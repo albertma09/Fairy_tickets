@@ -1,1 +1,73 @@
 
+= Memoria del Proyecto: [FairyTickets]
+
+[width="100%",cols="2,1",options="header"]
+|===
+|Fecha | [Fecha de Presentación]
+|Logo del Proyecto | image::ruta/al/logo.png[width=50]
+
+|===
+== Portada
+
+[Nombre del Proyecto]
+Membres integrants:
+- Diego Amador
+- Albert Mateos
+- Aitor Lopera
+
+
+== Introducción
+
+=== Descripción de los Miembros del Equipo de Trabajo
+
+En esta sección se describirán brevemente los miembros del equipo de trabajo, incluyendo sus competencias y responsabilidades.
+
+=== Descripción del Objetivo de la Aplicación
+
+Se explicará el objetivo principal de la aplicación, las necesidades que satisface y el público al que va destinada.
+
+=== Diseño de Base de Datos
+
+Aquí se describirá la estructura y diseño de la base de datos utilizada en el proyecto.
+
+=== Sketching y Mockup de Interficies
+
+Se mostrarán los bocetos y mockups de las interfaces de usuario para visualizar el diseño propuesto.
+
+=== La Guía de Estilo
+
+Se incluirá una guía de estilo para asegurar la coherencia visual y de usabilidad en toda la aplicación.
+
+=== Confección del Manual de Instalación/Distribución de la Aplicación
+
+Se proporcionará un manual paso a paso y detallado para instalar y distribuir la aplicación. Se incluirán consideraciones sobre permisos y seguridad.
+
+== Líneas Futuras
+
+En esta sección se discutirán posibles mejoras y ampliaciones futuras para la aplicación.
+
+== Conclusiones
+
+=== Desviaciones en la Planificación
+
+Se revisarán las desviaciones en el plan inicial del proyecto y se proporcionarán explicaciones para las diferencias.
+
+=== Aportaciones del Proyecto a los Conocimientos del Alumno
+
+Se resaltarán las aportaciones significativas del proyecto al desarrollo de los conocimientos de los miembros del equipo.
+
+== Glosario
+
+Se proporcionará un listado de términos técnicos con sus definiciones.
+
+== Webgrafía
+
+Se citarán las fuentes web utilizadas en el desarrollo del proyecto.
+
+== Otros Recursos de Consulta
+
+Se incluirán otros recursos utilizados como libros, artículos, etc.
+
+== Presentación del Proyecto
+
+Se preparará una presentación breve del proyecto para compartir con la audiencia.
