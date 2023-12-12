@@ -1,0 +1,13 @@
+= Fairy Tickets
+descripción...
+
+== Miembros y sus portfolios
+* https://github.com/albertma09[Albert Mateos Aguilera]
+
+== Fuentes externas
+* https://trello.com/b/c7PO2ag3/grupo1mateosloperaamador[Trello]
+* https://www.figma.com/files/team/1316061965584499287/Gr01-Mateos-Loper-Amador?fuid=1293229234483129567[Figma]
+
+== Servidor Isard
+
+
