@@ -10,5 +10,6 @@ descripción...
 * https://www.figma.com/files/team/1316061965584499287/Gr01-Mateos-Loper-Amador?fuid=1293229234483129567[Figma]
 
 == Servidor Isard
-
+* Alumno: Albert Mateos con IP 10.2.224.31
+* IP listado: 192.168.60.60
 
