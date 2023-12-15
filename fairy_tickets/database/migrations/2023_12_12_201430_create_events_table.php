@@ -13,7 +13,21 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+
+            //definicion de constraint BD
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('location_id');
+    
+            //atributos iniciales BD
+            $table->string('name');
+            $table->float('price');
+
+
             $table->timestamps();
+
+            //definicion de foreign key
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
         });
     }
 
