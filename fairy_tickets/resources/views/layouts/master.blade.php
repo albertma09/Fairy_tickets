@@ -10,11 +10,14 @@
 </head>
 
 <body>
-      <x-navigation-component/>
-    <h1>@yield('title')</h1> 
-    <div>
-        @yield('content') 
-    </div>
+    <x-navigation-component />
+    <main>
+        <h1>@yield('title')</h1>
+        <div>
+            @yield('content')
+        </div>
+    </main>
+    <footer></footer>
 </body>
 
 </html>
