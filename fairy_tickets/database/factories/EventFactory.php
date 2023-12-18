@@ -20,7 +20,10 @@ class EventFactory extends Factory
             'category_id'=>fake()->numberBetween(1,5),
             'location_id'=>fake()->numberBetween(1,3),
             'name'=>fake()->sentence,
-            'price'=>fake()->randomFloat,
+            'description'=>fake()->paragraph,
+            'price'=>fake()->randomFloat(2,1,1000),
+            'date'=>fake()->date($format = 'Y-m-d',$max = 'now'),
+            'hour'=>fake()->time($format = 'H:i:s', $min = 'now'),
         ];
     }
 }
