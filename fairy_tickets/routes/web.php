@@ -18,7 +18,7 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/home',function(){
-    return view('home.index');
+    return view('welcome');
 })->name('home.index');
 
 Route::fallback(function(){
