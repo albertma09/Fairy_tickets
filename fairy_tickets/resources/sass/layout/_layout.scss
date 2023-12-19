@@ -1,0 +1,10 @@
+/* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
+body {
+   height: 100vh;
+   width:100vw;
+   display: flex;
+   flex-flow: column nowrap;
+}
+main{
+   width: 100%;
+}

@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+// 1. Variables
+@import
+  'abstracts/variables';
+
+
+// 2. Vendors
+
+// 3. Base stuff
+@import
+  'base/base',
+  'base/fonts',
+  'base/typography';
+
+// 4. Layout-related sections
+@import
+  'layout/layout',
+  'layout/navigation';
+
+
+// 5. Components
+@import
+   'components/buttons';
+
+
+// 6. Page-specific styles
+
+// 7. Themes

@@ -1,0 +1,29 @@
+nav {
+    height: 12.5%;
+    width: 100%;
+    background-color: $col-oscuro;
+    color: $col-claro;
+    padding: 0 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+
+    img {
+        width: 64px;
+    }
+    i {
+        font-size: 32px;
+    }
+
+    input, li {
+        display: none;
+    }
+
+    ul {
+        display: flex;
+        flex-flow: row wrap;
+
+        li {
+            list-style: none;
+        }
+    }
+}
