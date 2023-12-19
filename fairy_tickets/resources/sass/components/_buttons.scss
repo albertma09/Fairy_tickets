@@ -3,4 +3,8 @@
    padding: 1rem;
    background-color: $col-oscuro;
    color: $col-brand;
+   &:hover{
+      color: $col-claro;
+      cursor: pointer;
+   }
 }

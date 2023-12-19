@@ -35,12 +35,32 @@ nav {
   width: 100%;
   background-color: #282020;
   color: #fdf7f7;
-  padding: 0 1rem;
+  padding: 0 0.2rem;
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
 }
-nav img {
+nav form {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+nav form input {
+  padding: 0.2rem;
+  border-radius: 4px;
+  max-width: 64px;
+  max-height: 1.2rem;
+}
+nav a {
+  height: 100%;
+}
+nav a img {
   width: 64px;
+  height: 100%;
+  margin-right: 1rem;
 }
 nav i {
   font-size: 32px;
@@ -61,6 +81,10 @@ nav ul li {
   padding: 1rem;
   background-color: #282020;
   color: #d74748;
+}
+.icon-button:hover {
+  color: #fdf7f7;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */
