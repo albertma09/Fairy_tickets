@@ -4,8 +4,8 @@
     </a>
     <x-search-component />
     <ul>
-        <li><a href="{{ route('home.index') }}">Home</a></li>
+        <li><a href="{{ route('home.index') }}" class="{{ Request::is('home*') ? 'nav-active' : '' }}">Home</a></li>
     </ul>
     <button class="icon-button"><i class="fa-solid fa-user"></i></button>
-    <button class="icon-button"><i class="fa-solid fa-bars"></i></button>
+    <button class="icon-button" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
 </nav>

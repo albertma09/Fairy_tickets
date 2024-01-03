@@ -1,10 +1,14 @@
 .icon-button{
    width: 64px;
    padding: 1rem;
+   margin-left: 0.5rem;
    background-color: $col-oscuro;
    color: $col-brand;
    &:hover{
       color: $col-claro;
       cursor: pointer;
+   }
+   i{
+      font-size:1.5rem;
    }
 }
