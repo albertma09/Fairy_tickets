@@ -2,4 +2,7 @@
 html {
    font-family:$sourcesans;
    font-size: 16px;
+   @include respond-to(768px){
+      font-size:18px;
+   }
 }
