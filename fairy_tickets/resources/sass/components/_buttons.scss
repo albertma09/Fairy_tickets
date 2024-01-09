@@ -4,11 +4,35 @@
    margin-left: 0.5rem;
    background-color: $col-oscuro;
    color: $col-brand;
+   &-buy{
+      background-color: $col-brand;
+      color: $col-claro;
+      padding: .5rem;
+      border-radius: 4px;
+   }
+   &-details{
+      width: 64px;
+      margin-left: 0.5rem;
+      background-color: $col-oscuro;
+      color: $col-brand;
+      padding: .5rem;
+      border-radius: 4px;
+   }
    &:hover{
       color: $col-claro;
       cursor: pointer;
    }
    i{
       font-size:1.5rem;
+   }
+}
+
+.filter-button{
+   background-color: $col-oscuro;
+   color: $col-brand;
+   padding: 1rem;
+   &:hover{
+      color: $col-claro;
+      cursor: pointer;
    }
 }

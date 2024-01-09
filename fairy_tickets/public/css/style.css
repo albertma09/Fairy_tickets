@@ -149,12 +149,68 @@ nav ul li a {
   background-color: #282020;
   color: #d74748;
 }
+.icon-button-buy {
+  background-color: #d74748;
+  color: #fdf7f7;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.icon-button-details {
+  width: 64px;
+  margin-left: 0.5rem;
+  background-color: #282020;
+  color: #d74748;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
 .icon-button:hover {
   color: #fdf7f7;
   cursor: pointer;
 }
 .icon-button i {
   font-size: 1.5rem;
+}
+
+.filter-button {
+  background-color: #282020;
+  color: #d74748;
+  padding: 1rem;
+}
+.filter-button:hover {
+  color: #fdf7f7;
+  cursor: pointer;
+}
+
+.events-card {
+  display: flex;
+  padding: 1rem;
+  margin: 2rem;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+.events-card-data {
+  display: flex;
+  flex-direction: column;
+  min-width: 60%;
+}
+.events-card-data-text {
+  display: flex;
+  flex-direction: column;
+}
+.events-card-data-img {
+  display: flex;
+  min-width: 40%;
+}
+.events-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter-categories {
+  background-color: #282020;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /*# sourceMappingURL=style.css.map */

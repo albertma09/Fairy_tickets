@@ -1,0 +1,25 @@
+.events-card{
+    display: flex;
+    padding: 1rem;
+    margin: 2rem;
+    border: 2px solid black;
+    border-radius: 10px;
+    &-data{
+        display: flex;
+        flex-direction: column;
+        min-width: 60%;
+        &-text{
+            display: flex;
+            flex-direction: column;
+        }
+        &-img{
+            display: flex;
+            min-width: 40%;
+        }
+    }
+    &-actions{
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+}

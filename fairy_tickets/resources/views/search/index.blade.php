@@ -8,6 +8,9 @@
 
     @forelse ($events as $event)
         <x-events-component :event="$event" />
+        {{-- <div>{{$event->name}}</div>
+    <div>{{$event->date}}</div>
+    <div>{{$event->price}} €</div> --}}
     @empty
         <li>No hay ningún evento que mostrar.</li>
     @endforelse
