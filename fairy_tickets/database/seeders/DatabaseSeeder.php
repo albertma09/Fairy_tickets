@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Location;
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
 
         Category::factory(5)->create();
         Location::factory(3)->create();
+        User::factory(2)->create();
         Event::factory($eventNum)->create();
         /*Event::factory($eventNum)->create()->each(function($event){
             Category::find(random_int(1, 5))->for($event)->create();
