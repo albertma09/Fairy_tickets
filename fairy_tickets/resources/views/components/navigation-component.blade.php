@@ -7,6 +7,10 @@
         <li><a href="{{ route('home.index') }}" class="{{ Request::is('home*') ? 'nav-active' : '' }}">Home</a></li>
         <li><a href="#" class="{{ Request::is('home*') ? 'nav-active' : '' }}">Prueba</a></li>
     </ul>
-    <button class="icon-button"><i class="fa-solid fa-user"></i></button>
+    @if (auth()->check())
+        <p>{{ auth()->user()->name }}</p>
+    @else
+        <a href="{{ route('login') }}" class="icon-button"><i class="fa-solid fa-user"></i></a>
+    @endif
     <button class="icon-button" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
 </nav>

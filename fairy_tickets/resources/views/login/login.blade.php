@@ -31,12 +31,11 @@
                     <a href="#">¿Olvidaste la contraseña?</a>
                 </div>
             </div>
+            <div class="inferior">
+                <a href="{{ URL::previous() }}">Volver</a>
+            </div>
         </div>
     </div>
-    {{-- <div class="login-container">
-        
-        
-    </div> --}}
 </body>
 
 </html>
