@@ -1,8 +1,17 @@
 /* Formato inicial de fuente para el sitio web */
 html {
-   font-family:$sourcesans;
+   font-family: $sourcesans;
    font-size: 16px;
-   @include respond-to(768px){
-      font-size:18px;
+
+   @include respond-to(768px) {
+      font-size: 18px;
+   }
+}
+
+.titulo {
+   &-brand {
+      color: $col-brand;
+      font-family: $fjalla;
+      font-size: 70px;
    }
 }
