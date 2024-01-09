@@ -42,11 +42,9 @@ nav {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-}
-@media screen and (min-width: 768px) {
-  nav {
-    padding: 0 1rem;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 nav form {
   margin: 0;
@@ -103,15 +101,20 @@ nav a img {
 nav i {
   font-size: 32px;
 }
+nav i.fa-bars-staggered {
+  color: #fdf7f7;
+}
+nav i.fa-bars {
+  color: #d74748;
+}
 nav ul {
-  display: flex;
+  display: none;
   flex-flow: row wrap;
   height: 100%;
 }
 nav ul li {
   height: inherit;
   list-style: none;
-  display: none;
 }
 nav ul li a {
   display: flex;
@@ -131,9 +134,29 @@ nav ul li a {
     border-bottom: 2px solid #d74748;
   }
 }
+nav ul.opened {
+  display: flex;
+  flex-flow: column nowrap;
+  position: fixed;
+  height: 87.5%;
+  top: 12.5%;
+  left: 0;
+  width: 100%;
+  background-color: #282020;
+  z-index: 1000;
+}
+nav ul.opened li {
+  height: auto;
+}
+nav ul.opened li a {
+  height: fit-content;
+  padding: 1.6rem;
+  font-size: 18px;
+  box-shadow: 0 1px 3px;
+}
 @media screen and (min-width: 768px) {
-  nav ul li {
-    display: block;
+  nav ul {
+    display: flex;
   }
 }
 @media screen and (min-width: 768px) {
