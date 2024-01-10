@@ -96,9 +96,6 @@ nav form button.icon-button:hover {
   background-color: #fdf7f7;
   border: 1px solid #d74748;
 }
-nav a {
-  height: 100%;
-}
 nav a img {
   width: 64px;
   height: 100%;
@@ -173,6 +170,7 @@ nav ul.opened li a {
 
 .oscuro {
   font-family: "Source Sans 3", sans-serif;
+  color: #d74748;
   font-weight: normal;
   font-size: 100%;
   margin: 0;
@@ -235,9 +233,22 @@ nav ul.opened li a {
 .oscuro .container .center .login .footer a:hover {
   color: #fdf7f7;
 }
+.oscuro .container .center .inferior {
+  margin-top: 10px;
+  font-size: 90%;
+  text-align: center;
+}
+.oscuro .container .center .inferior a {
+  display: block;
+  text-decoration: none;
+  color: #d74748;
+  margin-bottom: 3px;
+}
+.oscuro .container .center .inferior a:hover {
+  color: #fdf7f7;
+}
 
 .icon-button {
-  width: 64px;
   padding: 1rem;
   margin-left: 0.5rem;
   background-color: #282020;

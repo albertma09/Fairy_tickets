@@ -28,15 +28,14 @@
                     @endif
                 </form>
                 <div class="footer">
-                    <a href="#">¿Olvidaste la contraseña?</a>
+                    <a href="{{ route('formulario-recuperar-contrasenia')}}">¿Olvidaste la contraseña?</a>
                 </div>
+            </div>
+            <div class="inferior">
+                <a href="{{ URL::previous() }}">Volver</a>
             </div>
         </div>
     </div>
-    {{-- <div class="login-container">
-        
-        
-    </div> --}}
 </body>
 
 </html>
