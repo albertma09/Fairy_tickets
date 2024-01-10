@@ -21,6 +21,12 @@ html {
   }
 }
 
+.titulo-brand {
+  color: #d74748;
+  font-family: "Fjalla One", sans-serif;
+  font-size: 70px;
+}
+
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
 body {
   height: 100vh;
@@ -42,11 +48,9 @@ nav {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-}
-@media screen and (min-width: 768px) {
-  nav {
-    padding: 0 1rem;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 nav form {
   margin: 0;
@@ -103,15 +107,20 @@ nav a img {
 nav i {
   font-size: 32px;
 }
+nav i.fa-bars-staggered {
+  color: #fdf7f7;
+}
+nav i.fa-bars {
+  color: #d74748;
+}
 nav ul {
-  display: flex;
+  display: none;
   flex-flow: row wrap;
   height: 100%;
 }
 nav ul li {
   height: inherit;
   list-style: none;
-  display: none;
 }
 nav ul li a {
   display: flex;
@@ -131,15 +140,100 @@ nav ul li a {
     border-bottom: 2px solid #d74748;
   }
 }
+nav ul.opened {
+  display: flex;
+  flex-flow: column nowrap;
+  position: fixed;
+  height: 87.5%;
+  top: 12.5%;
+  left: 0;
+  width: 100%;
+  background-color: #282020;
+  z-index: 1000;
+}
+nav ul.opened li {
+  height: auto;
+}
+nav ul.opened li a {
+  height: fit-content;
+  padding: 1.6rem;
+  font-size: 18px;
+  box-shadow: 0 1px 3px;
+}
 @media screen and (min-width: 768px) {
-  nav ul li {
-    display: block;
+  nav ul {
+    display: flex;
   }
 }
 @media screen and (min-width: 768px) {
   nav button#menu-toggle {
     display: none;
   }
+}
+
+.oscuro {
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: normal;
+  font-size: 100%;
+  margin: 0;
+  background-color: #282020;
+}
+.oscuro .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+}
+.oscuro .container .center {
+  max-width: 320px;
+  width: 100%;
+}
+.oscuro .container .center .login {
+  width: 100%;
+  padding: 50px 30px;
+  border: 3px solid #d74748;
+}
+.oscuro .container .center .login .title {
+  font-family: "Fjalla One", sans-serif;
+  font-size: 250%;
+  color: #d74748;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.oscuro .container .center .login input {
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 110%;
+  color: #1b262c;
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 5px 5px 5px 10px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 3px;
+}
+.oscuro .container .center .login p {
+  color: #da0000;
+}
+.oscuro .container .center .login .footer {
+  font-size: 90%;
+  text-align: center;
+  margin-top: 15px;
+}
+.oscuro .container .center .login .footer a {
+  display: block;
+  text-decoration: none;
+  color: #d74748;
+  margin-bottom: 3px;
+}
+.oscuro .container .center .login .footer a:hover {
+  color: #fdf7f7;
 }
 
 .icon-button {
@@ -211,6 +305,24 @@ nav ul li a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.button-brand {
+  background-color: #d74748;
+  font-size: 110%;
+  width: 100%;
+  color: #fdf7f7;
+  height: 40px;
+  border: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  transition: 0.2s ease;
+}
+.button-brand:hover {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #d74748;
+  color: #d74748;
 }
 
 /*# sourceMappingURL=style.css.map */
