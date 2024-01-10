@@ -2,14 +2,20 @@ nav {
     @include dark-bg;
     height: 12.5%;
     width: 100%;
-    padding: 0 1rem;
     display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-between;
-    position:fixed;
-    top:0;
-    left:0;
+    flex-flow: column nowrap;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    div.nav-main {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1rem;
+        width: 100%;
+    }
 
     form {
         margin: 0;
@@ -26,9 +32,11 @@ nav {
             border-bottom-left-radius: 4px;
             max-width: 120px;
             height: 2rem;
+
             @include respond-to(768px) {
                 max-width: 140px;
             }
+
             @include respond-to(1024px) {
                 max-width: 200px;
             }
@@ -43,9 +51,11 @@ nav {
             border-bottom-right-radius: 4px;
             color: $col-oscuro;
             background-color: $col-brand;
+
             i {
                 font-size: 1rem;
             }
+
             &:hover {
                 color: $col-brand;
                 background-color: $col-claro;
@@ -66,10 +76,12 @@ nav {
 
     i {
         font-size: 32px;
-        &.fa-bars-staggered{
+
+        &.fa-bars-staggered {
             color: $col-claro;
         }
-        &.fa-bars{
+
+        &.fa-bars {
             color: $col-brand;
         }
     }
@@ -89,17 +101,23 @@ nav {
                 color: inherit;
                 height: inherit;
                 align-items: center;
+
                 @include respond-to(768px) {
                     padding: 0 1rem;
+
                     &:hover {
-                        border-bottom: 2px solid $col-claro;
+                        background-color: $col-claro;
+                        color: $col-oscuro;
                     }
+
                     &.nav-active {
-                        border-bottom: 2px solid $col-brand;
+                        background-color: $col-brand;
+                        color: $col-oscuro;
                     }
                 }
             }
         }
+
         &.opened {
             // Styles for the opened state
             display: flex;
@@ -114,7 +132,8 @@ nav {
 
             li {
                 height: auto;
-                a{
+
+                a {
                     height: fit-content;
                     padding: 1.6rem;
                     font-size: 18px;
@@ -122,6 +141,7 @@ nav {
                 }
             }
         }
+
         @include respond-to(768px) {
             display: flex;
         }

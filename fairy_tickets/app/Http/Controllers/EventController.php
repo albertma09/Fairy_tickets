@@ -21,8 +21,9 @@ class EventController extends Controller
     public function searchBySearchingItem(Request $request): View
     {
         $item = $request->input('search-input');
+        //dd($item);  
         $events = Event::getEventsBySearching($item);
-        dd($events);      
+        //dd($events);      
         return view('search.index',['events' => $events]);
     }
 
