@@ -15,3 +15,11 @@ html {
       font-size: 70px;
    }
 }
+
+button{
+   font-size: 16px;
+
+   @include respond-to(768px) {
+      font-size: 18px;
+   }
+}

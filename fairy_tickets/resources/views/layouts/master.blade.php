@@ -12,7 +12,6 @@
 
 <body>
     <x-navigation-component />
-    <x-category-filter-component />
     <main>
         <h1>@yield('title')</h1>
         <div>

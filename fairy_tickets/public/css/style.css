@@ -27,6 +27,15 @@ html {
   font-size: 70px;
 }
 
+button {
+  font-size: 16px;
+}
+@media screen and (min-width: 768px) {
+  button {
+    font-size: 18px;
+  }
+}
+
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
 body {
   height: 100vh;
@@ -36,6 +45,7 @@ body {
 
 main {
   width: 100%;
+  margin-top: 12.5%;
 }
 
 nav {
@@ -43,14 +53,19 @@ nav {
   background-color: #282020;
   height: 12.5%;
   width: 100%;
-  padding: 0 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+nav div.nav-main {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
+  padding: 0 1rem;
+  width: 100%;
 }
 nav form {
   margin: 0;
@@ -131,10 +146,12 @@ nav ul li a {
     padding: 0 1rem;
   }
   nav ul li a:hover {
-    border-bottom: 2px solid #fdf7f7;
+    background-color: #fdf7f7;
+    color: #282020;
   }
   nav ul li a.nav-active {
-    border-bottom: 2px solid #d74748;
+    background-color: #d74748;
+    color: #282020;
   }
 }
 nav ul.opened {
@@ -276,9 +293,27 @@ nav ul.opened li a {
   font-size: 1.5rem;
 }
 
-.filter-button {
-  background-color: #282020;
+.button-brand {
+  background-color: #d74748;
+  font-size: 110%;
+  width: 100%;
+  color: #fdf7f7;
+  height: 40px;
+  border: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  transition: 0.2s ease;
+}
+.button-brand:hover {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #d74748;
   color: #d74748;
+}
+
+.filter-button {
+  background-color: #d74748;
+  color: #282020;
   padding: 1rem;
 }
 .filter-button:hover {
@@ -312,28 +347,11 @@ nav ul.opened li a {
 }
 
 .filter-categories {
-  background-color: #282020;
+  background-color: #d74748;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-
-.button-brand {
-  background-color: #d74748;
-  font-size: 110%;
   width: 100%;
-  color: #fdf7f7;
-  height: 40px;
-  border: none;
-  border-radius: 3px;
-  margin-top: 10px;
-  transition: 0.2s ease;
-}
-.button-brand:hover {
-  cursor: pointer;
-  background-color: transparent;
-  border: 1px solid #d74748;
-  color: #d74748;
 }
 
 /*# sourceMappingURL=style.css.map */

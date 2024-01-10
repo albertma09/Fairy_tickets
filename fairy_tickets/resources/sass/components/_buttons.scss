@@ -51,18 +51,8 @@
 }
 
 .filter-button{
-   background-color: $col-oscuro;
-   color: $col-brand;
-   padding: 1rem;
-   &:hover{
-      color: $col-claro;
-      cursor: pointer;
-   }
-}
-
-.filter-button{
-   background-color: $col-oscuro;
-   color: $col-brand;
+   background-color: $col-brand;
+   color: $col-oscuro;
    padding: 1rem;
    &:hover{
       color: $col-claro;
