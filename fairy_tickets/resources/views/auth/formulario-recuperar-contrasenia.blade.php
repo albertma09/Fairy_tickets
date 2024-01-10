@@ -26,7 +26,7 @@
                     @csrf
                     <input type="text" id="email_address" class="form-control" name="email" placeholder="email" required>
                     @if ($errors->has('email'))
-                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                        <p class="text-danger">{{ $errors->first('email') }}</p>
                     @endif
                     <button type="submit" class="button-brand">
                         Recuperar contraseña
