@@ -8,7 +8,7 @@ use App\Models\Event;
 use App\Models\Category;
 use App\Models\Location;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Str;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -32,7 +32,25 @@ class DatabaseSeeder extends Seeder
 
         Category::factory(5)->create();
         Location::factory(3)->create();
-        User::factory(2)->create();
+        
+        User::create([
+            'name' => 'promotor1',
+            'email' => 'promotor1@test.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('p12345678'),
+            'remember_token' => Str::random(10),
+            // Otros campos si es necesario
+        ]);
+
+        User::create([
+            'name' => 'promotor2',
+            'email' => 'promotor2@test.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('p2345678'),
+            'remember_token' => Str::random(10),
+            // Otros campos si es necesario
+        ]);
+
         Event::factory($eventNum)->create();
         /*Event::factory($eventNum)->create()->each(function($event){
             Category::find(random_int(1, 5))->for($event)->create();
