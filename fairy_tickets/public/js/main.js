@@ -87,3 +87,22 @@ const delayedCloseMenuOnResize = debounce(()=>{
 }, 500);
 // Event listener del evento 'resize' de la ventana
 window.addEventListener("resize", delayedCloseMenuOnResize);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtén el elemento del enlace de cierre de sesión por su ID
+    var logoutLink = document.getElementById('logout-link');
+
+    // Agrega un event listener para el clic en el enlace
+    logoutLink.addEventListener('click', function (event) {
+        // Previene el comportamiento predeterminado del enlace
+        event.preventDefault();
+
+        // Muestra una alerta de confirmación y, si el usuario acepta, envía el formulario de cierre de sesión
+        var isConfirmed = confirm('¿Estás seguro de cerrar sesión?');
+
+        if (isConfirmed) {
+            document.getElementById('logout-form').submit();
+        }
+    });
+});

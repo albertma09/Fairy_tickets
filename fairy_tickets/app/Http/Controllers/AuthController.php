@@ -37,7 +37,7 @@ class AuthController extends Controller
             return redirect()->intended('/promotor');
         }
 
-        return redirect()->route('login')->with('error', 'Invalid login credentials');
+        return redirect()->route('login')->with('error', 'Las credenciales de login no son correctas');
     }
 
     /**
@@ -81,6 +81,7 @@ class AuthController extends Controller
 
         
         $token = Str::random(64);
+        
 
         
         DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
@@ -93,7 +94,7 @@ class AuthController extends Controller
         ]);
 
         
-        Mail::send('auth.recuperar-contrasenia', ['token' => $token], function ($message) use ($request) {
+        Mail::send('auth.recuperar-contrasenia', ['token' => $token, 'email' => $request->email], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject('Recuperar Contraseña');
         });
@@ -106,9 +107,9 @@ class AuthController extends Controller
      *
      * @return response()
      */
-    public function formularioActualizacion($token)
+    public function formularioActualizacion($token, $email)
     {
-        return view('auth.formulario-actualizacion', ['token' => $token]);
+        return view('auth.formulario-actualizacion', ['token' => $token, 'email' => $email]);
     }
 
      /**

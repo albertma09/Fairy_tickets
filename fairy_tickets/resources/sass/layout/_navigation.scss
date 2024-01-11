@@ -65,8 +65,12 @@ nav {
     }
 
     a {
-        
+        color: $col-brand;
+        text-decoration: none;
 
+        &:hover{
+            color: $col-claro;
+        }
         img {
             width: 64px;
             height: 100%;
