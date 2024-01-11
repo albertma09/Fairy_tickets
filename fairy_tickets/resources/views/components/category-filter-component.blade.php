@@ -1,5 +1,5 @@
 <div>
-    <form class="filter-categories" action="{{route('search.index')}}"  method="post">
+    <form class="filter-categories" action="{{route('searchByCategory.index')}}"  method="post">
         @csrf
         <button class="filter-button" type="submit" name="category-item" value="cine" >Cine</button>
         <button class="filter-button" type="submit" name="category-item" value="conferencia">Conferencia</button>

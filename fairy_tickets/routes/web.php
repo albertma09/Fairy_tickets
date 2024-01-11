@@ -46,7 +46,7 @@ Route::get('/home',[EventController::class,'index'])->name('home.index');
 
 Route::post('/events',[EventController::class,'searchBySearchingItem'])->name('search.index');
 
-Route::post('/events/categories',[EventController::class,'searchByCategoryItem'])->name('search.index');
+Route::post('/events/categories',[EventController::class,'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::fallback(function(){
     return ('Opps!!');
