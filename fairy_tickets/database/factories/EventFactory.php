@@ -19,10 +19,10 @@ class EventFactory extends Factory
         return [
             'category_id'=>fake()->numberBetween(1,5),
             'location_id'=>fake()->numberBetween(1,3),
-            'name'=>fake()->sentence,
+            'name'=>fake()->catchPhrase(),
             'description'=>fake()->paragraph,
             'price'=>fake()->randomFloat(2,1,1000),
-            'date'=>fake()->date($format = 'Y-m-d',$max = 'now'),
+            'date'=>fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
             'hour'=>fake()->time($format = 'H:i:s', $min = 'now'),
         ];
     }
