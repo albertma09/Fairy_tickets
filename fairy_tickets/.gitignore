@@ -17,4 +17,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-*.css.map
+/public/css/*.css.map
