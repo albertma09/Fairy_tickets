@@ -111,6 +111,13 @@ nav form button.icon-button:hover {
   background-color: #fdf7f7;
   border: 1px solid #d74748;
 }
+nav a {
+  color: #d74748;
+  text-decoration: none;
+}
+nav a:hover {
+  color: #fdf7f7;
+}
 nav a img {
   width: 64px;
   height: 100%;
@@ -233,8 +240,13 @@ nav ul.opened li a {
   border: none;
   border-radius: 3px;
 }
-.oscuro .container .center .login p {
+.oscuro .container .center .login .msg-error {
   color: #da0000;
+  padding: 10px;
+}
+.oscuro .container .center .login .msg-correct {
+  color: #72c487;
+  padding: 10px;
 }
 .oscuro .container .center .login .footer {
   font-size: 90%;

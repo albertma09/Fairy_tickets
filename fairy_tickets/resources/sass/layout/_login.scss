@@ -50,10 +50,18 @@
 
                 }
 
-                p {
-                    color: $col-gb-danger;
+                .msg {
+                    &-error{
+                        color: $col-gb-danger;
+                        padding: 10px;
+                    }
+                    
+                    &-correct{
+                        color:$col-fb-green;
+                        padding:10px
+                    }
                 }
-
+                
                 .footer {
                     font-size: 90%;
                     text-align: center;

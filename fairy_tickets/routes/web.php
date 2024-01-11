@@ -36,7 +36,7 @@ Route::get('/formulario-recuperar-contrasenia', [AuthController::class, 'formula
 Route::post('/enviar-recuperar-contrasenia', [AuthController::class, 'enviarRecuperarContrasenia'])->name('enviar-recuperacion');
 
 // Formulario donde se modificará la contraseña
-Route::get('/reiniciar-contrasenia/{token}', [AuthController::class, 'formularioActualizacion'])->name('formulario-actualizar-contrasenia');
+Route::get('/reiniciar-contrasenia/{token}/{email}', [AuthController::class, 'formularioActualizacion'])->name('formulario-actualizar-contrasenia');
 
 // Función que actualiza la contraseña del usuario
 Route::post('/actualizar-contrasenia', [AuthController::class, 'actualizarContrasenia'])->name('actualizar-contrasenia');

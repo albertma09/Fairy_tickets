@@ -9,7 +9,16 @@
             <li><a href="#">Prueba</a></li>
         </ul>
         @if (auth()->check())
-            <p>{{ auth()->user()->name }}</p>
+        @auth
+        <!-- Si el usuario está autenticado, muestra un enlace para cerrar sesión con una alerta de confirmación -->
+        <a href="#" id="logout-link">
+            Cerrar Sesión
+        </a>
+    
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @endauth
         @else
             <a href="{{ route('login') }}" class="icon-button"><i class="fa-solid fa-user"></i></a>
         @endif
