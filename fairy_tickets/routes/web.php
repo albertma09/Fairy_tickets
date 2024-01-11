@@ -23,10 +23,17 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Todas las rutas que necesitan autenticación de usuario
 Route::middleware(['auth.redirect'])->group(function () {
+    // Home del promotor
     Route::get('/promotor', function () {
         return view('home.promotor');
     });
+
+    // Creación de nuevos eventos
+    Route::get('/promotor/new-event', function () {
+        return view('events.create');
+    })->name('events.create');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña
@@ -42,12 +49,12 @@ Route::get('/reiniciar-contrasenia/{token}/{email}', [AuthController::class, 'fo
 Route::post('/actualizar-contrasenia', [AuthController::class, 'actualizarContrasenia'])->name('actualizar-contrasenia');
 
 
-Route::get('/home',[EventController::class,'index'])->name('home.index');
+Route::get('/home', [EventController::class, 'index'])->name('home.index');
 
-Route::post('/events',[EventController::class,'searchBySearchingItem'])->name('search.index');
+Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
 
-Route::post('/events/categories',[EventController::class,'searchByCategoryItem'])->name('search.index');
+Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('search.index');
 
-Route::fallback(function(){
+Route::fallback(function () {
     return ('Opps!!');
 });
