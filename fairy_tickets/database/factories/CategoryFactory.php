@@ -16,8 +16,23 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $categoryNames = [
+            'cine',
+            'comedia',
+            'conferencia',
+            'danza',
+            'hogar',
+            'moda',
+            'musica',
+            'opera',
+            'salud',
+            'teatro',
+            
+        ];
+
         return [
-            'name'=>fake()->sentence,
+            'name' => $this->faker->randomElement($categoryNames),
+
         ];
     }
 }

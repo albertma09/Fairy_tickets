@@ -17,10 +17,10 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->sentence,
+            'name'=>fake()->company(),
             'address'=>fake()->address(),
             'capacity'=>fake()->numberBetween(100, 5540),
-            'city'=>fake()->city,
+            'city'=>fake()->city('es_CO'),
         ];
     }
 }
