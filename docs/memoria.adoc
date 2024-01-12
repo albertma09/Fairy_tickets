@@ -135,6 +135,118 @@ Guarda los cambios y reinicia Apache:
 ----
 sudo service apache2 restart
 ----    
+== Sprints
+=== Sprint 1
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 5 nuevas tareas del desarrollo de la aplicación:
+
+===== R01: Definir Guía de Estilos de la Aplicación 
+
+* Definir la paleta de colores para los elementos de la aplicación.
+** Especificar los colores utilizados y justificar su elección.
+
+* Indicar la tipografía para diferentes textos de la aplicación.
+** Niveles de títulos, cuerpo del texto, citas, palabras resaltadas y otros.
+** Especificar tamaños de fuente según la ubicación del texto.
+
+* Especificar la iconografía utilizada en la aplicación.
+** Representar colores y tamaños posibles para las iconas.
+** Si la icona forma parte de un botón, este debe ser descrito.
+
+* Describir los botones de la aplicación.
+** Mencionar tamaños, márgenes, espaciados, fuentes, colores y comportamientos.
+** Detallar comportamientos como hover, seleccionado, importante, etc.
+
+* Detallar estilos de enlaces y elementos de formulario.
+** Incluir cómo se ven cuando son visibles, editables o no interactivos.
+
+* Describir gráficos y visualizaciones de componentes.
+** Mostrar ejemplos de tarjetas u otros elementos.
+
+===== R02: Plantejar l'Estructura de la Base de Dades 
+
+* Considerar al menos las entidades mencionadas.
+** Agregar el diagrama relacional y de clases a la memoria.
+** Mantener actualizado este diagrama a lo largo del desarrollo.
+
+===== R03: Entorn de Desplegament a Isard 
+
+* Desplegar semanalmente en Isard con consideraciones específicas.
+** Respetar rangos de direcciones IP asignadas.
+** Mostrar un diagrama de red actualizado en el README.
+
+* Instalar solo la aplicación web principal en la máquina Isard.
+** Dockerizar otros servicios como SGBD y servidor DNS.
+
+===== R04: Layout Principal
+
+* Diseñar nombre y logo para la aplicación.
+* Crear favicon.ico.
+* Todas las páginas tendrán un header y un footer.
+
+===== R05: Pàgina Home
+* Diseñar la página de inicio como punto de entrada.
+* Mostrar lista provisional de eventos con detalles.
+* Incluir un buscador y filtros por categoría.
+* Paginar y configurar la cantidad de registros por página.
+* Implementar pruebas funcionales y migraciones de base de datos.
+
+===== Notas Adicionales
+
+* Utilizar fuentes de inspiración como Material Design y Dribbble.
+* Mantener actualizada la documentación en la memoria.
+* Agregar enlaces a Figma para ejemplos visuales.
+
+
+
+==== Tareas
+
+.Tareas Realizadas
+[options="header"]
+|====================
+| Tarea 3+^| Descripción
+| **R01: Definir Guía de Estilos de la Aplicación** 3+|
+"" 
+
+| **R02: Plantear la Estructura de la Base de Datos** 3+|
+"" 
+
+| **R03: Entorno de Despliegue en Isard** 3+|
+"Para implementar el despliegue en el entorno Isard, realizamos los siguientes pasos:
+
+Instalación de Apache2 y PHP:
+
+Actualiza la lista de paquetes e instala Apache2 y PHP.
+Configuración de Apache2:
+
+Permite el uso de archivos .htaccess y habilita el módulo rewrite.
+Despliegue del Proyecto desde Git:
+
+Clona el proyecto Laravel desde Git en /var/www/html.
+Instala las dependencias de Laravel y configura el archivo .env.
+Configuraciones Adicionales:
+
+Configura el host virtual de Apache2 para apuntar al directorio del proyecto Laravel." 
+
+| **R04: Diseño Principal** 3+|
+"" 
+
+| **R05: Página de Inicio** 3+|
+"" 
+|====================
+
+
+==== Valoración individual
+Valoración de la semana individual
+
+===== *Diego:*
+
+
+===== *Aitor:* 
+
+
+===== *Albert:* 
+
 == Lineas futuras.
 == Conclusiones
 
