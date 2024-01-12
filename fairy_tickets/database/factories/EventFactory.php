@@ -17,7 +17,7 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id'=>fake()->numberBetween(1,5),
+            'category_id'=>fake()->numberBetween(1,10),
             'location_id'=>fake()->numberBetween(1,3),
             'name'=>fake()->catchPhrase(),
             'description'=>fake()->paragraph,
