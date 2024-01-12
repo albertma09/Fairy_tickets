@@ -9,7 +9,7 @@
         <br>
         <input type="password" name="password" placeholder="Contraseña" required>
         <br>
-        <button class="button-brand" type="submit">Iniciar Sesión</button>
+        <button class="button button-brand" type="submit">Iniciar Sesión</button>
         @if (session('error'))
             <p class="msg-error">{{ session('error') }}</p>
         @endif

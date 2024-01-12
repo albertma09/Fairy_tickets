@@ -10,6 +10,16 @@
   box-sizing: border-box;
 }
 
+.col-brand {
+  color: #d74748;
+  background-color: #282020;
+}
+
+.col-dark {
+  color: #282020;
+  background-color: #d74748;
+}
+
 /* Formato inicial de fuente para el sitio web */
 html {
   font-family: "Source Sans 3", sans-serif;
@@ -51,21 +61,27 @@ main {
 nav {
   color: #d74748;
   background-color: #282020;
-  height: 12.5%;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
+  justify-content: flex-end;
   position: fixed;
   top: 0;
   left: 0;
 }
+@media screen and (min-width: 375px) {
+  nav {
+    height: 14%;
+  }
+}
 nav div.nav-main {
+  height: 10vh;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
   width: 100%;
+  padding: 0 0.5rem;
 }
 nav form {
   margin: 0;
@@ -93,44 +109,12 @@ nav form input {
     max-width: 200px;
   }
 }
-nav form button.icon-button {
-  padding: 0.2rem;
-  margin: 0;
-  height: 2rem;
-  max-width: 2rem;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  color: #282020;
-  background-color: #d74748;
-}
-nav form button.icon-button i {
-  font-size: 1rem;
-}
-nav form button.icon-button:hover {
-  color: #d74748;
-  background-color: #fdf7f7;
-  border: 1px solid #d74748;
-}
 nav a {
-  color: #d74748;
   text-decoration: none;
 }
-nav a:hover {
-  color: #fdf7f7;
-}
 nav a img {
-  width: 64px;
+  width: 50px;
   height: 100%;
-  margin-right: 1rem;
-}
-nav i {
-  font-size: 32px;
-}
-nav i.fa-bars-staggered {
-  color: #fdf7f7;
-}
-nav i.fa-bars {
-  color: #d74748;
 }
 nav ul {
   display: none;
@@ -160,13 +144,16 @@ nav ul li a {
     background-color: #d74748;
     color: #282020;
   }
+  nav ul li a.nav-active:hover {
+    cursor: default;
+  }
 }
 nav ul.opened {
   display: flex;
   flex-flow: column nowrap;
   position: fixed;
-  height: 87.5%;
-  top: 12.5%;
+  height: 90vh;
+  top: 10vh;
   left: 0;
   width: 100%;
   background-color: #282020;
@@ -185,6 +172,14 @@ nav ul.opened li a {
   nav ul {
     display: flex;
   }
+}
+nav .filter-categories {
+  background-color: #d74748;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 0.5rem;
 }
 @media screen and (min-width: 768px) {
   nav button#menu-toggle {
@@ -277,60 +272,85 @@ nav ul.opened li a {
   color: #fdf7f7;
 }
 
-.icon-button {
-  padding: 1rem;
-  margin-left: 0.5rem;
-  background-color: #282020;
-  color: #d74748;
-}
-.icon-button-buy {
-  background-color: #d74748;
-  color: #fdf7f7;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-.icon-button-details {
-  width: 64px;
-  margin-left: 0.5rem;
-  background-color: #282020;
-  color: #d74748;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-.icon-button:hover {
-  color: #fdf7f7;
-  cursor: pointer;
-}
-.icon-button i {
-  font-size: 1.5rem;
-}
-
-.button-brand {
-  background-color: #d74748;
+.button {
   font-size: 110%;
   width: 100%;
-  color: #fdf7f7;
-  height: 40px;
-  border: none;
-  border-radius: 3px;
-  margin-top: 10px;
+  border-radius: 4px;
   transition: 0.2s ease;
+  padding: 0.6rem;
+}
+.button i {
+  font-size: 1.5rem;
+}
+.button:hover {
+  cursor: pointer;
+}
+.button-brand {
+  color: #282020;
+  background-color: #d74748;
+  border: 1px solid #d74748;
 }
 .button-brand:hover {
-  cursor: pointer;
   background-color: transparent;
-  border: 1px solid #d74748;
   color: #d74748;
+  border: 1px solid #d74748;
 }
-
-.filter-button {
+.button-dark {
+  color: #d74748;
+  background-color: #282020;
+  border: 1px solid #282020;
+}
+.button-dark:hover {
+  background-color: transparent;
+  color: #282020;
+  border: 1px solid #282020;
+}
+.button-filter {
   background-color: #d74748;
   color: #282020;
   padding: 1rem;
 }
-.filter-button:hover {
+.button-filter:hover {
   color: #fdf7f7;
   cursor: pointer;
+}
+.button-icon {
+  height: 2rem;
+  max-width: 2rem;
+  color: #d74748;
+  background-color: transparent;
+}
+.button-icon i {
+  font-size: 1.5rem;
+}
+.button-icon:hover {
+  color: #fdf7f7;
+}
+
+a.button,
+button.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: fit-content;
+}
+
+nav .button-icon i.fa-bars-staggered {
+  color: #fdf7f7;
+}
+nav .button-icon i.fa-bars {
+  color: #d74748;
+}
+
+nav form .button-icon {
+  color: #282020;
+  background-color: #d74748;
+  height: 2rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+nav form .button-icon i {
+  font-size: 1.2rem;
 }
 
 .events-card {
@@ -356,14 +376,6 @@ nav ul.opened li a {
 .events-card-actions {
   display: flex;
   justify-content: flex-end;
-}
-
-.filter-categories {
-  background-color: #d74748;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
