@@ -220,7 +220,12 @@ nav .filter-categories {
   font-size: 250%;
   color: #d74748;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 2.5rem;
+}
+.oscuro .container .center .login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .oscuro .container .center .login input {
   font-family: "Source Sans 3", sans-serif;
@@ -229,7 +234,7 @@ nav .filter-categories {
   display: block;
   width: 100%;
   height: 40px;
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
   padding: 5px 5px 5px 10px;
   box-sizing: border-box;
   border: none;
@@ -277,7 +282,7 @@ nav .filter-categories {
   width: 100%;
   border-radius: 4px;
   transition: 0.2s ease;
-  padding: 0.6rem;
+  padding: 0.6rem 1rem;
 }
 .button i {
   font-size: 1.5rem;
@@ -345,6 +350,7 @@ nav .button-icon i.fa-bars {
 nav form .button-icon {
   color: #282020;
   background-color: #d74748;
+  padding: 0.6rem;
   height: 2rem;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -374,8 +380,12 @@ nav form .button-icon i {
   min-width: 40%;
 }
 .events-card-actions {
+  margin-top: 1rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+}
+.events-card-actions button:first-child {
+  margin-right: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */
