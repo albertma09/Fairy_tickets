@@ -1,6 +1,6 @@
 <nav>
     <div class="nav-main">
-        <a href="{{ route('home.index') }}">
+        <a href="{{ route('home.index') }}" class="button">
             <img src="{{ asset('logo/logoFairyTickets_fondoOscuro.png') }}" alt="Logo del sitio web" />
         </a>
         <x-search-component />
@@ -14,15 +14,15 @@
         <a href="#" id="logout-link">
             Cerrar Sesión
         </a>
-    
+
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @endauth
         @else
-            <a href="{{ route('login') }}" class="icon-button"><i class="fa-solid fa-user"></i></a>
+            <a href="{{ route('login') }}" class="button button-icon "><i class="fa-solid fa-user"></i></a>
         @endif
-        <button class="icon-button" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <button class="button  button-icon" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
     </div>
     <x-category-filter-component />
 </nav>

@@ -2,15 +2,18 @@
 // 768px tablet
 // 1024px desktop
 @mixin respond-to($breakpoint) {
-   @media screen and (min-width: $breakpoint) {
-     @content;
-   }
- }
-
- // mixin que define texto o iconos sobre fondo oscuro
-@mixin dark-bg {
-  color: $col-brand;
-  background-color: $col-oscuro;
+    @media screen and (min-width: $breakpoint) {
+        @content;
+    }
 }
- 
- 
+
+// mixin que define texto o iconos oscuros
+@mixin dark-bg {
+    color: $col-brand;
+    background-color: $col-oscuro;
+}
+// mixin que define texto o iconos sobre fondo brand
+@mixin brand-bg {
+    color: $col-oscuro;
+    background-color: $col-brand;
+}
