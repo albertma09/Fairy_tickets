@@ -7,7 +7,7 @@
             <div>{{ $event->price }} €</div>
         </div>
         <div class="events-card-actions">
-            <button class="icon-button-buy">Compra tus entradas</button>
+            <a href="{{ route('events.mostrar', ['id' => $event->id]) }}" class="icon-button-buy">Compra tus entradas</a>
             <button class="icon-button-details">+</button>
         </div>
     </div>

@@ -36,4 +36,11 @@ class EventController extends Controller
         return view('search.index',['events' => $events]);
     }
 
+    public function mostrarEvento($id)
+{
+    $evento = Event::getEventsById($id); // Asumiendo que estás utilizando Eloquent y que tu modelo se llama "Evento"
+    
+    return view('events.mostrar', ['evento' => $evento]);
+}
+
 }
