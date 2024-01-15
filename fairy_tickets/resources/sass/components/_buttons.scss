@@ -1,61 +1,87 @@
-.icon-button {
-   padding: 1rem;
-   margin-left: 0.5rem;
-   background-color: $col-oscuro;
-   color: $col-brand;
-   &-buy{
-      background-color: $col-brand;
-      color: $col-claro;
-      padding: .5rem;
-      border-radius: 4px;
-   }
-   &-details{
-      width: 64px;
-      margin-left: 0.5rem;
-      background-color: $col-oscuro;
-      color: $col-brand;
-      padding: .5rem;
-      border-radius: 4px;
-   }
-
-   &:hover {
-      color: $col-claro;
-      cursor: pointer;
-   }
-
-   i {
-      font-size: 1.5rem;
-   }
-}
-
 .button {
+    font-size: 110%;
+    width: 100%;
+    border-radius: 4px;
+    transition: 0.2s ease;
+    padding: 0.6rem 1rem;
 
-   &-brand {
-      background-color: $col-brand;
-      font-size: 110%;
-      width: 100%;
-      color: $col-claro;
-      height: 40px;
-      border: none;
-      border-radius: 3px;
-      margin-top: 10px;
-      transition: 0.2s ease;
+    i {
+        font-size: 1.5rem;
+    }
 
-      &:hover {
-         cursor: pointer;
-         background-color: transparent;
-         border: 1px solid $col-brand;
-         color:$col-brand;
-      }
-   }
+    &:hover {
+        cursor: pointer;
+    }
+
+    &-brand {
+        @include brand-bg;
+        border: 1px solid $col-brand;
+
+        &:hover {
+            background-color: transparent;
+            color: $col-brand;
+            border: 1px solid $col-brand;
+        }
+    }
+
+    &-dark {
+        @include dark-bg;
+        border: 1px solid $col-oscuro;
+        &:hover {
+            background-color: transparent;
+            color: $col-oscuro;
+            border: 1px solid $col-oscuro;
+        }
+    }
+    &-filter {
+        background-color: $col-brand;
+        color: $col-oscuro;
+        padding: 1rem;
+        &:hover {
+            color: $col-claro;
+            cursor: pointer;
+        }
+    }
+    &-icon {
+        height: 2rem;
+        max-width: 2rem;
+        color: $col-brand;
+        background-color: transparent;
+
+        i {
+            font-size: 1.5rem;
+        }
+
+        &:hover {
+            color: $col-claro;
+        }
+    }
 }
 
-.filter-button{
-   background-color: $col-brand;
-   color: $col-oscuro;
-   padding: 1rem;
-   &:hover{
-      color: $col-claro;
-      cursor: pointer;
-   }
+a.button,
+button.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: fit-content;
+}
+nav .button-icon i {
+    &.fa-bars-staggered {
+        color: $col-claro;
+    }
+
+    &.fa-bars {
+        color: $col-brand;
+    }
+}
+
+nav form .button-icon {
+    @include brand-bg;
+    padding: 0.6rem;
+    height: 2rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    i {
+        font-size: 1.2rem;
+    }
 }

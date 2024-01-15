@@ -77,32 +77,32 @@ const addMenuFunctionalities = () => {
 // Llama a la función al cargar el documento
 document.addEventListener("DOMContentLoaded", addMenuFunctionalities);
 
-
 // Calcula cual es el tamaño al hacer resize:
 // Si es > breakpoint cierra el menú
-const delayedCloseMenuOnResize = debounce(()=>{
-    if(!checkScreenWidth(screenBreakpoint)){
+const delayedCloseMenuOnResize = debounce(() => {
+    if (!checkScreenWidth(screenBreakpoint)) {
         closeMenuOnResize();
     }
 }, 500);
 // Event listener del evento 'resize' de la ventana
 window.addEventListener("resize", delayedCloseMenuOnResize);
 
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     // Obtén el elemento del enlace de cierre de sesión por su ID
-    var logoutLink = document.getElementById('logout-link');
+    const logoutLink = document.getElementById("logout-link");
 
     // Agrega un event listener para el clic en el enlace
-    logoutLink.addEventListener('click', function (event) {
-        // Previene el comportamiento predeterminado del enlace
-        event.preventDefault();
+    if (logoutLink) {
+        logoutLink.addEventListener("click", function (event) {
+            // Previene el comportamiento predeterminado del enlace
+            event.preventDefault();
 
-        // Muestra una alerta de confirmación y, si el usuario acepta, envía el formulario de cierre de sesión
-        var isConfirmed = confirm('¿Estás seguro de cerrar sesión?');
+            // Muestra una alerta de confirmación y, si el usuario acepta, envía el formulario de cierre de sesión
+            let isConfirmed = confirm("¿Estás seguro de cerrar sesión?");
 
-        if (isConfirmed) {
-            document.getElementById('logout-form').submit();
-        }
-    });
+            if (isConfirmed) {
+                document.getElementById("logout-form").submit();
+            }
+        });
+    }
 });

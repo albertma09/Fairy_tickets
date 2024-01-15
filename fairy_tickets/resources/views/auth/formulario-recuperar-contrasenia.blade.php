@@ -14,7 +14,7 @@
         @if (Session::has('message'))
             <p class="msg-correct">{{ Session::get('message') }}</p>
         @endif
-        <button type="submit" class="button-brand">
+        <button type="submit" class="button button-brand">
             Recuperar contraseña
         </button>
 

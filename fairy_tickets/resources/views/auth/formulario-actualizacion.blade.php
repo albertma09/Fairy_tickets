@@ -33,7 +33,7 @@
 
 
 
-        <button type="submit" class="button-brand">
+        <button type="submit" class="button button-brand">
             Cambiar Contraseña
         </button>
 
