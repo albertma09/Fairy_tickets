@@ -28,7 +28,7 @@ class Event extends Model
     {
         $events = DB::table('events')
                     ->join('locations', 'events.location_id','=','locations.id')
-                    ->select('events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
+                    ->select('events.id','events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
                     ->get();
                     
         return $events;
@@ -38,7 +38,7 @@ class Event extends Model
     {
         $events = DB::table('events')
                     ->join('locations', 'events.location_id','=','locations.id')
-                    ->select('events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
+                    ->select('events.id','events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
                     ->where('events.name','like','%' . $item . '%')
                     ->orWhere('locations.name','like','%' . $item . '%')
                     ->orWhere('locations.city','like','%' . $item . '%')
@@ -52,8 +52,19 @@ class Event extends Model
         $events = DB::table('events')
                     ->join('locations', 'events.location_id','=','locations.id')
                     ->join('categories','events.category_id','=','categories.id')
-                    ->select('events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
+                    ->select('events.id','events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
                     ->where('categories.name','like','%' . $item . '%')
+                    ->get();
+                    
+        return $events;
+    }
+
+    public static function getEventsById($item)
+    {
+        $events = DB::table('events')
+                    ->join('locations', 'events.location_id','=','locations.id')
+                    ->select('events.id','events.name','events.description','events.price','events.date','events.hour','locations.name as location','locations.city as city')
+                    ->where('events.id','like', $item)
                     ->get();
                     
         return $events;
