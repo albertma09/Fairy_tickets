@@ -11,19 +11,20 @@
 }
 
 .col-brand {
-  color: #d74748;
-  background-color: #282020;
+  color: #fdf7f7;
+  background-color: #05283d;
 }
 
 .col-dark {
-  color: #282020;
-  background-color: #d74748;
+  color: #40e0d0;
+  background-color: #05283d;
 }
 
 /* Formato inicial de fuente para el sitio web */
 html {
   font-family: "Source Sans 3", sans-serif;
   font-size: 16px;
+  color: #fdf7f7;
 }
 @media screen and (min-width: 768px) {
   html {
@@ -32,9 +33,18 @@ html {
 }
 
 .titulo-brand {
-  color: #d74748;
   font-family: "Fjalla One", sans-serif;
   font-size: 70px;
+}
+
+a,
+.text-link {
+  color: #40e0d0;
+  text-decoration: none;
+}
+a:hover,
+.text-link:hover {
+  color: #fdf7f7;
 }
 
 button {
@@ -83,6 +93,7 @@ button {
 
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
 body {
+  background-color: #10364e;
   height: 100vh;
   display: flex;
   flex-flow: column nowrap;
@@ -94,8 +105,8 @@ main {
 }
 
 nav {
-  color: #d74748;
-  background-color: #282020;
+  color: #fdf7f7;
+  background-color: #05283d;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -172,12 +183,11 @@ nav ul li a {
     padding: 0 1rem;
   }
   nav ul li a:hover {
-    background-color: #fdf7f7;
-    color: #282020;
+    color: #40e0d0;
   }
   nav ul li a.nav-active {
-    background-color: #d74748;
-    color: #282020;
+    color: #40e0d0;
+    border-top: 2px solid #40e0d0;
   }
   nav ul li a.nav-active:hover {
     cursor: default;
@@ -191,7 +201,7 @@ nav ul.opened {
   top: 10vh;
   left: 0;
   width: 100%;
-  background-color: #282020;
+  background-color: #10364e;
   z-index: 1000;
 }
 nav ul.opened li {
@@ -203,13 +213,16 @@ nav ul.opened li a {
   font-size: 18px;
   box-shadow: 0 1px 3px;
 }
+nav ul.opened li a.nav-active {
+  border-left: 10px solid #40e0d0;
+  color: #40e0d0;
+}
 @media screen and (min-width: 768px) {
   nav ul {
     display: flex;
   }
 }
 nav .filter-categories {
-  background-color: #d74748;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -224,11 +237,11 @@ nav .filter-categories {
 
 .oscuro {
   font-family: "Source Sans 3", sans-serif;
-  color: #d74748;
+  color: #fdf7f7;
   font-weight: normal;
   font-size: 100%;
   margin: 0;
-  background-color: #282020;
+  background-color: #05283d;
 }
 .oscuro .container {
   display: flex;
@@ -248,12 +261,13 @@ nav .filter-categories {
 .oscuro .container .center .login {
   width: 100%;
   padding: 50px 30px;
-  border: 3px solid #d74748;
+  border: 3px solid #fdf7f7;
+  border-radius: 4px;
 }
 .oscuro .container .center .login .title {
   font-family: "Fjalla One", sans-serif;
   font-size: 250%;
-  color: #d74748;
+  color: #fdf7f7;
   text-align: center;
   margin-bottom: 2.5rem;
 }
@@ -290,12 +304,7 @@ nav .filter-categories {
 }
 .oscuro .container .center .login .footer a {
   display: block;
-  text-decoration: none;
-  color: #d74748;
   margin-bottom: 3px;
-}
-.oscuro .container .center .login .footer a:hover {
-  color: #fdf7f7;
 }
 .oscuro .container .center .inferior {
   margin-top: 10px;
@@ -304,12 +313,7 @@ nav .filter-categories {
 }
 .oscuro .container .center .inferior a {
   display: block;
-  text-decoration: none;
-  color: #d74748;
   margin-bottom: 3px;
-}
-.oscuro .container .center .inferior a:hover {
-  color: #fdf7f7;
 }
 
 .button {
@@ -327,45 +331,46 @@ nav .filter-categories {
   cursor: pointer;
 }
 .button-brand {
-  color: #282020;
-  background-color: #d74748;
-  border: 1px solid #d74748;
+  color: #40e0d0;
+  background-color: #05283d;
+  background-color: transparent;
+  border: 2px solid #40e0d0;
 }
 .button-brand:hover {
-  background-color: transparent;
-  color: #d74748;
-  border: 1px solid #d74748;
+  border: 2px solid #40e0d0;
+  background-color: #40e0d0;
+  color: #05283d;
 }
 .button-dark {
-  color: #d74748;
-  background-color: #282020;
-  border: 1px solid #282020;
+  color: #fdf7f7;
+  background-color: #05283d;
+  border: 1px solid #05283d;
 }
 .button-dark:hover {
   background-color: transparent;
-  color: #282020;
-  border: 1px solid #282020;
+  color: #05283d;
+  border: 1px solid #05283d;
 }
 .button-filter {
-  background-color: #d74748;
-  color: #282020;
+  background-color: transparent;
+  color: #fdf7f7;
   padding: 1rem;
 }
 .button-filter:hover {
-  color: #fdf7f7;
+  color: #40e0d0;
   cursor: pointer;
 }
 .button-icon {
   height: 2rem;
   max-width: 2rem;
-  color: #d74748;
+  color: #fdf7f7;
   background-color: transparent;
 }
 .button-icon i {
   font-size: 1.5rem;
 }
 .button-icon:hover {
-  color: #fdf7f7;
+  color: #40e0d0;
 }
 
 a.button,
@@ -377,15 +382,15 @@ button.button {
 }
 
 nav .button-icon i.fa-bars-staggered {
-  color: #fdf7f7;
+  color: #40e0d0;
 }
 nav .button-icon i.fa-bars {
-  color: #d74748;
+  color: #fdf7f7;
 }
 
 nav form .button-icon {
-  color: #282020;
-  background-color: #d74748;
+  color: #40e0d0;
+  background-color: #05283d;
   padding: 0.6rem;
   height: 2rem;
   border-top-left-radius: 0;

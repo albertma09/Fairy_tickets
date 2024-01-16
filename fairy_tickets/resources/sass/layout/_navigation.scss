@@ -78,13 +78,12 @@ nav {
                     padding: 0 1rem;
 
                     &:hover {
-                        background-color: $col-claro;
-                        color: $col-oscuro;
+                        color: $col-brand;
                     }
 
                     &.nav-active {
-                        background-color: $col-brand;
-                        color: $col-oscuro;
+                        color: $col-brand;
+                        border-top: 2px solid $col-brand;
 
                         &:hover {
                             cursor: default;
@@ -103,7 +102,7 @@ nav {
             top: 10vh;
             left: 0;
             width: 100%;
-            background-color: $col-oscuro;
+            background-color: $col-oscuro-2;
             z-index: 1000;
 
             li {
@@ -114,6 +113,10 @@ nav {
                     padding: 1.6rem;
                     font-size: 18px;
                     box-shadow: 0 1px 3px;
+                    &.nav-active {
+                        border-left: 10px solid $col-brand;
+                        color: $col-brand;
+                    }
                 }
             }
         }
@@ -122,9 +125,7 @@ nav {
             display: flex;
         }
     }
-
     .filter-categories {
-        background-color: $col-brand;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
