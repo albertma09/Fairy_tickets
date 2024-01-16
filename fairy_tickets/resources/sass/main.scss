@@ -1,34 +1,19 @@
 @charset "UTF-8";
 
 // 1. Variables
-@import
-  'abstracts/variables',
-  'abstracts/mixins';
-
+@import "abstracts/variables", "abstracts/mixins";
 
 // 2. Vendors
 
 // 3. Base stuff
-@import
-  'base/base',
-  'base/fonts',
-  'base/typography';
+@import "base/base", "base/fonts", "base/typography";
 
 // 4. Layout-related sections
-@import
-  'layout/eventos',
-  'layout/layout',
-  'layout/navigation',
-  'layout/login';
-
+@import "layout/eventos", "layout/layout", "layout/navigation";
 
 // 5. Components
-@import
-   'components/buttons',
-   'components/events',
-   'components/categories';
-
+@import "components/buttons", "components/events", "components/forms";
 
 // 6. Page-specific styles
-
+@import "pages/login";
 // 7. Themes

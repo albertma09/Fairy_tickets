@@ -17,3 +17,12 @@
     color: $col-brand;
     background-color: $col-oscuro;
 }
+
+// mixin que define el tamaño de los botones con iconos
+@mixin icon-button-size {
+    height: 2rem;
+    max-width: 2rem;
+    i {
+        font-size: 1.5rem;
+    }
+}

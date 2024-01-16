@@ -44,17 +44,26 @@
         }
     }
     &-icon {
-        height: 2rem;
-        max-width: 2rem;
+        @include icon-button-size;
         color: $col-claro;
         background-color: transparent;
-
-        i {
-            font-size: 1.5rem;
-        }
-
         &:hover {
             color: $col-brand;
+        }
+    }
+    &-search {
+        @include brand-bg;
+        @include icon-button-size;
+        padding: 0.6rem;
+        border: 2px solid $col-brand;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        &:hover {
+            color: $col-oscuro;
+            background-color: $col-brand;
+        }
+        i {
+            font-size: 1.2rem;
         }
     }
 }
@@ -77,12 +86,6 @@ nav .button-icon i {
 }
 
 nav form .button-icon {
-    @include brand-bg;
-    padding: 0.6rem;
-    height: 2rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
     i {
-        font-size: 1.2rem;
     }
 }
