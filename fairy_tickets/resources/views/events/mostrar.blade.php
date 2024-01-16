@@ -31,9 +31,7 @@
     </div>
 
     <div class="container">
-      <h1 class="titulo-brand">
-            mapa
-        </h1>
+      <x-maps-leaflet :centerPoint="['lat' => 52.16, 'long' => 5]" :zoomLevel="6"></x-maps-leaflet> 
     </div>
     {{-- @dd($evento) --}}
 
