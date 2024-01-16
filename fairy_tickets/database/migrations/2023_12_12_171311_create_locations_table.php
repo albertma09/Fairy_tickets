@@ -15,12 +15,15 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id();
-            
+
             //atributos iniciales BD
             $table->string('name');
-            $table->string('address');
-            $table->string('capacity');
+            $table->integer('capacity');
+            $table->string('province');
             $table->string('city');
+            $table->string('street');
+            $table->string('number');
+            $table->string('cp');
 
             $table->timestamps();
         });
