@@ -291,6 +291,26 @@ nav .filter-categories {
 .button-icon:hover {
   color: #40e0d0;
 }
+.button-search {
+  color: #40e0d0;
+  background-color: #05283d;
+  height: 2rem;
+  max-width: 2rem;
+  padding: 0.6rem;
+  border: 2px solid #40e0d0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.button-search i {
+  font-size: 1.5rem;
+}
+.button-search:hover {
+  color: #05283d;
+  background-color: #40e0d0;
+}
+.button-search i {
+  font-size: 1.2rem;
+}
 
 a.button,
 button.button {
@@ -305,18 +325,6 @@ nav .button-icon i.fa-bars-staggered {
 }
 nav .button-icon i.fa-bars {
   color: #fdf7f7;
-}
-
-nav form .button-icon {
-  color: #40e0d0;
-  background-color: #05283d;
-  padding: 0.6rem;
-  height: 2rem;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-nav form .button-icon i {
-  font-size: 1.2rem;
 }
 
 .events-card {
@@ -346,6 +354,23 @@ nav form .button-icon i {
 }
 .events-card-actions button:first-child {
   margin-right: 1rem;
+}
+
+.default-form {
+  display: flex;
+  padding: 4rem;
+  flex-flow: row wrap;
+}
+.default-form div {
+  width: 25%;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+.default-form input,
+.default-form select {
+  padding: 0.6rem;
+  border-radius: 4px;
 }
 
 .oscuro {

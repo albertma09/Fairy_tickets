@@ -2,5 +2,5 @@
     @csrf
     {{-- <label for="search-input" class="button-filter"><i class="fa-solid fa-magnifying-glass"></i></label> --}}
     <input type="text" id="search-input" name="search-input" />
-    <button type="submit" class="button button-brand button-icon"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button type="submit" class="button button-search"><i class="fa-solid fa-magnifying-glass"></i></button>
 </form>
