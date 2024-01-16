@@ -17,13 +17,13 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id'=>fake()->numberBetween(1,10),
-            'location_id'=>fake()->numberBetween(1,3),
-            'name'=>fake()->catchPhrase(),
-            'description'=>fake()->paragraph,
-            'price'=>fake()->randomFloat(2,1,1000),
-            'date'=>fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
-            'hour'=>fake()->time($format = 'H:i:s', $min = 'now'),
+            'category_id' => fake()->numberBetween(1, 10),
+            'location_id' => fake()->numberBetween(1, 3),
+            'name' => fake()->catchPhrase(),
+            'description' => fake()->paragraph,
+            'price' => fake()->randomFloat(2, 1, 1000),
+            'date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
+            'hour' => fake()->time($format = 'H:i:s', $min = 'now'),
         ];
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             //definicion de constraint BD
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('location_id');
-    
+
             //atributos iniciales BD
             $table->string('name');
             $table->text('description');
