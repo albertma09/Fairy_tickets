@@ -135,6 +135,7 @@ Guarda los cambios y reinicia Apache:
 ----
 sudo service apache2 restart
 ----    
+
 == Sprints
 === Sprint 1
 ==== Trabajo realizado
@@ -245,7 +246,143 @@ Valoración de la semana individual
 ===== *Aitor:* 
 
 
-===== *Albert:* 
+===== *Albert: Este sprint he estado sobretodo con la configuración de la maquina isard, además de esto junto con mis compañeros estuvimos decidiendo los estilos de la pagina y con esto creamos la guia de estilos* 
+
+=== Sprint 2
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 7 nuevas tareas del desarrollo de la aplicación:
+
+
+===== R06: Página Resultados de búsqueda
+
+Como usuario no registrado:
+- Navegar por la página.
+- Mostrar resultados aplicando un filtro por categoría.
+- Mostrar resultados de una búsqueda.
+
+===== R07: Refactor Página Home
+
+Como usuario no registrado:
+- Navegar por la página.
+- Mostrar un único buscador compartido con la página de resultados.
+- Mostrar para cada categoría el título, un número determinado de eventos y el total desde la configuración de la aplicación.
+- Acceder a la página de resultados de búsqueda por categoría.
+
+===== R08: Página Home para Promotores
+
+Para Promotores:
+- Acceder a una área independiente con un enlace en la página principal y en el footer.
+- El enlace dirige a la página de login si no están autenticados, o a la página Home Promotor si lo están.
+
+===== R09: Página Login
+
+Para Promotores y Administradores:
+- Acceder al sistema mediante esta página.
+- Mostrar la página Home Promotor después del login.
+- Mostrar siempre el usuario logado.
+- Acceder a la página de perfil de usuario (en futuros sprints).
+- Habilitar la opción de cerrar sesión (Sign out).
+
+===== R10: Cerrar Sesión
+
+Para Promotores y Administradores:
+- Eliminar variables de sesión.
+- Considerar limpieza de cookies, local storage, etc.
+- Redireccionar a la página Home de promotores.
+
+===== R11: Olvidé la Contraseña
+
+- Acceder desde la página de login.
+- Enviar un email con un enlace único y caducidad de 1 hora.
+- Redirigir a una página para cambiar la contraseña.
+- Mostrar requisitos y dar retroalimentación.
+- Configurar el tiempo de caducidad desde el archivo de configuración.
+
+===== R12: Página Crear Esdeveniment
+
+Para Promotores:
+- Crear eventos con título, categoría, dirección, imagen principal, descripción, fecha y hora, aforo máximo, entradas y más.
+- Permitir seleccionar o añadir nuevas direcciones.
+- Mostrar enlace "ver mapa" después de publicar el evento.
+- Configurar cierre de venta online.
+- Opción para ocultar el evento.
+- Opción para entradas nominales.
+
+.Tareas Realizadas
+[options="header"]
+|====================
+| Tarea 3+^| Descripción
+
+| R06: Página Resultados de búsqueda 3+| ""
+
+| R07: Refactor Página Home 3+| ""
+
+| R08: Página Home para Promotores 3+| ""
+
+| R09: Página Login 3+| "
+Implementación del Login en Laravel:
+Configuración del Modelo y Migración:
+
+Asegúrate de tener el modelo User y su migración.
+Rutas de Autenticación:
+
+Utiliza Auth::routes(); para habilitar las rutas predefinidas de autenticación.
+Protección de Rutas:
+
+Emplea el middleware auth en los controladores para proteger las rutas que requieren autenticación.
+Personalización de Vistas:
+
+Adapta las vistas en resources/views/auth según tus necesidades específicas."
+
+| R10: Cerrar Sesión 3+| "Implementación del Logout en Laravel:
+Ruta para el Logout:
+
+Crea una ruta que apunte al método logout en el controlador LoginController.
+Enlace de Logout:
+
+Agrega un enlace en la vista que dirija a la ruta de logout."
+
+| R11: Olvidé la Contraseña 3+| "Implementación de la Recuperación de Contraseña con Mailtrap en Laravel:
+Configuración del Servicio de Correo:
+
+Configura .env con las credenciales de Mailtrap.
+Personalización de Configuración de Correo:
+
+Ajusta config/mail.php para utilizar la configuración de Mailtrap.
+Generación del Controlador para Reset de Contraseña:
+
+Ejecuta php artisan make:controller ForgotPasswordController.
+Añadir Rutas Necesarias:
+
+En routes/web.php, agrega rutas para reset de contraseña.
+Creación de Vistas:
+
+Personaliza las vistas en resources/views/auth/passwords según tus necesidades.
+Personalización del Correo de Reset de Contraseña:
+
+Edita resources/views/auth/passwords/email.blade.php para personalizar el correo de reset.
+Configuración de Notificación de Reset de Contraseña:
+
+Asegúrate de que el modelo User utilice el trait Notifiable para recibir notificaciones." 
+
+| R12: Página Crear Esdeveniment | ""
+
+|====================
+
+==== Valoración individual
+Valoración de la semana individual
+
+===== *Diego:*
+
+
+===== *Aitor:* 
+
+
+===== *Albert: Este sprint he estado con el desarrollo tanto visual como funcional de todo el sistema de autenticación de usuario* 
+
+=== Sprint 3
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 4 nuevas tareas del desarrollo de la aplicación:
 
 == Lineas futuras.
 == Conclusiones
