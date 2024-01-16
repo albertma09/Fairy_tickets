@@ -8,7 +8,7 @@
         </div>
         <div class="events-card-actions">
             <button class="button button-brand button-buy">Compra tus entradas</button>
-            <button class="button button-dark button-details">+</button>
+            <button class="button button-brand button-details">+</button>
         </div>
     </div>
     <div class="events-card-data-img">imagen</div>

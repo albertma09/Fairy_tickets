@@ -9,11 +9,11 @@
 
 // mixin que define texto o iconos oscuros
 @mixin dark-bg {
-    color: $col-brand;
+    color: $col-claro;
     background-color: $col-oscuro;
 }
 // mixin que define texto o iconos sobre fondo brand
 @mixin brand-bg {
-    color: $col-oscuro;
-    background-color: $col-brand;
+    color: $col-brand;
+    background-color: $col-oscuro;
 }

@@ -15,12 +15,13 @@
 
     &-brand {
         @include brand-bg;
-        border: 1px solid $col-brand;
+        background-color: transparent;
+        border: 2px solid $col-brand;
 
         &:hover {
-            background-color: transparent;
-            color: $col-brand;
-            border: 1px solid $col-brand;
+            border: 2px solid $col-brand;
+            background-color: $col-brand;
+            color: $col-oscuro;
         }
     }
 
@@ -34,18 +35,18 @@
         }
     }
     &-filter {
-        background-color: $col-brand;
-        color: $col-oscuro;
+        background-color: transparent;
+        color: $col-claro;
         padding: 1rem;
         &:hover {
-            color: $col-claro;
+            color: $col-brand;
             cursor: pointer;
         }
     }
     &-icon {
         height: 2rem;
         max-width: 2rem;
-        color: $col-brand;
+        color: $col-claro;
         background-color: transparent;
 
         i {
@@ -53,7 +54,7 @@
         }
 
         &:hover {
-            color: $col-claro;
+            color: $col-brand;
         }
     }
 }
@@ -67,11 +68,11 @@ button.button {
 }
 nav .button-icon i {
     &.fa-bars-staggered {
-        color: $col-claro;
+        color: $col-brand;
     }
 
     &.fa-bars {
-        color: $col-brand;
+        color: $col-claro;
     }
 }
 
