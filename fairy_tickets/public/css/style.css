@@ -77,8 +77,8 @@ button {
   scroll-snap-align: center;
 }
 .centrado .container {
-  background-color: red;
-  color: white;
+  background-color: #05283d;
+  color: #fdf7f7;
   padding: 15px;
   margin: 2.5vh;
   width: 100%;
