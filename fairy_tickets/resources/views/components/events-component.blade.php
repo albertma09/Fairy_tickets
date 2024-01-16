@@ -7,8 +7,8 @@
             <div>{{ $event->price }} €</div>
         </div>
         <div class="events-card-actions">
-            <button class="button button-brand button-buy">Compra tus entradas</button>
-            <button class="button button-brand button-details">+</button>
+            <a href="{{ route('events.mostrar', ['id' => $event->id]) }}" class="button button-brand button-buy">Compra tus entradas</a>
+            <button class="button button-dark button-details">+</button>
         </div>
     </div>
     <div class="events-card-data-img">imagen</div>

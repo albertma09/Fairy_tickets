@@ -12,10 +12,10 @@
 
 <body>
     <x-navigation-component />
-    <main>
-        <div>
+    <main class="centrado">
+        
             @yield('content')
-        </div>
+       
     </main>
     <footer></footer>
     <script src="js/main.js"></script>

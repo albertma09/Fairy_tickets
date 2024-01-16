@@ -56,6 +56,41 @@ button {
   }
 }
 
+.centrado {
+  margin-top: 12.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.centrado .slider-container {
+  display: flex;
+  width: 100%;
+  height: 40vh;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+.centrado .slider-container img {
+  flex: 0 0 100%;
+  width: 100%;
+  object-fit: cover;
+  scroll-snap-align: center;
+}
+.centrado .container {
+  background-color: red;
+  color: white;
+  padding: 15px;
+  margin: 2.5vh;
+  width: 100%;
+}
+@media (min-width: 769px) {
+  .centrado .container {
+    /* En pantallas de ordenador, ocupa el 80% del ancho */
+    width: 80%;
+    border-radius: 10px;
+  }
+}
+
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
 body {
   background-color: #10364e;
@@ -287,6 +322,7 @@ nav .filter-categories {
   border-radius: 4px;
   transition: 0.2s ease;
   padding: 0.6rem 1rem;
+  text-decoration: none;
 }
 .button i {
   font-size: 1.5rem;
