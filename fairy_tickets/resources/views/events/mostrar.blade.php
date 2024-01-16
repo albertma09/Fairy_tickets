@@ -26,7 +26,7 @@
 
     <div class="container">
       <h1 class="titulo-brand">
-            
+            sesiones
         </h1>
     </div>
 
