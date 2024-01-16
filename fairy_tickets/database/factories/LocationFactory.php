@@ -19,7 +19,7 @@ class LocationFactory extends Factory
         return [
             'name' => fake()->company(),
             'capacity' => fake()->numberBetween(100, 5540),
-            'province' => fake()->address(),
+            'province' => fake()->city('es_CO'),
             'city' => fake()->city('es_CO'),
             'street' => fake()->streetName('es_CO'),
             'number' => fake()->buildingNumber(),

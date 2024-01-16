@@ -7,8 +7,11 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Location;
+use App\Models\Session;
+use App\Models\TicketType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -32,7 +35,7 @@ class DatabaseSeeder extends Seeder
 
         Category::factory(10)->create();
         Location::factory(5)->create();
-        
+
         User::create([
             'name' => 'promotor1',
             'email' => 'promotor1@test.com',
@@ -56,6 +59,8 @@ class DatabaseSeeder extends Seeder
             Category::find(random_int(1, 5))->for($event)->create();
             Location::find(random_int(1, 3))->for($event)->create();
         });*/
+        Session::factory($eventNum * 2)->create();
+        TicketType::factory($eventNum * 4)->create();
         $this->command->info("Se han creado $eventNum eventos");
     }
 }
