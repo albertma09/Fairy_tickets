@@ -6,6 +6,7 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
         <input type="email" name="email" placeholder="Correo" required />
+        <input type="password" name="password" placeholder="Contraseña" required>
         <button class="button button-brand" type="submit">Iniciar Sesión</button>
         @if (session('error'))
             <p class="msg-error">{{ session('error') }}</p>
