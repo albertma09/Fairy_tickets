@@ -10,6 +10,10 @@
   box-sizing: border-box;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .col-brand {
   color: #fdf7f7;
   background-color: #05283d;
@@ -358,14 +362,31 @@ nav .button-icon i.fa-bars {
 
 .default-form {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 4rem;
-  flex-flow: row wrap;
 }
 .default-form div {
-  width: 25%;
   padding: 1.2rem;
+}
+.default-form div.input-unit {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
+}
+.default-form div.row-unit {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.default-form div.container-quarter {
+  width: 25%;
+}
+.default-form div.container-half {
+  width: 50%;
+}
+.default-form div.container-full {
+  width: 100%;
 }
 .default-form input,
 .default-form select {
