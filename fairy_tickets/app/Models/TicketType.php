@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class TicketType extends Model
 {
     use HasFactory;
-    protected $fillable = ['description', 'price'];
+    protected $fillable = ['description', 'price', 'ticket_amount'];
 
     public function session(): BelongsTo
     {

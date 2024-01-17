@@ -20,7 +20,8 @@ class SessionFactory extends Factory
     {
         return [
             'date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
-            'hour' => fake()->time($format = 'H:i:s', $min = 'now')
+            'hour' => fake()->time($format = 'H:i:s', $min = 'now'),
+            'session_capacity' => fake()->numberBetween(1, 5540),
         ];
     }
 
