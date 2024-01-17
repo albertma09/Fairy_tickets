@@ -17,7 +17,7 @@ class SessionFactory extends Factory
     public function definition(): array
     {
         return [
-            'event_id' => fake()->numberBetween(1, 60),
+            'event_id' => fake()->numberBetween(1, 10),
             'date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
             'hour' => fake()->time($format = 'H:i:s', $min = 'now')
         ];

@@ -38,4 +38,29 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     *  Creamos dos usuarios por defecto
+     *
+     *
+     */
+    public function seededUsers(): array
+    {
+        return [
+            [
+                'name' => 'promotor1',
+                'email' => 'promotor1@test.com',
+                'email_verified_at' => now(),
+                'password' => static::$password ??= Hash::make('p12345678'),
+                'remember_token' => Str::random(10),
+            ],
+            [
+                'name' => 'promotor2',
+                'email' => 'promotor2@test.com',
+                'email_verified_at' => now(),
+                'password' => static::$password ??= Hash::make('p2345678'),
+                'remember_token' => Str::random(10),
+            ],
+        ];
+    }
 }

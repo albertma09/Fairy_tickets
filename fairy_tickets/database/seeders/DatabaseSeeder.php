@@ -31,34 +31,19 @@ class DatabaseSeeder extends Seeder
             $this->command->info("Se ha reconstruido la base de datos");
         }
 
-        $eventNum = max((int) $this->command->ask('Introduce el número de Eventos a crear', 60), 1);
+        $eventNum = max((int) $this->command->ask('Introduce el número de Eventos a crear', 10), 1);
 
         Category::factory(10)->create();
         Location::factory(5)->create();
 
-        User::create([
-            'name' => 'promotor1',
-            'email' => 'promotor1@test.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('p12345678'),
-            'remember_token' => Str::random(10),
-            // Otros campos si es necesario
-        ]);
-
-        User::create([
-            'name' => 'promotor2',
-            'email' => 'promotor2@test.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('p2345678'),
-            'remember_token' => Str::random(10),
-            // Otros campos si es necesario
-        ]);
+        // Creación de los dos usuarios por defecto
+        $seededUsers = User::factory()->seededUsers();
+        foreach ($seededUsers as  $userData) {
+            User::create($userData);
+        }
 
         Event::factory($eventNum)->create();
-        /*Event::factory($eventNum)->create()->each(function($event){
-            Category::find(random_int(1, 5))->for($event)->create();
-            Location::find(random_int(1, 3))->for($event)->create();
-        });*/
+
         Session::factory($eventNum * 2)->create();
         TicketType::factory($eventNum * 4)->create();
         $this->command->info("Se han creado $eventNum eventos");

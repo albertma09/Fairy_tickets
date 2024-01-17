@@ -19,6 +19,7 @@ return new class extends Migration
             //definicion de constraint BD
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('location_id');
+            $table->unsignedBigInteger('user_id');
 
             //atributos iniciales BD
             $table->string('name');
@@ -33,6 +34,7 @@ return new class extends Migration
             //definicion de foreign key
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

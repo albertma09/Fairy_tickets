@@ -17,7 +17,7 @@ class TicketTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'session_id' => fake()->numberBetween(1, 120),
+            'session_id' => fake()->numberBetween(1, 20),
             'description' => fake()->catchPhrase(),
             'price' => fake()->randomFloat(2, 0, 900)
         ];

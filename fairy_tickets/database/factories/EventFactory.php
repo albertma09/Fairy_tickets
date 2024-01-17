@@ -19,6 +19,7 @@ class EventFactory extends Factory
         return [
             'category_id' => fake()->numberBetween(1, 10),
             'location_id' => fake()->numberBetween(1, 3),
+            'user_id' => fake()->numberBetween(1, 2),
             'name' => fake()->catchPhrase(),
             'description' => fake()->paragraph,
             'price' => fake()->randomFloat(2, 1, 1000),

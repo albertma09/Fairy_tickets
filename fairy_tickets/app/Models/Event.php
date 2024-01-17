@@ -24,6 +24,11 @@ class Event extends Model
         return $this->belongsTo(Location::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function sessions(): HasMany
     {
         return $this->hasMany(Session::class);
