@@ -41,25 +41,28 @@
                 <legend>Cierre de la venta online
                 </legend>
                 <div class="input-unit">
-                    <label for="onlineSaleClosure"></label>
                     <div class="row-unit">
-                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="existing" checked>
+                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="same"
+                            class="onlinesale-closure-radio" checked>
                         <label for="withEvent">Hora de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="existing">
+                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="onehour"
+                            class="onlinesale-closure-radio">
                         <label for="oneHBefore">Una hora antes de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="existing">
+                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="twohours"
+                            class="onlinesale-closure-radio">
                         <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="custom" name="onlineSaleClosure" value="existing">
-                        <label for="custom">Personalizar fecha y hora de cierre de la venta online</label>
+                        <input type="radio" id="customDatetime" name="onlineSaleClosure" value="cusrom"
+                            class="onlinesale-closure-radio">
+                        <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
                     </div>
                 </div>
-                <div class="input-unit hidden">
+                <div class="input-unit" id="customClosureDatetimeContainer">
                     <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de la
                         venta online</label>
                     <input type="datetime-local" id="onlineClosureDatetime" name="onlineClosureDatetime">
