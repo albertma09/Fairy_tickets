@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,11 +12,13 @@ class Session extends Model
     use HasFactory;
 
     protected $fillable = ['date', 'hour'];
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }
-    public function ticket_types(): HasMany
+
+    public function ticketTypes(): HasMany
     {
         return $this->hasMany(TicketType::class);
     }

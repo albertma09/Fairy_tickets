@@ -44,8 +44,6 @@ class DatabaseSeeder extends Seeder
 
         Event::factory($eventNum)->create();
 
-        Session::factory($eventNum * 2)->create();
-        TicketType::factory($eventNum * 4)->create();
         $this->command->info("Se han creado $eventNum eventos");
     }
 }

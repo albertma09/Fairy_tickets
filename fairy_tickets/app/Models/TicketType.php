@@ -10,6 +10,7 @@ class TicketType extends Model
 {
     use HasFactory;
     protected $fillable = ['description', 'price'];
+
     public function session(): BelongsTo
     {
         return $this->belongsTo(Session::class);
