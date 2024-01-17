@@ -82,6 +82,9 @@ button {
   padding: 15px;
   margin: 2.5vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 @media (min-width: 769px) {
   .centrado .container {
@@ -89,6 +92,28 @@ button {
     width: 80%;
     border-radius: 10px;
   }
+}
+.centrado .container .sesiones-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  flex-direction: column;
+  align-content: center;
+}
+.centrado .container .sesiones-container .sesion-card {
+  border: 1px solid #fdf7f7;
+  padding: 10px;
+  border-radius: 8px;
+  width: 50%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.centrado .container .sesiones-container .sesion-card .sesion-info {
+  margin: 0;
+  padding: 5px;
 }
 
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
