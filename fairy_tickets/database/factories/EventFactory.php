@@ -29,18 +29,4 @@ class EventFactory extends Factory
             'hour' => fake()->time($format = 'H:i:s', $min = 'now'),
         ];
     }
-    /**
-     * Función que crea de 1 a 4 sesiones relacionadas con un evento cuando este se acaba de crear por factory
-     *
-     * @return void
-     */
-    public function configure()
-    {
-        return $this->afterCreating(function (Event $event) {
-            $sessions = Session::factory()->count(rand(1, 4))->make()->toArray();
-            foreach ($sessions as $session) {
-                $event->sessions()->create($session);
-            }
-        });
-    }
 }

@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             User::create($userData);
         }
 
-        Event::factory($eventNum)->create();
+        Event::factory($eventNum)->hasSessions(rand(1, 4))->create();
 
         $this->command->info("Se han creado $eventNum eventos");
     }
