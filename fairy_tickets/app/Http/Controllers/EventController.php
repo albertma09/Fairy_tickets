@@ -3,37 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
-    public function index(): View
-    {
-        return view('home.index', ['events' => Event::getAllEvents()]);
-    }
-
     // public function index(): View
     // {
-    //     return view('home.index', ['events' => Event::all()]);
+    //     $events=Event::getAllEvents();
+    //     return view('home.index', ['events'=>$events]);
     // }
 
     public function searchBySearchingItem(Request $request): View
     {
-        $item = $request->input('search-input');
-        //dd($item);  
-        $events = Event::getEventsBySearching($item);
-        //dd($events);      
-        return view('search.index',['events' => $events]);
+        try {
+            $item = $request->input('search-input');
+            //dd($item);  
+            $events = Event::getEventsBySearching($item);
+            //dd($events);      
+            return view('search.index', ['events' => $events]);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
 
-    public function searchByCategoryItem(Request $request):View
-    {   //dd($request);
-        $item = $request->input('category-item');
-        //dd($item);
-        $events = Event::getEventsByCategory($item);
-        //dd($events);
-        return view('search.index',['events' => $events]);
+    public function searchByCategoryItem(Request $request): View
+    {
+        try {
+            //dd($request);
+            $item = $request->input('category-item');
+            //dd($item);
+            $events = Event::getEventsByCategory($item);
+            //dd($events);
+            return view('search.index', ['events' => $events]);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
 
     public function mostrarEvento($id)
