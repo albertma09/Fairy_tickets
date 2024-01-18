@@ -27,6 +27,8 @@ return new class extends Migration
             $table->float('price');
             $table->date('date');
             $table->time('hour');
+            $table->boolean('hidden');
+            $table->boolean('nominal_tickets');
 
 
             $table->timestamps();

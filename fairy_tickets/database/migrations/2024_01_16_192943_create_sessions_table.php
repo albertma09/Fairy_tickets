@@ -25,6 +25,7 @@ return new class extends Migration
             //atributos iniciales BD
             $table->date('date');
             $table->time('hour');
+            $table->integer('session_capacity');
 
             // Timestamps
             $table->timestamps();

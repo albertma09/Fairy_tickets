@@ -26,3 +26,12 @@
         font-size: 1.5rem;
     }
 }
+
+// mixin que define contenedores flex, recibe por parámetro la disposición y si hace wrap o no
+// dónde disposition es row o column
+// dónde behaviour es wrap o no wrap
+@mixin flex-container($disposition: row, $behaviour: nowrap) {
+    display: flex;
+    flex-direction: $disposition;
+    flex-wrap: $behaviour;
+}

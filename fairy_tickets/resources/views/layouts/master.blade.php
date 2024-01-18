@@ -19,7 +19,7 @@
         </div>
     </main>
     <footer></footer>
-    <script src="js/main.js"></script>
+    <script type="module" src="{{ asset('js/main.js') }}"></script>
 </body>
 
 </html>

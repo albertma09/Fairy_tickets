@@ -32,10 +32,16 @@ Route::middleware(['auth.redirect'])->group(function () {
         return view('home.promotor');
     });
 
-    // Creación de nuevos eventos
-    Route::get('/promotor/new-event', function () {
-        return view('events.create');
-    })->name('events.create');
+    // Creación de nuevos eventos, vista y llamada a la función que gestiona la subida de datos
+    Route::get(
+        '/promotor/new-event',
+        [EventController::class, 'showCreateForm']
+    )->name('events.create');
+
+    Route::post(
+        '/promotor/new-event',
+        [EventController::class, 'store']
+    )->name('events.store');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña
@@ -50,7 +56,7 @@ Route::get('/reiniciar-contrasenia/{token}/{email}', [AuthController::class, 'fo
 // Función que actualiza la contraseña del usuario
 Route::post('/actualizar-contrasenia', [AuthController::class, 'actualizarContrasenia'])->name('actualizar-contrasenia');
 
-
+// Rutas relacionadas con los eventos
 Route::get('/home', [CategoryController::class, 'index'])->name('home.index');
 
 Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
@@ -58,7 +64,6 @@ Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name(
 Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->name('events.mostrar');
-
 Route::fallback(function () {
     return ('Opps!!');
 });

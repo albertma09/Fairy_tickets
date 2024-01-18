@@ -18,7 +18,8 @@ class TicketTypeFactory extends Factory
     {
         return [
             'description' => fake()->catchPhrase(),
-            'price' => fake()->randomFloat(2, 0, 900)
+            'price' => fake()->randomFloat(2, 0, 900),
+            'ticket_amount' => fake()->numberBetween(0, 900),
         ];
     }
 }

@@ -11,7 +11,7 @@ class Session extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'hour'];
+    protected $fillable = ['date', 'hour', 'session_capacity'];
 
     public function event(): BelongsTo
     {
