@@ -356,6 +356,17 @@ nav .filter-categories {
   background-color: #40e0d0;
   color: #05283d;
 }
+.button-danger {
+  color: #ff6f61;
+  background-color: transparent;
+  border: 2px solid #ff6f61;
+  font-weight: bold;
+}
+.button-danger:hover {
+  color: #fdf7f7;
+  background-color: #ff6f61;
+  font-weight: bolder;
+}
 .button-dark {
   color: #fdf7f7;
   background-color: #05283d;
@@ -540,6 +551,23 @@ nav .button-icon i.fa-bars {
 .category-card-more {
   display: flex;
   justify-content: center;
+}
+
+dialog {
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1.4rem;
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.6);
+  color: #fdf7f7;
+  background-color: #05283d;
+  position: relative;
+}
+dialog.close-dialog-button {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .oscuro {

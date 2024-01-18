@@ -8,76 +8,78 @@ const isCustomDateRadioChecked = (radioGroup) => {
 };
 
 // Función que realiza el cambio de visibilidad del input personalizar datetime de cierre de venta online si se selecciona
-export const setupCustomiseOnlineClosureToggle = (
-    radioGroup,
-    customContainer
-) => {
-    // Estado inicial
-    customContainer.classList.toggle(
-        "hidden",
-        !isCustomDateRadioChecked(radioGroup)
+export const setupCustomiseOnlineClosureToggle = () => {
+    const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
+    const customContainer = document.getElementById(
+        "customClosureDatetimeContainer"
     );
-
-    // Listeners para cambiar el estado cuando haya un cambio
-    radioGroup.forEach((radio) => {
-        radio.addEventListener("change", () => {
-            customContainer.classList.toggle(
-                "hidden",
-                !isCustomDateRadioChecked(radioGroup)
-            );
+    // Si existen, lanza las funcionalidades
+    if (radioGroup && customContainer) {
+        // Estado inicial
+        customContainer.classList.toggle(
+            "hidden",
+            !isCustomDateRadioChecked(radioGroup)
+        );
+    
+        // Listeners para cambiar el estado cuando haya un cambio
+        radioGroup.forEach((radio) => {
+            radio.addEventListener("change", () => {
+                customContainer.classList.toggle(
+                    "hidden",
+                    !isCustomDateRadioChecked(radioGroup)
+                );
+            });
         });
-    });
+        
+    }
 };
 
 // Función que realiza el cambio de visibilidad según el radio seleccionado
 export const handleAddressTypeChange = (
     existingAddressRadio,
     newAddressRadio,
-    existingAddressContainer,
-    newAddressContainer
+    newAddressDialog
 ) => {
     // Comprueba qué botón radio está seleccionado y cambia la visibilidad con la clase hidden
     if (existingAddressRadio.checked) {
-        existingAddressContainer.classList.remove("hidden");
-        newAddressContainer.classList.add("hidden");
+        newAddressDialog.close();
     } else if (newAddressRadio.checked) {
-        existingAddressContainer.classList.add("hidden");
-        newAddressContainer.classList.remove("hidden");
+        newAddressDialog.showModal();
     }
 };
 
 // Función inicial que establece los listeners
-export const setupAddressFormToggle = (
-    existingAddressRadio,
-    newAddressRadio,
-    existingAddressContainer,
-    newAddressContainer
-) => {
-    // Listeners para los radios
-    if (existingAddressRadio && newAddressRadio) {
-        existingAddressRadio.addEventListener("change", () => {
-            handleAddressTypeChange(
-                existingAddressRadio,
-                newAddressRadio,
-                existingAddressContainer,
-                newAddressContainer
-            );
-        });
-        newAddressRadio.addEventListener("change", () => {
-            handleAddressTypeChange(
-                existingAddressRadio,
-                newAddressRadio,
-                existingAddressContainer,
-                newAddressContainer
-            );
-        });
-    }
+export const setupAddressFormToggle = () => {
+    // Getters de los botones y los containers
+    const existingAddressRadio = document.getElementById("existingAddress");
+    const newAddressRadio = document.getElementById("newAddress");
+    const newAddressDialog = document.getElementById("newLocationDialog");
 
-    // Lanza el estado inicial según se cargue la página
-    handleAddressTypeChange(
-        existingAddressRadio,
-        newAddressRadio,
-        existingAddressContainer,
-        newAddressContainer
-    );
+    // Si existen lanza las funcionalidades, por si no estamos en esa página
+    if (existingAddressRadio && newAddressRadio && newAddressDialog) {
+        // Listeners para los radios
+        if (existingAddressRadio && newAddressRadio) {
+            existingAddressRadio.addEventListener("change", () => {
+                handleAddressTypeChange(
+                    existingAddressRadio,
+                    newAddressRadio,
+                    newAddressDialog
+                );
+            });
+            newAddressRadio.addEventListener("change", () => {
+                handleAddressTypeChange(
+                    existingAddressRadio,
+                    newAddressRadio,
+                    newAddressDialog
+                );
+            });
+        }
+
+        // Lanza el estado inicial según se cargue la página
+        handleAddressTypeChange(
+            existingAddressRadio,
+            newAddressRadio,
+            newAddressDialog
+        );
+    }
 };

@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -42,6 +43,10 @@ Route::middleware(['auth.redirect'])->group(function () {
         '/promotor/new-event',
         [EventController::class, 'store']
     )->name('events.store');
+    Route::post(
+        '/promotor/new-location',
+        [LocationController::class, 'store']
+    )->name('location.store');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña
