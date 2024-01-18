@@ -25,16 +25,36 @@
                 </select>
             </div>
 
+            <div class="container-full">
+                <p>Primero elige si quieres seleccionar una de las ubicaciones usadas con anterioridad o añadir una
+                    nueva:
+                </p>
+                <div class="row-unit">
+                    <input type="radio" id="existingAddress" name="addressType" value="existing" checked>
+                    <label for="existingAddress">Ubicación ya existente</label>
+                </div>
+                <div class="row-unit">
+                    <input type="radio" id="newAddress" name="addressType" value="new">
+                    <label for="newAddress">Nueva dirección</label>
+                </div>
+            </div>
+            <div id="existingAddressContainer" class=" input-unit container-full">
+                <label for="addressId">Selecciona una dirección</label>
+                <select name="addressId" id="addressId">
+                    <option value=""></option>
+                </select>
+            </div>
+
             <!-- Imagen Principal -->
             <div class="input-unit">
                 <label for="image">Imagen principal del evento</label>
-                <input type="file" id="image" name="image" accept="image/*" required>
+                <input type="file" id="image" name="image" accept="image/*">
             </div>
 
             <!-- Descripción -->
             <div class="input-unit">
                 <label for="description">Descripción del evento</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
+                <textarea id="description" name="description" rows="4"></textarea>
             </div>
             <!-- Cierre de la venta en línea -->
             <fieldset>
@@ -42,22 +62,22 @@
                 </legend>
                 <div class="input-unit">
                     <div class="row-unit">
-                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="same"
+                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
                             class="onlinesale-closure-radio" checked>
                         <label for="withEvent">Hora de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="onehour"
+                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
                             class="onlinesale-closure-radio">
                         <label for="oneHBefore">Una hora antes de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="twohours"
+                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
                             class="onlinesale-closure-radio">
                         <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="customDatetime" name="onlineSaleClosure" value="cusrom"
+                        <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
                             class="onlinesale-closure-radio">
                         <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
                     </div>
@@ -86,74 +106,21 @@
 
         </div>
         <div class="container-half">
-            <!-- Dirección -->
-            {{-- Select en el que si se elige nueva dirección, se abre un nuevo formulario para añadir una dirección nueva --}}
-            <fieldset>
-                <legend>Información de la ubicación del evento</legend>
-                <div class="container-full">
-                    <p>Primero elige si quieres seleccionar una de las ubicaciones usadas con anterioridad o añadir una
-                        nueva:
-                    </p>
-                    <div class="row-unit">
-                        <input type="radio" id="existingAddress" name="addressType" value="existing">
-                        <label for="existingAddress">Ubicación ya existente</label>
-                    </div>
-                    <div class="row-unit">
-                        <input type="radio" id="newAddress" name="addressType" value="new" checked>
-                        <label for="newAddress">Nueva dirección</label>
-                    </div>
-                </div>
-                <div id="existingAddressContainer" class=" input-unit container-full hidden">
-                    <label for="addressId">Selecciona una dirección</label>
-                    <select name="addressId" id="addressId">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div id="newAddressContainer" class="hidden container-full">
-                    <div class="input-unit">
-                        <label for="locationName">Nombre del recinto</label>
-                        <input type="text" name="locationName" id="locationName">
-                    </div>
-                    <div class="input-unit">
-                        <label for="locationCapacity">Aforo máximo</label>
-                        <input type="text" name="locationCapacity" id="locationCapacity">
-                    </div>
-                    <div class="input-unit">
-                        <label for="locationProvince">Provincia</label>
-                        <input type="text" name="locationProvince" id="locationProvince">
-                    </div>
-                    <div class="input-unit">
-                        <label for="locationProvince">Ciudad</label>
-                        <input type="text" name="locationCity" id="locationCity">
-                    </div>
-                    <div class="input-unit">
-                        <label for="locationProvince">Calle</label>
-                        <input type="text" name="locationStreet" id="locationStreet">
-                    </div>
-                    <div class="input-unit">
-                        <label for="locationProvince">Número</label>
-                        <input type="text" name="locationNumber" id="locationNumber">
-                    </div>
-                    <div class="input-unit">
-                        <label for="locationProvince">Código Postal</label>
-                        <input type="text" name="locationCP" id="locationCP">
-                    </div>
-            </fieldset>
             <fieldset>
                 <legend>Información de sesión</legend>
 
                 <!-- Fecha y hora de la celebración del evento-->
                 <div class="input-unit">
                     <label for="eventDatetime">Fecha y hora del evento</label>
-                    <input type="datetime-local" id="eventDatetime" name="eventDatetime" required>
+                    <input type="datetime-local" id="eventDatetime" name="eventDatetime">
                 </div>
 
                 <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
                 {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
                 <!-- Aforo máximo -->
                 <div class="input-unit">
-                    <label for="sessionMaxCapacity">Limitación de aforo (máx.)</label>
-                    <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity" required>
+                    <label for="sessionMaxCapacity">Limitación de aforo (sesión) </label>
+                    <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity">
                 </div>
 
                 <!-- Agregar elementos de formulario dinámicos para fechas/horas y capacidades adicionales -->
@@ -167,4 +134,28 @@
 
         <button class="button button-brand" type="submit">Crear Evento</button>
     </form>
+    @if (session('success'))
+        <dialog id="successDialog">
+            <h3>¡Operación realizada con éxito!</h3>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            <button class="button button-brand close-dialog-button">Ok</button>
+        </dialog>
+    @endif
+
+    @if (session('error'))
+    <dialog id="errorDialog">
+        <div class="alert alert-danger">
+            <h3>¡Atención!</h3>
+            {{ session('error') }}
+        </div>
+        <button class="button button-brand close-dialog-button">Ok</button>
+
+    </dialog>
+    @endif
+    <dialog id="newLocationDialog">
+        <button class="button button-danger close-dialog-button">X</button>
+        <x-forms.events-form-component />
+    </dialog>
 @endsection

@@ -1,0 +1,15 @@
+dialog{
+   top:40%;
+   left:50%;
+   transform:translateX(-50%);
+   padding:1.4rem;
+   @include card-shape;
+   @include dark-bg;
+   position:relative;
+
+   &.close-dialog-button{
+      position:absolute;
+      right:0;
+      top:0;
+   }
+}

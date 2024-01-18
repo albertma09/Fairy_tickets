@@ -28,27 +28,28 @@ class EventController extends Controller
      public function searchByCategoryItem(Request $request): View
     {
         try {
-            
+
             $item = $request->input('category-item');
-            
+
             $events = Event::getEventsByCategory($item);
-            
+
             return view('search.index', ['events' => $events]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
         }
-    }   
+    }
 
 
     public function mostrarEvento($id)
     {
-        $result = Event::getEventsById($id);
+        $result = Event::getEventsById($id); // Asumiendo que estás utilizando Eloquent y que tu modelo se llama "Evento"
 
         $events = [];
         $sessions = [];
         $tickets = [];
 
         foreach ($result as $row) {
+            // Agregar datos de eventos
             $events[$row->event_id] = [
                 'id' => $row->event_id,
                 'name' => $row->name,
@@ -62,13 +63,14 @@ class EventController extends Controller
                 'cp' => $row->cp,
             ];
 
+            // Agregar datos de sesiones
             $sessions[$row->session_id] = [
                 'id' => $row->session_id,
                 'date' => $row->date,
                 'hour' => $row->hour,
             ];
 
-       
+            // Agregar datos de tickets
             $tickets[$row->ticket_type_id] = [
                 'id' => $row->ticket_type_id,
                 'session_id' => $row->session_id,
@@ -80,7 +82,7 @@ class EventController extends Controller
         $sessionPrices = [];
 
         foreach ($sessions as $sessionId => $session) {
-        
+            // Encuentra los tickets asociados a esta sesión
             $sessionTickets = array_filter($tickets, function ($ticket) use ($sessionId) {
                 return $ticket['session_id'] == $sessionId;
             });
@@ -102,16 +104,26 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         // Validación de la información del formulario
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'category' => 'required|in:cine,conferencia,danza,musica,teatro',
             'addressType' => 'required|in:existing,new',
             'address' => $request->input('addressType') == 'existing' ? 'required_if:addressType,existing' : 'nullable',
+            'locationName' => 'required_if:addressType,new|string',
+            'locationCapacity' => 'required_if:addressType,new|integer',
+            'locationProvince' => 'required_if:addressType,new|string',
+            'locationCity' => 'required_if:addressType,new|string',
+            'locationStreet' => 'required_if:addressType,new|string',
+            'locationNumber' => 'required_if:addressType,new|string',
+            'locationCP' => 'required_if:addressType,new|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required',
-            'datetime' => 'required',
-            'max_capacity' => 'required_if:addressType,new|integer',
+            'description' => 'required|string',
+            'eventDatetime' => 'required|date',
+            'sessionMaxCapacity' => 'required|integer',
+            'onlineSaleClosure' => 'required|in:0,1,2,custom',
+            'onlineClosureDatetime' => 'required_if:onlineSaleClosure,custom|date',
             'hidden_event' => 'boolean',
             'named_tickets' => 'boolean',
         ]);

@@ -24,7 +24,18 @@
             color: $col-oscuro;
         }
     }
+    &-danger {
+        color: $col-contraste;
+        background-color: transparent;
+        border: 2px solid $col-contraste;
+        font-weight: bold;
 
+        &:hover {
+            color: $col-claro;
+            background-color: $col-contraste;
+            font-weight: bolder;
+        }
+    }
     &-dark {
         @include dark-bg;
         border: 1px solid $col-oscuro;
