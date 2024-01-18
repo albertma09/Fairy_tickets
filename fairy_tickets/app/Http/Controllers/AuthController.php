@@ -34,7 +34,8 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/promotor');
+            $userId = Auth::user()->id;
+            return redirect()->intended('/promotor/' . $userId);
         }
 
         return redirect()->route('login')->with('error', 'Las credenciales de login no son correctas');

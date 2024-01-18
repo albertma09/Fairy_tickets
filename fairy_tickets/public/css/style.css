@@ -41,6 +41,10 @@ html {
   font-size: 70px;
 }
 
+h2 {
+  font-family: "Fjalla One", sans-serif;
+}
+
 a,
 .text-link {
   color: #40e0d0;
@@ -118,6 +122,35 @@ button {
 .centrado .container .sesiones-container .sesion-card .sesion-info {
   margin: 0;
   padding: 5px;
+}
+.centrado #popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%; /* Cambiado a 80% para ocupar la mayoría de la página */
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: slideIn 0.3s ease; /* Añadido una animación de deslizamiento */
+}
+.centrado #popup-content {
+  background: #fdf7f7;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 100%; /* Cambiado a 100% para ocupar el ancho total del contenedor */
+  width: 100%;
+  height: 100%;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
@@ -262,6 +295,40 @@ nav .filter-categories {
   nav button#menu-toggle {
     display: none;
   }
+}
+
+.add-event {
+  width: 16rem;
+  padding: 1.2rem;
+}
+
+.promotor-container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.promotor-container .event-card {
+  width: 18rem;
+  height: 22rem;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #05283d;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.promotor-container .event-card .img {
+  width: 90%;
+  height: 70%;
+}
+.promotor-container .event-card .img img {
+  flex: 0 0 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .button {

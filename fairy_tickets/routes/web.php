@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\PromotorController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -29,9 +31,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Todas las rutas que necesitan autenticación de usuario
 Route::middleware(['auth.redirect'])->group(function () {
     // Home del promotor
-    Route::get('/promotor', function () {
-        return view('home.promotor');
-    });
+    Route::get('/promotor/{userId}', [PromotorController::class, 'mostrarPromotor'])->name('promotor');
 
     // Creación de nuevos eventos, vista y llamada a la función que gestiona la subida de datos
     Route::get(

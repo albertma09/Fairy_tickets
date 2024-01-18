@@ -19,11 +19,13 @@ class EventController extends Controller
     public function searchBySearchingItem(Request $request): View
     {
         $item = $request->input('search-input');
-        $events = Event::getEventsBySearching($item);
+        $events = Event::getEventsBySearching($item);     
         return view('search.index', ['events' => $events]);
     }
 
-    public function searchByCategoryItem(Request $request): View
+   
+
+     public function searchByCategoryItem(Request $request): View
     {
         try {
 
@@ -36,6 +38,7 @@ class EventController extends Controller
             Log::debug($e->getMessage());
         }
     }
+
 
     public function mostrarEvento($id)
     {
@@ -72,6 +75,7 @@ class EventController extends Controller
                 'id' => $row->ticket_type_id,
                 'session_id' => $row->session_id,
                 'price' => $row->price,
+                'description' => $row->description,
             ];
         }
 
@@ -83,11 +87,10 @@ class EventController extends Controller
                 return $ticket['session_id'] == $sessionId;
             });
 
-            // Encuentra el precio más bajo de los tickets asociados a esta sesión
             $minPrice = min(array_column($sessionTickets, 'price'));
 
-            // Agrega la fecha, hora y precio más bajo a los datos combinados
             $sessionPrices[$sessionId] = [
+                'id' => $session['id'],
                 'date' => $session['date'],
                 'hour' => $session['hour'],
                 'min_price' => $minPrice,
@@ -95,7 +98,8 @@ class EventController extends Controller
         }
 
 
-        return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices]);
+        return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
+
     }
 
     public function store(Request $request)
