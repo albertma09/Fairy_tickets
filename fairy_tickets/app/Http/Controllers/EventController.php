@@ -43,7 +43,7 @@ class EventController extends Controller
     public function mostrarEvento($id)
     {
         $result = Event::getEventsById($id);
-
+       
         $events = [];
         $sessions = [];
         $tickets = [];
@@ -73,7 +73,7 @@ class EventController extends Controller
                 'id' => $row->ticket_type_id,
                 'session_id' => $row->session_id,
                 'price' => $row->price,
-                'description' => $row->description,
+                'ticket_types_description' => $row->ticket_types_description,
             ];
         }
 
