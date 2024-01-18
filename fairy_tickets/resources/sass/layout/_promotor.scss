@@ -1,0 +1,40 @@
+
+.add-event{
+    width: 16rem;
+    padding: 1.2rem;
+}
+
+.promotor-container {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .event-card {
+        width: 18rem;
+        height: 22rem;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: $col-oscuro;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        .img {
+            width: 90%;
+            height: 70%;
+
+            img {
+                flex: 0 0 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+
+    }
+
+}

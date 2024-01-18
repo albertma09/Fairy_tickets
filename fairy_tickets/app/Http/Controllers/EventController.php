@@ -24,77 +24,73 @@ class EventController extends Controller
         //dd($item);  
         $events = Event::getEventsBySearching($item);
         //dd($events);      
-        return view('search.index',['events' => $events]);
+        return view('search.index', ['events' => $events]);
     }
 
-    public function searchByCategoryItem(Request $request):View
+    public function searchByCategoryItem(Request $request): View
     {   //dd($request);
         $item = $request->input('category-item');
         //dd($item);
         $events = Event::getEventsByCategory($item);
         //dd($events);
-        return view('search.index',['events' => $events]);
+        return view('search.index', ['events' => $events]);
     }
 
     public function mostrarEvento($id)
-{
-    $result = Event::getEventsById($id); // Asumiendo que estás utilizando Eloquent y que tu modelo se llama "Evento"
+    {
+        $result = Event::getEventsById($id);
 
-    $events = [];
-$sessions = [];
-$tickets = [];
+        $events = [];
+        $sessions = [];
+        $tickets = [];
 
-foreach ($result as $row) {
-    // Agregar datos de eventos
-    $events[$row->event_id] = [
-        'id' => $row->event_id,
-        'name' => $row->name,
-        'description' => $row->description,
-        'location_name' => $row->location_name,
-        'capacity' => $row->capacity,
-        'province' => $row->province,
-        'city' => $row->city,
-        'street' => $row->street,
-        'number' => $row->number,
-        'cp' => $row->cp,
-    ];
+        foreach ($result as $row) {
+            $events[$row->event_id] = [
+                'id' => $row->event_id,
+                'name' => $row->name,
+                'description' => $row->description,
+                'location_name' => $row->location_name,
+                'capacity' => $row->capacity,
+                'province' => $row->province,
+                'city' => $row->city,
+                'street' => $row->street,
+                'number' => $row->number,
+                'cp' => $row->cp,
+            ];
 
-    // Agregar datos de sesiones
-    $sessions[$row->session_id] = [
-        'id' => $row->session_id,
-        'date' => $row->date,
-        'hour' => $row->hour,
-    ];
+            $sessions[$row->session_id] = [
+                'id' => $row->session_id,
+                'date' => $row->date,
+                'hour' => $row->hour,
+            ];
 
-    // Agregar datos de tickets
-    $tickets[$row->ticket_type_id] = [
-        'id' => $row->ticket_type_id,
-        'session_id' => $row->session_id,
-        'price' => $row->price,
-    ];
-}
+       
+            $tickets[$row->ticket_type_id] = [
+                'id' => $row->ticket_type_id,
+                'session_id' => $row->session_id,
+                'price' => $row->price,
+            ];
+        }
 
-$sessionPrices = [];
+        $sessionPrices = [];
 
-foreach ($sessions as $sessionId => $session) {
-    // Encuentra los tickets asociados a esta sesión
-    $sessionTickets = array_filter($tickets, function ($ticket) use ($sessionId) {
-        return $ticket['session_id'] == $sessionId;
-    });
+        foreach ($sessions as $sessionId => $session) {
+        
+            $sessionTickets = array_filter($tickets, function ($ticket) use ($sessionId) {
+                return $ticket['session_id'] == $sessionId;
+            });
 
-    // Encuentra el precio más bajo de los tickets asociados a esta sesión
-    $minPrice = min(array_column($sessionTickets, 'price'));
+            $minPrice = min(array_column($sessionTickets, 'price'));
 
-    // Agrega la fecha, hora y precio más bajo a los datos combinados
-    $sessionPrices[$sessionId] = [
-        'date' => $session['date'],
-        'hour' => $session['hour'],
-        'min_price' => $minPrice,
-    ];
-}
+            $sessionPrices[$sessionId] = [
+                'id' => $session['id'],
+                'date' => $session['date'],
+                'hour' => $session['hour'],
+                'min_price' => $minPrice,
+            ];
+        }
 
-    
-    return view('events.mostrar', ['id' => $id,'evento' => $events, 'sessionPrices' => $sessionPrices ]);
-}
 
+        return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
+    }
 }

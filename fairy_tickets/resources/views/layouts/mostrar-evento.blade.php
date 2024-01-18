@@ -18,7 +18,7 @@
        
     </main>
     <footer></footer>
-    <script src="js/main.js"></script>
+    <script src="{{asset('js/main.js')}}"></script>
 </body>
 
 </html>

@@ -37,6 +37,10 @@ html {
   font-size: 70px;
 }
 
+h2 {
+  font-family: "Fjalla One", sans-serif;
+}
+
 a,
 .text-link {
   color: #40e0d0;
@@ -258,6 +262,40 @@ nav .filter-categories {
   nav button#menu-toggle {
     display: none;
   }
+}
+
+.add-event {
+  width: 16rem;
+  padding: 1.2rem;
+}
+
+.promotor-container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.promotor-container .event-card {
+  width: 18rem;
+  height: 22rem;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #05283d;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.promotor-container .event-card .img {
+  width: 90%;
+  height: 70%;
+}
+.promotor-container .event-card .img img {
+  flex: 0 0 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .button {
