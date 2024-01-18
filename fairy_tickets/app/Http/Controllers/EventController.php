@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-<<<<<<< fairy_tickets/app/Http/Controllers/EventController.php
 use App\Models\Location;
-=======
 use Exception;
->>>>>>> fairy_tickets/app/Http/Controllers/EventController.php
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
