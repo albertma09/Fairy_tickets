@@ -35,16 +35,16 @@ Route::middleware(['auth.redirect'])->group(function () {
 
     // Creación de nuevos eventos, vista y llamada a la función que gestiona la subida de datos
     Route::get(
-        '/promotor/new-event',
+        '/manage/new-event',
         [EventController::class, 'showCreateForm']
     )->name('events.create');
 
     Route::post(
-        '/promotor/new-event',
+        '/manage/new-event',
         [EventController::class, 'store']
     )->name('events.store');
     Route::post(
-        '/promotor/new-location',
+        '/manage/new-location',
         [LocationController::class, 'store']
     )->name('location.store');
 });
