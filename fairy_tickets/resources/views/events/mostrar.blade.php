@@ -1,8 +1,11 @@
 @extends('layouts.mostrar-evento')
 
-@section('title', $evento[0]->name)
+@section('title', $evento[$id]['name'])
 
 @section('content')
+
+    {{-- @dd($evento) --}}
+
 
     <div class="slider-container">
         <button class="prev-btn">&#10094;</button>
@@ -15,24 +18,35 @@
         <button class="next-btn">&#10095;</button>
     </div>
     <div class="container">
+        <h2 class="titulo-brand">{{ $evento[$id]['name'] }}</h2>
+        <p>{{ $evento[$id]['description'] }}</p>
+    </div>
+
+    <div class="container">
         <h1 class="titulo-brand">
-            {{ $evento[0]->name }}
+            Sesiones
         </h1>
-
-        <p>
-            {{ $evento[0]->description }}
-        </p>
+        <div class="sesiones-container">
+            @foreach ($sessionPrices as $sessionId => $session)
+                <div class="sesion-card">
+                    <p class="sesion-info">Fecha de sesión: {{ $session['date'] }}</p>
+                    <p class="sesion-info">Hora de sesión: {{ $session['hour'] }}</p>
+                    <p class="sesion-info">Precio: {{ $session['min_price'] }}</p>
+                    <button class="button button-brand">Comprar</button>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <div class="container">
-      <h1 class="titulo-brand">
-            sesiones
-        </h1>
+        @foreach ($evento as $event)
+
+            <p>Ubicación: {{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
+                {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}</p>
+
+            
+        @endforeach
     </div>
 
-    <div class="container">
-      <x-maps-leaflet :centerPoint="['lat' => 52.16, 'long' => 5]" :zoomLevel="6"></x-maps-leaflet> 
-    </div>
-    {{-- @dd($evento) --}}
 
 @endsection

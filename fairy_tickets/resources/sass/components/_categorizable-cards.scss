@@ -1,0 +1,40 @@
+.category-card{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 90%;
+    &-data{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: $col-oscuro;
+        padding: 0.5rem 1rem;
+        &-name{
+            font-size: 250%;
+            font-weight: bold;
+        }
+        &-total{
+            display: flex;
+            flex-direction: column;
+            &-label{
+                text-align: center;
+                font-size: 80%;
+            }
+            &-number{
+                text-align: center;
+                font-size: 200%;
+                font-weight: bold;
+            }
+        }
+    }
+    &-events{
+        display: flex;
+        flex-direction: row;
+        min-height: 5rem;
+    }
+    &-more{
+        display: flex;
+        justify-content: center;
+    }
+}
