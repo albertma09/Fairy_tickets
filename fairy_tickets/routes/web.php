@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\AuthController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +51,7 @@ Route::get('/reiniciar-contrasenia/{token}/{email}', [AuthController::class, 'fo
 Route::post('/actualizar-contrasenia', [AuthController::class, 'actualizarContrasenia'])->name('actualizar-contrasenia');
 
 
-Route::get('/home', [EventController::class, 'index'])->name('home.index');
+Route::get('/home', [CategoryController::class, 'index'])->name('home.index');
 
 Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
 
