@@ -12,7 +12,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'date', 'hour'];
+    protected $fillable = ['name', 'description', 'price', 'date', 'hour', 'hidden', 'nominal_tickets'];
 
     public function category(): BelongsTo
     {

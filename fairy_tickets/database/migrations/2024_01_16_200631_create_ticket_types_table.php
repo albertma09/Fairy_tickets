@@ -24,6 +24,7 @@ return new class extends Migration
             //atributos iniciales BD
             $table->string('description');
             $table->double('price');
+            $table->integer('ticket_amount');
 
             $table->timestamps();
 

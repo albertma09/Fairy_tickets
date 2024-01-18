@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Event;
-use App\Models\Session;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Event>
@@ -27,6 +25,8 @@ class EventFactory extends Factory
             'price' => fake()->randomFloat(2, 1, 1000),
             'date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
             'hour' => fake()->time($format = 'H:i:s', $min = 'now'),
+            'hidden' => fake()->boolean(10),
+            'nominal_tickets' => fake()->boolean(20),
         ];
     }
 }

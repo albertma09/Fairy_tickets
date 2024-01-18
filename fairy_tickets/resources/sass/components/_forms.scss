@@ -1,12 +1,23 @@
 .default-form {
-    display: flex;
+    @include flex-container(row, wrap);
     padding: 4rem;
-    flex-flow: row wrap;
     div {
-        width: 25%;
         padding: 1.2rem;
-        display: flex;
-        flex-direction: column;
+        &.input-unit {
+            @include flex-container(column);
+        }
+        &.row-unit {
+            @include flex-container();
+        }
+        &.container-quarter {
+            width: 25%;
+        }
+        &.container-half {
+            width: 50%;
+        }
+        &.container-full {
+            width: 100%;
+        }
     }
     input,
     select {
