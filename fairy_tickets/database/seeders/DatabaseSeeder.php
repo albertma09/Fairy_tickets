@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         if ($this->command->confirm('Desea refrescar la base de datos?', true)) {
-            $this->command->call('migrate:refresh');
+            $this->command->call('migrate:fresh');
             $this->command->info("Se ha reconstruido la base de datos");
         }
 

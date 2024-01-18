@@ -18,3 +18,14 @@ export const debounce = (func, delay) => {
         }, delay);
     };
 };
+
+// Función que recibe un elemento y encuentra su dialogo padre, si lo tiene
+export const findParentDialog = (element) => {
+    let parent = element.parentNode;
+  
+    while (parent && parent.tagName !== 'DIALOG') {
+      parent = parent.parentNode;
+    }
+  
+    return parent; // Devuelve el tag del dialog o null
+  }

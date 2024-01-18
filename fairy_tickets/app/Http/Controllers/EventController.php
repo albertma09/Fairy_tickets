@@ -100,17 +100,26 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-dd($request);
+        dd($request);
         // Validación de la información del formulario
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'category' => 'required|in:cine,conferencia,danza,musica,teatro',
             'addressType' => 'required|in:existing,new',
             'address' => $request->input('addressType') == 'existing' ? 'required_if:addressType,existing' : 'nullable',
+            'locationName' => 'required_if:addressType,new|string',
+            'locationCapacity' => 'required_if:addressType,new|integer',
+            'locationProvince' => 'required_if:addressType,new|string',
+            'locationCity' => 'required_if:addressType,new|string',
+            'locationStreet' => 'required_if:addressType,new|string',
+            'locationNumber' => 'required_if:addressType,new|string',
+            'locationCP' => 'required_if:addressType,new|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required',
-            'datetime' => 'required',
-            'max_capacity' => 'required_if:addressType,new|integer',
+            'description' => 'required|string',
+            'eventDatetime' => 'required|date',
+            'sessionMaxCapacity' => 'required|integer',
+            'onlineSaleClosure' => 'required|in:0,1,2,custom',
+            'onlineClosureDatetime' => 'required_if:onlineSaleClosure,custom|date',
             'hidden_event' => 'boolean',
             'named_tickets' => 'boolean',
         ]);
