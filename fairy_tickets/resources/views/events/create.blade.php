@@ -28,13 +28,13 @@
             <!-- Imagen Principal -->
             <div class="input-unit">
                 <label for="image">Imagen principal del evento</label>
-                <input type="file" id="image" name="image" accept="image/*" required>
+                <input type="file" id="image" name="image" accept="image/*" >
             </div>
 
             <!-- Descripción -->
             <div class="input-unit">
                 <label for="description">Descripción del evento</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
+                <textarea id="description" name="description" rows="4" ></textarea>
             </div>
             <!-- Cierre de la venta en línea -->
             <fieldset>
@@ -42,22 +42,22 @@
                 </legend>
                 <div class="input-unit">
                     <div class="row-unit">
-                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="same"
+                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
                             class="onlinesale-closure-radio" checked>
                         <label for="withEvent">Hora de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="onehour"
+                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
                             class="onlinesale-closure-radio">
                         <label for="oneHBefore">Una hora antes de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="twohours"
+                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
                             class="onlinesale-closure-radio">
                         <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
                     </div>
                     <div class="row-unit">
-                        <input type="radio" id="customDatetime" name="onlineSaleClosure" value="cusrom"
+                        <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
                             class="onlinesale-closure-radio">
                         <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
                     </div>
@@ -152,7 +152,7 @@
                 {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
                 <!-- Aforo máximo -->
                 <div class="input-unit">
-                    <label for="sessionMaxCapacity">Limitación de aforo (máx.)</label>
+                    <label for="sessionMaxCapacity">Limitación de aforo (sesión) </label>
                     <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity" required>
                 </div>
 

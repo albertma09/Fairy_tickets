@@ -17,7 +17,7 @@ const initializeEventForm = () => {
         "existingAddressContainer"
     );
     const newAddressContainer = document.getElementById("newAddressContainer");
-    const radioGroup = document.querySelectorAll(".onlineSaleClosure");
+    const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
     const customDatetimeContainer = document.getElementById(
         "customClosureDatetimeContainer"
     );
