@@ -69,6 +69,7 @@ class EventController extends Controller
                 'id' => $row->ticket_type_id,
                 'session_id' => $row->session_id,
                 'price' => $row->price,
+                'description' => $row->description,
             ];
         }
 

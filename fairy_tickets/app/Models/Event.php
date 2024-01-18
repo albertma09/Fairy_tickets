@@ -72,7 +72,7 @@ class Event extends Model
     public static function getEventsById($item)
     {
         $events = DB::table('events')
-            ->select('events.id as event_id', 'events.name', 'events.description', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
+            ->select('events.id as event_id', 'events.name', 'events.description', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price','ticket_types.description', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
             ->join('sessions', 'events.id', '=', 'sessions.event_id')
             ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
             ->join('locations', 'events.location_id', '=', 'locations.id')

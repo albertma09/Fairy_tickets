@@ -47,4 +47,11 @@
     </div>
 
 
+    <!-- Contenedor del menú emergente -->
+    <div id="popup-container">
+        <div id="popup-content">
+            <!-- El contenido del menú se agregará aquí dinámicamente -->
+        </div>
+    </div>
+
 @endsection
