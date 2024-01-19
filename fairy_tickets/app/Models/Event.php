@@ -48,7 +48,7 @@ class Event extends Model
     {
         $events = DB::table('events')
             ->join('locations', 'events.location_id', '=', 'locations.id')
-            ->select('events.id', 'events.name', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
+            ->select('events.id', 'events.name as event', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
             ->where('events.name', 'like', '%' . $item . '%')
             ->orWhere('locations.name', 'like', '%' . $item . '%')
             ->orWhere('locations.city', 'like', '%' . $item . '%')
@@ -62,8 +62,9 @@ class Event extends Model
         $events = DB::table('events')
             ->join('locations', 'events.location_id', '=', 'locations.id')
             ->join('categories', 'events.category_id', '=', 'categories.id')
-            ->select('events.id', 'events.name', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
+            ->select('events.id', 'events.name as event', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
             ->where('categories.name', 'like', '%' . $item . '%')
+            ->orderBy('events.date')
             ->get();
 
         return $events;

@@ -25,12 +25,12 @@ class EventController extends Controller
 
    
 
-     public function searchByCategoryItem(Request $request): View
+     public function searchByCategoryItem(string $name): View
     {
         try {
-
-            $item = $request->input('category-item');
-
+            
+            $item = $name;
+            
             $events = Event::getEventsByCategory($item);
 
             return view('search.index', ['events' => $events]);
