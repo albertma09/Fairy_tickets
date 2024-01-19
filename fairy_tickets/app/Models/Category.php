@@ -29,9 +29,9 @@ class Category extends Model
                 $categories = DB::table('events')
                     ->join('locations', 'events.location_id', '=', 'locations.id')
                     ->join('categories', 'events.category_id', '=', 'categories.id')
-                    ->selectRaw('events.name as event, categories.name as category, locations.name as location, events.price,events.date')
+                    ->selectRaw('events.id as id, events.name as event, categories.name as category, locations.name as location, events.price,events.date')
                     ->where('categories.name', '=', $categoryName)
-                    ->orderBy('categories.name')
+                    ->orderBy('events.date')
                     ->limit(env('EVENTSBYCATEGORY'))
                     ->get();
                 $categories = $categories->toArray();
@@ -40,9 +40,9 @@ class Category extends Model
                 $categories = DB::table('events')
                     ->join('locations', 'events.location_id', '=', 'locations.id')
                     ->join('categories', 'events.category_id', '=', 'categories.id')
-                    ->selectRaw('events.name as event, categories.name as category, locations.name as location, events.price, events.date')
+                    ->selectRaw('events.id as id, events.name as event, categories.name as category, locations.name as location, events.price, events.date')
                     ->where('categories.name', '=', $categoryName)
-                    ->orderBy('categories.name')
+                    ->orderBy('events.date')
                     ->limit(env('EVENTSBYCATEGORY'))
                     ->get();
                 $categories = $categories->toArray();
