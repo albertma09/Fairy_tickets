@@ -19,13 +19,13 @@ class EventController extends Controller
     public function searchBySearchingItem(Request $request): View
     {
         $item = $request->input('search-input');
-        $events = Event::getEventsBySearching($item);     
+        $events = Event::getEventsBySearching($item);
         return view('search.index', ['events' => $events]);
     }
 
-   
 
-     public function searchByCategoryItem(Request $request): View
+
+    public function searchByCategoryItem(Request $request): View
     {
         try {
 
@@ -43,7 +43,7 @@ class EventController extends Controller
     public function mostrarEvento($id)
     {
         $result = Event::getEventsById($id);
-       
+
         $events = [];
         $sessions = [];
         $tickets = [];
@@ -99,34 +99,26 @@ class EventController extends Controller
 
 
         return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
-
     }
 
     public function store(Request $request)
     {
-        dd($request);
         // Validación de la información del formulario
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'category' => 'required|in:cine,conferencia,danza,musica,teatro',
-            'addressType' => 'required|in:existing,new',
-            'address' => $request->input('addressType') == 'existing' ? 'required_if:addressType,existing' : 'nullable',
-            'locationName' => 'required_if:addressType,new|string',
-            'locationCapacity' => 'required_if:addressType,new|integer',
-            'locationProvince' => 'required_if:addressType,new|string',
-            'locationCity' => 'required_if:addressType,new|string',
-            'locationStreet' => 'required_if:addressType,new|string',
-            'locationNumber' => 'required_if:addressType,new|string',
-            'locationCP' => 'required_if:addressType,new|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'addressId' => 'required',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string',
-            'eventDatetime' => 'required|date',
+            'sessionDatetime' => 'required|date',
             'sessionMaxCapacity' => 'required|integer',
             'onlineSaleClosure' => 'required|in:0,1,2,custom',
-            'onlineClosureDatetime' => 'required_if:onlineSaleClosure,custom|date',
+            'customSaleClosure' => 'required_if:onlineSaleClosure,custom|date',
             'hidden_event' => 'boolean',
             'named_tickets' => 'boolean',
         ]);
+
+        dd($request);
 
         if ($validatedData['addressType'] == 'new') {
             // Save the new address to the database (assuming you have an Address model)
