@@ -288,8 +288,7 @@ nav .filter-categories {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  padding: 0 0.5rem;
+  width: auto;
 }
 @media screen and (min-width: 768px) {
   nav button#menu-toggle {
@@ -434,13 +433,27 @@ nav .button-icon i.fa-bars {
   color: #fdf7f7;
 }
 
+.button-category {
+  font-size: 110%;
+  width: 100%;
+  border-radius: 4px;
+  transition: 0.2s ease;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+}
+.button-category:hover {
+  border: 2px solid #40e0d0;
+  background-color: #40e0d0;
+  color: #05283d;
+}
+
 .events-card {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: auto;
   flex-wrap: wrap;
-  padding: 0.5rem;
+  padding: 1rem;
   margin: 2rem;
   border-radius: 10px;
   background-color: #05283d;
@@ -453,6 +466,8 @@ nav .button-icon i.fa-bars {
 .events-card-data-name {
   text-align: center;
   font-weight: bold;
+  font-size: 1.1rem;
+  margin: 1rem 0;
 }
 .events-card-data-img {
   display: flex;
@@ -462,20 +477,41 @@ nav .button-icon i.fa-bars {
 .events-card-data-date {
   display: flex;
   flex-direction: column;
+  background-color: #fdf7f7;
+  border-radius: 0.5rem;
+  color: #10364e;
+  padding: 0 0.5rem;
 }
 .events-card-data-date-day {
-  color: green;
   font-weight: bold;
   text-align: center;
+  font-size: 2rem;
 }
 .events-card-data-date-monthYear {
   display: flex;
-  justify-content: space-between;
+  font-weight: bold;
+}
+.events-card-data-date-monthYear-month {
+  margin-right: 0.5rem;
+}
+.events-card-data-price {
+  font-weight: bold;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  color: #ff6f61;
+  margin: 0.1rem;
+  padding: 0 1rem;
 }
 .events-card-locPreu {
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-left: 1rem;
+}
+.events-card-buy {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 0 0;
 }
 
 .default-form {
@@ -512,12 +548,50 @@ nav .button-icon i.fa-bars {
   border-radius: 4px;
 }
 
+/* Estilos generales para la barra de desplazamiento */
+/* Para navegadores WebKit (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra de desplazamiento */
+}
+::-webkit-scrollbar-track {
+  background-color: #10364e; /* Color de fondo del riel */
+}
+::-webkit-scrollbar-thumb {
+  background-color: #05283d; /* Color del mango */
+  border-radius: 6px; /* Radio de esquinas del mango */
+}
+::-webkit-scrollbar-button {
+  display: none; /* Oculta los botones */
+}
+
+/* Estilo del riel (pista) de la barra de desplazamiento */
+::-ms-scrollbar {
+  width: 12px;
+}
+::-ms-scrollbar-thumb {
+  background-color: #05283d;
+  border-radius: 6px;
+}
+::-ms-scrollbar-track {
+  background-color: #10364e;
+}
+::-ms-scrollbar-base {
+  display: none; /* Oculta la base de la barra de desplazamiento en IE */
+}
+
+/* Estilos adicionales para navegadores Firefox (no soportan -webkit-scrollbar)*/
+body {
+  scrollbar-color: #05283d #10364e; /* Establece el color de la barra de desplazamiento y el riel en Firefox */
+  scrollbar-width: thin; /* Establece el grosor de la barra de desplazamiento en Firefox */
+}
+
 .category-card {
   display: flex;
   flex-direction: column;
   padding: 1rem;
   border-radius: 10px;
   width: 90%;
+  margin-bottom: 3rem;
 }
 .category-card-data {
   display: flex;
@@ -547,6 +621,8 @@ nav .button-icon i.fa-bars {
   display: flex;
   flex-direction: row;
   min-height: 5rem;
+  overflow: auto;
+  margin-bottom: 1rem;
 }
 .category-card-more {
   display: flex;

@@ -15,7 +15,6 @@ class CategoryController extends Controller
         
             $categories=Category::getTotalCategories();
             $events=Category::getCategorizablesCards();
-            // dd(gettype($categories));
             return view('home.index', ['events'=>$events,'categories' =>$categories]);
         
     }
