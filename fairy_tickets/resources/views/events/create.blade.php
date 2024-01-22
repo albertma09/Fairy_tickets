@@ -10,18 +10,18 @@
             <!-- Título del evento -->
             <div class="input-unit">
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" name="name" required>
             </div>
 
             <!-- Categoría -->
             <div class="input-unit">
                 <label for="category">Categoría</label>
-                <select id="category" name="category" required>
-                    <option value="cine">Cine</option>
-                    <option value="conferencia">Conferencia</option>
-                    <option value="danza">Danza</option>
-                    <option value="musica">Musica</option>
-                    <option value="teatro">Teatro</option>
+                <select id="category" name="category_id" required>
+                    <option value="8">Cine</option>
+                    <option value="3">Conferencia</option>
+                    <option value="5">Danza</option>
+                    <option value="7">Musica</option>
+                    <option value="1">Teatro</option>
                 </select>
             </div>
 
@@ -40,11 +40,11 @@
             </div>
             <div id="existingAddressContainer" class=" input-unit container-full">
                 <label for="addressId">Selecciona una dirección</label>
-                <select name="addressId" id="addressId">
-                    <option value=""></option>
+                <select name="location_id" id="addressId">
+                    <option value="1">Sala Razzmatazz</option>
                 </select>
             </div>
-
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
             <!-- Imagen Principal -->
             {{-- <div class="input-unit">
                 <label for="image">Imagen principal del evento</label>
@@ -60,7 +60,7 @@
             <!-- Fecha y hora de la celebración del evento-->
             <div class="input-unit">
                 <label for='datetime'>Fecha y hora del evento</label>
-                <input type="datetime-local" id="datetime" name="datetime">
+                <input type="datetime-local" id="datetime" name="sessionDatetime">
             </div>
 
             <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
@@ -105,14 +105,14 @@
                 <div class="input-unit" id="customClosureDatetimeContainer">
                     <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de la
                         venta online</label>
-                    <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure">
+                    <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure" value="">
                 </div>
             </fieldset>
 
 
             <!-- Evento oculto -->
             <div class="row-unit">
-                <input type="checkbox" id="hidden_event" name="hidden_event">
+                <input type="checkbox" id="hidden_event" name="hidden">
                 <label for="hidden_event">Ocultar evento</label>
 
             </div>
