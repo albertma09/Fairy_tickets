@@ -285,10 +285,10 @@ nav ul.opened li a.nav-active {
   }
 }
 nav .filter-categories {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: 1fr;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: auto;
 }
 @media screen and (min-width: 768px) {
   nav button#menu-toggle {
@@ -442,6 +442,7 @@ nav .button-icon i.fa-bars {
   text-decoration: none;
 }
 .button-category:hover {
+  border: 2px solid #40e0d0;
   background-color: #40e0d0;
   color: #05283d;
 }
@@ -501,7 +502,7 @@ nav .button-icon i.fa-bars {
   margin: 0.1rem;
   padding: 0 1rem;
 }
-.events-card-locPrice {
+.events-card-locPreu {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -776,8 +777,39 @@ dialog.close-dialog-button {
   font-size: 110%;
   color: #1b262c;
   display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: 'Error: expected "}".\a     \2577 \a 124 \2502  }\a     \2502   ^\a     \2575 \a   resources\\sass\\components\\_events.scss 124:2  @import\a   resources\\sass\\main.scss 15:31                root stylesheet';
+  width: 100%;
+  height: 40px;
+  margin-bottom: 2rem;
+  padding: 5px 5px 5px 10px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 3px;
 }
+.oscuro .container .center .login .msg-error {
+  color: #da0000;
+  padding: 10px;
+}
+.oscuro .container .center .login .msg-correct {
+  color: #72c487;
+  padding: 10px;
+}
+.oscuro .container .center .login .footer {
+  font-size: 90%;
+  text-align: center;
+  margin-top: 15px;
+}
+.oscuro .container .center .login .footer a {
+  display: block;
+  margin-bottom: 3px;
+}
+.oscuro .container .center .inferior {
+  margin-top: 10px;
+  font-size: 90%;
+  text-align: center;
+}
+.oscuro .container .center .inferior a {
+  display: block;
+  margin-bottom: 3px;
+}
+
+/*# sourceMappingURL=main.css.map */
