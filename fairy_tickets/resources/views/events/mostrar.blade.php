@@ -33,7 +33,7 @@
                     <p class="sesion-info">Fecha de sesión: {{ $session['date'] }}</p>
                     <p class="sesion-info">Hora de sesión: {{ $session['hour'] }}</p>
                     <p class="sesion-info">Precio: {{ $session['min_price'] }}€</p>
-                    <button class="button button-brand">Comprar</button>
+                    <button class="button button-brand" id="{{ $session['id'] }}">Comprar</button>
                 </div>
             @endforeach
         </div>
@@ -48,10 +48,16 @@
 
 
     <!-- Contenedor del menú emergente -->
-    <div id="popup-container">
-        <div id="popup-content">
+    <div class="popup-container">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <div id="ticket-types-container"></div>
             <!-- El contenido del menú se agregará aquí dinámicamente -->
         </div>
     </div>
 
+
+    <script>
+        const tickets = {!! json_encode($tickets) !!};
+    </script>
 @endsection

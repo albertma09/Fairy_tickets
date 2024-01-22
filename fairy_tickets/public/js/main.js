@@ -1,4 +1,6 @@
 // Imports de módulos
+
+
 import {
     setupAddressFormToggle,
     setupCustomiseOnlineClosureToggle,
@@ -8,6 +10,8 @@ import {
     delayedCloseMenuOnResize,
 } from "./modules/navigation.js";
 import { commonButtonsSetup } from "./modules/buttons.js";
+
+import {openModal}from './modules/popup.js';
 
 // Función que inicializa las funcionalidades para el eventform
 const initializeEventForm = () => {
@@ -41,4 +45,5 @@ document.addEventListener("DOMContentLoaded", function () {
     addMenuFunctionalities();
     initializeEventForm();
     commonButtonsSetup();
+    openModal();
 });

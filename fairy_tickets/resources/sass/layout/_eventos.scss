@@ -68,7 +68,7 @@
 
 
 
-  #popup-container {
+  .popup-container {
     display: none;
     position: fixed;
     top: 0;
@@ -82,13 +82,28 @@
     animation: slideIn 0.3s ease; /* Añadido una animación de deslizamiento */
 }
 
-#popup-content {
+
+.popup-content {
     background: $col-claro;
+    color: black;
     padding: 20px;
     border-radius: 10px;
     max-width: 100%; /* Cambiado a 100% para ocupar el ancho total del contenedor */
     width: 100%;
     height: 100%;
+}
+
+.close-popup {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  color: $col-oscuro; /* Cambia el color del botón según tus preferencias */
+
+  &:hover{
+   color: $col-contraste;
+  }
 }
 
 @keyframes slideIn {
