@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('hour');
             $table->integer('session_capacity');
+            $table->dateTime('online_sale_closure');
 
             // Timestamps
             $table->timestamps();

@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'hidden', 'nominal_tickets'];
+    protected $fillable = ['user_id', 'category_id', 'location_id', 'name', 'description', 'hidden', 'nominal_tickets'];
 
     public function category(): BelongsTo
     {
@@ -92,4 +94,29 @@ class Event extends Model
 
         return $events;
     }
+
+    public static function createEvent(array $formData)
+    {
+        try {
+            log::info("Llamada al método Event.createEvent");
+            // Separamos los datos de los eventos y de las sesiones
+            $eventData = $formData;
+            unset($eventData['sessionDatetime']);
+            unset($eventData['sessionMaxCapacity']);
+            unset($eventData['onlineSaleClosure']);
+            unset($eventData['customSaleClosure']);
+            //   dd($formData);
+            $eventData['nominal_tickets'] = (bool) ($eventData['nominal_tickets'] ?? false);
+            $eventData['hidden'] = (bool) ($eventData['hidden'] ?? false);
+
+            // Crea el evento y guarda la id
+            $event = Event::create($eventData);
+            $eventId = $event->id;
+
+            $sessionId = Session::createSession($eventId, $formData);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
+    }
+
 }

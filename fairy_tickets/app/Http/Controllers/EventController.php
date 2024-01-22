@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Session;
 use App\Models\Location;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class EventController extends Controller
 {
     public function showCreateForm()
     {
+       // Location::getLocationsByUser();
         return view('events.create');
     }
 
@@ -106,57 +105,31 @@ class EventController extends Controller
     public function store(Request $request)
     {
         try {
+            log::info('Llamada al método EventController.store');
             // Validación de la información del formulario
             $validatedData = $request->validate([
                 'name' => 'required|max:255',
                 'category_id' => 'required|integer',
                 'location_id' => 'required|integer',
                 'user_id' => 'required|integer',
-                //  'addressId' => 'sometimes',
                 // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'description' => 'required|string',
                 'sessionDatetime' => 'required|date',
                 'sessionMaxCapacity' => 'required|integer',
-                //   'onlineSaleClosure' => 'required|in:0,1,2,custom',
-                //   'customSaleClosure' => 'nullable|required_if:onlineSaleClosure,custom|date',
-                'hidden_event' => 'sometimes|nullable|accepted',
+                'onlineSaleClosure' => 'required|in:0,1,2,custom',
+                'customSaleClosure' => 'nullable|required_if:onlineSaleClosure,custom|date',
+                'hidden' => 'sometimes|nullable|accepted',
                 'named_tickets' => 'sometimes|nullable|accepted',
             ]);
-            dd($validatedData);
-            // Separamos los datos de los eventos y de las sesiones
-            $eventData = $validatedData;
-            unset($eventData['sessionDatetime']);
-            unset($eventData['sessionMaxCapacity']);
-            unset($eventData['onlineSaleClosure']);
-            unset($eventData['customSaleClosure']);
-
-            // Crea el evento y guarda la id
-            $event = Event::create($eventData);
-            $eventId = $event->id;
-
-            // Datos de la sesión
-            $sessionDatetime = $validatedData['sessionDatetime'];
-            $carbonDatetime = Carbon::parse($sessionDatetime);
-
-            $sessionData = [
-                'event_id' => $eventId,
-                'date' => $carbonDatetime->toDateString(),
-                'hour' => $carbonDatetime->toTimeString(),
-                'session_capacity' => $validatedData['sessionMaxCapacity']
-            ];
-            // Crea la sesión y guarda la id
-            $session = Session::create($sessionData);
-            $sessionId = $session->id;
+            // Se guarda en base de datos y recogemos la id
+            $eventId = Event::createEvent($validatedData);
 
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('event_images', 'public');
-                $event->image = $imagePath;
-                $event->save();
             }
 
             return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
         } catch (Exception $e) {
-            dd($e->getMessage());
             Log::debug($e->getMessage());
         }
     }

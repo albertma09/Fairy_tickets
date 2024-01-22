@@ -22,6 +22,7 @@ class SessionFactory extends Factory
             'date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
             'hour' => fake()->time($format = 'H:i:s', $min = 'now'),
             'session_capacity' => fake()->numberBetween(1, 5540),
+            'online_sale_closure' => fake()->dateTimeBetween('+1 month', '+2 month')->format('Y-m-d H:i:s'),
         ];
     }
 

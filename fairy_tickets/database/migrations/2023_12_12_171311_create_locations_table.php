@@ -25,6 +25,9 @@ return new class extends Migration
             $table->string('number');
             $table->string('cp');
 
+            // restricciones
+            $table-> unique(['name', 'street', 'number', 'cp']);
+
             $table->timestamps();
         });
     }
