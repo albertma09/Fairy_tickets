@@ -31,12 +31,12 @@
                     <option value="">Selecciona una opción</option>
                     <option value="new">Añadir nueva dirección</option>
                     @foreach ($locations as $location)
-                        <option value="{{$location->id}}">{{ $location->name }}</option>
+                        <option value="{{ $location->id }}">{{ $location->name }}</option>
                     @endforeach
+                    @if ((session('newLocation') == !null))
+                        <option value="{{session('newLocation')['id']}}" selected>{{session('newLocation')['name']}}</option>
+                    @endif
                 </select>
-                <div id="addressShowCase">
-
-                </div>
             </div>
             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
             <!-- Imagen Principal -->

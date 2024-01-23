@@ -9,7 +9,22 @@ use App\Models\Location;
 
 class LocationController extends Controller
 {
-    public function store(Request $request){
+    // Función que recibe una id por parámetro y hace la llamada a bd para traer la info de esa ubicación
+    public function showLocation(Request $request)
+    {
+        try {
+            Log::info('Llamada al método LocationController.getLocationById');
+            $id = $request->query('id');
+            $location = Location::getLocationById($id);
+            return $location;
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+            return redirect()->route('events.create')->with('error', '¡Atención! No se ha podido guardar la ubicación en nuestra base de datos.');
+        }
+    }
+
+    public function store(Request $request)
+    {
         try {
             Log::info("Llamada al método LocationController.store");
             // Validación de la información del formulario
@@ -22,11 +37,11 @@ class LocationController extends Controller
                 'number' => 'required|string',
                 'cp' => 'required|string',
             ]);
-            if($validatedData){
-                Location::create($validatedData);
-                return redirect()->route('events.create')->with('success', 'Los datos de la nueva ubicación han sido guardados con éxito en nuestra base de datos.');
+            if ($validatedData) {
+                $location = Location::create($validatedData);
+                $validatedData['id'] = $location->id;
+                return redirect()->route('events.create')->with('newLocation', $validatedData);
             }
-            
         } catch (Exception $e) {
             Log::debug($e->getMessage());
             return redirect()->route('events.create')->with('error', '¡Atención! No se ha podido guardar la ubicación en nuestra base de datos.');
