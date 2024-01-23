@@ -12,11 +12,13 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        
+        try{
+            Log::info('Llamada al método CategoryController.index ');
             $categories=Category::getTotalCategories();
             $events=Category::getCategorizablesCards();
-            // dd(gettype($categories));
             return view('home.index', ['events'=>$events,'categories' =>$categories]);
-        
+        }catch(Exception $e){
+            Log::debug($e->getMessage());
+        }
     }
 }

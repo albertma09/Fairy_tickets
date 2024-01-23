@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Log;
-use Exception;
 
 class Event extends Model
 {
@@ -36,39 +36,38 @@ class Event extends Model
         return $this->hasMany(Session::class);
     }
 
-    public static function getAllEvents()
-    {
-        $events = DB::table('events')
-            ->join('locations', 'events.location_id', '=', 'locations.id')
-            ->select('events.id', 'events.name', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
-            ->get();
-
-        return $events;
-    }
-
     public static function getEventsBySearching($item)
     {
-        $events = DB::table('events')
-            ->join('locations', 'events.location_id', '=', 'locations.id')
-            ->select('events.id', 'events.name', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
-            ->where('events.name', 'like', '%' . $item . '%')
-            ->orWhere('locations.name', 'like', '%' . $item . '%')
-            ->orWhere('locations.city', 'like', '%' . $item . '%')
-            ->get();
+        try {
+            $events = DB::table('events')
+                ->join('locations', 'events.location_id', '=', 'locations.id')
+                ->select('events.id', 'events.name as event', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
+                ->whereRaw('unaccent(lower(events.name)) ILIKE unaccent(lower(?))', ["%$item%"])
+                ->orWhereRaw('unaccent(lower(locations.name)) ILIKE unaccent(lower(?))', ["%$item%"])
+                ->orWhereRaw('unaccent(lower(locations.city)) ILIKE unaccent(lower(?))', ["%$item%"])
+                ->get();
 
-        return $events;
+            return $events;
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
 
     public static function getEventsByCategory($item)
     {
-        $events = DB::table('events')
-            ->join('locations', 'events.location_id', '=', 'locations.id')
-            ->join('categories', 'events.category_id', '=', 'categories.id')
-            ->select('events.id', 'events.name', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
-            ->where('categories.name', 'like', '%' . $item . '%')
-            ->get();
+        try {
+            $events = DB::table('events')
+                ->join('locations', 'events.location_id', '=', 'locations.id')
+                ->join('categories', 'events.category_id', '=', 'categories.id')
+                ->select('events.id', 'events.name as event', 'events.description', 'events.price', 'events.date', 'events.hour', 'locations.name as location', 'locations.city as city')
+                ->where('categories.name', 'like', '%' . $item . '%')
+                ->orderBy('events.date')
+                ->get();
 
-        return $events;
+            return $events;
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
 
     public static function getEventsById($item)

@@ -47,6 +47,11 @@ Route::middleware(['auth.redirect'])->group(function () {
         '/manage/new-location',
         [LocationController::class, 'store']
     )->name('location.store');
+
+    Route::get(
+        '/sesiones/{id}',
+        [PromotorController::class, 'getSessionsByPromotor']
+    )->name('home.sessions');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña
@@ -67,6 +72,8 @@ Route::get('/home', [CategoryController::class, 'index'])->name('home.index');
 Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
 
 Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
+
+Route::get('/events/categories/{name}', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->name('events.mostrar');
 Route::fallback(function () {

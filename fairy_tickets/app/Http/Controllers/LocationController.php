@@ -11,6 +11,7 @@ class LocationController extends Controller
 {
     public function store(Request $request){
         try {
+            Log::info("Llamada al método LocationController.store");
             // Validación de la información del formulario
             $validatedData = $request->validate([
                 'name' => 'required|string',

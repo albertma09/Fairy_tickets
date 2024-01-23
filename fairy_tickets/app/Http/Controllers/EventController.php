@@ -19,18 +19,25 @@ class EventController extends Controller
 
     public function searchBySearchingItem(Request $request): View
     {
-        $item = $request->input('search-input');
-        $events = Event::getEventsBySearching($item);
-        return view('search.index', ['events' => $events]);
+        try {
+            Log::info("Llamada al método EventController.searchBySearchingItem");
+
+            $item = $request->input('search-input');
+            $events = Event::getEventsBySearching($item);
+            return view('search.index', ['events' => $events]);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
 
 
 
-    public function searchByCategoryItem(Request $request): View
+    public function searchByCategoryItem(string $name): View
     {
         try {
+            Log::info("Llamada al método EventController.searchByCategoryItem");
 
-            $item = $request->input('category-item');
+            $item = $name;
 
             $events = Event::getEventsByCategory($item);
 

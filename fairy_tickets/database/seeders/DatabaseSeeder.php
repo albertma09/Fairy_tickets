@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             $this->command->info("Se ha reconstruido la base de datos");
         }
 
-        $eventNum = max((int) $this->command->ask('Introduce el número de Eventos a crear', 10), 1);
+        $eventNum = max((int) $this->command->ask('Introduce el número de Eventos a crear', 100), 1);
 
         Category::factory(10)->create();
         Location::factory(5)->create();

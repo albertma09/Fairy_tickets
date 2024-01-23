@@ -7,14 +7,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use stdClass;
 
-class categorizableCardComponent extends Component
+class sessionComponent extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public stdClass $category,
-        public stdClass $event 
+        public stdClass $session
     )
     {}
 
@@ -23,6 +22,6 @@ class categorizableCardComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.categorizable-card-component');
+        return view('components.session-component');
     }
 }
