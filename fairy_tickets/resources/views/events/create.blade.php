@@ -25,24 +25,18 @@
                 </select>
             </div>
 
-            <div class="container-full">
-                <p>Primero, elige si quieres seleccionar una de las ubicaciones usadas con anterioridad o añadir una
-                    nueva:
-                </p>
-                <div class="row-unit">
-                    <input type="radio" id="existingAddress" name="addressType" value="existing" checked>
-                    <label for="existingAddress">Ubicación ya existente</label>
-                </div>
-                <div class="row-unit">
-                    <input type="radio" id="newAddress" name="addressType" value="new">
-                    <label for="newAddress">Nueva dirección</label>
-                </div>
-            </div>
             <div id="existingAddressContainer" class=" input-unit container-full">
-                <label for="addressId">Selecciona una dirección</label>
+                <label for="addressId">Dirección del evento</label>
                 <select name="location_id" id="addressId">
-                    <option value="1">Sala Razzmatazz</option>
+                    <option value="">Selecciona una opción</option>
+                    <option value="new">Añadir nueva dirección</option>
+                    @foreach ($locations as $location)
+                        <option value="{{$location->id}}">{{ $location->name }}</option>
+                    @endforeach
                 </select>
+                <div id="addressShowCase">
+
+                </div>
             </div>
             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
             <!-- Imagen Principal -->

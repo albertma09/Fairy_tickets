@@ -13,8 +13,8 @@ class EventController extends Controller
 {
     public function showCreateForm()
     {
-       // Location::getLocationsByUser();
-        return view('events.create');
+       $userLocations = Location::getLocationsByUser();
+        return view('events.create', ['locations' => $userLocations]);
     }
 
     public function searchBySearchingItem(Request $request): View
