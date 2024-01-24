@@ -33,8 +33,9 @@
                     @foreach ($locations as $location)
                         <option value="{{ $location->id }}">{{ $location->name }}</option>
                     @endforeach
-                    @if ((session('newLocation') == !null))
-                        <option value="{{session('newLocation')['id']}}" selected>{{session('newLocation')['name']}}</option>
+                    @if (session('newLocation') == !null)
+                        <option value="{{ session('newLocation')['id'] }}" selected>{{ session('newLocation')['name'] }}
+                        </option>
                     @endif
                 </select>
             </div>
@@ -62,7 +63,9 @@
             <!-- Aforo máximo -->
             <div class="input-unit">
                 <label for="sessionMaxCapacity">Limitación de aforo (sesión) </label>
-                <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity">
+                <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
+                    value="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
+                    max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
             </div>
 
             <!-- Agregar elementos de formulario dinámicos para fechas/horas y capacidades adicionales -->

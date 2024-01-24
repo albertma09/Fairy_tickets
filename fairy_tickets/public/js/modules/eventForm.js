@@ -38,20 +38,30 @@ const fetchLocationData = async (locationId) => {
     try {
         const response = await fetch(`/Location/fetch?id=${locationId}`);
         const data = await response.json();
-        
-        return data;
 
+        return data;
     } catch (error) {
-        console.error('Error fetching location data:', error);
+        console.error("Error fetching location data:", error);
     }
 };
 
+// Función que asigna un valor y un valor máximo al input de capacida de sesión
+// según la capacidad que se le pasa
+const changeSessionMaxCap = (capacity) => {
+    const maxCapInput = document.getElementById("sessionMaxCapacity");
+    maxCapInput.value = capacity;
+    maxCapInput.max = capacity;
+};
+
+// Función que después de buscar los datos de la ubicación seleccionada
+// llama la función que cambia la capacidad máx de sesión.
 const assignMaxCapOnAddressChange = async (addressSelect) => {
+    if (!isNaN(addressSelect.value)) {
     const locationData = await fetchLocationData(addressSelect.value);
     const capacity = locationData[0].capacity;
-    const maxCapInput = document.getElementById("sessionMaxCapacity");
-}; 
-
+    changeSessionMaxCap(capacity);
+    }
+};
 
 // Función que realiza el cambio de visibilidad según el radio seleccionado
 const handleNewAddress = (newAddressDialog, addressSelect) => {
