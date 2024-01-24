@@ -23,7 +23,7 @@ class EventFactory extends Factory
             'name' => fake()->catchPhrase(),
             'description' => fake()->paragraph,
             'hidden' => fake()->boolean(10),
-            'nominal_tickets' => fake()->boolean(20),
+            'image' => "",
         ];
     }
 }

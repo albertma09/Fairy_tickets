@@ -15,7 +15,7 @@ class Session extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_id','date', 'hour', 'session_capacity', 'online_sale_closure'];
+    protected $fillable = ['event_id','date', 'hour', 'session_capacity', 'online_sale_closure', 'nominal_tickets'];
 
     public function event(): BelongsTo
     {
@@ -78,16 +78,21 @@ class Session extends Model
                     throw new \Exception('Error: tipo de dato de venta online no válido.');
             }
 
-            // Prepare session data
+            // Arreglamos el tipo de datos que nos trae nominal_tickets, pasamos a booleano cuando viene vacío
+            $nominalTickets = (bool) ($formData['nominal_tickets'] ?? false);
+
+
+            // Preparamos los datos de la sesión en un array
             $sessionData = [
                 'event_id' => $eventId,
                 'date' => $carbonDatetime->toDateString(),
                 'hour' => $carbonDatetime->toTimeString(),
                 'session_capacity' => $formData['sessionMaxCapacity'],
                 'online_sale_closure' => $onlineClosure->toDateTimeString(),
+                'nominal_tickets' => $nominalTickets,
             ];
 
-            // Create the session and get the session ID
+            // Creamos la sesión y recibimos el id
             $session = Session::create($sessionData);
             $sessionId = $session->id;
 

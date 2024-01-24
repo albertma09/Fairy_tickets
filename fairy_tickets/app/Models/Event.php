@@ -14,7 +14,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'category_id', 'location_id', 'name', 'description', 'hidden', 'nominal_tickets'];
+    protected $fillable = ['user_id', 'category_id', 'location_id', 'name', 'description', 'hidden', 'image'];
 
     public function category(): BelongsTo
     {
@@ -104,8 +104,7 @@ class Event extends Model
             unset($eventData['sessionMaxCapacity']);
             unset($eventData['onlineSaleClosure']);
             unset($eventData['customSaleClosure']);
-            //   dd($formData);
-            $eventData['nominal_tickets'] = (bool) ($eventData['nominal_tickets'] ?? false);
+            unset($eventData['nominal_tickets']);
             $eventData['hidden'] = (bool) ($eventData['hidden'] ?? false);
 
             // Crea el evento y guarda la id

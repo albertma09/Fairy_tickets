@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Location;
+use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -14,7 +15,8 @@ class EventController extends Controller
     public function showCreateForm()
     {
        $userLocations = Location::getLocationsByUser();
-        return view('events.create', ['locations' => $userLocations]);
+       $categories = Category::getCategories();
+        return view('events.create', ['locations' => $userLocations, 'categories' => $categories]);
     }
 
     public function searchBySearchingItem(Request $request): View
@@ -119,7 +121,7 @@ class EventController extends Controller
                 'category_id' => 'required|integer',
                 'location_id' => 'required|integer',
                 'user_id' => 'required|integer',
-                // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'description' => 'required|string',
                 'sessionDatetime' => 'required|date',
                 'sessionMaxCapacity' => 'required|integer',
@@ -128,13 +130,17 @@ class EventController extends Controller
                 'hidden' => 'sometimes|nullable|accepted',
                 'named_tickets' => 'sometimes|nullable|accepted',
             ]);
-            // Se guarda en base de datos y recogemos la id
-            $eventId = Event::createEvent($validatedData);
 
             if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('event_images', 'public');
+                $imagePath = $request->file('image')->store('public/img/covers');
+                $fileName = basename($imagePath);
+                $validatedData['image'] = $fileName;
+            } else {
+                throw New Exception('No es un archivo de imagen válido o está vacío.');
             }
 
+            // Se guarda en base de datos y recogemos la id
+            $eventId = Event::createEvent($validatedData);
             return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
         } catch (Exception $e) {
             Log::debug($e->getMessage());

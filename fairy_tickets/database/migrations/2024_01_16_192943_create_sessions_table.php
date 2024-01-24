@@ -27,6 +27,7 @@ return new class extends Migration
             $table->time('hour');
             $table->integer('session_capacity');
             $table->dateTime('online_sale_closure');
+            $table->boolean('nominal_tickets');
 
             // Timestamps
             $table->timestamps();

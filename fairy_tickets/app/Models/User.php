@@ -51,7 +51,4 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
-    public function locations(): BelongsToMany{
-        return $this->belongsToMany(Location::class);
-    }
 }
