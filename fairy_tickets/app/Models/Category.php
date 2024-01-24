@@ -31,23 +31,31 @@ class Category extends Model
             for ($i = 0; $i < count($totalCategories); $i++) {
                 $categoryName = $totalCategories[$i]->name;
                 if ($categorieswhitEvents === null) {
-                    $categories = DB::table('events')
-                        ->join('locations', 'events.location_id', '=', 'locations.id')
-                        ->join('categories', 'events.category_id', '=', 'categories.id')
-                        ->selectRaw('events.id as id, events.name as event, categories.name as category, locations.name as location, events.price,events.date')
-                        ->whereRaw('unaccent(lower(categories.name)) ILIKE unaccent(lower(?))', [$categoryName])
-                        ->orderBy('events.date')
+                    $categories = DB::table(DB::raw('(SELECT DISTINCT ON (event) e.id, e.name as event, c.name as category, s.date, tt.price
+                    FROM events e
+                    INNER JOIN categories c ON c.id = e.category_id
+                    INNER JOIN sessions s ON s.event_id = e.id
+                    INNER JOIN ticket_types tt ON tt.session_id = s.id
+                    ORDER BY event, tt.price) as sub'))
+                        ->select('sub.id', 'sub.event', 'sub.category', 'sub.date', 'sub.price')
+                        ->where('sub.category',$categoryName)
+                        ->orderBy('sub.date')
+                        ->orderBy('sub.event')
                         ->limit(env('EVENTSBYCATEGORY'))
                         ->get();
                     $categories = $categories->toArray();
                     $categorieswhitEvents = $categories;
                 } else {
-                    $categories = DB::table('events')
-                        ->join('locations', 'events.location_id', '=', 'locations.id')
-                        ->join('categories', 'events.category_id', '=', 'categories.id')
-                        ->selectRaw('events.id as id, events.name as event, categories.name as category, locations.name as location, events.price, events.date')
-                        ->whereRaw('unaccent(lower(categories.name)) ILIKE unaccent(lower(?))', [$categoryName])
-                        ->orderBy('events.date')
+                    $categories = DB::table(DB::raw('(SELECT DISTINCT ON (event) e.id, e.name as event, c.name as category, s.date, tt.price
+                    FROM events e
+                    INNER JOIN categories c ON c.id = e.category_id
+                    INNER JOIN sessions s ON s.event_id = e.id
+                    INNER JOIN ticket_types tt ON tt.session_id = s.id
+                    ORDER BY event, tt.price) as sub'))
+                        ->select('sub.id', 'sub.event', 'sub.category', 'sub.date', 'sub.price')
+                        ->where('sub.category',$categoryName)
+                        ->orderBy('sub.date')
+                        ->orderBy('sub.event')
                         ->limit(env('EVENTSBYCATEGORY'))
                         ->get();
                     $categories = $categories->toArray();

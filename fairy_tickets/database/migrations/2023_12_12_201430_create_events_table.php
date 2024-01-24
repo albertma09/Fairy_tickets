@@ -24,9 +24,6 @@ return new class extends Migration
             //atributos iniciales BD
             $table->string('name');
             $table->text('description');
-            $table->float('price');
-            $table->date('date');
-            $table->time('hour');
             $table->boolean('hidden');
             $table->boolean('nominal_tickets');
 
