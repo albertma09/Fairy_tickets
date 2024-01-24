@@ -351,7 +351,6 @@ Personalización de Configuración de Correo:
 Ajusta config/mail.php para utilizar la configuración de Mailtrap.
 Generación del Controlador para Reset de Contraseña:
 
-Ejecuta php artisan make:controller ForgotPasswordController.
 Añadir Rutas Necesarias:
 
 En routes/web.php, agrega rutas para reset de contraseña.
@@ -383,6 +382,63 @@ Valoración de la semana individual
 === Sprint 3
 ==== Trabajo realizado
 Durante esta semana, nos enfocamos en 4 nuevas tareas del desarrollo de la aplicación:
+
+===== R13: Añadir múltiples sesiones a un evento
+
+- Permite agregar nuevas fechas (sesiones) a un evento existente.
+- La creación de una nueva sesión implica duplicar los datos de la sesión por defecto, como la fecha y hora, aforo máximo, tipos de entradas y precios.
+- Muestra los datos duplicados en modo edición para realizar cambios si es necesario.
+- Permite gestionar los tipos de entrada de manera independiente para cada sesión.
+- Solo disponible para los promotores de eventos.
+
+===== R14: Página resumen Lista de sesiones abiertas
+
+- Muestra la lista de sesiones abiertas del promotor.
+- Ordenadas por fecha, priorizando las más cercanas.
+- Para cada sesión, se muestra la imagen principal, título, fecha y estado de ventas de entradas.
+- Acceso a detalles de evento, administración y listados de entradas de cada sesión.
+- Enlace temporal desde la página principal de promotores.
+
+===== R15: Página Administrar eventos
+
+- Disponible en la página principal de promotores.
+- Lista de eventos con información básica y opciones para editar.
+
+===== R16: Página mostrar evento
+
+- Muestra el nombre, fotos, descripción e información del lugar del evento.
+- Calendario para las sesiones si hay más de una.
+- La selección de una sesión muestra la lista de entradas disponibles.
+- Seleccionar cantidad de entradas por tipo y calcular el precio total.
+- El botón "comprar" redirige a la Pantalla de confirmación de compra (Pendiente).
+
+.Tareas Realizadas
+[options="header"]
+|====================
+| Tarea 3+^| Descripción
+
+| R13: Añadir múltiples sesiones a un evento 3+| ""
+
+| R14: Página resumen Lista de sesiones abiertas 3+| ""
+
+| R15: Página Administrar eventos 3+| ""
+
+| R16: Página mostrar evento 3+| "Para realizar esta página primero debemos recivir todos los datos del evento, que son sus propios datos "
+
+|====================
+
+==== Valoración individual
+Valoración de la semana individual
+
+===== *Diego:*
+
+
+===== *Aitor:* 
+
+
+===== *Albert: Este sprint principalmente he estado con el desarrollo de la pagina de detalles del evento, haciendo que se puedan ver imagenes, el nombre y descripción del evento, las sesiones y la locación.
+
+Además también estuve haciendo la pantalla de home promotor para que se pudiesen ver los eventos de cada usuario y mejorar el aspecto visual.* 
 
 == Lineas futuras.
 == Conclusiones

@@ -7,7 +7,7 @@
         <ul id="nav-dropdown-menu">
             <li><a href="{{ route('home.index') }}" class="{{ Request::is('home*') ? 'nav-active' : '' }}">Home</a></li>
             @if (Auth::check())
-                <li><a href="{{ route('promotor', ['userId' => Auth::id()]) }}">Promotor</a></li>
+                <li><a href="{{ route('promotor', ['userId' => Auth::id()]) }}" class="{{ Request::is('promotor*') ? 'nav-active' : '' }}">Promotor</a></li>
             @endif
 
         </ul>
