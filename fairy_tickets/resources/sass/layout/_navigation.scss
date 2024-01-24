@@ -125,11 +125,19 @@ nav {
             display: flex;
         }
     }
+    // .filter-categories {
+    //     display: flex;
+    //     flex-direction: row;
+    //     justify-content: space-between;
+    //     width: auto;
+    // }
+
     .filter-categories {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: auto;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: 1fr;
+        text-align: center;
+        // width: auto;
     }
 
     button#menu-toggle {

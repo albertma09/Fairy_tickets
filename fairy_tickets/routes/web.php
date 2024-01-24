@@ -47,6 +47,11 @@ Route::middleware(['auth.redirect'])->group(function () {
         '/manage/new-location',
         [LocationController::class, 'store']
     )->name('location.store');
+
+    Route::get(
+        '/sesiones/{id}',
+        [PromotorController::class, 'getSessionsByPromotor']
+    )->name('home.sessions');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña

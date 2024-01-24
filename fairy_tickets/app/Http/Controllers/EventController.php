@@ -18,19 +18,26 @@ class EventController extends Controller
 
     public function searchBySearchingItem(Request $request): View
     {
-        $item = $request->input('search-input');
-        $events = Event::getEventsBySearching($item);     
-        return view('search.index', ['events' => $events]);
+        try {
+            Log::info("Llamada al método EventController.searchBySearchingItem");
+
+            $item = $request->input('search-input');
+            $events = Event::getEventsBySearching($item);
+            return view('search.index', ['events' => $events]);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
 
-   
 
-     public function searchByCategoryItem(string $name): View
+
+    public function searchByCategoryItem(string $name): View
     {
         try {
-            
+            Log::info("Llamada al método EventController.searchByCategoryItem");
+
             $item = $name;
-            
+
             $events = Event::getEventsByCategory($item);
 
             return view('search.index', ['events' => $events]);
@@ -43,7 +50,7 @@ class EventController extends Controller
     public function mostrarEvento($id)
     {
         $result = Event::getEventsById($id);
-       
+
         $events = [];
         $sessions = [];
         $tickets = [];
@@ -104,7 +111,6 @@ class EventController extends Controller
 
 
         return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
-
     }
 
     public function store(Request $request)
