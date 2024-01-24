@@ -30,10 +30,12 @@
         <div class="sesiones-container">
             @foreach ($sessionPrices as $sessionId => $session)
                 <div class="sesion-card">
-                    <p class="sesion-info">Fecha de sesión: {{ $session['date'] }}</p>
-                    <p class="sesion-info">Hora de sesión: {{ $session['hour'] }}</p>
+                    <p class="sesion-info">Fecha de sesión: {{ $session['date'] }}
+                    </p>
+                    <p class="sesion-info">Hora de sesión:
+                        {{ \Carbon\Carbon::createFromFormat('H:i:s', $session['hour'])->format('H:i') }}</p>
                     <p class="sesion-info">Precio: {{ $session['min_price'] }}€</p>
-                    <button class="button button-brand">Comprar</button>
+                    <button class="button button-brand" id="{{ $session['id'] }}">Comprar</button>
                 </div>
             @endforeach
         </div>
@@ -48,10 +50,20 @@
 
 
     <!-- Contenedor del menú emergente -->
-    <div id="popup-container">
-        <div id="popup-content">
+    <div class="popup-container">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <h1>Tickets</h1>
+            <div id="ticket-types-container"></div>
+            <div id="final-price">
+                Total: 0.00€
+            </div>
             <!-- El contenido del menú se agregará aquí dinámicamente -->
         </div>
     </div>
 
+
+    <script>
+        const tickets = {!! json_encode($tickets) !!};
+    </script>
 @endsection

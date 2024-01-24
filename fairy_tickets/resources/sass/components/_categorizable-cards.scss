@@ -6,7 +6,7 @@
         background-color: $col-oscuro-2; /* Color de fondo del riel */
     }
     &-thumb {
-        background-color: $col-oscuro; /* Color del mango */
+        background-color: $col-brand; /* Color del mango */
         border-radius: 6px; /* Radio de esquinas del mango */
     }
     &-button {
@@ -18,7 +18,7 @@
 ::-ms-scrollbar {
     width: 12px;
     &-thumb {
-        background-color: $col-oscuro;
+        background-color: $col-brand;
         border-radius: 6px;
     }
     &-track {
@@ -31,7 +31,7 @@
 
 /* Estilos adicionales para navegadores Firefox (no soportan -webkit-scrollbar)*/
 body {
-    scrollbar-color: $col-oscuro $col-oscuro-2; /* Establece el color de la barra de desplazamiento y el riel en Firefox */
+    scrollbar-color: $col-brand $col-oscuro-2; /* Establece el color de la barra de desplazamiento y el riel en Firefox */
     scrollbar-width: thin; /* Establece el grosor de la barra de desplazamiento en Firefox */
 }
 

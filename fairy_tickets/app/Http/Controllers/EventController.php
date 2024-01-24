@@ -83,8 +83,13 @@ class EventController extends Controller
                 'session_id' => $row->session_id,
                 'price' => $row->price,
                 'ticket_types_description' => $row->ticket_types_description,
+                'ticket_amount' => $row->ticket_amount,
             ];
         }
+
+        usort($tickets, function ($a, $b) {
+            return $a['price'] - $b['price'];
+        });
 
         $sessionPrices = [];
 
