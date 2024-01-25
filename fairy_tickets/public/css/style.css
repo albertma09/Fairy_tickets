@@ -747,6 +747,25 @@ dialog {
   background-color: #05283d;
   position: relative;
 }
+dialog div {
+  display: grid;
+  grid-auto-columns: 1fr 1fr;
+  grid-auto-rows: 1fr 1fr;
+  justify-items: center;
+}
+dialog div p {
+  font-size: 2rem;
+  grid-column: 1/3;
+  padding: 1rem;
+}
+dialog div #cancelButton {
+  grid-column: 1;
+  grid-row: 2;
+}
+dialog div #confirmButton {
+  grid-column: 2;
+  grid-row: 2;
+}
 dialog.close-dialog-button {
   position: absolute;
   right: 0;

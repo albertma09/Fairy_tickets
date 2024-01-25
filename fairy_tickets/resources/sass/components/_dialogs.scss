@@ -1,15 +1,38 @@
-dialog{
-   top:40%;
-   left:50%;
-   transform:translateX(-50%);
-   padding:1.4rem;
+dialog {
+   top: 40%;
+   left: 50%;
+   transform: translateX(-50%);
+   padding: 1.4rem;
    @include card-shape;
    @include dark-bg;
-   position:relative;
+   position: relative;
 
-   &.close-dialog-button{
-      position:absolute;
-      right:0;
-      top:0;
+   div {
+      display: grid;
+    grid-auto-columns: 1fr 1fr;
+    grid-auto-rows: 1fr 1fr;
+    justify-items: center;
+
+      p {
+         font-size: 2rem;
+         grid-column: 1/3;
+         padding: 1rem;
+      }
+
+      #cancelButton{
+         grid-column: 1;
+         grid-row: 2;
+      }
+
+      #confirmButton{
+         grid-column: 2;
+         grid-row: 2;
+      }
+   }
+
+   &.close-dialog-button {
+      position: absolute;
+      right: 0;
+      top: 0;
    }
 }
