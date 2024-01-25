@@ -7,6 +7,12 @@ const isCustomDateRadioChecked = (radioGroup) => {
     );
 };
 
+// Función que recibe por parámetros un elemento y una condición.
+// Oculta el elemento si la condición se cumple y viceversa.
+const hideElement = (element, condition) => {
+    element.classList.toggle("hidden", !condition);
+};
+
 // Función que realiza el cambio de visibilidad del input personalizar datetime de cierre de venta online si se selecciona
 export const setupCustomiseOnlineClosureToggle = () => {
     const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
@@ -16,17 +22,15 @@ export const setupCustomiseOnlineClosureToggle = () => {
     // Si existen, lanza las funcionalidades
     if (radioGroup && customContainer) {
         // Estado inicial
-        customContainer.classList.toggle(
-            "hidden",
-            !isCustomDateRadioChecked(radioGroup)
-        );
+        hideElement(customContainer, isCustomDateRadioChecked(radioGroup));
 
         // Listeners para cambiar el estado cuando haya un cambio
         radioGroup.forEach((radio) => {
             radio.addEventListener("change", () => {
-                customContainer.classList.toggle(
-                    "hidden",
-                    !isCustomDateRadioChecked(radioGroup)
+                // Used the hideElement function
+                hideElement(
+                    customContainer,
+                    isCustomDateRadioChecked(radioGroup)
                 );
             });
         });
@@ -45,21 +49,26 @@ const fetchLocationData = async (locationId) => {
     }
 };
 
-// Función que asigna un valor y un valor máximo al input de capacida de sesión
-// según la capacidad que se le pasa
-const changeSessionMaxCap = (capacity) => {
-    const maxCapInput = document.getElementById("sessionMaxCapacity");
+// Función que asigna un valor y un valor máximo al input de capacidad de sesión
+// según la capacidad que se le pasa, también se lo asigna a la creación del ticket inicial
+const changeSessionMaxCap = (capacity, maxCapInput, ticketQtyInput) => {
     maxCapInput.value = capacity;
     maxCapInput.max = capacity;
+    ticketQtyInput.max = capacity;
 };
 
 // Función que después de buscar los datos de la ubicación seleccionada
-// llama la función que cambia la capacidad máx de sesión.
-const assignMaxCapOnAddressChange = async (addressSelect) => {
+// llama las funciones que cambian la capacidad máx de sesión a todos los elementos del formulario
+// que lo necesitan.
+const assignMaxCapToForm = async (
+    addressSelect,
+    maxCapInput,
+    ticketQtyInput
+) => {
     if (!isNaN(addressSelect.value)) {
-    const locationData = await fetchLocationData(addressSelect.value);
-    const capacity = locationData[0].capacity;
-    changeSessionMaxCap(capacity);
+        const locationData = await fetchLocationData(addressSelect.value);
+        const capacity = locationData[0].capacity;
+        changeSessionMaxCap(capacity, maxCapInput, ticketQtyInput);
     }
 };
 
@@ -79,12 +88,17 @@ export const setupAddressFormToggle = () => {
     // Getters del select y los containers
     const addressSelect = document.getElementById("addressId");
     const newAddressDialog = document.getElementById("newLocationDialog");
+    const maxCapInput = document.getElementById("sessionMaxCapacity");
+    const ticketQtyInput = document.getElementById("ticketQuantity");
 
     // Si existen añade el listener las funcionalidades, por si no estamos en esa página
-    if (addressSelect && newAddressDialog) {
+    if (addressSelect && newAddressDialog && maxCapInput) {
         addressSelect.addEventListener("change", () => {
             handleNewAddress(newAddressDialog, addressSelect);
-            assignMaxCapOnAddressChange(addressSelect);
+            assignMaxCapToForm(addressSelect, maxCapInput, ticketQtyInput);
+        });
+        maxCapInput.addEventListener("change", () => {
+            ticketQtyInput.max = maxCapInput.value;
         });
     }
 };

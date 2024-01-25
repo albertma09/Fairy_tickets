@@ -97,7 +97,7 @@ class Event extends Model
     {
 
         $events = DB::table('events')
-            ->select('id', 'name', 'description')
+            ->select('id', 'name', 'description', 'image')
             ->where('user_id', $item)
             ->get();
 
