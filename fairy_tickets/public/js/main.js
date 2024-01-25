@@ -11,7 +11,7 @@ import {
 } from "./modules/navigation.js";
 import { commonButtonsSetup } from "./modules/buttons.js";
 
-import {openModal}from './modules/popup.js';
+import { openModal } from './modules/popup.js';
 
 // Función que inicializa las funcionalidades para el eventform
 const initializeEventForm = () => {
@@ -26,21 +26,26 @@ window.addEventListener("resize", delayedCloseMenuOnResize);
 document.addEventListener("DOMContentLoaded", function () {
     // Obtén el elemento del enlace de cierre de sesión por su ID
     const logoutLink = document.getElementById("logout-link");
-
+    const logoutDialog = document.getElementById('logoutDialog');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
     // Agrega un event listener para el clic en el enlace
     if (logoutLink) {
         logoutLink.addEventListener("click", function (event) {
-            // Previene el comportamiento predeterminado del enlace
-            event.preventDefault();
+            logoutDialog.showModal();
 
-            // Muestra una alerta de confirmación y, si el usuario acepta, envía el formulario de cierre de sesión
-            let isConfirmed = confirm("¿Estás seguro de cerrar sesión?");
 
-            if (isConfirmed) {
-                document.getElementById("logout-form").submit();
-            }
         });
     }
+
+    cancelButton.addEventListener('click', () => {
+        logoutDialog.close();
+    });
+
+    confirmButton.addEventListener('click', () => {
+        document.getElementById("logout-form").submit();
+        logoutDialog.close();
+    });
 
     addMenuFunctionalities();
     initializeEventForm();
