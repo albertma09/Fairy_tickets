@@ -1,0 +1,468 @@
+= Fairy Tickets
+Albert Mateos - Aitor Lopera - Diego Amador 
+:doctype: book
+:encoding: utf-8
+:lang: en
+:toc: left
+:numbered:
+
+==  Descripción de los miembros del equipo.
+* Albert Mateos
+* Aitor Lopera
+* Diego Amador   
+
+== Objetivos de la aplicación.
+== Necesidades.
+== Publico objetivo.
+
+==  Diseño de base de datos.
+[plantuml,,png]
+--
+class Event{}
+class Location{}
+class Category{}
+
+Event ||..o{ Location
+Event ||..o{ Category
+    
+--
+
+== Sketching y Mockups de interfícies de usuario.
+.Consejo:
+[TIP]
+====
+Para ver los detalles de los Sketching y Mockups, puede dirigirse al siguiente enlace https://www.figma.com/file/4AYrxGKE9Jr0IWjy3QuiVL/gr01-Layouts?type=design&mode=design&t=RbeKfi6LfndwQ6Wj-0[Sketching y Mockups]
+====    
+== Guia de estilos.
+.Consejo:
+[TIP]
+====
+En el siguiente enlace, puede encontrar toda la información a detalle de la guia de estilos de la aplicación https://www.figma.com/file/cOq2a3i65rwIY4i7gC5tbq/gr01-Gu%C3%ADa-de-estilos?type=design&node-id=0-1&mode=design&t=RbeKfi6LfndwQ6Wj-0[Guia de estilos]
+====
+== Manual de instalación/Distribución de la Aplicación. 
+==== Isard
+Instala Apache2 y PHP en tu servidor Debian ejecutando los siguientes comandos:
+
+[source,sh]
+----
+sudo apt update
+sudo apt install apache2 php php-cli php-mbstring unzip
+----
+
+===== Configuración de Apache2
+
+Edita el archivo de configuración de Apache2 para permitir el uso de archivos `.htaccess` y habilitar el módulo `rewrite`:
+
+[source,sh]
+----
+sudo nano /etc/apache2/sites-available/000-default.conf
+----
+
+Agrega las siguientes líneas dentro de la sección `<VirtualHost>`:
+
+[source,apache]
+----
+<Directory /var/www/html>
+    AllowOverride All
+</Directory>
+----
+
+Guarda los cambios y reinicia Apache:
+
+[source,sh]
+----
+sudo service apache2 restart
+----
+
+===== Despliegue del Proyecto desde Git
+
+Clona tu proyecto Laravel desde Git en el directorio `/var/www/html`:
+
+[source,sh]
+----
+sudo git clone https://tu-repositorio-git.git /var/www/html
+----
+
+Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel:
+
+[source,sh]
+----
+cd /var/www/html
+sudo composer install
+----
+
+Configura el archivo de entorno `.env` con la información adecuada, incluyendo la conexión a la base de datos.
+
+Genera la clave de aplicación de Laravel:
+
+[source,sh]
+----
+sudo php artisan key:generate
+----
+
+Establece los permisos adecuados para los directorios de almacenamiento y de caché:
+
+[source,sh]
+----
+sudo chmod -R 775 storage bootstrap/cache
+sudo chown -R www-data:www-data storage bootstrap/cache
+----
+
+===== Configuraciones Adicionales
+
+Configura el host virtual de Apache2 para apuntar al directorio del proyecto Laravel. Edita el archivo `/etc/apache2/sites-available/000-default.conf`:
+
+[source,apache]
+----
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/gr01-mateos-lopera-amador/public
+
+    <Directory /var/www/html/gr01-mateos-lopera-amador/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+----
+
+Guarda los cambios y reinicia Apache:
+
+[source,sh]
+----
+sudo service apache2 restart
+----    
+
+== Sprints
+=== Sprint 1
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 5 nuevas tareas del desarrollo de la aplicación:
+
+===== R01: Definir Guía de Estilos de la Aplicación 
+
+* Definir la paleta de colores para los elementos de la aplicación.
+** Especificar los colores utilizados y justificar su elección.
+
+* Indicar la tipografía para diferentes textos de la aplicación.
+** Niveles de títulos, cuerpo del texto, citas, palabras resaltadas y otros.
+** Especificar tamaños de fuente según la ubicación del texto.
+
+* Especificar la iconografía utilizada en la aplicación.
+** Representar colores y tamaños posibles para las iconas.
+** Si la icona forma parte de un botón, este debe ser descrito.
+
+* Describir los botones de la aplicación.
+** Mencionar tamaños, márgenes, espaciados, fuentes, colores y comportamientos.
+** Detallar comportamientos como hover, seleccionado, importante, etc.
+
+* Detallar estilos de enlaces y elementos de formulario.
+** Incluir cómo se ven cuando son visibles, editables o no interactivos.
+
+* Describir gráficos y visualizaciones de componentes.
+** Mostrar ejemplos de tarjetas u otros elementos.
+
+===== R02: Plantejar l'Estructura de la Base de Dades 
+
+* Considerar al menos las entidades mencionadas.
+** Agregar el diagrama relacional y de clases a la memoria.
+** Mantener actualizado este diagrama a lo largo del desarrollo.
+
+===== R03: Entorn de Desplegament a Isard 
+
+* Desplegar semanalmente en Isard con consideraciones específicas.
+** Respetar rangos de direcciones IP asignadas.
+** Mostrar un diagrama de red actualizado en el README.
+
+* Instalar solo la aplicación web principal en la máquina Isard.
+** Dockerizar otros servicios como SGBD y servidor DNS.
+
+===== R04: Layout Principal
+
+* Diseñar nombre y logo para la aplicación.
+* Crear favicon.ico.
+* Todas las páginas tendrán un header y un footer.
+
+===== R05: Pàgina Home
+* Diseñar la página de inicio como punto de entrada.
+* Mostrar lista provisional de eventos con detalles.
+* Incluir un buscador y filtros por categoría.
+* Paginar y configurar la cantidad de registros por página.
+* Implementar pruebas funcionales y migraciones de base de datos.
+
+===== Notas Adicionales
+
+* Utilizar fuentes de inspiración como Material Design y Dribbble.
+* Mantener actualizada la documentación en la memoria.
+* Agregar enlaces a Figma para ejemplos visuales.
+
+
+
+==== Tareas
+
+.Tareas Realizadas
+[options="header"]
+|====================
+| Tarea 3+^| Descripción
+| **R01: Definir Guía de Estilos de la Aplicación** 3+|
+"" 
+
+| **R02: Plantear la Estructura de la Base de Datos** 3+|
+"" 
+
+| **R03: Entorno de Despliegue en Isard** 3+|
+"Para implementar el despliegue en el entorno Isard, realizamos los siguientes pasos:
+
+Instalación de Apache2 y PHP:
+
+Actualiza la lista de paquetes e instala Apache2 y PHP.
+Configuración de Apache2:
+
+Permite el uso de archivos .htaccess y habilita el módulo rewrite.
+Despliegue del Proyecto desde Git:
+
+Clona el proyecto Laravel desde Git en /var/www/html.
+Instala las dependencias de Laravel y configura el archivo .env.
+Configuraciones Adicionales:
+
+Configura el host virtual de Apache2 para apuntar al directorio del proyecto Laravel." 
+
+| **R04: Diseño Principal** 3+|
+"" 
+
+| **R05: Página de Inicio** 3+|
+"" 
+|====================
+
+
+==== Valoración individual
+Valoración de la semana individual
+
+===== *Diego:*
+
+
+===== *Aitor:* 
+
+
+===== *Albert: Este sprint he estado sobretodo con la configuración de la maquina isard, además de esto junto con mis compañeros estuvimos decidiendo los estilos de la pagina y con esto creamos la guia de estilos* 
+
+=== Sprint 2
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 7 nuevas tareas del desarrollo de la aplicación:
+
+
+===== R06: Página Resultados de búsqueda
+
+Como usuario no registrado:
+- Navegar por la página.
+- Mostrar resultados aplicando un filtro por categoría.
+- Mostrar resultados de una búsqueda.
+
+===== R07: Refactor Página Home
+
+Como usuario no registrado:
+- Navegar por la página.
+- Mostrar un único buscador compartido con la página de resultados.
+- Mostrar para cada categoría el título, un número determinado de eventos y el total desde la configuración de la aplicación.
+- Acceder a la página de resultados de búsqueda por categoría.
+
+===== R08: Página Home para Promotores
+
+Para Promotores:
+- Acceder a una área independiente con un enlace en la página principal y en el footer.
+- El enlace dirige a la página de login si no están autenticados, o a la página Home Promotor si lo están.
+
+===== R09: Página Login
+
+Para Promotores y Administradores:
+- Acceder al sistema mediante esta página.
+- Mostrar la página Home Promotor después del login.
+- Mostrar siempre el usuario logado.
+- Acceder a la página de perfil de usuario (en futuros sprints).
+- Habilitar la opción de cerrar sesión (Sign out).
+
+===== R10: Cerrar Sesión
+
+Para Promotores y Administradores:
+- Eliminar variables de sesión.
+- Considerar limpieza de cookies, local storage, etc.
+- Redireccionar a la página Home de promotores.
+
+===== R11: Olvidé la Contraseña
+
+- Acceder desde la página de login.
+- Enviar un email con un enlace único y caducidad de 1 hora.
+- Redirigir a una página para cambiar la contraseña.
+- Mostrar requisitos y dar retroalimentación.
+- Configurar el tiempo de caducidad desde el archivo de configuración.
+
+===== R12: Página Crear Esdeveniment
+
+Para Promotores:
+- Crear eventos con título, categoría, dirección, imagen principal, descripción, fecha y hora, aforo máximo, entradas y más.
+- Permitir seleccionar o añadir nuevas direcciones.
+- Mostrar enlace "ver mapa" después de publicar el evento.
+- Configurar cierre de venta online.
+- Opción para ocultar el evento.
+- Opción para entradas nominales.
+
+.Tareas Realizadas
+[options="header"]
+|====================
+| Tarea 3+^| Descripción
+
+| R06: Página Resultados de búsqueda 3+| ""
+
+| R07: Refactor Página Home 3+| ""
+
+| R08: Página Home para Promotores 3+| ""
+
+| R09: Página Login 3+| "
+Implementación del Login en Laravel:
+Configuración del Modelo y Migración:
+
+Asegúrate de tener el modelo User y su migración.
+Rutas de Autenticación:
+
+Utiliza Auth::routes(); para habilitar las rutas predefinidas de autenticación.
+Protección de Rutas:
+
+Emplea el middleware auth en los controladores para proteger las rutas que requieren autenticación.
+Personalización de Vistas:
+
+Adapta las vistas en resources/views/auth según tus necesidades específicas."
+
+| R10: Cerrar Sesión 3+| "Implementación del Logout en Laravel:
+Ruta para el Logout:
+
+Crea una ruta que apunte al método logout en el controlador LoginController.
+Enlace de Logout:
+
+Agrega un enlace en la vista que dirija a la ruta de logout."
+
+| R11: Olvidé la Contraseña 3+| "Implementación de la Recuperación de Contraseña con Mailtrap en Laravel:
+Configuración del Servicio de Correo:
+
+Configura .env con las credenciales de Mailtrap.
+Personalización de Configuración de Correo:
+
+Ajusta config/mail.php para utilizar la configuración de Mailtrap.
+Generación del Controlador para Reset de Contraseña:
+
+Añadir Rutas Necesarias:
+
+En routes/web.php, agrega rutas para reset de contraseña.
+Creación de Vistas:
+
+Personaliza las vistas en resources/views/auth/passwords según tus necesidades.
+Personalización del Correo de Reset de Contraseña:
+
+Edita resources/views/auth/passwords/email.blade.php para personalizar el correo de reset.
+Configuración de Notificación de Reset de Contraseña:
+
+Asegúrate de que el modelo User utilice el trait Notifiable para recibir notificaciones." 
+
+| R12: Página Crear Esdeveniment | ""
+
+|====================
+
+==== Valoración individual
+Valoración de la semana individual
+
+===== *Diego:*
+
+
+===== *Aitor:* 
+
+
+===== *Albert: Este sprint he estado con el desarrollo tanto visual como funcional de todo el sistema de autenticación de usuario* 
+
+=== Sprint 3
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 4 nuevas tareas del desarrollo de la aplicación:
+
+===== R13: Añadir múltiples sesiones a un evento
+
+- Permite agregar nuevas fechas (sesiones) a un evento existente.
+- La creación de una nueva sesión implica duplicar los datos de la sesión por defecto, como la fecha y hora, aforo máximo, tipos de entradas y precios.
+- Muestra los datos duplicados en modo edición para realizar cambios si es necesario.
+- Permite gestionar los tipos de entrada de manera independiente para cada sesión.
+- Solo disponible para los promotores de eventos.
+
+===== R14: Página resumen Lista de sesiones abiertas
+
+- Muestra la lista de sesiones abiertas del promotor.
+- Ordenadas por fecha, priorizando las más cercanas.
+- Para cada sesión, se muestra la imagen principal, título, fecha y estado de ventas de entradas.
+- Acceso a detalles de evento, administración y listados de entradas de cada sesión.
+- Enlace temporal desde la página principal de promotores.
+
+===== R15: Página Administrar eventos
+
+- Disponible en la página principal de promotores.
+- Lista de eventos con información básica y opciones para editar.
+
+===== R16: Página mostrar evento
+
+- Muestra el nombre, fotos, descripción e información del lugar del evento.
+- Calendario para las sesiones si hay más de una.
+- La selección de una sesión muestra la lista de entradas disponibles.
+- Seleccionar cantidad de entradas por tipo y calcular el precio total.
+- El botón "comprar" redirige a la Pantalla de confirmación de compra (Pendiente).
+
+.Tareas Realizadas
+[options="header"]
+|====================
+| Tarea 3+^| Descripción
+
+| R13: Añadir múltiples sesiones a un evento 3+| ""
+
+| R14: Página resumen Lista de sesiones abiertas 3+| ""
+
+| R15: Página Administrar eventos 3+| ""
+
+| R16: Página mostrar evento 3+| "Para realizar esta página primero debemos recivir todos los datos del evento, que son sus propios datos "
+
+|====================
+
+==== Valoración individual
+Valoración de la semana individual
+
+===== *Diego:*
+
+
+===== *Aitor:* 
+
+
+===== *Albert: Este sprint principalmente he estado con el desarrollo de la pagina de detalles del evento, haciendo que se puedan ver imagenes, el nombre y descripción del evento, las sesiones y la locación.
+
+Además también estuve haciendo la pantalla de home promotor para que se pudiesen ver los eventos de cada usuario y mejorar el aspecto visual.* 
+
+== Lineas futuras.
+== Conclusiones
+
+=== Desviaciones en la Planificación
+
+Se revisarán las desviaciones en el plan inicial del proyecto y se proporcionarán explicaciones para las diferencias.
+
+=== Aportaciones del Proyecto a los Conocimientos del Alumno
+
+Se resaltarán las aportaciones significativas del proyecto al desarrollo de los conocimientos de los miembros del equipo.
+
+== Glosario
+
+Se proporcionará un listado de términos técnicos con sus definiciones.
+
+== Webgrafía
+
+Se citarán las fuentes web utilizadas en el desarrollo del proyecto.
+
+== Otros Recursos de Consulta
+
+Se incluirán otros recursos utilizados como libros, artículos, etc.
+
+== Presentación del Proyecto
+
+Se preparará una presentación breve del proyecto para compartir con la audiencia.

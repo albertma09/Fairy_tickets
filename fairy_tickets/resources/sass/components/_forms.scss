@@ -1,0 +1,27 @@
+.default-form {
+    @include flex-container(row, wrap);
+    padding: 4rem;
+    div {
+        padding: 1.2rem;
+        &.input-unit {
+            @include flex-container(column);
+        }
+        &.row-unit {
+            @include flex-container();
+        }
+        &.container-quarter {
+            width: 25%;
+        }
+        &.container-half {
+            width: 50%;
+        }
+        &.container-full {
+            width: 100%;
+        }
+    }
+    input,
+    select {
+        padding: 0.6rem;
+        border-radius: 4px;
+    }
+}

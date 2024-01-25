@@ -1,0 +1,80 @@
+/* Estilos generales para la barra de desplazamiento */
+/* Para navegadores WebKit (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de desplazamiento */
+    &-track {
+        background-color: $col-oscuro-2; /* Color de fondo del riel */
+    }
+    &-thumb {
+        background-color: $col-brand; /* Color del mango */
+        border-radius: 6px; /* Radio de esquinas del mango */
+    }
+    &-button {
+        display: none; /* Oculta los botones */
+    }
+}
+
+/* Estilo del riel (pista) de la barra de desplazamiento */
+::-ms-scrollbar {
+    width: 12px;
+    &-thumb {
+        background-color: $col-brand;
+        border-radius: 6px;
+    }
+    &-track {
+        background-color: $col-oscuro-2;
+    }
+    &-base {
+        display: none; /* Oculta la base de la barra de desplazamiento en IE */
+    }
+}
+
+/* Estilos adicionales para navegadores Firefox (no soportan -webkit-scrollbar)*/
+body {
+    scrollbar-color: $col-brand $col-oscuro-2; /* Establece el color de la barra de desplazamiento y el riel en Firefox */
+    scrollbar-width: thin; /* Establece el grosor de la barra de desplazamiento en Firefox */
+}
+
+.category-card{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 90%;
+    margin-bottom: 3rem;
+    &-data{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: $col-oscuro;
+        padding: 0.5rem 1rem;
+        &-name{
+            font-size: 250%;
+            font-weight: bold;
+        }
+        &-total{
+            display: flex;
+            flex-direction: column;
+            &-label{
+                text-align: center;
+                font-size: 80%;
+            }
+            &-number{
+                text-align: center;
+                font-size: 200%;
+                font-weight: bold;
+            }
+        }
+    }
+    &-events{
+        display: flex;
+        flex-direction: row;
+        min-height: 5rem;
+        overflow: auto;
+        margin-bottom: 1rem;
+    }
+    &-more{
+        display: flex;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,194 @@
+.centrado {
+  margin-top: 12.5%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .slider-container {
+    display: flex;
+    width: 100%;
+    height: 40vh;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+
+
+    img {
+      flex: 0 0 100%;
+      width: 100%;
+      object-fit: cover;
+      scroll-snap-align: center;
+    }
+  }
+
+  .container {
+    background-color: $col-oscuro;
+    color: $col-claro;
+    padding: 15px;
+    margin: 2.5vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: 769px) {
+      /* En pantallas de ordenador, ocupa el 80% del ancho */
+      width: 80%;
+      border-radius: 10px;
+    }
+
+    .sesiones-container {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      flex-direction: column;
+      align-content: center;
+
+
+      .sesion-card {
+        border: 1px solid $col-claro;
+        padding: 10px;
+        border-radius: 8px;
+        width: 50%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sesion-info {
+          margin: 0;
+          padding: 5px;
+        }
+      }
+    }
+  }
+
+
+
+
+  .popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $col-oscuro-2;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+
+    @media (min-width: 769px) {
+      /* En pantallas de ordenador, ocupa el 80% del ancho */
+      width: 80vw;
+      border-radius: 10px;
+    }
+  }
+
+  .popup-content {
+    background: $col-oscuro-2;
+    padding: 20px;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 5rem 1fr;
+    overflow-y: scroll;
+    justify-items: center;
+
+    @media (min-width: 769px) {
+      /* En pantallas de ordenador, ocupa el 80% del ancho */
+      width: 80vw;
+      border-radius: 10px;
+    }
+
+  }
+
+  .close-popup {
+    position: absolute;
+    color: $col-claro;
+    top: 5px;
+    right: 25px;
+    font-size: 40px;
+    cursor: pointer;
+
+    &:hover {
+      color: $col-contraste;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  #ticket-types-container {
+    display: grid;
+    grid-gap: 1.5rem;
+    justify-content: center;
+    /* height: 50%; */
+    max-height: 90%;
+    overflow: scroll;
+    padding: 0 1rem;
+  }
+
+  .ticket-container {
+    background-color: $col-oscuro;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    width: 85vw;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @media (min-width: 769px) {
+      width: 60vw;
+      border-radius: 10px;
+    }
+  }
+
+  .information-container {
+    display: grid;
+    justify-items: center;
+    align-items: start;
+    width: 50vw;
+    font-size: 1.5rem;
+
+    &>p:first-child {
+      font-size: 2.5rem;
+    }
+
+
+  }
+
+  .buy-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 1fr;
+    width: 20vw;
+    align-items: center;
+    justify-items: center;
+
+    &>*:first-child {
+      font-size: 2rem;
+      grid-row: 2;
+      text-align: center;
+      background-color: $col-oscuro-2;
+      color: $col-brand;
+      border: solid 2px;
+      border-radius: 4px;
+    }
+  }
+
+  #final-price {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,38 @@
+/* Formato inicial de fuente para el sitio web */
+html {
+    font-family: $sourcesans;
+    font-size: 16px;
+    color: $col-claro;
+
+    @include respond-to(768px) {
+        font-size: 18px;
+    }
+}
+
+.titulo {
+    &-brand {
+        font-family: $fjalla;
+        font-size: 70px;
+    }
+}
+
+h2{
+    font-family: $fjalla;
+}
+
+a,
+.text-link {
+    color: $col-brand;
+    text-decoration: none;
+    &:hover {
+        color: $col-claro;
+    }
+}
+
+button {
+    font-size: 16px;
+
+    @include respond-to(768px) {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,42 @@
+// mixin para los breakpoints de la pantalla
+// 768px tablet
+// 1024px desktop
+@mixin respond-to($breakpoint) {
+    @media screen and (min-width: $breakpoint) {
+        @content;
+    }
+}
+
+// mixin que define texto o iconos oscuros
+@mixin dark-bg {
+    color: $col-claro;
+    background-color: $col-oscuro;
+}
+// mixin que define texto o iconos sobre fondo brand
+@mixin brand-bg {
+    color: $col-brand;
+    background-color: $col-oscuro;
+}
+
+// mixin que define el tamaño de los botones con iconos
+@mixin icon-button-size {
+    height: 2rem;
+    max-width: 2rem;
+    i {
+        font-size: 1.5rem;
+    }
+}
+
+@mixin card-shape {
+    border-radius:8px;
+    box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.6);
+}
+
+// mixin que define contenedores flex, recibe por parámetro la disposición y si hace wrap o no
+// dónde disposition es row o column
+// dónde behaviour es wrap o no wrap
+@mixin flex-container($disposition: row, $behaviour: nowrap) {
+    display: flex;
+    flex-direction: $disposition;
+    flex-wrap: $behaviour;
+}
