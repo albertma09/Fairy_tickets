@@ -39,6 +39,8 @@ class Event extends Model
     public static function getEventsBySearching($item)
     {
         try {
+            Log::info('Llamada al método Event.getEventsBySearching');
+
             $events = DB::table('events')
                 ->join('locations', 'events.location_id', '=', 'locations.id')
                 ->join('sessions', 'events.id', '=', 'sessions.event_id')
@@ -61,6 +63,8 @@ class Event extends Model
     public static function getEventsByCategory($item)
     {
         try {
+            Log::info('Llamada al método Event.getEventsByCategory');
+
             $events = DB::table('events')
                 ->join('categories','categories.id','=','events.category_id')
                 ->join('locations', 'events.location_id', '=', 'locations.id')

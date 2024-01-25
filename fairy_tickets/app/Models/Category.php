@@ -45,6 +45,7 @@ class Category extends Model
                         ->get();
                     $categories = $categories->toArray();
                     $categorieswhitEvents = $categories;
+                    // dd($categorieswhitEvents);
                 } else {
                     $categories = DB::table(DB::raw('(SELECT DISTINCT ON (event) e.id, e.name as event, c.name as category, s.date, tt.price
                     FROM events e
@@ -62,6 +63,7 @@ class Category extends Model
                     $categorieswhitEvents = array_merge($categorieswhitEvents, $categories);
                 }
             }
+            // dd($categorieswhitEvents);
             return $categorieswhitEvents;
         } catch (Exception $e) {
             Log::debug($e->getMessage());
