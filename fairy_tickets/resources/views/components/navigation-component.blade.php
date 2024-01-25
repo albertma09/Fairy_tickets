@@ -28,4 +28,5 @@
         <button class="button  button-icon" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
     </div>
     <x-category-filter-component />
+    <x-modal-component/>
 </nav>
