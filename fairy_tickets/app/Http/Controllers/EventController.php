@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Location;
+use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -13,7 +14,9 @@ class EventController extends Controller
 {
     public function showCreateForm()
     {
-        return view('events.create');
+       $userLocations = Location::getLocationsByUser();
+       $categories = Category::getCategories();
+        return view('events.create', ['locations' => $userLocations, 'categories' => $categories]);
     }
 
     public function searchBySearchingItem(Request $request): View
@@ -115,47 +118,37 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
-        // Validación de la información del formulario
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'category' => 'required|in:cine,conferencia,danza,musica,teatro',
-            'addressType' => 'required|in:existing,new',
-            'address' => $request->input('addressType') == 'existing' ? 'required_if:addressType,existing' : 'nullable',
-            'locationName' => 'required_if:addressType,new|string',
-            'locationCapacity' => 'required_if:addressType,new|integer',
-            'locationProvince' => 'required_if:addressType,new|string',
-            'locationCity' => 'required_if:addressType,new|string',
-            'locationStreet' => 'required_if:addressType,new|string',
-            'locationNumber' => 'required_if:addressType,new|string',
-            'locationCP' => 'required_if:addressType,new|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string',
-            'eventDatetime' => 'required|date',
-            'sessionMaxCapacity' => 'required|integer',
-            'onlineSaleClosure' => 'required|in:0,1,2,custom',
-            'onlineClosureDatetime' => 'required_if:onlineSaleClosure,custom|date',
-            'hidden_event' => 'boolean',
-            'named_tickets' => 'boolean',
-        ]);
+        try {
+            log::info('Llamada al método EventController.store');
+            // Validación de la información del formulario
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'category_id' => 'required|integer',
+                'location_id' => 'required|integer',
+                'user_id' => 'required|integer',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'description' => 'required|string',
+                'sessionDatetime' => 'required|date',
+                'sessionMaxCapacity' => 'required|integer',
+                'onlineSaleClosure' => 'required|in:0,1,2,custom',
+                'customSaleClosure' => 'nullable|required_if:onlineSaleClosure,custom|date',
+                'hidden' => 'sometimes|nullable|accepted',
+                'named_tickets' => 'sometimes|nullable|accepted',
+            ]);
 
-        if ($validatedData['addressType'] == 'new') {
-            // Save the new address to the database (assuming you have an Address model)
-            // Adjust this part based on your actual database structure
-            $newAddress = Location::create(['address' => $validatedData['address']]);
-            $validatedData['address_id'] = $newAddress->id;
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('public/img/covers');
+                $fileName = basename($imagePath);
+                $validatedData['image'] = $fileName;
+            } else {
+                throw New Exception('No es un archivo de imagen válido o está vacío.');
+            }
+
+            // Se guarda en base de datos y recogemos la id
+            $eventId = Event::createEvent($validatedData);
+            return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
         }
-
-        // Store the event in the database
-        $event = Event::create($validatedData);
-
-        // Handle image upload if applicable
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('event_images', 'public');
-            $event->image = $imagePath;
-            $event->save();
-        }
-
-        return redirect()->route('events.create')->with('success', 'Event created successfully!');
     }
 }

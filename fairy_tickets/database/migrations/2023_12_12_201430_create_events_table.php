@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->boolean('hidden');
-            $table->boolean('nominal_tickets');
+            $table->text('image');
 
 
             $table->timestamps();

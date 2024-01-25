@@ -20,7 +20,7 @@ export const setupCustomiseOnlineClosureToggle = () => {
             "hidden",
             !isCustomDateRadioChecked(radioGroup)
         );
-    
+
         // Listeners para cambiar el estado cuando haya un cambio
         radioGroup.forEach((radio) => {
             radio.addEventListener("change", () => {
@@ -30,56 +30,61 @@ export const setupCustomiseOnlineClosureToggle = () => {
                 );
             });
         });
-        
+    }
+};
+
+// Función que pasa al controlador la id de una ubicación y espera sus datos
+const fetchLocationData = async (locationId) => {
+    try {
+        const response = await fetch(`/Location/fetch?id=${locationId}`);
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.error("Error fetching location data:", error);
+    }
+};
+
+// Función que asigna un valor y un valor máximo al input de capacida de sesión
+// según la capacidad que se le pasa
+const changeSessionMaxCap = (capacity) => {
+    const maxCapInput = document.getElementById("sessionMaxCapacity");
+    maxCapInput.value = capacity;
+    maxCapInput.max = capacity;
+};
+
+// Función que después de buscar los datos de la ubicación seleccionada
+// llama la función que cambia la capacidad máx de sesión.
+const assignMaxCapOnAddressChange = async (addressSelect) => {
+    if (!isNaN(addressSelect.value)) {
+    const locationData = await fetchLocationData(addressSelect.value);
+    const capacity = locationData[0].capacity;
+    changeSessionMaxCap(capacity);
     }
 };
 
 // Función que realiza el cambio de visibilidad según el radio seleccionado
-export const handleAddressTypeChange = (
-    existingAddressRadio,
-    newAddressRadio,
-    newAddressDialog
-) => {
+const handleNewAddress = (newAddressDialog, addressSelect) => {
     // Comprueba qué botón radio está seleccionado y cambia la visibilidad con la clase hidden
-    if (existingAddressRadio.checked) {
-        newAddressDialog.close();
-    } else if (newAddressRadio.checked) {
+
+    if (addressSelect.value === "new") {
         newAddressDialog.showModal();
+    } else {
+        newAddressDialog.close();
     }
 };
 
 // Función inicial que establece los listeners
 export const setupAddressFormToggle = () => {
-    // Getters de los botones y los containers
-    const existingAddressRadio = document.getElementById("existingAddress");
-    const newAddressRadio = document.getElementById("newAddress");
+    // Getters del select y los containers
+    const addressSelect = document.getElementById("addressId");
     const newAddressDialog = document.getElementById("newLocationDialog");
 
-    // Si existen lanza las funcionalidades, por si no estamos en esa página
-    if (existingAddressRadio && newAddressRadio && newAddressDialog) {
-        // Listeners para los radios
-        if (existingAddressRadio && newAddressRadio) {
-            existingAddressRadio.addEventListener("change", () => {
-                handleAddressTypeChange(
-                    existingAddressRadio,
-                    newAddressRadio,
-                    newAddressDialog
-                );
-            });
-            newAddressRadio.addEventListener("change", () => {
-                handleAddressTypeChange(
-                    existingAddressRadio,
-                    newAddressRadio,
-                    newAddressDialog
-                );
-            });
-        }
-
-        // Lanza el estado inicial según se cargue la página
-        handleAddressTypeChange(
-            existingAddressRadio,
-            newAddressRadio,
-            newAddressDialog
-        );
+    // Si existen añade el listener las funcionalidades, por si no estamos en esa página
+    if (addressSelect && newAddressDialog) {
+        addressSelect.addEventListener("change", () => {
+            handleNewAddress(newAddressDialog, addressSelect);
+            assignMaxCapOnAddressChange(addressSelect);
+        });
     }
 };

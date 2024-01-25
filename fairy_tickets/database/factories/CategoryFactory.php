@@ -17,16 +17,17 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         $categoryNames = [
-            'cine',
-            'comedia',
-            'conferencia',
-            'danza',
-            'hogar',
-            'moda',
-            'musica',
-            'opera',
-            'salud',
-            'teatro',
+            'Cine',
+            'Comedia',
+            'Conferencia',
+            'Danza',
+            'Exposición',
+            'Moda',
+            'Musica',
+            'Opera',
+            'Salud',
+            'Teatro',
+            'Feria',
             
         ];
 

@@ -19,6 +19,7 @@ const initializeEventForm = () => {
     setupCustomiseOnlineClosureToggle();
 };
 
+
 // Event listener del evento 'resize' de la ventana
 window.addEventListener("resize", delayedCloseMenuOnResize);
 

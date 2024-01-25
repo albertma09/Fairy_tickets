@@ -79,3 +79,6 @@ Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->
 Route::fallback(function () {
     return ('Opps!!');
 });
+
+// Rutas para peticiones asíncronas
+Route::get('/Location/fetch', [LocationController::class, 'showLocation']);

@@ -14,7 +14,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'date', 'hour', 'hidden', 'nominal_tickets'];
+    protected $fillable = ['user_id', 'category_id', 'location_id', 'name', 'description', 'hidden', 'image'];
 
     public function category(): BelongsTo
     {
@@ -103,4 +103,28 @@ class Event extends Model
 
         return $events;
     }
+
+    public static function createEvent(array $formData)
+    {
+        try {
+            log::info("Llamada al método Event.createEvent");
+            // Separamos los datos de los eventos y de las sesiones
+            $eventData = $formData;
+            unset($eventData['sessionDatetime']);
+            unset($eventData['sessionMaxCapacity']);
+            unset($eventData['onlineSaleClosure']);
+            unset($eventData['customSaleClosure']);
+            unset($eventData['nominal_tickets']);
+            $eventData['hidden'] = (bool) ($eventData['hidden'] ?? false);
+
+            // Crea el evento y guarda la id
+            $event = Event::create($eventData);
+            $eventId = $event->id;
+
+            $sessionId = Session::createSession($eventId, $formData);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
+    }
+
 }

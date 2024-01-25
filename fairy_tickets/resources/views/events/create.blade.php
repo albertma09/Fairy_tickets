@@ -10,41 +10,34 @@
             <!-- Título del evento -->
             <div class="input-unit">
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" name="name" required />
             </div>
 
             <!-- Categoría -->
             <div class="input-unit">
                 <label for="category">Categoría</label>
-                <select id="category" name="category" required>
-                    <option value="cine">Cine</option>
-                    <option value="conferencia">Conferencia</option>
-                    <option value="danza">Danza</option>
-                    <option value="musica">Musica</option>
-                    <option value="teatro">Teatro</option>
+                <select id="category" name="category_id" required>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
                 </select>
             </div>
 
-            <div class="container-full">
-                <p>Primero elige si quieres seleccionar una de las ubicaciones usadas con anterioridad o añadir una
-                    nueva:
-                </p>
-                <div class="row-unit">
-                    <input type="radio" id="existingAddress" name="addressType" value="existing" checked>
-                    <label for="existingAddress">Ubicación ya existente</label>
-                </div>
-                <div class="row-unit">
-                    <input type="radio" id="newAddress" name="addressType" value="new">
-                    <label for="newAddress">Nueva dirección</label>
-                </div>
-            </div>
             <div id="existingAddressContainer" class=" input-unit container-full">
-                <label for="addressId">Selecciona una dirección</label>
-                <select name="addressId" id="addressId">
-                    <option value=""></option>
+                <label for="addressId">Dirección del evento</label>
+                <select name="location_id" id="addressId">
+                    <option value="">Selecciona una opción</option>
+                    <option value="new">Añadir nueva dirección</option>
+                    @foreach ($locations as $location)
+                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                    @endforeach
+                    @if (session('newLocation') == !null)
+                        <option value="{{ session('newLocation')['id'] }}" selected>{{ session('newLocation')['name'] }}
+                        </option>
+                    @endif
                 </select>
             </div>
-
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
             <!-- Imagen Principal -->
             <div class="input-unit">
                 <label for="image">Imagen principal del evento</label>
@@ -56,6 +49,36 @@
                 <label for="description">Descripción del evento</label>
                 <textarea id="description" name="description" rows="4"></textarea>
             </div>
+
+            <fieldset>
+                <legend>Primera sesión del evento</legend>
+                <!-- Fecha y hora de la celebración del evento-->
+            <div class="input-unit">
+                <label for='datetime'>Fecha y hora del evento</label>
+                <input type="datetime-local" id="datetime" name="sessionDatetime" required />
+            </div>
+
+            <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
+            {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
+            <!-- Aforo máximo -->
+            <div class="input-unit">
+                <label for="sessionMaxCapacity">Limitación de aforo (por defecto, la capacidad máxima del recinto) </label>
+                <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
+                    value="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
+                    max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
+            </div>
+
+            <!-- Entradas nominales -->
+            <div class="row-unit">
+                <input type="checkbox" id="named_tickets" name="named_tickets" />
+                <label for="named_tickets">Entradas nominales</label>
+
+            </div>
+            <!-- Agregar elementos de formulario dinámicos para fechas/horas y capacidades adicionales -->
+
+            <!-- Entradas -->
+            <!-- Agregar elementos de formulario dinámicos para tipos de entrada -->
+
             <!-- Cierre de la venta en línea -->
             <fieldset>
                 <legend>Cierre de la venta online
@@ -85,54 +108,21 @@
                 <div class="input-unit" id="customClosureDatetimeContainer">
                     <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de la
                         venta online</label>
-                    <input type="datetime-local" id="onlineClosureDatetime" name="onlineClosureDatetime">
+                    <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure" value="">
                 </div>
             </fieldset>
 
+            </fieldset>
+            
 
             <!-- Evento oculto -->
             <div class="row-unit">
-                <input type="checkbox" id="hidden_event" name="hidden_event">
+                <input type="checkbox" id="hidden_event" name="hidden" />
                 <label for="hidden_event">Ocultar evento</label>
 
             </div>
 
-            <!-- Entradas nominales -->
-            <div class="row-unit">
-                <input type="checkbox" id="named_tickets" name="named_tickets">
-                <label for="named_tickets">Entradas nominales</label>
-
-            </div>
-
-        </div>
-        <div class="container-half">
-            <fieldset>
-                <legend>Información de sesión</legend>
-
-                <!-- Fecha y hora de la celebración del evento-->
-                <div class="input-unit">
-                    <label for="eventDatetime">Fecha y hora del evento</label>
-                    <input type="datetime-local" id="eventDatetime" name="eventDatetime">
-                </div>
-
-                <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
-                {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
-                <!-- Aforo máximo -->
-                <div class="input-unit">
-                    <label for="sessionMaxCapacity">Limitación de aforo (sesión) </label>
-                    <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity">
-                </div>
-
-                <!-- Agregar elementos de formulario dinámicos para fechas/horas y capacidades adicionales -->
-
-                <!-- Entradas -->
-                <!-- Agregar elementos de formulario dinámicos para tipos de entrada -->
-
-            </fieldset>
-        </div>
-
-
-        <button class="button button-brand" type="submit">Crear Evento</button>
+            <button class="button button-brand" type="submit">Crear Evento</button>
     </form>
     @if (session('success'))
         <dialog id="successDialog">
@@ -145,14 +135,14 @@
     @endif
 
     @if (session('error'))
-    <dialog id="errorDialog">
-        <div class="alert alert-danger">
-            <h3>¡Atención!</h3>
-            {{ session('error') }}
-        </div>
-        <button class="button button-brand close-dialog-button">Ok</button>
+        <dialog id="errorDialog">
+            <div class="alert alert-danger">
+                <h3>¡Atención!</h3>
+                {{ session('error') }}
+            </div>
+            <button class="button button-brand close-dialog-button">Ok</button>
 
-    </dialog>
+        </dialog>
     @endif
     <dialog id="newLocationDialog">
         <button class="button button-danger close-dialog-button">X</button>

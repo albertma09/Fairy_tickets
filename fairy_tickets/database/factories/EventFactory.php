@@ -22,11 +22,8 @@ class EventFactory extends Factory
             'user_id' => fake()->numberBetween(1, 2),
             'name' => fake()->catchPhrase(),
             'description' => fake()->paragraph,
-            // 'price' => fake()->randomFloat(2, 1, 1000),
-            // 'date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
-            // 'hour' => fake()->time($format = 'H:i:s', $min = 'now'),
             'hidden' => fake()->boolean(10),
-            'nominal_tickets' => fake()->boolean(20),
+            'image' => "",
         ];
     }
 }

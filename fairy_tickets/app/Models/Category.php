@@ -69,6 +69,19 @@ class Category extends Model
     }
 
 
+    public static function getCategories()
+    {
+        try {
+            Log::info("Llamada al método Category.getCategories");
+
+            $cat = DB::table('categories')
+                ->select('categories.id','categories.name')
+                ->get();
+            return $cat;
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
+    }
     public static function getTotalCategories()
     {
         try {
