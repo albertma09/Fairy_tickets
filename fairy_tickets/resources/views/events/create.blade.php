@@ -6,7 +6,7 @@
 
     <form class="default-form" action="{{ route('events.store') }}" method ="POST" enctype="multipart/form-data">
         @csrf
-        <div class="container-half">
+        <div class="container-full">
             <!-- Título del evento -->
             <div class="input-unit">
                 <label for="title">Título del evento</label>
@@ -117,24 +117,35 @@
             </fieldset>
 
             <fieldset>
-                <legend>Tipo de entrada inicial</legend>
-                <div class="input-unit">
-                    <label for="ticketDescription">Nombre del tipo de entrada</label>
-                    <input type="text" name="ticketDescription" id="ticketDescription" />
+                <legend>Clases de entrada</legend>
+                <p>En esta sección podrás definir cuántas clases de entrada tendrá la primera sesión de tu evento, así como
+                    su nombre y precio.
+                    También podrás poner una cantidad máxima de entradas a la venta.</p>
+                <small>Ten en cuenta que la suma total no
+                    podrá ser mayor que la capacidad máxima de tu sesión.</small>
+                <div>Añade un nuevo tipo de entrada
+                    <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i></button>
+                    <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i></button>
                 </div>
-                <div class="input-unit">
-                    <label for="">Precio</label>
-                    <div>
-                        <input type="text" name="precioEuros" min="0" max="9999" size="4" maxlength="4"
-                            title="Sólo puedes usar números" value="0" />
-                        . <input type="text" name="precioCentimos" min="0" max="99" size="2" maxlength="2"
-                            title="Sólo puedes usar números" value="00" />
-                        €
+                <div class="form-ticket-container" id="formTicketContainer">
+                    <div class="form-ticket-unit" id="formTicketUnit">
+                        <h4>Tipo de entrada 1</h4>
+                        <div class="input-unit">
+                            <label for="ticketDescription1">Nombre del tipo de entrada</label>
+                            <input type="text" name="ticketDescription[]" id="ticketDescription1" />
+                        </div>
+                        <div class="input-unit">
+                            <label for="price1">Precio</label>
+                            <input type="text" name="price[]" pattern="\d{1,4}(?:\,\d{2})?" title="Sólo puedes usar números, y máximo 4 numeros enteros." value="0" id="price1" placeholder="0000,00" />
+                        </div>
+                        <div class="input-unit">
+                            <label for="ticketQuantity1">Cantidad de entradas a la venta (opcional)</label>
+                            <input type="number" min="0"
+                                max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
+                                name="ticketQuantity[]" id="ticketQuantity1"
+                                title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
+                        </div>
                     </div>
-                </div>
-                <div class="input-unit">
-                    <label for="ticketQuantity">Cantidad de entradas a la venta (opcional)</label>
-                    <input type="number" min="0" max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}" name="ticketQuantity" id="ticketQuantity" title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
                 </div>
             </fieldset>
 

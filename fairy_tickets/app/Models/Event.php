@@ -107,7 +107,7 @@ class Event extends Model
     public static function createEvent(array $formData)
     {
         try {
-            log::info("Llamada al método Event.createEvent");
+            Log::info("Llamada al método Event.createEvent");
             // Separamos los datos de los eventos y de las sesiones
             $eventData = $formData;
             unset($eventData['sessionDatetime']);
@@ -122,6 +122,7 @@ class Event extends Model
             $eventId = $event->id;
 
             $sessionId = Session::createSession($eventId, $formData);
+            TicketType::createTicketType($sessionId, $formData);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
         }

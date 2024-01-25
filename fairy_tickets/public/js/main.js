@@ -4,6 +4,7 @@
 import {
     setupAddressFormToggle,
     setupCustomiseOnlineClosureToggle,
+    setupAddRemoveTicketTypes,
 } from "./modules/eventForm.js";
 import {
     addMenuFunctionalities,
@@ -17,6 +18,7 @@ import { ticketSalesModalSetup } from './modules/modals.js';
 const initializeEventForm = () => {
     setupAddressFormToggle();
     setupCustomiseOnlineClosureToggle();
+    setupAddRemoveTicketTypes();
 };
 
 

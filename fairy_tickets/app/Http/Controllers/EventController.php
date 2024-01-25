@@ -134,6 +134,10 @@ class EventController extends Controller
                 'customSaleClosure' => 'nullable|required_if:onlineSaleClosure,custom|date',
                 'hidden' => 'sometimes|nullable|accepted',
                 'named_tickets' => 'sometimes|nullable|accepted',
+                'ticketDescription' => 'required|string',
+                'precioEuros' => 'required|numeric|min:0|max:9999',
+                'precioCentimos' => 'required|numeric|min:0|max:99',
+                'ticketQuantity' => 'required|nullable|integer|min:0|lte:sessionMaxCapacity', // La cantidad de tickets no puede ser superior a la capacidad máx de la sesión
             ]);
 
             if ($request->hasFile('image')) {
