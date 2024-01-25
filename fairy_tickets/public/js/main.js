@@ -11,7 +11,7 @@ import {
 } from "./modules/navigation.js";
 import { commonButtonsSetup } from "./modules/buttons.js";
 
-import { openModal } from './modules/popup.js';
+import { ticketSalesModalSetup } from './modules/modals.js';
 
 // Función que inicializa las funcionalidades para el eventform
 const initializeEventForm = () => {
@@ -51,5 +51,5 @@ document.addEventListener("DOMContentLoaded", function () {
     addMenuFunctionalities();
     initializeEventForm();
     commonButtonsSetup();
-    openModal();
+    ticketSalesModalSetup();
 });

@@ -53,67 +53,90 @@
             <fieldset>
                 <legend>Primera sesión del evento</legend>
                 <!-- Fecha y hora de la celebración del evento-->
-            <div class="input-unit">
-                <label for='datetime'>Fecha y hora del evento</label>
-                <input type="datetime-local" id="datetime" name="sessionDatetime" required />
-            </div>
-
-            <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
-            {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
-            <!-- Aforo máximo -->
-            <div class="input-unit">
-                <label for="sessionMaxCapacity">Limitación de aforo (por defecto, la capacidad máxima del recinto) </label>
-                <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
-                    value="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
-                    max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
-            </div>
-
-            <!-- Entradas nominales -->
-            <div class="row-unit">
-                <input type="checkbox" id="named_tickets" name="named_tickets" />
-                <label for="named_tickets">Entradas nominales</label>
-
-            </div>
-            <!-- Agregar elementos de formulario dinámicos para fechas/horas y capacidades adicionales -->
-
-            <!-- Entradas -->
-            <!-- Agregar elementos de formulario dinámicos para tipos de entrada -->
-
-            <!-- Cierre de la venta en línea -->
-            <fieldset>
-                <legend>Cierre de la venta online
-                </legend>
                 <div class="input-unit">
-                    <div class="row-unit">
-                        <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
-                            class="onlinesale-closure-radio" checked>
-                        <label for="withEvent">Hora de la celebración del evento</label>
-                    </div>
-                    <div class="row-unit">
-                        <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
-                            class="onlinesale-closure-radio">
-                        <label for="oneHBefore">Una hora antes de la celebración del evento</label>
-                    </div>
-                    <div class="row-unit">
-                        <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
-                            class="onlinesale-closure-radio">
-                        <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
-                    </div>
-                    <div class="row-unit">
-                        <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
-                            class="onlinesale-closure-radio">
-                        <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
-                    </div>
+                    <label for='datetime'>Fecha y hora del evento</label>
+                    <input type="datetime-local" id="datetime" name="sessionDatetime" required autofocus />
                 </div>
-                <div class="input-unit" id="customClosureDatetimeContainer">
-                    <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de la
-                        venta online</label>
-                    <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure" value="">
+
+                <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
+                {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
+                <!-- Aforo máximo -->
+                <div class="input-unit">
+                    <label for="sessionMaxCapacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
+                    </label>
+                    <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
+                        value="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
+                        max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
                 </div>
-            </fieldset>
+
+                <!-- Entradas nominales -->
+                <div class="row-unit">
+                    <input type="checkbox" id="named_tickets" name="named_tickets" />
+                    <label for="named_tickets">Entradas nominales</label>
+
+                </div>
+                <!-- Agregar elementos de formulario dinámicos para fechas/horas y capacidades adicionales -->
+
+                <!-- Entradas -->
+                <!-- Agregar elementos de formulario dinámicos para tipos de entrada -->
+
+                <!-- Cierre de la venta en línea -->
+                <fieldset>
+                    <legend>Cierre de la venta online
+                    </legend>
+                    <div class="input-unit">
+                        <div class="row-unit">
+                            <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
+                                class="onlinesale-closure-radio" checked>
+                            <label for="withEvent">Hora de la celebración del evento</label>
+                        </div>
+                        <div class="row-unit">
+                            <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
+                                class="onlinesale-closure-radio">
+                            <label for="oneHBefore">Una hora antes de la celebración del evento</label>
+                        </div>
+                        <div class="row-unit">
+                            <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
+                                class="onlinesale-closure-radio">
+                            <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
+                        </div>
+                        <div class="row-unit">
+                            <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
+                                class="onlinesale-closure-radio">
+                            <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
+                        </div>
+                    </div>
+                    <div class="input-unit" id="customClosureDatetimeContainer">
+                        <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de
+                            la
+                            venta online</label>
+                        <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure" value="">
+                    </div>
+                </fieldset>
 
             </fieldset>
-            
+
+            <fieldset>
+                <legend>Tipo de entrada inicial</legend>
+                <div class="input-unit">
+                    <label for="ticketDescription">Nombre del tipo de entrada</label>
+                    <input type="text" name="ticketDescription" id="ticketDescription" />
+                </div>
+                <div class="input-unit">
+                    <label for="">Precio</label>
+                    <div>
+                        <input type="text" name="precioEuros" min="0" max="9999" size="4" maxlength="4"
+                            title="Sólo puedes usar números" value="0" />
+                        . <input type="text" name="precioCentimos" min="0" max="99" size="2" maxlength="2"
+                            title="Sólo puedes usar números" value="00" />
+                        €
+                    </div>
+                </div>
+                <div class="input-unit">
+                    <label for="ticketQuantity">Cantidad de entradas a la venta (opcional)</label>
+                    <input type="number" min="0" max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}" name="ticketQuantity" id="ticketQuantity" title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
+                </div>
+            </fieldset>
 
             <!-- Evento oculto -->
             <div class="row-unit">
