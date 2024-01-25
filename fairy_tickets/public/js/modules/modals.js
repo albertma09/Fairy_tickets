@@ -13,42 +13,76 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
     const plus = document.createElement("i");
     const minusButton = document.createElement("button");
     const minus = document.createElement("i");
-    const numberOfTickets = document.createElement("p");
+    const numberOfTickets = document.createElement("input");
+    numberOfTickets.size = 1;
+    const addQuantityText = document.createElement("p");
+    addQuantityText.textContent = 'Ingresa la cantidad';
+    
+    // plus.classList.add("fas", "fa-plus");
+    // minus.classList.add("fas", "fa-minus");
+    // plusButton.appendChild(plus);
+    // minusButton.appendChild(minus);
+    // plusButton.classList.add("button", "button-brand");
+    // minusButton.classList.add("button", "button-danger");
+    
+    numberOfTickets.value = "0";
+    let selectedQuantity = 0;
+    // plusButton.addEventListener("click", function () {
+    //     // Incrementar el valor solo si no excede un límite (puedes ajustar este límite)
+    //     if (parseInt(numberOfTickets.value) < ticket.ticket_amount) {
+    //         numberOfTickets.value = String(
+    //             parseInt(numberOfTickets.value) + 1
+    //         );
+    //         const ticketPrice = parseFloat(ticket.price);
+    //         updateTotal(ticketPrice, finalPrice);
+    //     }
+    // });
 
-    plus.classList.add("fas", "fa-plus");
-    minus.classList.add("fas", "fa-minus");
-    plusButton.appendChild(plus);
-    minusButton.appendChild(minus);
-    plusButton.classList.add("button", "button-brand");
-    minusButton.classList.add("button", "button-danger");
+    // minusButton.addEventListener("click", function () {
+    //     // Decrementar el valor solo si no es menor que cero
+    //     if (parseInt(numberOfTickets.value) > 0) {
+    //         numberOfTickets.value = String(
+    //             parseInt(numberOfTickets.value) - 1
+    //         );
+    //         const ticketPrice = parseFloat(ticket.price);
+    //         updateTotal((-ticketPrice), finalPrice);
+    //     }
+    // });
 
-    numberOfTickets.textContent = "0";
+    const calculateTotal = (quantity) => {
+        return function() {
+            let newValue = parseInt(numberOfTickets.value);
+            if(isNaN(newValue)){
+                numberOfTickets.value = 0;
+                newValue = numberOfTickets.value;
+            }
+        
+        
+            if(numberOfTickets.value>ticket.ticket_amount){
+                numberOfTickets.value = ticket.ticket_amount;
+            }
+           
+            if(quantity<numberOfTickets.value){
+                const ticketPrice = (numberOfTickets.value-quantity) * ticket.price;
+                updateTotal((ticketPrice), finalPrice);
+            }else if(quantity>numberOfTickets.value){
+                const ticketPrice = (quantity-numberOfTickets.value) * ticket.price;
+                updateTotal((-ticketPrice), finalPrice);
+            }
 
-    plusButton.addEventListener("click", function () {
-        // Incrementar el valor solo si no excede un límite (puedes ajustar este límite)
-        if (parseInt(numberOfTickets.textContent) < ticket.ticket_amount) {
-            numberOfTickets.textContent = String(
-                parseInt(numberOfTickets.textContent) + 1
-            );
-            const ticketPrice = parseFloat(ticket.price);
-            updateTotal(ticketPrice, finalPrice);
-        }
-    });
+            quantity = parseInt(numberOfTickets.value); 
 
-    minusButton.addEventListener("click", function () {
-        // Decrementar el valor solo si no es menor que cero
-        if (parseInt(numberOfTickets.textContent) > 0) {
-            numberOfTickets.textContent = String(
-                parseInt(numberOfTickets.textContent) - 1
-            );
-            const ticketPrice = parseFloat(ticket.price);
-            updateTotal((-ticketPrice), finalPrice);
-        }
-    });
+           
+        
+        };
+    };
 
+    numberOfTickets.addEventListener("blur", calculateTotal(selectedQuantity));
+    
+    
     buyContainer.appendChild(numberOfTickets);
-    buyContainer.appendChild(plusButton);
-    buyContainer.appendChild(minusButton);
+    buyContainer.appendChild(addQuantityText);
+    // buyContainer.appendChild(minusButton);
 };
 
 const buildInfoContainer = (ticket, informationContainer) => {
@@ -101,28 +135,29 @@ export const ticketSalesModalSetup = () => {
         ticketTypesContainer &&
         finalPrice
     ) {
-        // Agregar evento de clic al botón "Comprar" para mostrar el menú emergente
+        
         document
             .querySelectorAll(".sesion-card .button-brand")
             .forEach((button) => {
                 button.addEventListener("click", function () {
-                    // Mostrar el menú emergente
+                   
                     popupContainer.style.display = "flex";
                     Object.entries(tickets).forEach(([ticketId, ticket]) => {
                         if (ticket.session_id == button.id) {
-                            // crear divs para almacenar la información
+                            
                             buildTicketContainer(ticket, ticketTypesContainer, finalPrice);
+                            
                         }
                     });
                 });
             });
 
-        // Agregar evento de clic al botón de cierre para ocultar el menú emergente
+        
         closePopupButton.addEventListener("click", function () {
             resetContainer(ticketTypesContainer, finalPrice, popupContainer);
         });
 
-        // Cerrar el menú emergente al hacer clic en el fondo oscuro
+        
         popupContainer.addEventListener("click", function (event) {
             if (event.target === popupContainer) {
                 resetContainer(
