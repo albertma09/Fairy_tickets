@@ -405,6 +405,7 @@ nav .filter-categories {
 .promotor-container .event-card .img {
   width: 90%;
   height: 70%;
+  display: flex;
 }
 .promotor-container .event-card .img img {
   flex: 0 0 100%;
