@@ -66,7 +66,7 @@ class Category extends Model
             // dd($categorieswhitEvents);
             return $categorieswhitEvents;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ class Category extends Model
                 ->get();
             return $cat;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
     public static function getTotalCategories()
@@ -97,7 +97,7 @@ class Category extends Model
                 ->get();
             return $cat;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }

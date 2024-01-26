@@ -24,14 +24,14 @@ class Location extends Model
     public static function getLocationById($id)
     {
         try {
-            Log::info('Llamada al método Location.getLocationById');
+            Log::info('Llamada al método Location.getLocationById',['Id_location',$id]);
 
             $location = Location::select('locations.id', 'locations.name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
                 ->where('locations.id', '=', $id)
                 ->get();
             return $location;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ class Location extends Model
 
             return $locations;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }

@@ -12,25 +12,24 @@ class PromotorController extends Controller
     public function mostrarPromotor($userId)
     {
         try {
-            Log::info("Llamada al metodo PromotorController.mostrarPromotor");
+            Log::info("Llamada al metodo PromotorController.mostrarPromotor", ['id_user' => $userId]);
             $events = Event::getEventsByUserId($userId);
             return view('home.promotor', ['events' => $events]);
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
     public function getSessionsByPromotor($id)
     {
-        
+
         try {
-            Log::info("Llamada al metodo PromotorController.getSessionsByPromotor");
+            Log::info("Llamada al metodo PromotorController.getSessionsByPromotor", ['id_promotor' => $id]);
             $sessions = Session::getAllSessionsByPromotor($id);
-            
+
             return view('home.sessions', ['sessions' => $sessions]);
-            
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }
