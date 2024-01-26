@@ -115,6 +115,9 @@ class Event extends Model
             unset($eventData['onlineSaleClosure']);
             unset($eventData['customSaleClosure']);
             unset($eventData['nominal_tickets']);
+            unset($eventData['ticketDescription']);
+            unset($eventData['price']);
+            unset($eventData['ticketQuantity']);
             $eventData['hidden'] = (bool) ($eventData['hidden'] ?? false);
 
             // Crea el evento y guarda la id

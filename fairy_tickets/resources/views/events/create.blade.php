@@ -10,7 +10,7 @@
             <!-- Título del evento -->
             <div class="input-unit">
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="name" required />
+                <input type="text" id="title" name="name" autofocus required />
             </div>
 
             <!-- Categoría -->
@@ -55,7 +55,7 @@
                 <!-- Fecha y hora de la celebración del evento-->
                 <div class="input-unit">
                     <label for='datetime'>Fecha y hora del evento</label>
-                    <input type="datetime-local" id="datetime" name="sessionDatetime" required autofocus />
+                    <input type="datetime-local" id="datetime" name="sessionDatetime" required />
                 </div>
 
                 <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->

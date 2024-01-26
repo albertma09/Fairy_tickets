@@ -14,8 +14,8 @@ class EventController extends Controller
 {
     public function showCreateForm()
     {
-       $userLocations = Location::getLocationsByUser();
-       $categories = Category::getCategories();
+        $userLocations = Location::getLocationsByUser();
+        $categories = Category::getCategories();
         return view('events.create', ['locations' => $userLocations, 'categories' => $categories]);
     }
 
@@ -116,6 +116,22 @@ class EventController extends Controller
         return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
     }
 
+    // Función
+    public static function checkSessionCapTicketAmount(int $sessionMaxCap, array $ticketAmounts): bool
+    {
+        try {
+            Log::info('Llamada al método EventController.checkSessionCapTicketAmount', ['session_max_cap' => $sessionMaxCap, 'ticket_amounts' => $ticketAmounts]);
+            $totalTickets = 0;
+            foreach ($ticketAmounts as $amount) {
+                $totalTickets += $amount;
+                Log::debug($amount);
+            }
+            return ($sessionMaxCap >= $totalTickets);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
     public function store(Request $request)
     {
         try {
@@ -134,10 +150,9 @@ class EventController extends Controller
                 'customSaleClosure' => 'nullable|required_if:onlineSaleClosure,custom|date',
                 'hidden' => 'sometimes|nullable|accepted',
                 'named_tickets' => 'sometimes|nullable|accepted',
-                'ticketDescription' => 'required|string',
-                'precioEuros' => 'required|numeric|min:0|max:9999',
-                'precioCentimos' => 'required|numeric|min:0|max:99',
-                'ticketQuantity' => 'required|nullable|integer|min:0|lte:sessionMaxCapacity', // La cantidad de tickets no puede ser superior a la capacidad máx de la sesión
+                'ticketDescription.*' => 'required|string',
+                'price.*' => 'required|numeric|min:0',
+                'ticketQuantity.*' => 'nullable|integer|min:0',
             ]);
 
             if ($request->hasFile('image')) {
@@ -145,14 +160,20 @@ class EventController extends Controller
                 $fileName = basename($imagePath);
                 $validatedData['image'] = $fileName;
             } else {
-                throw New Exception('No es un archivo de imagen válido o está vacío.');
+                throw new Exception('No es un archivo de imagen válido o está vacío.');
             }
 
-            // Se guarda en base de datos y recogemos la id
-            $eventId = Event::createEvent($validatedData);
-            return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
+            // Miramos si la cantidad de tickets total es válida
+            if ($this->checkSessionCapTicketAmount($validatedData['sessionMaxCapacity'], $validatedData['ticketQuantity'])) {
+                // Se guarda en base de datos el evento, la primera sesión y los tickets
+                Event::createEvent($validatedData);
+                return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
+            } else {
+                throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
+            }
         } catch (Exception $e) {
             Log::debug($e->getMessage());
+            dd($e->getMessage());
         }
     }
 }
