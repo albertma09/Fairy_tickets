@@ -18,7 +18,7 @@ class CategoryController extends Controller
             $events=Category::getCategorizablesCards();
             return view('home.index', ['events'=>$events,'categories' =>$categories]);
         }catch(Exception $e){
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }

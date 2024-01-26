@@ -30,7 +30,7 @@ class Session extends Model
     public static function getAllSessionsByPromotor($id)
     {
         try{
-            Log::info('Llamada al método Session.getAllSessionsByPromotor');
+            Log::info('Llamada al método Session.getAllSessionsByPromotor',['Id_promotor' => $id]);
             
             $sessions = DB::table('sessions')
             ->join('events', 'events.id', '=', 'sessions.event_id')
@@ -41,14 +41,14 @@ class Session extends Model
             Log::info('fin de la carga de sesiones por promotor');
         return $sessions;
         }catch(Exception $e){
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
         
     }
     public static function createSession(int $eventId, array $formData)
     {
         try {
-            log::info('Llamada al método Session.createSession');
+            log::info('Llamada al método Session.createSession', ['Id_evento'=>$eventId,'datos_formulario'=>$formData]);
             // Parseamos el datetime que nos llega
             $sessionDatetime = $formData['sessionDatetime'];
             $carbonDatetime = Carbon::parse($sessionDatetime);
