@@ -18,7 +18,7 @@ class LocationController extends Controller
             $location = Location::getLocationById($id);
             return $location;
         } catch (Exception $e) {
-            Log::error($e->getMessage());
+            Log::debug($e->getMessage());
             return redirect()->route('events.create')->with('error', '¡Atención! No se ha podido guardar la ubicación en nuestra base de datos.');
         }
     }
@@ -43,7 +43,7 @@ class LocationController extends Controller
                 return redirect()->route('events.create')->with('newLocation', $validatedData);
             }
         } catch (Exception $e) {
-            Log::error($e->getMessage());
+            Log::debug($e->getMessage());
             return redirect()->route('events.create')->with('error', '¡Atención! No se ha podido guardar la ubicación en nuestra base de datos.');
         }
     }

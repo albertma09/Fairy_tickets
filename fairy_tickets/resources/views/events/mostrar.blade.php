@@ -9,9 +9,6 @@
     {{-- @dd($tickets) --}}
 
     <div class="slider-container">
-        @foreach ($evento as $event)
-            <img class="slider-item" src="{{ asset('storage/img/covers/' . $event['image']) }}" />
-        @endforeach
 
         <img class="slider-item"
             src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
@@ -48,14 +45,7 @@
         @foreach ($evento as $event)
             <p>Ubicación: {{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
                 {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}</p>
-                <iframe width="600" height="450" frameborder="0" style="border:0"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
-            {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}">
-        </iframe>
         @endforeach
-        
-
-
     </div>
 
 
