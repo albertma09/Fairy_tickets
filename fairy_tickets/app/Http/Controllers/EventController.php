@@ -116,7 +116,7 @@ class EventController extends Controller
         return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
     }
 
-    // Función
+    // Función que comprueba que el total de tickets no sea mayor que el de la capacidad de la sesión
     public static function checkSessionCapTicketAmount(int $sessionMaxCap, array $ticketAmounts): bool
     {
         try {
@@ -132,10 +132,27 @@ class EventController extends Controller
         }
     }
 
+    // Función que cambia las comas por puntos, por si el input de precio es hecho en formato español
+    private function sanitizePriceValues(Request $request)
+    {
+        $priceValues = $request->input('price', []);
+
+        foreach ($priceValues as &$price) {
+            $price = str_replace(',', '.', $price); // Replace commas with dots
+        }
+
+        $request->merge(['price' => $priceValues]);
+    }
+
+
     public function store(Request $request)
     {
         try {
             log::info('Llamada al método EventController.store');
+
+            // Primero comprobamos que los precios lleguen bien
+            $this->sanitizePriceValues($request);
+
             // Validación de la información del formulario
             $validatedData = $request->validate([
                 'name' => 'required|max:255',
@@ -172,8 +189,8 @@ class EventController extends Controller
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
             }
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
-            dd($e->getMessage());
+            Log::error($e->getMessage());
+            return redirect()->route('events.create')->with('error', $e->getMessage())->withInput();
         }
     }
 }
