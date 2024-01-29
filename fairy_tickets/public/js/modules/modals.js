@@ -52,7 +52,7 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
     const calculateTotal = (quantity) => {
         return function() {
             let newValue = parseInt(numberOfTickets.value);
-            if(isNaN(newValue)){
+            if(isNaN(newValue)|| newValue <0){
                 numberOfTickets.value = 0;
                 newValue = numberOfTickets.value;
             }
