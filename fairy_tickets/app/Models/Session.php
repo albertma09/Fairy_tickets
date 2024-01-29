@@ -30,7 +30,7 @@ class Session extends Model
     public static function getAllSessionsByPromotor($id)
     {
         try {
-            Log::info('Llamada al método Session.getAllSessionsByPromotor');
+            Log::info('Llamada al método Session.getAllSessionsByPromotor', ['Id_promotor' => $id]);
 
             $sessions = DB::table('sessions')
                 ->join('events', 'events.id', '=', 'sessions.event_id')
@@ -41,7 +41,6 @@ class Session extends Model
             Log::info('fin de la carga de sesiones por promotor');
             return $sessions;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
         }
     }
 
@@ -67,7 +66,7 @@ class Session extends Model
                     }
                     break;
                 case '0':
-                    // 
+                    //
                     break;
                 default:
                     throw new \Exception('Error: tipo de dato de venta online no válido.');
@@ -92,7 +91,7 @@ class Session extends Model
                     // Cuando la cantidad de tickets no se indican o viene 0 toma la capacidad máxima de sesión
                     'ticket_amount' => ($formData['ticketQuantity'][$i] !== null && $formData['ticketQuantity'][$i] !== 0) ? $formData['ticketQuantity'][$i] : $formData['sessionMaxCapacity'],
                 ];
-                Log::debug('Datos que crea la función Session.createSessionTicketArray',$ticketData, $formData['sessionMaxCapacity']);
+                Log::debug('Datos que crea la función Session.createSessionTicketArray', $ticketData, $formData['sessionMaxCapacity']);
             }
             return $ticketData;
         } catch (\Exception $e) {
