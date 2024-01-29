@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
     <script src="https://kit.fontawesome.com/918614923c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="icon" href="{{ asset('storage/img/covers/favicon.png') }}">
 </head>
 
 <body>
