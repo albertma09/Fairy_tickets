@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TicketType extends Model
+class Purchase extends Model
 {
     use HasFactory;
-    protected $fillable = ['session_id', 'description', 'price', 'ticket_amount'];
 
+    protected $fillable = ['session_id', 'name', 'dni', 'phone_number', 'email'];
     public function session(): BelongsTo
     {
         return $this->belongsTo(Session::class);
     }
-    // public function tickets(): HasMany
-    // {
-    //     return $this->hasMany(Ticket::class);
-    // }
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

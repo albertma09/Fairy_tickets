@@ -7,8 +7,7 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Location;
-use App\Models\Session;
-use App\Models\TicketType;
+use App\Models\Purchase;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -44,6 +43,8 @@ class DatabaseSeeder extends Seeder
 
         Event::factory($eventNum / 2)->hasSessions(1)->create();
         Event::factory($eventNum / 2)->hasSessions(rand(2, 4))->create();
+
+        Purchase::factory(200)->create();
 
         $this->command->info("Se han creado $eventNum eventos");
     }

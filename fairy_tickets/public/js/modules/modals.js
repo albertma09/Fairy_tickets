@@ -50,24 +50,25 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
     // });
 
     const calculateTotal = (quantity) => {
-        return function() {
+        return function () {
             let newValue = parseInt(numberOfTickets.value);
-            if(isNaN(newValue)|| newValue <0){
+            if (isNaN(newValue) || newValue < 0) {
                 numberOfTickets.value = 0;
                 newValue = numberOfTickets.value;
             }
-        
-        
-            if(numberOfTickets.value>ticket.ticket_amount){
+
+            if (numberOfTickets.value > ticket.ticket_amount) {
                 numberOfTickets.value = ticket.ticket_amount;
             }
-           
-            if(quantity<numberOfTickets.value){
-                const ticketPrice = (numberOfTickets.value-quantity) * ticket.price;
-                updateTotal((ticketPrice), finalPrice);
-            }else if(quantity>numberOfTickets.value){
-                const ticketPrice = (quantity-numberOfTickets.value) * ticket.price;
-                updateTotal((-ticketPrice), finalPrice);
+
+            if (quantity < numberOfTickets.value) {
+                const ticketPrice =
+                    (numberOfTickets.value - quantity) * ticket.price;
+                updateTotal(ticketPrice, finalPrice);
+            } else if (quantity > numberOfTickets.value) {
+                const ticketPrice =
+                    (quantity - numberOfTickets.value) * ticket.price;
+                updateTotal(-ticketPrice, finalPrice);
             }
 
             quantity = parseInt(numberOfTickets.value); 
