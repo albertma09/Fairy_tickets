@@ -85,5 +85,10 @@
         height: 100%;
         border-left: dashed 1px;
         display: grid;
+        justify-items: center;
+        img{
+            width: 100px;
+            height: 100px;
+        }
     }
 }

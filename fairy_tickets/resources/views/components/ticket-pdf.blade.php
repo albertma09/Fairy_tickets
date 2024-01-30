@@ -37,7 +37,11 @@
                 </div>
             </div>
             <div class="ticket-type-info">
-                contenido ticket
+                <img src="{{ asset('logo/logoFairyTickets.png') }}" alt="Logo del sitio web" />
+                <p>nombre entrada</p>
+                <p>precio</p>
+                {{ $codigoQR }}
+                <p>identificador</p>
             </div>
         </div>
 
