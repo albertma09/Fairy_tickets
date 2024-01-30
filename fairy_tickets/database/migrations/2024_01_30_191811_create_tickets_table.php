@@ -13,7 +13,20 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+
+            // definicion de atributo fk
+            $table->unsignedBigInteger('purchase_id');
+
+            // atributos iniciales BD
+            $table->string('name');
+            $table->string('dni', 9); // 8 Numeros y 1 letra
+            $table->string('phone_number');
+
+            // timestamps
             $table->timestamps();
+
+            // definicion constraint FK
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
         });
     }
 
