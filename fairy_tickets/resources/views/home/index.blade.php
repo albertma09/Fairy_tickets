@@ -6,7 +6,7 @@
     <h2>Próximos eventos</h2>
 
 
-    @forelse ($categories as $category)
+    @foreach ($categories as $category)
         <div class="category-card">
             <div class="category-card-data">
                 <div class="category-card-data-name">{{ ucfirst($category->name) }}</div>
@@ -24,12 +24,9 @@
                     <div>No hay eventos</div>
                 @endforelse
             </div>
-            <div class="category-card-more"><a href="{{ route('searchByCategory.index', ['name' => $category->name]) }}"
-                    class="button button-brand">Ver más eventos</a></div>
+            <div class="category-card-more"><a href="{{ route('searchByCategory.index', ['name' => $category->name]) }}" class="button button-brand">Ver más eventos</a></div>
         </div>
-    @empty
-        <div>No hay eventos</div>
-    @endforelse
+    @endforeach
 
 
 @endsection

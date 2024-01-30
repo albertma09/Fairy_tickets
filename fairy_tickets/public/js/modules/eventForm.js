@@ -1,4 +1,7 @@
 /* Métodos y funcionalidades del formulario de eventos */
+// Contadores para las funcionalidades
+let ticketGroupIdCounter = 2;
+
 
 // Función que devuelve true si el radio con value custom está checkeado
 const isCustomDateRadioChecked = (radioGroup) => {
@@ -83,7 +86,7 @@ const handleNewAddress = (newAddressDialog, addressSelect) => {
     }
 };
 
-// Función inicial que establece los listeners
+// Función inicial que establece las funcionalidades del formulario de dirección y lo relacionado con la capacidad máxima
 export const setupAddressFormToggle = () => {
     // Getters del select y los containers
     const addressSelect = document.getElementById("addressId");
@@ -99,6 +102,64 @@ export const setupAddressFormToggle = () => {
         });
         maxCapInput.addEventListener("change", () => {
             ticketQtyInput.max = maxCapInput.value;
+        });
+    }
+};
+
+// Función que se encarga de añadir un nuevo grupo de inputs para un nuevo tipo de ticket
+const addNewTicketInputGroup = (ticketContainer, firstTicket) => {
+        const newTicketType = firstTicket.cloneNode(true);
+        newTicketType.querySelector("h4").textContent = `Tipo de entrada ${ticketGroupIdCounter}`;
+
+        // Cambiamos los ids para que no se repitan
+        const ticketTypeName = newTicketType.querySelector("#ticketDescription1");
+        ticketTypeName.id = `ticketDescription${ticketGroupIdCounter}`;
+        ticketTypeName.previousElementSibling.setAttribute('for', `ticketDescription${ticketGroupIdCounter}`);
+        
+        const price = newTicketType.querySelector("#price1");
+        price.id = `price${ticketGroupIdCounter}`;
+        price.previousElementSibling.setAttribute('for', `price${ticketGroupIdCounter}`);
+
+        const ticketQuantity = newTicketType.querySelector("#ticketQuantity1");
+        ticketQuantity.id = `ticketQuantity${ticketGroupIdCounter}`;
+        ticketQuantity.previousElementSibling.setAttribute('for', `ticketQuantity${ticketGroupIdCounter}`);
+
+        // Añadimos el contenedor al padre y sumamos al contador que lleva la cuenta de inputs
+        ticketContainer.appendChild(newTicketType);
+        ticketGroupIdCounter++;
+};
+
+// Función que se encarga de eliminar el último grupo de inputs para un tipo de ticket
+const removeLastTicketInputGroup = (ticketContainer) => {
+    const ticketGroups = ticketContainer.children;
+    
+    // Nos aseguramos que hay más de un contenedor antes de eliminarlo
+    if (ticketGroups.length > 1) {
+        ticketGroups[ticketGroups.length - 1].remove();
+        ticketGroupIdCounter--;
+    }
+};
+
+// Función que establece las funcionalidades para los tipos de tickets: añadir nuevos tipos y eliminarlos
+export const setupAddRemoveTicketTypes = () => {
+    // Recogemos los botones, el container y el div a clonar
+    const addTicketTypeBtn = document.querySelector("#addTicketType");
+    const removeTicketTypeBtn = document.querySelector("#removeTicketType");
+    const ticketContainer = document.querySelector("#formTicketContainer");
+    const firstTicket = document.querySelector("#formTicketUnit");
+    if (
+        addTicketTypeBtn &&
+        removeTicketTypeBtn &&
+        ticketContainer &&
+        firstTicket
+    ) {
+        addTicketTypeBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            addNewTicketInputGroup(ticketContainer, firstTicket);
+        });
+        removeTicketTypeBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            removeLastTicketInputGroup(ticketContainer);
         });
     }
 };
