@@ -46,6 +46,10 @@
             <p>Ubicación: {{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
                 {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}</p>
         @endforeach
+        <iframe width="600" height="450" frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
+            {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}">
+        </iframe>
     </div>
 
 
