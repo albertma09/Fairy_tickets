@@ -16,15 +16,15 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
     const numberOfTickets = document.createElement("input");
     numberOfTickets.size = 1;
     const addQuantityText = document.createElement("p");
-    addQuantityText.textContent = "Ingresa la cantidad";
-
+    addQuantityText.textContent = 'Ingresa la cantidad';
+    
     // plus.classList.add("fas", "fa-plus");
     // minus.classList.add("fas", "fa-minus");
     // plusButton.appendChild(plus);
     // minusButton.appendChild(minus);
     // plusButton.classList.add("button", "button-brand");
     // minusButton.classList.add("button", "button-danger");
-
+    
     numberOfTickets.value = "0";
     let selectedQuantity = 0;
     // plusButton.addEventListener("click", function () {
@@ -71,12 +71,16 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
                 updateTotal(-ticketPrice, finalPrice);
             }
 
-            quantity = parseInt(numberOfTickets.value);
+            quantity = parseInt(numberOfTickets.value); 
+
+           
+        
         };
     };
 
     numberOfTickets.addEventListener("blur", calculateTotal(selectedQuantity));
-
+    
+    
     buyContainer.appendChild(numberOfTickets);
     buyContainer.appendChild(addQuantityText);
     // buyContainer.appendChild(minusButton);
@@ -132,27 +136,29 @@ export const ticketSalesModalSetup = () => {
         ticketTypesContainer &&
         finalPrice
     ) {
+        
         document
             .querySelectorAll(".sesion-card .button-brand")
             .forEach((button) => {
                 button.addEventListener("click", function () {
+                   
                     popupContainer.style.display = "flex";
                     Object.entries(tickets).forEach(([ticketId, ticket]) => {
                         if (ticket.session_id == button.id) {
-                            buildTicketContainer(
-                                ticket,
-                                ticketTypesContainer,
-                                finalPrice
-                            );
+                            
+                            buildTicketContainer(ticket, ticketTypesContainer, finalPrice);
+                            
                         }
                     });
                 });
             });
 
+        
         closePopupButton.addEventListener("click", function () {
             resetContainer(ticketTypesContainer, finalPrice, popupContainer);
         });
 
+        
         popupContainer.addEventListener("click", function (event) {
             if (event.target === popupContainer) {
                 resetContainer(
