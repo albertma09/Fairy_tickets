@@ -20,10 +20,13 @@
                 <div class="event-card">
                     <div class="img">
                         <img src="{{ asset('storage/img/covers/' . $event->image) }}" />
-
                     </div>
+                    
                     <h3>{{ $event->name }}</h3>
-                    <!-- Otros detalles del evento si es necesario -->
+                    <div class="edit-icon">
+                        <i class="fas fa-pencil-alt"></i>
+                        <p>editar</p>
+                    </div>
                 </div>
             @endforeach
         </div>

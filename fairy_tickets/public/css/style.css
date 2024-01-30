@@ -397,6 +397,11 @@ nav .filter-categories {
   justify-content: space-around;
   align-items: center;
 }
+.promotor-container .event-card h3,
+.promotor-container .event-card .img {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
 .promotor-container .event-card .img {
   width: 90%;
   height: 70%;
@@ -405,6 +410,28 @@ nav .filter-categories {
   flex: 0 0 100%;
   width: 100%;
   object-fit: cover;
+}
+.promotor-container .event-card:hover {
+  cursor: pointer;
+}
+.promotor-container .event-card:hover .img,
+.promotor-container .event-card:hover h3 {
+  opacity: 0;
+}
+.promotor-container .event-card:hover .edit-icon {
+  display: grid;
+  justify-items: center;
+}
+.promotor-container .event-card:hover .edit-icon i {
+  font-size: 2rem;
+  padding: 0.8rem;
+}
+.promotor-container .event-card:hover .edit-icon p {
+  font-size: 1.5rem;
+}
+.promotor-container .event-card .edit-icon {
+  position: absolute;
+  display: none;
 }
 
 .button {
@@ -846,6 +873,88 @@ dialog.close-dialog-button {
   flex: 0 0 100%;
   width: 100%;
   object-fit: cover;
+}
+
+.ticket {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ticket .ticket-content {
+  width: 85%;
+  height: 50vh;
+  background-color: #fdf7f7;
+  display: grid;
+  color: black;
+  grid-auto-columns: 1.3fr 1fr 1fr 1fr;
+  align-items: center;
+}
+.ticket .img-ticket {
+  grid-column: 1;
+  grid-row: 1/2;
+  display: flex;
+  height: 100%;
+}
+.ticket .img-ticket img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ticket .event-info {
+  grid-column: 2/4;
+  grid-row: 1/2;
+  display: grid;
+  height: 100%;
+  grid-auto-rows: 0.5fr 2fr 0.5fr;
+  align-items: center;
+  justify-items: center;
+}
+.ticket .event-info .date {
+  border-top: solid 1px;
+  border-bottom: solid 1px;
+  display: grid;
+  justify-items: center;
+  width: 80%;
+  padding: 0.3rem;
+  align-content: stretch;
+  justify-content: space-between;
+}
+.ticket .event-info .date .day {
+  grid-column: 1;
+}
+.ticket .event-info .date .month {
+  grid-column: 2;
+}
+.ticket .event-info .date .year {
+  grid-column: 3;
+}
+.ticket .event-info .info {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-items: center;
+  align-content: space-around;
+}
+.ticket .event-info .location {
+  width: 80%;
+  text-align: center;
+  border-top: solid 1px;
+  padding: 0.5rem;
+}
+.ticket .ticket-type-info {
+  grid-column: 4;
+  grid-row: 1/2;
+  height: 100%;
+  border-left: dashed 1px;
+  display: grid;
+  justify-items: center;
+}
+.ticket .ticket-type-info img {
+  width: 100px;
+  height: 100px;
 }
 
 .oscuro {
