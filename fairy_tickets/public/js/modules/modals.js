@@ -22,7 +22,26 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
     plusButton.classList.add("button", "button-brand");
     minusButton.classList.add("button", "button-danger");
 
-    numberOfTickets.textContent = "0";
+    const calculateTotal = (quantity) => {
+        return function() {
+            let newValue = parseInt(numberOfTickets.value);
+            if(isNaN(newValue)|| newValue <0){
+                numberOfTickets.value = 0;
+                newValue = numberOfTickets.value;
+            }
+        
+        
+            if(numberOfTickets.value>ticket.ticket_amount){
+                numberOfTickets.value = ticket.ticket_amount;
+            }
+           
+            if(quantity<numberOfTickets.value){
+                const ticketPrice = (numberOfTickets.value-quantity) * ticket.price;
+                updateTotal((ticketPrice), finalPrice);
+            }else if(quantity>numberOfTickets.value){
+                const ticketPrice = (quantity-numberOfTickets.value) * ticket.price;
+                updateTotal((-ticketPrice), finalPrice);
+            }
 
     plusButton.addEventListener("click", function () {
         // Incrementar el valor solo si no excede un límite (puedes ajustar este límite)
