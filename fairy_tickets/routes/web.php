@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GeneratorPDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,8 @@ Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name(
 Route::get('/events/categories/{name}', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->name('events.mostrar');
+
+Route::get('/buyTicket', [GeneratorPDF::class, 'generatePDF'])->name('components.ticket-pdf');
 Route::fallback(function () {
     return ('Opps!!');
 });
