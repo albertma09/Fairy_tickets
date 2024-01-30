@@ -11,20 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ticket_types', function (Blueprint $table) {
+        Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-
-            //definicion de constraint BD
+            // definicion de atributo fk
             $table->unsignedBigInteger('session_id');
 
-            //atributos iniciales BD
-            $table->string('description');
-            $table->double('price');
-            $table->integer('ticket_amount');
+            // atributos iniciales BD
+            $table->string('name');
+            $table->string('dni', 9); // 8 Numeros y 1 letra
+            $table->string('phone_number');
+            $table->string('email');
 
+            // timestamps
             $table->timestamps();
 
-            //definicion de foreign key
+            //definición constrain FK
             $table->foreign('session_id')->references('id')->on('sessions')->onDelete('cascade');
         });
     }
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ticket_types');
+        Schema::dropIfExists('purchases');
     }
 };
