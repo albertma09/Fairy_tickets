@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -33,20 +31,14 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        try {
-            Log::info('Llamada al método AuthController.login', ['usuario' => $request->input('email')]);
+        $credentials = $request->only('email', 'password');
 
-            $credentials = $request->only('email', 'password');
-
-            if (Auth::attempt($credentials)) {
-                $userId = Auth::user()->id;
-                return redirect()->intended('/promotor/' . $userId);
-            }
-
-            return redirect()->route('login')->with('error', 'Las credenciales de login no son correctas');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
+        if (Auth::attempt($credentials)) {
+            $userId = Auth::user()->id;
+            return redirect()->intended('/promotor/' . $userId);
         }
+
+        return redirect()->route('login')->with('error', 'Las credenciales de login no son correctas');
     }
 
     /**
@@ -57,21 +49,13 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        Auth::logout();
 
-        try {
+        $request->session()->invalidate();
 
-            Log::info('LLamada al método AuthController.logout');
+        $request->session()->regenerateToken();
 
-            Auth::logout();
-
-            $request->session()->invalidate();
-
-            $request->session()->regenerateToken();
-
-            return redirect('/');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-        }
+        return redirect('/');
     }
 
     /**
@@ -91,41 +75,35 @@ class AuthController extends Controller
      */
     public function enviarRecuperarContrasenia(Request $request)
     {
-        try {
+       
+        $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
 
-            Log::info('Llamada al método AuthController.enviarRecuperarContrasenia');
+        
+        $token = Str::random(64);
+        
 
-            $request->validate([
-                'email' => 'required|email|exists:users',
-            ]);
+        
+        DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
 
+        
+        DB::table('password_reset_tokens')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
 
-            $token = Str::random(64);
+        
+        Mail::send('auth.recuperar-contrasenia', ['token' => $token, 'email' => $request->email], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject('Recuperar Contraseña');
+        });
 
-
-
-            DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
-
-
-            DB::table('password_reset_tokens')->insert([
-                'email' => $request->email,
-                'token' => $token,
-                'created_at' => Carbon::now()
-            ]);
-
-
-            Mail::send('auth.recuperar-contrasenia', ['token' => $token, 'email' => $request->email], function ($message) use ($request) {
-                $message->to($request->email);
-                $message->subject('Recuperar Contraseña');
-            });
-
-            return back()->with('message', 'Te hemos enviado un email con las instrucciones para que recuperes tu contraseña');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-        }
+        return back()->with('message', 'Te hemos enviado un email con las instrucciones para que recuperes tu contraseña');
     }
 
-    /**
+     /**
      * Función que devuelve la vista con el formulario que actualiza la contraseña
      *
      * @return response()
@@ -135,48 +113,43 @@ class AuthController extends Controller
         return view('auth.formulario-actualizacion', ['token' => $token, 'email' => $email]);
     }
 
-    /**
+     /**
      * Función que actualiza la contraseña del usuario
      *
      * @return response()
      */
     public function actualizarContrasenia(Request $request)
     {
-        try{
-            Log::info('Llamada al método AuthController.actualizarContraseña');
+        
+        $request->validate([
+            'email' => 'required|email|exists:users',
+            'password' => 'required|string|min:8|regex:/[A-Z]/|REGEX:/[a-z]/|regex:/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/|confirmed',
+            'password_confirmation' => 'required'
+        ]);
 
-            $request->validate([
-                'email' => 'required|email|exists:users',
-                'password' => 'required|string|min:8|regex:/[A-Z]/|REGEX:/[a-z]/|regex:/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/|confirmed',
-                'password_confirmation' => 'required'
-            ]);
-    
-    
-            $updatePassword = DB::table('password_reset_tokens')
-                ->where([
-                    'email' => $request->email,
-                    'token' => $request->token
-                ])
-                ->first();
-    
-    
-            if (!$updatePassword) {
-                return back()->withInput()->with('error', 'Token inválido');
-            }
-    
-    
-            $user = User::where('email', $request->email)
-                ->update(['password' => Hash::make($request->password)]);
-    
-    
-    
-            DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
-    
-    
-            return redirect('/login')->with('message', 'Tu contraseña se ha cambiado correctamente');
-        }catch(Exception $e){
+        
+        $updatePassword = DB::table('password_reset_tokens')
+            ->where([
+                'email' => $request->email,
+                'token' => $request->token
+            ])
+            ->first();
 
-            Log::error($e->getMessage());
+        
+        if (!$updatePassword) {
+            return back()->withInput()->with('error', 'Token inválido');
         }
+
+        
+        $user = User::where('email', $request->email)
+            ->update(['password' => Hash::make($request->password)]);
+
+
+        
+        DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
+
+        
+        return redirect('/login')->with('message', 'Tu contraseña se ha cambiado correctamente');
     }
+    
 }

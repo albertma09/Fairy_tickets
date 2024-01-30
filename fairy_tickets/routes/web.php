@@ -72,7 +72,7 @@ Route::get('/home', [CategoryController::class, 'index'])->name('home.index');
 
 Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
 
-// Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
+Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/events/categories/{name}', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
