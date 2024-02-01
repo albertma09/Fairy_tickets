@@ -35,45 +35,44 @@ body {
     scrollbar-width: thin; /* Establece el grosor de la barra de desplazamiento en Firefox */
 }
 
-.category-card{
-    display: flex;
-    flex-direction: column;
+.category-card {
+    @include flex-container(column);
     padding: 1rem;
-    border-radius: 10px;
     width: 90%;
     margin-bottom: 3rem;
-    &-data{
+    &-data {
+        @include card-shape;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         background-color: $col-oscuro;
-        padding: 0.5rem 1rem;
-        &-name{
+        padding: 2rem 3rem;
+        &-name {
             font-size: 250%;
             font-weight: bold;
         }
-        &-total{
+        &-total {
             display: flex;
             flex-direction: column;
-            &-label{
+            &-label {
                 text-align: center;
                 font-size: 80%;
             }
-            &-number{
+            &-number {
                 text-align: center;
                 font-size: 200%;
                 font-weight: bold;
             }
         }
     }
-    &-events{
+    &-events {
         display: flex;
         flex-direction: row;
         min-height: 5rem;
         overflow: auto;
         margin-bottom: 1rem;
     }
-    &-more{
+    &-more {
         display: flex;
         justify-content: center;
     }

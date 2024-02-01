@@ -5,7 +5,6 @@ nav {
     max-height: 20vh;
 
     div.nav-main {
-        height: 10vh;
         @include flex-container;
         align-items: center;
         justify-content: space-between;
@@ -89,7 +88,7 @@ nav {
             flex-flow: column nowrap;
             position: fixed;
             height: 90vh;
-            top: 10vh;
+            top: 8vh;
             left: 0;
             width: 100%;
             background-color: $col-oscuro;
@@ -115,19 +114,14 @@ nav {
             display: flex;
         }
     }
-    // .filter-categories {
-    //     display: flex;
-    //     flex-direction: row;
-    //     justify-content: space-between;
-    //     width: auto;
-    // }
 
     .filter-categories {
+        scrollbar-width: none;
         display: flex;
         align-items: center;
         text-align: center;
         overflow-x: scroll;
-        // width: auto;
+        justify-content: space-around;
     }
 
     button#menu-toggle {

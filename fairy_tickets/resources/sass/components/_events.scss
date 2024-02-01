@@ -1,4 +1,5 @@
 .events-card {
+    @include card-shape;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -7,15 +8,13 @@
     padding: 1rem;
     padding: 1rem;
     margin: 2rem;
-    border-radius: 10px;
-    background-color: $col-oscuro;
 
+    background-color: $col-oscuro;
 
     &-data {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-
 
         &-name {
             text-align: center;
@@ -32,7 +31,6 @@
             height: 50%;
         }
 
-
         &-date {
             display: flex;
             flex-direction: column;
@@ -43,45 +41,42 @@
             // margin: 0.5rem 0 0.5rem 0;
 
             &-day {
-            background-color: $col-claro;
-            border-radius: 0.5rem;
-            color: $col-oscuro-2;
-            padding: 0 0.5rem;
-            // margin: 0.5rem 0 0.5rem 0;
+                background-color: $col-claro;
+                border-radius: 0.5rem;
+                color: $col-oscuro-2;
+                padding: 0 0.5rem;
+                // margin: 0.5rem 0 0.5rem 0;
 
-            &-day {
-                font-weight: bold;
-                text-align: center;
-                font-size: 2rem;
-                font-size: 2rem;
+                &-day {
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: 2rem;
+                    font-size: 2rem;
+                }
+
+                &-monthYear {
+                    display: flex;
+                    font-weight: bold;
+
+                    &-month {
+                        margin-right: 0.5rem;
+                    }
+                }
             }
 
-
-            &-monthYear {
-                display: flex;
+            &-price {
+                font-weight: bold;
+                font-size: 1.5rem;
+                white-space: nowrap;
+                color: $col-contraste;
+                margin: 0.1rem;
+                padding: 0 1rem;
                 font-weight: bold;
 
                 &-month {
                     margin-right: 0.5rem;
                 }
             }
-
-        }
-
-        &-price {
-            font-weight: bold;
-            font-size: 1.5rem;
-            white-space: nowrap;
-            color: $col-contraste;
-            margin: 0.1rem;
-            padding: 0 1rem;
-                font-weight: bold;
-
-                &-month {
-                    margin-right: 0.5rem;
-                }
-            }
-
         }
 
         &-price {

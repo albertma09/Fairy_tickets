@@ -15,10 +15,10 @@
 <body>
     <div class="grid-container">
         <x-navigation-component />
-        <div class="body-content">
+        <div class="body-container">
             <main>
-                <h1>@yield('title')</h1>
-                <div>
+                <h1 class="titulo titulo-cabecera">@yield('title')</h1>
+                <div class="main-content">
                     @yield('content')
                 </div>
             </main>

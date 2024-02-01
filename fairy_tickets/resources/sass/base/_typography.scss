@@ -14,9 +14,25 @@ html {
         font-family: $fjalla;
         font-size: 70px;
     }
+    &-cabecera {
+        font-family: $fjalla;
+        text-align: center;
+        font-size: 70px;
+        @include respond-to(1024px) {
+            font-size: 100px;
+        }
+    }
+    &-seccion {
+        font-family: $fjalla;
+        text-align: center;
+        font-size: 40px;
+        @include respond-to(1024px) {
+            font-size: 50px;
+        }
+    }
 }
 
-h2{
+h2 {
     font-family: $fjalla;
 }
 
