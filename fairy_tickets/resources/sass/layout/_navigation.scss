@@ -1,25 +1,15 @@
 nav {
     @include dark-bg;
-    width: 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-end;
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    @include respond-to(375px) {
-        height: 14%;
-    }
+    display: grid;
+    grid-template-rows: max-content max-content;
+    max-height: 20vh;
 
     div.nav-main {
         height: 10vh;
-        display: flex;
-        flex-flow: row nowrap;
+        @include flex-container;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: 0 0.5rem;
     }
 
     form {
@@ -102,7 +92,7 @@ nav {
             top: 10vh;
             left: 0;
             width: 100%;
-            background-color: $col-oscuro-2;
+            background-color: $col-oscuro;
             z-index: 1000;
 
             li {
@@ -133,10 +123,10 @@ nav {
     // }
 
     .filter-categories {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        grid-template-rows: 1fr;
+        display: flex;
+        align-items: center;
         text-align: center;
+        overflow-x: scroll;
         // width: auto;
     }
 

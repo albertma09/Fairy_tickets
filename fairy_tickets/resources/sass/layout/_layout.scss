@@ -1,11 +1,27 @@
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
-body {
+body,
+html {
     background-color: $col-oscuro-2;
-    height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
+    height: 100%;
 }
-main {
-    width: 100%;
-    margin-top: 12.5%;
+.grid-container {
+    display: grid;
+    grid-template-rows: 15% 1fr;
+    height: 100vh;
+
+    @include respond-to(426px) {
+        grid-template-rows: auto 1fr;
+    }
+}
+
+.nav {
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.body-content {
+    padding: 1rem;
+    overflow-y: auto;
 }

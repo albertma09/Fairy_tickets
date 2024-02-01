@@ -6,7 +6,6 @@
     padding: 0.6rem 1rem;
     text-decoration: none;
 
-
     i {
         font-size: 1.5rem;
     }
@@ -42,7 +41,6 @@
         @include dark-bg;
         border: 1px solid $col-oscuro;
 
-
         &:hover {
             background-color: transparent;
             color: $col-oscuro;
@@ -50,12 +48,10 @@
         }
     }
 
-
     &-filter {
         background-color: transparent;
         color: $col-claro;
         padding: 1rem;
-
 
         &:hover {
             color: $col-brand;
@@ -63,18 +59,15 @@
         }
     }
 
-
     &-icon {
         @include icon-button-size;
         color: $col-claro;
         background-color: transparent;
 
-
         &:hover {
             color: $col-brand;
         }
     }
-
 
     &-search {
         @include brand-bg;
@@ -84,16 +77,18 @@
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
 
-
         &:hover {
             color: $col-oscuro;
             background-color: $col-brand;
         }
 
-
         i {
             font-size: 1.2rem;
         }
+    }
+
+    &-logo {
+        padding-left: 0;
     }
 }
 
@@ -105,7 +100,6 @@ button.button {
     max-width: fit-content;
 }
 
-
 nav .button-icon i {
     &.fa-bars-staggered {
         color: $col-brand;
@@ -115,7 +109,6 @@ nav .button-icon i {
         color: $col-claro;
     }
 }
-
 
 .button-category {
     font-size: 110%;
@@ -128,5 +121,4 @@ nav .button-icon i {
         background-color: $col-brand;
         color: $col-oscuro;
     }
-
 }
