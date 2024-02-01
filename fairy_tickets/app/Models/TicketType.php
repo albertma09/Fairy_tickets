@@ -16,8 +16,8 @@ class TicketType extends Model
     {
         return $this->belongsTo(Session::class);
     }
-    // public function tickets(): HasMany
-    // {
-    //     return $this->hasMany(Ticket::class);
-    // }
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Ticket extends Model
 {
     use HasFactory;
-    protected $fillable = ['purchase_id', 'name', 'dni', 'phone_number',];
+    protected $fillable = ['purchase_id', 'ticket_type_id', 'name', 'dni', 'phone_number',];
 
     public function purchase(): BelongsTo
     {
         return $this->belongsTo(Purchase::class);
     }
-    // public function ticketType(): BelongsTo
-    // {
-    //     return $this->belongsTo(TicketType::class);
-    // }
+    public function ticketType(): BelongsTo
+    {
+        return $this->belongsTo(TicketType::class);
+    }
 }

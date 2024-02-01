@@ -16,17 +16,19 @@ return new class extends Migration
 
             // definicion de atributo fk
             $table->unsignedBigInteger('purchase_id');
+            $table->unsignedBigInteger('ticket_type_id');
 
             // atributos iniciales BD
-            $table->string('name');
-            $table->string('dni', 9); // 8 Numeros y 1 letra
-            $table->string('phone_number');
+            $table->string('name')->nullable();
+            $table->string('dni', 9)->nullable(); // 8 Numeros y 1 letra
+            $table->string('phone_number')->nullable();
 
             // timestamps
             $table->timestamps();
 
             // definicion constraint FK
             $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
+            $table->foreign('ticket_type_id')->references('id')->on('ticket_types')->onDelete('cascade');
         });
     }
 
