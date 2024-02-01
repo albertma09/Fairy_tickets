@@ -16,10 +16,15 @@ class TicketFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => $this->faker->name,
-            'dni' => $this->faker->regexify('[0-9]{8}[A-Z]'),
-            'phone_number' => $this->faker->phoneNumber,
-        ];
+        $isNominal = $this->faker->boolean(20);  // probabilidad de que las entradas sean nominales o no
+        $ticketAttributes = [];
+
+        if ($isNominal) {
+            $ticketAttributes['name'] = $this->faker->name;
+            $ticketAttributes['dni'] = $this->faker->regexify('[0-9]{8}[A-Z]');
+            $ticketAttributes['phone_number'] = $this->faker->phoneNumber;
+        }
+
+        return $ticketAttributes;
     }
 }

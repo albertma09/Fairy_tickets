@@ -32,7 +32,9 @@ class PurchaseFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Purchase $purchase) {
-            $tickets = Ticket::factory()->count(rand(1, 4))->make()->toArray();
+            $ticketType = $purchase->session->ticketTypes()->inRandomOrder()->first();
+
+            $tickets = Ticket::factory()->count(rand(1, 4))->make(['ticket_type_id' => $ticketType->id])->toArray();
             foreach ($tickets as $ticket) {
                 $purchase->tickets()->create($ticket);
             }
