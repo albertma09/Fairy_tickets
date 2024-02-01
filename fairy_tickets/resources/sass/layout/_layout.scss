@@ -1,11 +1,50 @@
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
-body {
+body,
+html {
     background-color: $col-oscuro-2;
-    height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
+    height: 100%;
 }
-main {
-    width: 100%;
-    margin-top: 12.5%;
+.grid-container {
+    display: grid;
+    grid-template-rows: 15% 1fr;
+    height: 100vh;
+
+    @include respond-to(426px) {
+        grid-template-rows: auto 1fr;
+    }
+}
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    .nav-main {
+        padding: 0 1rem;
+    }
+    .filter-categories {
+        padding: 0 1rem;
+    }
+}
+
+.body-container {
+    padding: 1rem;
+    overflow-y: auto;
+    main {
+        @include flex-container(column, nowrap);
+        align-items: center;
+        .titulo-cabecera {
+            margin: 2rem 0;
+        }
+        .titulo-seccion {
+            margin: 1.5rem 0;
+        }
+        .main-content {
+            @include flex-container(column, nowrap);
+            align-items: center;
+            @include respond-to(765px) {
+                max-width: 90%;
+            }
+        }
+    }
 }

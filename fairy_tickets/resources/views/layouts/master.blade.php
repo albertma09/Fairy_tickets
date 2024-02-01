@@ -7,18 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     <script src="https://kit.fontawesome.com/918614923c.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('/logo/favicon.png') }}">
+    <link rel="shortcut icon" sizes="192x192" href="{{ asset('/logo/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
-    <x-navigation-component />
-    <main>
-        <h1>@yield('title')</h1>
-        <div>
-            @yield('content')
+    <div class="grid-container">
+        <x-navigation-component />
+        <div class="body-container">
+            <main>
+                <h1 class="titulo titulo-cabecera">@yield('title')</h1>
+                <div class="main-content">
+                    @yield('content')
+                </div>
+            </main>
+            <footer class="footer"></footer>
         </div>
-    </main>
-    <footer></footer>
+    </div>
     <script type="module" src="{{ asset('js/main.js') }}"></script>
 </body>
 

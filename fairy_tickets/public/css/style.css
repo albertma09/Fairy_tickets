@@ -40,6 +40,26 @@ html {
   font-family: "Fjalla One", sans-serif;
   font-size: 70px;
 }
+.titulo-cabecera {
+  font-family: "Fjalla One", sans-serif;
+  text-align: center;
+  font-size: 70px;
+}
+@media screen and (min-width: 1024px) {
+  .titulo-cabecera {
+    font-size: 100px;
+  }
+}
+.titulo-seccion {
+  font-family: "Fjalla One", sans-serif;
+  text-align: center;
+  font-size: 40px;
+}
+@media screen and (min-width: 1024px) {
+  .titulo-seccion {
+    font-size: 50px;
+  }
+}
 
 h2 {
   font-family: "Fjalla One", sans-serif;
@@ -130,7 +150,7 @@ button {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #10364e;
+  background-color: #154766;
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -144,7 +164,7 @@ button {
   }
 }
 .centrado .popup-content {
-  background: #10364e;
+  background: #154766;
   padding: 20px;
   width: 100vw;
   height: 100vh;
@@ -236,42 +256,77 @@ button {
 }
 
 /* El contenedor padre ocupa todo el alto de pantalla y contendrá el nav y el main en forma de columna */
-body {
-  background-color: #10364e;
-  height: 100vh;
-  display: flex;
-  flex-flow: column nowrap;
+body,
+html {
+  background-color: #154766;
+  height: 100%;
 }
 
-main {
-  width: 100%;
-  margin-top: 12.5%;
+.grid-container {
+  display: grid;
+  grid-template-rows: 15% 1fr;
+  height: 100vh;
+}
+@media screen and (min-width: 426px) {
+  .grid-container {
+    grid-template-rows: auto 1fr;
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav .nav-main {
+  padding: 0 1rem;
+}
+.nav .filter-categories {
+  padding: 0 1rem;
+}
+
+.body-container {
+  padding: 1rem;
+  overflow-y: auto;
+}
+.body-container main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.body-container main .titulo-cabecera {
+  margin: 2rem 0;
+}
+.body-container main .titulo-seccion {
+  margin: 1.5rem 0;
+}
+.body-container main .main-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+@media screen and (min-width: 765px) {
+  .body-container main .main-content {
+    max-width: 90%;
+  }
 }
 
 nav {
   color: #fdf7f7;
   background-color: #05283d;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-end;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-@media screen and (min-width: 375px) {
-  nav {
-    height: 14%;
-  }
+  display: grid;
+  grid-template-rows: max-content max-content;
+  max-height: 20vh;
 }
 nav div.nav-main {
-  height: 10vh;
   display: flex;
-  flex-flow: row nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 0 0.5rem;
 }
 nav form {
   margin: 0;
@@ -342,10 +397,10 @@ nav ul.opened {
   flex-flow: column nowrap;
   position: fixed;
   height: 90vh;
-  top: 10vh;
+  top: 8vh;
   left: 0;
   width: 100%;
-  background-color: #10364e;
+  background-color: #05283d;
   z-index: 1000;
 }
 nav ul.opened li {
@@ -367,10 +422,12 @@ nav ul.opened li a.nav-active {
   }
 }
 nav .filter-categories {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: 1fr;
+  scrollbar-width: none;
+  display: flex;
+  align-items: center;
   text-align: center;
+  overflow-x: scroll;
+  justify-content: space-around;
 }
 @media screen and (min-width: 768px) {
   nav button#menu-toggle {
@@ -526,6 +583,9 @@ nav .filter-categories {
 .button-search i {
   font-size: 1.2rem;
 }
+.button-logo {
+  padding-left: 0;
+}
 
 a.button,
 button.button {
@@ -556,6 +616,8 @@ nav .button-icon i.fa-bars {
 }
 
 .events-card {
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -564,7 +626,6 @@ nav .button-icon i.fa-bars {
   padding: 1rem;
   padding: 1rem;
   margin: 2rem;
-  border-radius: 10px;
   background-color: #05283d;
 }
 .events-card-data {
@@ -590,13 +651,13 @@ nav .button-icon i.fa-bars {
   flex-direction: column;
   background-color: #fdf7f7;
   border-radius: 0.5rem;
-  color: #10364e;
+  color: #154766;
   padding: 0 0.5rem;
 }
 .events-card-data-date-day {
   background-color: #fdf7f7;
   border-radius: 0.5rem;
-  color: #10364e;
+  color: #154766;
   padding: 0 0.5rem;
 }
 .events-card-data-date-day-day {
@@ -693,7 +754,7 @@ nav .button-icon i.fa-bars {
   width: 12px; /* Ancho de la barra de desplazamiento */
 }
 ::-webkit-scrollbar-track {
-  background-color: #10364e; /* Color de fondo del riel */
+  background-color: #154766; /* Color de fondo del riel */
 }
 ::-webkit-scrollbar-thumb {
   background-color: #40e0d0; /* Color del mango */
@@ -712,7 +773,7 @@ nav .button-icon i.fa-bars {
   border-radius: 6px;
 }
 ::-ms-scrollbar-track {
-  background-color: #10364e;
+  background-color: #154766;
 }
 ::-ms-scrollbar-base {
   display: none; /* Oculta la base de la barra de desplazamiento en IE */
@@ -720,24 +781,26 @@ nav .button-icon i.fa-bars {
 
 /* Estilos adicionales para navegadores Firefox (no soportan -webkit-scrollbar)*/
 body {
-  scrollbar-color: #40e0d0 #10364e; /* Establece el color de la barra de desplazamiento y el riel en Firefox */
+  scrollbar-color: #40e0d0 #154766; /* Establece el color de la barra de desplazamiento y el riel en Firefox */
   scrollbar-width: thin; /* Establece el grosor de la barra de desplazamiento en Firefox */
 }
 
 .category-card {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
   padding: 1rem;
-  border-radius: 10px;
   width: 90%;
   margin-bottom: 3rem;
 }
 .category-card-data {
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: #05283d;
-  padding: 0.5rem 1rem;
+  padding: 2rem 3rem;
 }
 .category-card-data-name {
   font-size: 250%;
@@ -836,7 +899,7 @@ dialog.close-dialog-button {
   flex-direction: column;
   background-color: #fdf7f7;
   border-radius: 0.5rem;
-  color: #10364e;
+  color: #154766;
   padding: 0 0.5rem;
 }
 .session-card-data-date-day {

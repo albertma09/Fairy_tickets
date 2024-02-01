@@ -3,7 +3,7 @@
 @section('title', 'Fairy Tickets')
 
 @section('content')
-    <h2>Próximos eventos</h2>
+    <h2 class="titulo titulo-seccion">Próximos eventos</h2>
 
 
     @foreach ($categories as $category)
@@ -24,7 +24,8 @@
                     <div>No hay eventos</div>
                 @endforelse
             </div>
-            <div class="category-card-more"><a href="{{ route('searchByCategory.index', ['name' => $category->name]) }}" class="button button-brand">Ver más eventos</a></div>
+            <div class="category-card-more"><a href="{{ route('searchByCategory.index', ['name' => $category->name]) }}"
+                    class="button button-brand">Ver más eventos</a></div>
         </div>
     @endforeach
 
