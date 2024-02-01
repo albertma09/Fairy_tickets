@@ -169,7 +169,7 @@
     }
     .buy-container{
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       grid-auto-rows: 1fr 1fr;
       width: 20vw;
       align-items: center;
@@ -177,7 +177,12 @@
       
       & > *:first-child{
         font-size: 2rem;
-        grid-row: 1 / 3;
+        grid-row: 2;
+        background: transparent;
+        border: solid $col-brand;
+        color: $col-brand;
+        text-align: center;
+        border-radius: 4px;
       }
   }
 
