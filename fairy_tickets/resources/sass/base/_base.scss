@@ -19,3 +19,7 @@
 .col-dark {
     @include brand-bg;
 }
+
+.grid-container {
+    display: grid;
+}

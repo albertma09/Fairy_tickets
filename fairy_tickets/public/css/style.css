@@ -24,6 +24,10 @@
   background-color: #05283d;
 }
 
+.grid-container {
+  display: grid;
+}
+
 /* Formato inicial de fuente para el sitio web */
 html {
   font-family: "Source Sans 3", sans-serif;
@@ -262,13 +266,12 @@ html {
   height: 100%;
 }
 
-.grid-container {
-  display: grid;
+body > .grid-container {
   grid-template-rows: 15% 1fr;
   height: 100vh;
 }
 @media screen and (min-width: 426px) {
-  .grid-container {
+  body > .grid-container {
     grid-template-rows: auto 1fr;
   }
 }
@@ -714,38 +717,57 @@ nav .button-icon i.fa-bars {
   object-fit: cover;
 }
 
-.default-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 4rem;
+.default-form > .grid-container {
+  padding: 0 1rem;
 }
-.default-form div {
-  padding: 1.2rem;
+.default-form .grid-container {
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
 }
-.default-form div.input-unit {
+.default-form .grid-container .input-unit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.3rem;
+  align-items: center;
+}
+.default-form .grid-container .dual-button-container {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
 }
-.default-form div.row-unit {
+.default-form .grid-container .alert {
+  color: #ff6f61;
+}
+.default-form .grid-container .alert-success {
+  color: #72c487;
+}
+.default-form .grid-container .row-unit {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  align-items: center;
 }
-.default-form div.container-quarter {
-  width: 25%;
+.default-form .grid-container .row-unit label {
+  margin-left: 1rem;
 }
-.default-form div.container-half {
-  width: 50%;
+.default-form .grid-container .row-unit input[type=checkbox],
+.default-form .grid-container .row-unit input[type=radio] {
+  margin: 0; /* Reset margin */
 }
-.default-form div.container-full {
+.default-form .grid-container input:not([type=checkbox]):not([type=radio]):not([type=file]),
+.default-form .grid-container select,
+.default-form .grid-container textarea {
   width: 100%;
-}
-.default-form input,
-.default-form select {
   padding: 0.6rem;
+  border: 2px solid #fdf7f7;
   border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #05283d;
+}
+.default-form .grid-container input:not([type=checkbox]):not([type=radio]):not([type=file]):focus,
+.default-form .grid-container select:focus,
+.default-form .grid-container textarea:focus {
+  outline: none;
+  border-color: #40e0d0;
+  box-shadow: 0 0 5px #40e0d0;
 }
 
 /* Estilos generales para la barra de desplazamiento */

@@ -4,8 +4,7 @@ html {
     background-color: $col-oscuro-2;
     height: 100%;
 }
-.grid-container {
-    display: grid;
+body > .grid-container {
     grid-template-rows: 15% 1fr;
     height: 100vh;
 
