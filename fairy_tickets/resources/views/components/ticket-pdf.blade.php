@@ -14,6 +14,8 @@
 
 <body class="pdf">
 
+
+
     <table>
         <tr>
             <td>
@@ -27,20 +29,20 @@
 
                     <tr>
                         <td colspan="3">
-                            <h3>Nombre evento</h3>
-                            <p>nombre local, ciudad, provincia</p>
-                            <p>hora inicio</p>
+                            <h3>{{$ticket->event_name}}</h3>
+                            <p>{{$ticket->location_name}}, {{$ticket->city}} {{$ticket->province}}</p>
+                            <p>{{$ticket->hour}}</p>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <p>dia</p>
+                            <p>{{$day}}</p>
                         </td>
                         <td>
-                            <p>mes</p>
+                            <p>{{$month}}</p>
                         </td>
                         <td>
-                            <p>año</p>
+                            <p>{{$year}}</p>
                         </td>
                     </tr>
                 </table>
@@ -51,15 +53,25 @@
                         <td>
                             <div class="qr-code">
                                 <img src="data:image/png;base64, {!! $codigoQR !!}" alt="Código QR">
-                                <p>identificador</p>
+                                <p>{{$ticket->id}}</p>
                             </div>
                         </td>
                     </tr>
+                    @if($ticket->client_name !== null && $ticket->dni !== null)
                     <tr>
                         <td>
+                            <p>{{$ticket->client_name}}</p>
+                            <p>{{$ticket->dni}}</p>
+                        </td>
+                    </tr>
+                        
+                        @endif
+                    <tr>
+                        
+                        <td>
                             
-                            <p>nombre entrada</p>
-                            <p>precio</p>
+                            <p>{{$ticket->ticket_type_name}}</p>
+                            <p>{{$ticket->price}}€</p>
 
 
                         </td>
@@ -73,7 +85,7 @@
 
     <h2>Descripción</h2>
     <p>
-        descripción del evento
+        {{$ticket->event_description}}
     </p>
 
 
