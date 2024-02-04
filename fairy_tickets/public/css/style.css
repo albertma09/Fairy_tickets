@@ -278,14 +278,13 @@ body > .grid-container {
 
 .nav {
   position: sticky;
-  top: 0;
   z-index: 100;
 }
 .nav .nav-main {
   padding: 0 1rem;
 }
 .nav .filter-categories {
-  padding: 0 1rem;
+  margin: 0 1rem;
 }
 
 .body-container {
@@ -323,7 +322,8 @@ nav {
   background-color: #05283d;
   display: grid;
   grid-template-rows: max-content max-content;
-  max-height: 20vh;
+  height: max-content;
+  max-height: 16vh;
 }
 nav div.nav-main {
   display: flex;
@@ -338,7 +338,8 @@ nav form {
   padding: 0;
   height: 100%;
   display: flex;
-  flex-flow: row nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
 }
@@ -432,7 +433,6 @@ nav .filter-categories {
   align-items: center;
   text-align: center;
   overflow-x: scroll;
-  justify-content: space-around;
 }
 @media screen and (min-width: 768px) {
   nav button#menu-toggle {

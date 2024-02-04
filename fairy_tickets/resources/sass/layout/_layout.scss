@@ -15,14 +15,13 @@ body > .grid-container {
 
 .nav {
     position: sticky;
-    top: 0;
     z-index: 100;
 
     .nav-main {
         padding: 0 1rem;
     }
     .filter-categories {
-        padding: 0 1rem;
+        margin: 0 1rem;
     }
 }
 
