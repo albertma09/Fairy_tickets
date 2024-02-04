@@ -41,9 +41,9 @@ body {
     margin-bottom: 3rem;
     &-data {
         @include card-shape;
-        display: flex;
-        flex-direction: row;
+        @include flex-container;
         justify-content: space-between;
+        align-items: center;
         background-color: $col-oscuro;
         padding: 1.5rem 2rem;
         &-name {

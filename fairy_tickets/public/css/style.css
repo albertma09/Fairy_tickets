@@ -625,98 +625,86 @@ nav .button-icon i.fa-bars {
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: auto;
   flex-wrap: wrap;
-  padding: 1rem;
-  padding: 1rem;
-  margin: 2rem;
+  height: 100%;
+  min-width: 70%;
+  margin: 2rem 2rem 0 0;
   background-color: #05283d;
+}
+@media screen and (min-width: 765px) {
+  .events-card {
+    width: fit-content;
+    min-width: 30%;
+  }
+}
+.events-card-img {
+  height: 50%;
+}
+.events-card-img img {
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .events-card-data {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 1rem;
 }
 .events-card-data-name {
   text-align: center;
   font-weight: bold;
-  font-size: 1.1rem;
-  margin: 1rem 0;
-  font-size: 1.1rem;
-  margin: 1rem 0;
+  font-size: 1.2rem;
 }
-.events-card-data-img {
+.events-card-data-content {
   display: flex;
-  width: 100%;
-  height: 50%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-top: 1.4rem;
+  justify-content: space-around;
 }
-.events-card-data-date {
+.events-card-data-content-date {
   display: flex;
   flex-direction: column;
   background-color: #fdf7f7;
-  border-radius: 0.5rem;
   color: #154766;
+  border-radius: 0.5rem;
   padding: 0 0.5rem;
 }
-.events-card-data-date-day {
-  background-color: #fdf7f7;
-  border-radius: 0.5rem;
-  color: #154766;
-  padding: 0 0.5rem;
-}
-.events-card-data-date-day-day {
+.events-card-data-content-date-day {
   font-weight: bold;
   text-align: center;
   font-size: 2rem;
-  font-size: 2rem;
 }
-.events-card-data-date-day-monthYear {
+.events-card-data-content-date-monthYear {
   display: flex;
   font-weight: bold;
 }
-.events-card-data-date-day-monthYear-month {
+.events-card-data-content-date-monthYear-month {
   margin-right: 0.5rem;
 }
-.events-card-data-date-price {
-  font-weight: bold;
-  font-size: 1.5rem;
-  white-space: nowrap;
-  color: #ff6f61;
-  margin: 0.1rem;
-  padding: 0 1rem;
-  font-weight: bold;
-}
-.events-card-data-date-price-month {
-  margin-right: 0.5rem;
-}
-.events-card-data-price {
-  font-weight: bold;
-  font-size: 1.5rem;
-  white-space: nowrap;
-  color: #ff6f61;
-  margin: 0.1rem;
-  padding: 0 1rem;
-}
-.events-card-locPrice {
+.events-card-data-content-from {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
   text-align: center;
-  margin-left: 1rem;
+  align-items: center;
+  margin-left: 2rem;
+}
+.events-card-data-content-from div:first-child {
+  font-weight: bold;
+  color: #ff6f61;
+}
+.events-card-data-content-from-price {
+  font-weight: bolder;
+  white-space: nowrap;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ff6f61;
 }
 .events-card-buy {
   display: flex;
   justify-content: center;
-  margin: 1rem 0 0 0;
-}
-
-.img {
-  height: 70%;
-}
-.img img {
-  flex: 0 0 100%;
-  width: 100%;
-  object-fit: cover;
+  margin-top: 1.4rem;
 }
 
 .default-form > .grid-container {
@@ -825,7 +813,9 @@ body {
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
+  align-items: center;
   background-color: #05283d;
   padding: 1.5rem 2rem;
 }
