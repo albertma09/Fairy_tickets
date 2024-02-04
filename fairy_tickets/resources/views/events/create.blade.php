@@ -13,7 +13,7 @@
                 <label for="title">Título del evento</label>
                 <input type="text" id="title" name="name" value="{{ old('name') }}" autofocus required />
                 @error('name')
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $message }}
                     </div>
                 @enderror
@@ -45,7 +45,7 @@
                         </option>
                     @endif
                     @error('location_id')
-                        <div class="alert alert-danger">
+                        <div class="msg-error">
                             {{ $message }}
                         </div>
                     @enderror
@@ -57,12 +57,12 @@
                 <label for="image">Imagen principal del evento</label>
                 <input type="file" id="image" name="image" accept="image/*">
                 @if ($errors->has('image'))
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $errors->first('image') }}
                     </div>
                 @endif
                 @error('image')
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $message }}
                     </div>
                 @enderror
@@ -73,12 +73,12 @@
                 <label for="description">Descripción del evento</label>
                 <textarea id="description" name="description" rows="4">{{ old('description') }}</textarea>
                 @if ($errors->has('description'))
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $errors->first('description') }}
                     </div>
                 @endif
                 @error('description')
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $message }}
                     </div>
                 @enderror
@@ -90,7 +90,7 @@
                 <input type="datetime-local" id="datetime" name="sessionDatetime" value="{{ old('sessionDatetime') }}"
                     required />
                 @error('sessionDatetime')
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $message }}
                     </div>
                 @enderror
@@ -106,7 +106,7 @@
                     value="{{ $errors->has('sessionMaxCapacity') ? old('sessionMaxCapacity') : session('newLocation')['capacity'] ?? '' }}"
                     max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
                 @error('sessionMaxCapacity')
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $message }}
                     </div>
                 @enderror
@@ -151,7 +151,7 @@
                 <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure"
                     value="{{ old('customSaleClosure') }}">
                 @error('customSaleClosure')
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $message }}
                     </div>
                 @enderror
@@ -179,19 +179,21 @@
                     <h4>Tipo de entrada 1</h4>
                     <div class="input-unit">
                         <label for="ticketDescription1">Nombre del tipo de entrada</label>
-                        <input type="text" name="ticketDescription[]" id="ticketDescription1" />
+                        <input type="text" name="ticketDescription[]" id="ticketDescription1"
+                            value="{{ old('ticketDescription.0') }}" />
                     </div>
                     <div class="input-unit">
                         <label for="price1">Precio</label>
-                        <input type="text" name="price[]" pattern="\d{1,4}(?:\,\d{2})?"
-                            title="Sólo puedes usar números, y máximo 4 numeros enteros." value="0" id="price1"
+                        <input type="text" name="price[]" pattern="\d{1,4}(,\d{1,2})?"
+                            title="Sólo puedes usar números, y máximo 4 numeros enteros."
+                            value="{{ isset(old('price.0')) ? old('price.0') : '0000,00' }}" id="price1"
                             placeholder="0000,00" />
                     </div>
                     <div class="input-unit">
                         <label for="ticketQuantity1">Cantidad de entradas a la venta (opcional)</label>
                         <input type="number" min="0"
                             max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
-                            name="ticketQuantity[]" id="ticketQuantity1"
+                            name="ticketQuantity[]" id="ticketQuantity1" value ="{{ old('ticketQuantity.0') }}"
                             title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
                     </div>
                 </div>
@@ -208,17 +210,17 @@
             <div>
                 @if (session('success'))
                     <h3>¡Operación realizada con éxito!</h3>
-                    <div class="alert alert-success">
+                    <div class="msg-correct">
                         {{ session('success') }}
                     </div>
                 @endif
 
                 @if (session('error'))
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         <h3>¡Atención!</h3>
                         {{ session('error') }}
                         @if ($errors->any())
-                            <div class="alert alert-danger">
+                            <div>
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>

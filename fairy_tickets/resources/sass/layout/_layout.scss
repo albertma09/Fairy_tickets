@@ -31,6 +31,7 @@ body > .grid-container {
     overflow-y: auto;
     main {
         @include flex-container(column, nowrap);
+        width: 100%;
         align-items: center;
         .titulo-cabecera {
             margin: 2rem 0;
@@ -39,6 +40,7 @@ body > .grid-container {
             margin: 1.5rem 0;
         }
         .main-content {
+            width: 100%;
             @include flex-container(column, nowrap);
             align-items: center;
             @include respond-to(765px) {

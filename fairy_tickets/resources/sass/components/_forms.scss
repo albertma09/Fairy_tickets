@@ -43,13 +43,6 @@
         .dual-button-container {
             @include flex-container(column, nowrap);
         }
-        .alert {
-            color: $col-contraste;
-        }
-
-        .alert-success {
-            color: $col-fb-green;
-        }
 
         .row-unit {
             display: flex;
@@ -74,11 +67,26 @@
             border-radius: 4px;
             box-sizing: border-box;
             background-color: $col-oscuro;
+            color: $col-claro;
             &:focus {
                 outline: none;
                 border-color: $col-brand;
                 box-shadow: 0 0 5px $col-brand;
             }
+        }
+    }
+}
+
+form {
+    .msg {
+        &-error {
+            color: $col-fb-danger;
+            padding: 10px;
+        }
+
+        &-correct {
+            color: $col-fb-green;
+            padding: 10px;
         }
     }
 }

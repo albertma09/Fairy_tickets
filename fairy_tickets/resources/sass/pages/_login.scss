@@ -56,18 +56,6 @@
                     border-radius: 3px;
                 }
 
-                .msg {
-                    &-error {
-                        color: $col-fb-danger;
-                        padding: 10px;
-                    }
-
-                    &-correct {
-                        color: $col-fb-green;
-                        padding: 10px;
-                    }
-                }
-
                 .footer {
                     font-size: 90%;
                     text-align: center;

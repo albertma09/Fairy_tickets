@@ -296,6 +296,7 @@ body > .grid-container {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  width: 100%;
   align-items: center;
 }
 .body-container main .titulo-cabecera {
@@ -305,6 +306,7 @@ body > .grid-container {
   margin: 1.5rem 0;
 }
 .body-container main .main-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -735,12 +737,6 @@ nav .button-icon i.fa-bars {
   flex-direction: column;
   flex-wrap: nowrap;
 }
-.default-form .grid-container .alert {
-  color: #ff6f61;
-}
-.default-form .grid-container .alert-success {
-  color: #72c487;
-}
 .default-form .grid-container .row-unit {
   display: flex;
   align-items: center;
@@ -761,6 +757,7 @@ nav .button-icon i.fa-bars {
   border-radius: 4px;
   box-sizing: border-box;
   background-color: #05283d;
+  color: #fdf7f7;
 }
 .default-form .grid-container input:not([type=checkbox]):not([type=radio]):not([type=file]):focus,
 .default-form .grid-container select:focus,
@@ -768,6 +765,15 @@ nav .button-icon i.fa-bars {
   outline: none;
   border-color: #40e0d0;
   box-shadow: 0 0 5px #40e0d0;
+}
+
+form .msg-error {
+  color: #da0000;
+  padding: 10px;
+}
+form .msg-correct {
+  color: #72c487;
+  padding: 10px;
 }
 
 /* Estilos generales para la barra de desplazamiento */
@@ -811,7 +817,6 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  padding: 1rem;
   width: 90%;
   margin-bottom: 3rem;
 }
@@ -822,10 +827,10 @@ body {
   flex-direction: row;
   justify-content: space-between;
   background-color: #05283d;
-  padding: 2rem 3rem;
+  padding: 1.5rem 2rem;
 }
 .category-card-data-name {
-  font-size: 250%;
+  font-size: 220%;
   font-weight: bold;
 }
 .category-card-data-total {
@@ -1071,14 +1076,6 @@ hr {
   box-sizing: border-box;
   border: none;
   border-radius: 3px;
-}
-.oscuro .container .center .login .msg-error {
-  color: #da0000;
-  padding: 10px;
-}
-.oscuro .container .center .login .msg-correct {
-  color: #72c487;
-  padding: 10px;
 }
 .oscuro .container .center .login .footer {
   font-size: 90%;

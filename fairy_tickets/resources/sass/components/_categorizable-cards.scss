@@ -37,7 +37,6 @@ body {
 
 .category-card {
     @include flex-container(column);
-    padding: 1rem;
     width: 90%;
     margin-bottom: 3rem;
     &-data {
@@ -46,9 +45,9 @@ body {
         flex-direction: row;
         justify-content: space-between;
         background-color: $col-oscuro;
-        padding: 2rem 3rem;
+        padding: 1.5rem 2rem;
         &-name {
-            font-size: 250%;
+            font-size: 220%;
             font-weight: bold;
         }
         &-total {
