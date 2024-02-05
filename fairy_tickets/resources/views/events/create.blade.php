@@ -11,10 +11,12 @@
 
             <div class="input-unit">
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="name" value="{{ old('name') }}" autofocus required />
+                <input type="text" id="title" name="name" value="{{ old('name') }}" maxlength="250" autofocus
+                    required />
                 @error('name')
                     <div class="msg-error">
-                        {{ $message }}
+                        El título del evento que has introducido es erróneo, por favor, vuelve a introducir un título
+                        válido.
                     </div>
                 @enderror
             </div>
@@ -23,12 +25,18 @@
             <div class="input-unit">
                 <label for="category">Categoría</label>
                 <select id="category" name="category_id" required>
+                    <option value="">Selecciona una opión</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
+                @error('category_id')
+                    <div class="msg-error">
+                        Por favor, selecciona una categoría.
+                    </div>
+                @enderror
             </div>
 
             <div id="existingAddressContainer" class=" input-unit container-full">
@@ -46,7 +54,7 @@
                     @endif
                     @error('location_id')
                         <div class="msg-error">
-                            {{ $message }}
+                            Por favor, selecciona una opción válida para determinar la ubicación del evento.
                         </div>
                     @enderror
                 </select>
@@ -63,7 +71,7 @@
                 @endif
                 @error('image')
                     <div class="msg-error">
-                        {{ $message }}
+                        Ha habido algún error al subir la imágen, por favor, vuélvalo a intentar.
                     </div>
                 @enderror
             </div>
@@ -71,19 +79,15 @@
             <!-- Descripción -->
             <div class="input-unit">
                 <label for="description">Descripción del evento</label>
-                <textarea id="description" name="description" rows="4">{{ old('description') }}</textarea>
-                @if ($errors->has('description'))
-                    <div class="msg-error">
-                        {{ $errors->first('description') }}
-                    </div>
-                @endif
+                <textarea id="description" name="description" rows="5">{{ old('description') }}</textarea>
                 @error('description')
                     <div class="msg-error">
-                        {{ $message }}
+                        No ha escrito una descripción correcta, por favor, vuelva a escribir la descripción del evento.
                     </div>
                 @enderror
             </div>
 
+            <h3 class="form-section-title">Información de la primera sesión</h3>
             <!-- Fecha y hora de la celebración del evento-->
             <div class="input-unit">
                 <label for='datetime'>Fecha y hora del evento</label>
@@ -91,7 +95,7 @@
                     required />
                 @error('sessionDatetime')
                     <div class="msg-error">
-                        {{ $message }}
+                        Por favor, elija unas fecha y hora correctas.
                     </div>
                 @enderror
             </div>
@@ -107,7 +111,8 @@
                     max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
                 @error('sessionMaxCapacity')
                     <div class="msg-error">
-                        {{ $message }}
+                        No ha introducido un dato correcto, recuerde que la capacidad de la sesión no puede superar el aforo del
+                        recinto dónde se celebra el evento.
                     </div>
                 @enderror
             </div>
@@ -152,31 +157,23 @@
                     value="{{ old('customSaleClosure') }}">
                 @error('customSaleClosure')
                     <div class="msg-error">
-                        {{ $message }}
+                        Por favor, elija unas fecha y hora correctas.
                     </div>
                 @enderror
             </div>
 
             <div>
+                <h3 class="form-section-title">Tipos de entrada</h3>
                 <p>En esta sección podrás definir cuántas clases de entrada tendrá la primera sesión de tu evento, así
                     como
                     su nombre y precio.
                     También podrás poner una cantidad máxima de entradas a la venta.</p>
-                <small>Ten en cuenta que la suma total no
-                    podrá ser mayor que la capacidad máxima de tu sesión.</small>
-            </div>
-            <div>
-                <p>Añade un nuevo tipo de entrada</p>
-                <div class="dual-button-container">
-                    <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i>
-                    </button>
-                    <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i>
-                    </button>
-                </div>
+                <p class="msg-info">Ten en cuenta que la suma total no
+                    podrá ser mayor que la capacidad máxima de tu sesión.</p>
             </div>
             <div class="form-ticket-container" id="formTicketContainer">
                 <div class="form-ticket-unit" id="formTicketUnit">
-                    <h4>Tipo de entrada 1</h4>
+                    <h4 class="form-ticket-title">Tipo de entrada 1</h4>
                     <div class="input-unit">
                         <label for="ticketDescription1">Nombre del tipo de entrada</label>
                         <input type="text" name="ticketDescription[]" id="ticketDescription1"
@@ -186,7 +183,7 @@
                         <label for="price1">Precio</label>
                         <input type="text" name="price[]" pattern="\d{1,4}(,\d{1,2})?"
                             title="Sólo puedes usar números, y máximo 4 numeros enteros."
-                            value="{{ isset(old('price.0')) ? old('price.0') : '0000,00' }}" id="price1"
+                            value="{{ old('price.0') !== null ? old('price.0') : '0000,00' }}" id="price1"
                             placeholder="0000,00" />
                     </div>
                     <div class="input-unit">
@@ -196,6 +193,16 @@
                             name="ticketQuantity[]" id="ticketQuantity1" value ="{{ old('ticketQuantity.0') }}"
                             title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
                     </div>
+                </div>
+            </div>
+            <div class="add-remove-ticket">
+
+                <p>Añade un nuevo tipo de entrada o elimina el último</p>
+                <div class="dual-button-container">
+                    <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i>
+                    </button>
+                    <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i>
+                    </button>
                 </div>
             </div>
             </fieldset>
