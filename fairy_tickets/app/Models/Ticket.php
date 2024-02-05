@@ -23,7 +23,7 @@ class Ticket extends Model
         return $this->belongsTo(TicketType::class);
     }
 
-    public static function getTicketsInformation()
+    public static function getTicketsInformation($session_id, $email)
     {
 
         try{
@@ -32,6 +32,7 @@ class Ticket extends Model
                 'tickets.id',
                 'tickets.name as client_name',
                 'tickets.dni',
+                'purchases.email',
                 'ticket_types.description as ticket_type_name',
                 'ticket_types.price',
                 'events.name as event_name',
@@ -58,5 +59,22 @@ class Ticket extends Model
         
 
 
+    }
+
+    public static function getEventInformation(){
+        try{
+            $event = DB::table('events')
+            ->join('sessions', 'sessions.event_id', '=', 'events.id')
+            ->select('events.id','events.name', 'events.description', 'sessions.date', 'sessions.hour')
+            ->where('sessions.id', 234)
+            ->get();
+
+            return $event;
+
+        }catch (Exception $e){
+
+           
+            Log::debug($e->getMessage());
+        }
     }
 }

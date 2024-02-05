@@ -22,7 +22,7 @@
                 <table class="inner-table first-table">
                     <tr>
                         <td colspan="3">
-                            <img src="{{ public_path('logo/logoFairyTickets_fondoOscuro.png') }}"
+                            <img src="{{ public_path('logo/logoFairyTickets.png') }}"
                                 alt="Logo del sitio web" class="logo-img" />
                         </td>
                     </tr>

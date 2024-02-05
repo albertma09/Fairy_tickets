@@ -78,7 +78,10 @@ Route::get('/events/categories/{name}', [EventController::class, 'searchByCatego
 
 Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->name('events.mostrar');
 
-Route::get('/buyTicket', [GeneratorPDF::class, 'generatePDF'])->name('components.ticket-pdf');
+Route::get('/buyTicket/{session_id}/{email}', [GeneratorPDF::class, 'generatePDF'])->name('buy-ticket');
+
+Route::get('/sendPdfEmail',[GeneratorPDF::class, 'sendPdfEmail'])->name('send-pfd-email');
+
 Route::fallback(function () {
     return ('Opps!!');
 });
