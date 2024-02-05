@@ -3,7 +3,7 @@ nav {
     display: grid;
     grid-template-rows: max-content max-content;
     height: max-content;
-    max-height: 16vh;
+    max-height: 20vh;
 
     div.nav-main {
         @include flex-container;

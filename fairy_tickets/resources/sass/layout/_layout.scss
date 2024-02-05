@@ -6,6 +6,7 @@ html {
 }
 body > .grid-container {
     grid-template-rows: 15% 1fr;
+    gap: 0;
     height: 100vh;
 
     @include respond-to(426px) {
