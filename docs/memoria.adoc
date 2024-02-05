@@ -12,20 +12,34 @@ Albert Mateos - Aitor Lopera - Diego Amador
 * Diego Amador   
 
 == Objetivos de la aplicación.
+Esta aplicación tiene como objetivo la creación de una plataforma en la que publicar eventos y poner a la venta entradas para los mismos.
+
 == Necesidades.
+Las necesidades a las que esta aplicación trata de dar respuesta son las siguientes:
+
+1. Publicación de eventos. Permitirá publicar eventos en la red para darlos a conocer al gran público.
+
+2. CRUD de eventos. Ofrecerá un sistema de gestión para que los promotores usuarios de la app puedan llevar a cabo su trabajo de manera más eficiente e intuitiva. Así, la plataforma permitirá una gestión CRUD de los eventos.
+
+3. Plataforma de pagos. Llevar a cabo toda la gestión de la compraventa de entradas. La aplicación se encargará de ofrecer una forma de pago segura mediante el consumo de una API (pasarela de pagos) externa.
+
+4. Identificación de entradas y seguimiento del consumidor. La aplicación se encargará de la identificación de las entradas y el envío y recordatorio de las mismas a los clientes antes del evento.
+
+5. Monitorización de la satisfacción del consumidor. Permitirá un sistema de _feedback_ para que los usuarios que hayan comprado una entrada puedan dar su opinión sobre el evento, y así el promotor tenga una forma directa de conocer el grado de satisfacción de sus clientes.
+
+
 == Publico objetivo.
+Esta aplicación está diseñada considerando dos _targets_ diferentes. 
+
+Por un lado, tenemos a los promotores que necesitan publicar sus eventos y llevarlos a la mayor cantidad de gente posible. Este tipo de usuario será el que tenga acceso a las secciones restringidas de la aplicación que llevan a cabo todo el proceso CRUD de los eventos.
+Se trata de un público corporativo y profesional, que lo que necesita es realizar su trabajo de la forma más cómoda y eficiente, resultados al menor plazo posible y retroalimentación rápida y clara.
+
+En el otro lado, encontramos al gran público, a las personas que buscando por la red encontrarán eventos publicados en esta aplicacióna y comprarán sus entradas. Este grupo de personas, consideramos que lo compone un rango muy amplio y diverso, ya que, además, el rango de edades o los sesgos de filtraje variarán mucho dependiendo del tipo de evento que se publique. Entendiendo esto, pensamos que se tratará de personas con un mínimo poder adquisitivo que suelan tener acceso a las redes y las utilitcen a menudo. Esto engloba a personas de entre 14 y 60 años.  
 
 ==  Diseño de base de datos.
-[plantuml,,png]
---
-class Event{}
-class Location{}
-class Category{}
+Para ver el diseño MER de la base de datos puede dirigirse al siguiente enlace:
+https://drive.google.com/file/d/1jDNZInTPw_NM7lHp22TpuoQtsD87uHpR/view?usp=sharing[Esquema MER]
 
-Event ||..o{ Location
-Event ||..o{ Category
-    
---
 
 == Sketching y Mockups de interfícies de usuario.
 .Consejo:
@@ -73,6 +87,29 @@ Guarda los cambios y reinicia Apache:
 ----
 sudo service apache2 restart
 ----
+===== Configuración del docker y la base de datos
+En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
+
+La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
+
+
+Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
+
+Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
+
+[source,docker]
+----
+docker compose build
+----
+
+Una vez creada la imagen tendremos que lanzar el comando up para construir los contenedores indicados en el archivo `compose.yml`:
+
+[source,docker]
+----
+docker compose up -d
+----
+
+De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
 
 ===== Despliegue del Proyecto desde Git
 
