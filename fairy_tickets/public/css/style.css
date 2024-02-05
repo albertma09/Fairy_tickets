@@ -628,7 +628,7 @@ nav .button-icon i.fa-bars {
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
-  min-width: 70%;
+  min-width: 75%;
   margin: 2rem 2rem 0 0;
   background-color: #05283d;
 }
@@ -843,7 +843,8 @@ body {
   flex-direction: row;
   min-height: 5rem;
   overflow: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 .category-card-more {
   display: flex;

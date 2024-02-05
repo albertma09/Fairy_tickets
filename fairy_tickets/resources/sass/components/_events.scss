@@ -2,7 +2,7 @@
     @include card-shape;
     @include flex-container(column, wrap);
     height: 100%;
-    min-width: 70%;
+    min-width: 75%;
     margin: 2rem 2rem 0 0;
     background-color: $col-oscuro;
     @include respond-to(765px) {

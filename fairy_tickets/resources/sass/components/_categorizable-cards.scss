@@ -69,7 +69,8 @@ body {
         flex-direction: row;
         min-height: 5rem;
         overflow: auto;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
+        padding-bottom:1rem;
     }
     &-more {
         display: flex;
