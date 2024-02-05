@@ -1,27 +1,114 @@
 .default-form {
-    @include flex-container(row, wrap);
-    padding: 4rem;
-    div {
-        padding: 1.2rem;
-        &.input-unit {
-            @include flex-container(column);
-        }
-        &.row-unit {
-            @include flex-container();
-        }
-        &.container-quarter {
-            width: 25%;
-        }
-        &.container-half {
-            width: 50%;
-        }
-        &.container-full {
-            width: 100%;
+    > .grid-container {
+        padding: 0 1rem;
+    }
+    .grid-container {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+
+        .row-unit {
+            display: flex;
+            align-items: center;
+
+            label {
+                margin-left: 1rem;
+            }
+
+            input[type="checkbox"],
+            input[type="radio"] {
+                margin: 0;
+            }
         }
     }
-    input,
-    select {
+
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    select,
+    textarea {
+        width: 100%;
         padding: 0.6rem;
+        border: 2px solid $col-claro;
         border-radius: 4px;
+        box-sizing: border-box;
+        background-color: $col-oscuro;
+        color: $col-claro;
+        &:focus {
+            outline: none;
+            border-color: $col-brand;
+            box-shadow: 0 0 5px $col-brand;
+        }
+    }
+    .add-remove-ticket{
+        justify-self: center;
+        background-color: $col-oscuro;
+        @include card-shape;
+        @include flex-container(row, nowrap);
+        max-width:fit-content;
+        padding: 1rem;
+        margin-top: -1.2rem;
+        margin-bottom: 1.2rem;
+        p{
+            max-width: 35vw;
+            padding-right: 1rem;
+            @include respond-to(765px){
+                max-width:20vw;
+            };
+        }
+        .dual-button-container{
+            @include flex-container(column, nowrap);
+            justify-content: space-between;
+        }
+    }
+}
+
+form {
+    .msg {
+        &-error {
+            color: $col-fb-danger;
+            padding: 10px;
+        }
+
+        &-correct {
+            color: $col-fb-green;
+            padding: 10px;
+        }
+
+        &-info {
+            margin: 1rem 0 1rem 2rem;
+            padding-bottom: 0.2rem;
+            border-right: 0.2rem solid $col-contraste;
+            font-weight: lighter;
+        }
+    }
+    .input-unit {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.3rem;
+        align-items: center;
+    }
+    .form-ticket-unit {
+        @include flex-container(column, nowrap);
+        margin-bottom: 2rem;
+        .form-ticket-title{
+            font-family: $fjalla;
+            letter-spacing: 0.1rem;
+            font-weight: normal;
+            border-left: 1rem solid $col-contraste;
+            border-bottom: 2px solid $col-contraste;
+            padding-left:0.5rem;
+            margin: 1rem 0;
+        }
+        .input-unit{
+            margin-bottom:1.2rem;
+        }
+    }
+    .form-section-title{
+        text-align: center;
+        border-radius: 4px;
+        border: 2px solid $col-contraste;
+        color: $col-contraste;
+        font-family: $fjalla;
+        font-size: 2rem;
+        padding:1rem;
+        margin: 3rem 1.6rem 1.5rem 1.6rem;
     }
 }

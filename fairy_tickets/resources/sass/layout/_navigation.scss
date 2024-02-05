@@ -2,6 +2,7 @@ nav {
     @include dark-bg;
     display: grid;
     grid-template-rows: max-content max-content;
+    height: max-content;
     max-height: 20vh;
 
     div.nav-main {
@@ -15,8 +16,7 @@ nav {
         margin: 0;
         padding: 0;
         height: 100%;
-        display: flex;
-        flex-flow: row nowrap;
+        @include flex-container;
         align-items: center;
         justify-content: center;
 
@@ -121,7 +121,6 @@ nav {
         align-items: center;
         text-align: center;
         overflow-x: scroll;
-        justify-content: space-around;
     }
 
     button#menu-toggle {

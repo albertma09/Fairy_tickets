@@ -6,23 +6,37 @@
 
     <form class="default-form" action="{{ route('events.store') }}" method ="POST" enctype="multipart/form-data">
         @csrf
-        <div class="container-full">
+        <div class="grid-container">
             <!-- Título del evento -->
+
             <div class="input-unit">
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="name" value="{{ old('name') }}" autofocus required />
+                <input type="text" id="title" name="name" value="{{ old('name') }}" maxlength="250" autofocus
+                    required />
+                @error('name')
+                    <div class="msg-error">
+                        El título del evento que has introducido es erróneo, por favor, vuelve a introducir un título
+                        válido.
+                    </div>
+                @enderror
             </div>
 
             <!-- Categoría -->
             <div class="input-unit">
                 <label for="category">Categoría</label>
                 <select id="category" name="category_id" required>
+                    <option value="">Selecciona una opión</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
+                @error('category_id')
+                    <div class="msg-error">
+                        Por favor, selecciona una categoría.
+                    </div>
+                @enderror
             </div>
 
             <div id="existingAddressContainer" class=" input-unit container-full">
@@ -38,6 +52,11 @@
                         <option value="{{ session('newLocation')['id'] }}" selected>{{ session('newLocation')['name'] }}
                         </option>
                     @endif
+                    @error('location_id')
+                        <div class="msg-error">
+                            Por favor, selecciona una opción válida para determinar la ubicación del evento.
+                        </div>
+                    @enderror
                 </select>
             </div>
             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
@@ -46,123 +65,146 @@
                 <label for="image">Imagen principal del evento</label>
                 <input type="file" id="image" name="image" accept="image/*">
                 @if ($errors->has('image'))
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         {{ $errors->first('image') }}
                     </div>
                 @endif
+                @error('image')
+                    <div class="msg-error">
+                        Ha habido algún error al subir la imágen, por favor, vuélvalo a intentar.
+                    </div>
+                @enderror
             </div>
 
             <!-- Descripción -->
             <div class="input-unit">
                 <label for="description">Descripción del evento</label>
-                <textarea id="description" name="description" rows="4">{{ old('description') }}</textarea>
-                @if ($errors->has('description'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('description') }}
+                <textarea id="description" name="description" rows="5">{{ old('description') }}</textarea>
+                @error('description')
+                    <div class="msg-error">
+                        No ha escrito una descripción correcta, por favor, vuelva a escribir la descripción del evento.
                     </div>
-                @endif
+                @enderror
             </div>
 
-            <fieldset>
-                <legend>Primera sesión del evento</legend>
-                <!-- Fecha y hora de la celebración del evento-->
-                <div class="input-unit">
-                    <label for='datetime'>Fecha y hora del evento</label>
-                    <input type="datetime-local" id="datetime" name="sessionDatetime" value="{{ old('sessionDatetime') }}"
-                        required />
-                </div>
+            <h3 class="form-section-title">Información de la primera sesión</h3>
+            <!-- Fecha y hora de la celebración del evento-->
+            <div class="input-unit">
+                <label for='datetime'>Fecha y hora del evento</label>
+                <input type="datetime-local" id="datetime" name="sessionDatetime" value="{{ old('sessionDatetime') }}"
+                    required />
+                @error('sessionDatetime')
+                    <div class="msg-error">
+                        Por favor, elija unas fecha y hora correctas.
+                    </div>
+                @enderror
+            </div>
 
-                <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
-                {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
-                <!-- Aforo máximo -->
-                <div class="input-unit">
-                    <label for="sessionMaxCapacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
-                    </label>
-                    <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
-                        value="{{ $errors->has('sessionMaxCapacity') ? old('sessionMaxCapacity') : session('newLocation')['capacity'] ?? '' }}"
-                        max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
-                </div>
+            <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
+            {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
+            <!-- Aforo máximo -->
+            <div class="input-unit">
+                <label for="sessionMaxCapacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
+                </label>
+                <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
+                    value="{{ $errors->has('sessionMaxCapacity') ? old('sessionMaxCapacity') : session('newLocation')['capacity'] ?? '' }}"
+                    max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
+                @error('sessionMaxCapacity')
+                    <div class="msg-error">
+                        No ha introducido un dato correcto, recuerde que la capacidad de la sesión no puede superar el aforo del
+                        recinto dónde se celebra el evento.
+                    </div>
+                @enderror
+            </div>
 
-                <!-- Entradas nominales -->
+            <!-- Entradas nominales -->
+            <div class="row-unit">
+                <input type="checkbox" id="named_tickets" name="named_tickets"
+                    {{ old('named_tickets') ? 'checked' : '' }} />
+                <label for="named_tickets">Entradas nominales</label>
+            </div>
+
+            <!-- Cierre de la venta en línea -->
+            <div class="input-unit">
+                <p>Indica el momento del cierre de la venta de entradas en línea</p>
                 <div class="row-unit">
-                    <input type="checkbox" id="named_tickets" name="named_tickets"
-                        {{ old('named_tickets') ? 'checked' : '' }} />
-                    <label for="named_tickets">Entradas nominales</label>
-
+                    <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
+                        class="onlinesale-closure-radio"
+                        {{ old('onlineSaleClosure') == 0 || old('onlineSaleClosure') === null ? 'checked' : '' }}>
+                    <label for="withEvent">Hora de la celebración del evento</label>
                 </div>
-
-                <!-- Cierre de la venta en línea -->
-                <fieldset>
-                    <legend>Cierre de la venta online
-                    </legend>
-                    <div class="input-unit">
-                        <div class="row-unit">
-                            <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
-                                class="onlinesale-closure-radio"
-                                {{ old('onlineSaleClosure') == 0 || old('onlineSaleClosure') === null ? 'checked' : '' }}>
-                            <label for="withEvent">Hora de la celebración del evento</label>
-                        </div>
-                        <div class="row-unit">
-                            <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
-                                class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 1 ? 'checked' : '' }}>
-                            <label for="oneHBefore">Una hora antes de la celebración del evento</label>
-                        </div>
-                        <div class="row-unit">
-                            <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
-                                class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 2 ? 'checked' : '' }}>
-                            <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
-                        </div>
-                        <div class="row-unit">
-                            <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
-                                class="onlinesale-closure-radio"
-                                {{ old('onlineSaleClosure') == 'custom' ? 'checked' : '' }}>
-                            <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
-                        </div>
+                <div class="row-unit">
+                    <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
+                        class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 1 ? 'checked' : '' }}>
+                    <label for="oneHBefore">Una hora antes de la celebración del evento</label>
+                </div>
+                <div class="row-unit">
+                    <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
+                        class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 2 ? 'checked' : '' }}>
+                    <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
+                </div>
+                <div class="row-unit">
+                    <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
+                        class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 'custom' ? 'checked' : '' }}>
+                    <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
+                </div>
+            </div>
+            <div class="input-unit" id="customClosureDatetimeContainer">
+                <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de
+                    la
+                    venta online</label>
+                <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure"
+                    value="{{ old('customSaleClosure') }}">
+                @error('customSaleClosure')
+                    <div class="msg-error">
+                        Por favor, elija unas fecha y hora correctas.
                     </div>
-                    <div class="input-unit" id="customClosureDatetimeContainer">
-                        <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de
-                            la
-                            venta online</label>
-                        <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure"
-                            value="{{ old('customSaleClosure') }}">
-                    </div>
-                </fieldset>
+                @enderror
+            </div>
 
-            </fieldset>
-
-            <fieldset>
-                <legend>Clases de entrada</legend>
-                <p>En esta sección podrás definir cuántas clases de entrada tendrá la primera sesión de tu evento, así como
+            <div>
+                <h3 class="form-section-title">Tipos de entrada</h3>
+                <p>En esta sección podrás definir cuántas clases de entrada tendrá la primera sesión de tu evento, así
+                    como
                     su nombre y precio.
                     También podrás poner una cantidad máxima de entradas a la venta.</p>
-                <small>Ten en cuenta que la suma total no
-                    podrá ser mayor que la capacidad máxima de tu sesión.</small>
-                <div>Añade un nuevo tipo de entrada
-                    <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i></button>
-                    <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i></button>
-                </div>
-                <div class="form-ticket-container" id="formTicketContainer">
-                    <div class="form-ticket-unit" id="formTicketUnit">
-                        <h4>Tipo de entrada 1</h4>
-                        <div class="input-unit">
-                            <label for="ticketDescription1">Nombre del tipo de entrada</label>
-                            <input type="text" name="ticketDescription[]" id="ticketDescription1" />
-                        </div>
-                        <div class="input-unit">
-                            <label for="price1">Precio</label>
-                            <input type="text" name="price[]" pattern="\d{1,4}(?:\,\d{2})?"
-                                title="Sólo puedes usar números, y máximo 4 numeros enteros." value="0"
-                                id="price1" placeholder="0000,00" />
-                        </div>
-                        <div class="input-unit">
-                            <label for="ticketQuantity1">Cantidad de entradas a la venta (opcional)</label>
-                            <input type="number" min="0"
-                                max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
-                                name="ticketQuantity[]" id="ticketQuantity1"
-                                title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
-                        </div>
+                <p class="msg-info">Ten en cuenta que la suma total no
+                    podrá ser mayor que la capacidad máxima de tu sesión.</p>
+            </div>
+            <div class="form-ticket-container" id="formTicketContainer">
+                <div class="form-ticket-unit" id="formTicketUnit">
+                    <h4 class="form-ticket-title">Tipo de entrada 1</h4>
+                    <div class="input-unit">
+                        <label for="ticketDescription1">Nombre del tipo de entrada</label>
+                        <input type="text" name="ticketDescription[]" id="ticketDescription1"
+                            value="{{ old('ticketDescription.0') }}" />
+                    </div>
+                    <div class="input-unit">
+                        <label for="price1">Precio</label>
+                        <input type="text" name="price[]" pattern="\d{1,4}(,\d{1,2})?"
+                            title="Sólo puedes usar números, y máximo 4 numeros enteros."
+                            value="{{ old('price.0') !== null ? old('price.0') : '0000,00' }}" id="price1"
+                            placeholder="0000,00" />
+                    </div>
+                    <div class="input-unit">
+                        <label for="ticketQuantity1">Cantidad de entradas a la venta (opcional)</label>
+                        <input type="number" min="0"
+                            max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
+                            name="ticketQuantity[]" id="ticketQuantity1" value ="{{ old('ticketQuantity.0') }}"
+                            title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
                     </div>
                 </div>
+            </div>
+            <div class="add-remove-ticket">
+
+                <p>Añade un nuevo tipo de entrada o elimina el último</p>
+                <div class="dual-button-container">
+                    <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i>
+                    </button>
+                    <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
             </fieldset>
 
             <!-- Evento oculto -->
@@ -175,17 +217,17 @@
             <div>
                 @if (session('success'))
                     <h3>¡Operación realizada con éxito!</h3>
-                    <div class="alert alert-success">
+                    <div class="msg-correct">
                         {{ session('success') }}
                     </div>
                 @endif
 
                 @if (session('error'))
-                    <div class="alert alert-danger">
+                    <div class="msg-error">
                         <h3>¡Atención!</h3>
                         {{ session('error') }}
                         @if ($errors->any())
-                            <div class="alert alert-danger">
+                            <div>
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>

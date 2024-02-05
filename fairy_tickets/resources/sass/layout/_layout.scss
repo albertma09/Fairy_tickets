@@ -4,9 +4,9 @@ html {
     background-color: $col-oscuro-2;
     height: 100%;
 }
-.grid-container {
-    display: grid;
+body > .grid-container {
     grid-template-rows: 15% 1fr;
+    gap: 0;
     height: 100vh;
 
     @include respond-to(426px) {
@@ -16,14 +16,13 @@ html {
 
 .nav {
     position: sticky;
-    top: 0;
     z-index: 100;
 
     .nav-main {
         padding: 0 1rem;
     }
     .filter-categories {
-        padding: 0 1rem;
+        margin: 0 1rem;
     }
 }
 
@@ -32,6 +31,7 @@ html {
     overflow-y: auto;
     main {
         @include flex-container(column, nowrap);
+        width: 100%;
         align-items: center;
         .titulo-cabecera {
             margin: 2rem 0;
@@ -40,6 +40,7 @@ html {
             margin: 1.5rem 0;
         }
         .main-content {
+            width: 100%;
             @include flex-container(column, nowrap);
             align-items: center;
             @include respond-to(765px) {
