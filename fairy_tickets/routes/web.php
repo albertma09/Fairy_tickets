@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\GeneratorPDF;
 
 /*
@@ -40,19 +41,31 @@ Route::middleware(['auth.redirect'])->group(function () {
         [EventController::class, 'showCreateForm']
     )->name('events.create');
 
+    Route::get(
+        '/manage/{eventId}/new-session',
+        [SessionController::class, 'showCreateForm']
+    )->name('sessions.create');
+
+
     Route::post(
         '/manage/new-event',
         [EventController::class, 'store']
     )->name('events.store');
+
     Route::post(
         '/manage/new-location',
         [LocationController::class, 'store']
     )->name('location.store');
 
+    Route::post(
+        '/manage/new-session',
+        [SessionController::class, 'store']
+    )->name('session.store');
+
     Route::get(
         '/sesiones/{id}',
-        [PromotorController::class, 'getSessionsByPromotor']
-    )->name('home.sessions');
+        [SessionController::class, 'showSessionsByPromotor']
+    )->name('sessions.mostrar');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña

@@ -48,7 +48,7 @@ class GeneratorPDF extends Controller
                 ->subject('Correo de prueba para descargar tickets');
         });
 
-        return view('home.sessions');
+        return view('sessions.mostrar');
 
     }
 }

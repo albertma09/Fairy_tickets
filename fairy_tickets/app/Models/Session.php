@@ -27,6 +27,8 @@ class Session extends Model
         return $this->hasMany(TicketType::class);
     }
 
+    // Función que pasa por parámetro la id de un usuario y
+    // devuelve todas las sesiones de los eventos que este ha creado
     public static function getAllSessionsByPromotor($id)
     {
         try {
@@ -41,10 +43,34 @@ class Session extends Model
             Log::info('fin de la carga de sesiones por promotor');
             return $sessions;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
+    // Función que pasa por parámetro la id de un evento y
+    // devuelve la primera sesión creada (la sesión por defecto) y sus tickets
+    public static function getFirstSessionByEvent($eventId)
+    {
+        try {
+            Log::info('Llamada al método Session.getFirstSessionByEvent');
+
+            $sessions = DB::table('sessions')
+                ->join('ticket_types', 'ticket_types.session_id', '=', 'sessions.id')
+                ->select('sessions.name', 'sessions.date', 'sessions.hour')
+                ->where('events.user_id', '=', $id)
+                ->orderBy('sessions.date')
+                ->get();
+            Log::info('fin de la carga de sesiones por promotor');
+            return $sessions;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+
+
+// Función que recibe el tipo de cierre escogido por el usuario y la fecha del evento y
+// devuelve la fecha del cierre según lo que se pida
     private static function adjustOnlineClosure(Carbon $eventDate, string $onlineClosure, string $customClosure = null): Carbon
     {
         try {
@@ -78,6 +104,8 @@ class Session extends Model
         }
     }
 
+
+// Función que recibe una id de sesión y crea un array de tickets vinculados a ésta
     private static function createSessionTicketsArray(int $sessionId, array $formData): array
     {
         try {
@@ -92,7 +120,7 @@ class Session extends Model
                     // Cuando la cantidad de tickets no se indican o viene 0 toma la capacidad máxima de sesión
                     'ticket_amount' => ($formData['ticketQuantity'][$i] !== null && $formData['ticketQuantity'][$i] !== 0) ? $formData['ticketQuantity'][$i] : $formData['sessionMaxCapacity'],
                 ];
-                Log::debug('Datos que crea la función Session.createSessionTicketArray',$ticketData, $formData['sessionMaxCapacity']);
+                Log::debug('Datos que crea la función Session.createSessionTicketArray', $ticketData, $formData['sessionMaxCapacity']);
             }
             return $ticketData;
         } catch (\Exception $e) {
@@ -100,6 +128,8 @@ class Session extends Model
         }
     }
 
+    // Función que hace el insert a base de datos de una sesión,
+    // recibe el id del evento al que pertenece y los datos de sesión en forma de array asociativo
     public static function createSession(int $eventId, array $formData)
     {
         try {
