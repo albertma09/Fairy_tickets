@@ -11,15 +11,9 @@
 
         <input type="hidden" id="email_address" value="{{ $email }}" name="email" required>
 
-
-
-
         <label for="password">Contraseña</label>
 
         <input type="password" id="password" name="password" required autofocus>
-
-
-
 
         <label for="password-confirm">Confirmar Contraseña</label>
 
