@@ -40,13 +40,24 @@ class GeneratorPDF extends Controller
     public function sendPdfEmail(){
 
         $data = Ticket::getEventInformation();
+        
         $event = $data[0];
-        $session_id = $event->id;
+        $event_id = $event->id;
 
-        Mail::send('components.email-pdf', ['session_id'=> 234, 'email'=>'avis.beahan@example.org', 'event'=>$event, 'session_id'=>$session_id ], function ($message) {
+        Mail::send('email.email-pdf', ['session_id'=> 234, 'email'=>'avis.beahan@example.org', 'event'=>$event, 'event_id'=>$event_id ], function ($message) {
             $message->to('recipient@example.com')
-                ->subject('Correo de prueba para descargar tickets');
+                ->subject('Compra tickets');
         });
+
+        $events = Ticket::getRememberTickets();
+
+            foreach($events as $event){
+
+                Mail::send('email.remember-event', ['event'=>$event ], function ($message) {
+                    $message->to('prueba@example.com')
+                        ->subject('Dia evento');
+                });
+            }
 
         return view('home.sessions');
 
