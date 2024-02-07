@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\Ticket;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +14,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $events = Ticket::getRememberTickets();
+
+            foreach($events as $event){
+
+                Mail::send('email.remember-event', ['event'=>$event ], function ($message) {
+                    $message->to('prueba@example.com')
+                        ->subject('Dia evento');
+                });
+            }
+           
+        })->everyMinute();
+    
+
     }
 
     /**
