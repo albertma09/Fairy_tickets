@@ -67,7 +67,7 @@ class Ticket extends Model
             $event = DB::table('events')
             ->join('sessions', 'sessions.event_id', '=', 'events.id')
             ->select('events.id','events.name', 'events.description', 'sessions.date', 'sessions.hour')
-            ->where('sessions.id', 25)
+            ->where('sessions.id', 1)
             ->get();
 
             return $event;
@@ -87,6 +87,26 @@ class Ticket extends Model
             ->join('events', 'events.id', '=', 'sessions.event_id')
             ->select('events.id', 'purchases.email', 'events.name as event_name', 'sessions.id as session_id')
             ->where('sessions.date', '=', DB::raw('1 + CURRENT_DATE'))
+            ->get();
+
+
+
+            return $event;
+        }catch(Exception $e){
+            Log::debug($e->getMessage());
+        }
+    }
+
+    public static function sendOpinion(){
+
+        try{
+
+            
+            $event = DB::table('purchases')
+            ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
+            ->join('events', 'events.id', '=', 'sessions.event_id')
+            ->select('purchases.name', 'purchases.email', 'events.id','events.name as event_name')
+            ->where('sessions.date', '=', DB::raw('CURRENT_DATE - 1'))
             ->get();
 
 

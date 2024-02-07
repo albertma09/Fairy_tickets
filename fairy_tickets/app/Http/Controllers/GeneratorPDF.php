@@ -7,6 +7,7 @@ use Dompdf\Dompdf;
 use App\Models\Ticket;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class GeneratorPDF extends Controller
@@ -49,15 +50,7 @@ class GeneratorPDF extends Controller
                 ->subject('Compra tickets');
         });
 
-        $events = Ticket::getRememberTickets();
-
-            foreach($events as $event){
-
-                Mail::send('email.remember-event', ['event'=>$event ], function ($message) {
-                    $message->to('prueba@example.com')
-                        ->subject('Dia evento');
-                });
-            }
+        
 
         return view('home.sessions');
 
