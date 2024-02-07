@@ -13,8 +13,10 @@ class SessionController extends Controller
 {
    public function showCreateForm($eventId)
     {
-         $session = Event::find($eventId);
-        return view('sessions.create', ['event' => $event]);
+
+         $sessionData = Session::getFirstSessionDataByEvent($eventId);
+         $locationData = $sessionData['session']->event->location;
+        return view('sessions.create', ['sessionData' => $sessionData, 'location' => $locationData]);
     }
 
    public function showSessionsByPromotor($id)
@@ -29,5 +31,9 @@ class SessionController extends Controller
        } catch (Exception $e) {
            Log::debug($e->getMessage());
        }
+   }
+
+   public function store(Request $request){
+
    }
 }

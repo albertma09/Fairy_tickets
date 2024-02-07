@@ -171,30 +171,13 @@
                 <p class="msg-info">Ten en cuenta que la suma total no
                     podrá ser mayor que la capacidad máxima de tu sesión.</p>
             </div>
+            @php
+                $index = 1;
+            @endphp
             <div class="form-ticket-container" id="formTicketContainer">
-                <div class="form-ticket-unit" id="formTicketUnit">
-                    <h4 class="form-ticket-title">Tipo de entrada 1</h4>
-                    <div class="input-unit">
-                        <label for="ticketDescription1">Nombre del tipo de entrada</label>
-                        <input type="text" name="ticketDescription[]" id="ticketDescription1"
-                            value="{{ old('ticketDescription.0') }}" />
-                    </div>
-                    <div class="input-unit">
-                        <label for="price1">Precio</label>
-                        <input type="text" name="price[]" pattern="\d{1,4}(,\d{1,2})?"
-                            title="Sólo puedes usar números, y máximo 4 numeros enteros."
-                            value="{{ old('price.0') !== null ? old('price.0') : '0000,00' }}" id="price1"
-                            placeholder="0000,00" />
-                    </div>
-                    <div class="input-unit">
-                        <label for="ticketQuantity1">Cantidad de entradas a la venta (opcional)</label>
-                        <input type="number" min="0"
-                            max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
-                            name="ticketQuantity[]" id="ticketQuantity1" value ="{{ old('ticketQuantity.0') }}"
-                            title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
-                    </div>
-                </div>
+                <x-forms.tickettype-input-group-component :index="$index" :ticketType="null" />
             </div>
+
             <div class="add-remove-ticket">
 
                 <p>Añade un nuevo tipo de entrada o elimina el último</p>

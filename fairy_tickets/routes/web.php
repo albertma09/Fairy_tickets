@@ -35,37 +35,39 @@ Route::middleware(['auth.redirect'])->group(function () {
     // Home del promotor
     Route::get('/promotor/{userId}', [PromotorController::class, 'mostrarPromotor'])->name('promotor');
 
-    // Creación de nuevos eventos, vista y llamada a la función que gestiona la subida de datos
+    // Eventos
     Route::get(
         '/manage/new-event',
         [EventController::class, 'showCreateForm']
     )->name('events.create');
-
-    Route::get(
-        '/manage/{eventId}/new-session',
-        [SessionController::class, 'showCreateForm']
-    )->name('sessions.create');
-
 
     Route::post(
         '/manage/new-event',
         [EventController::class, 'store']
     )->name('events.store');
 
+    // Sesiones
+    Route::get(
+        '/sesiones/{id}',
+        [SessionController::class, 'showSessionsByPromotor']
+    )->name('sessions.mostrar');
+
+    Route::get(
+        '/manage/{eventId}/new-session',
+        [SessionController::class, 'showCreateForm']
+    )->name('sessions.create');
+
+    Route::post(
+        '/manage/new-session',
+        [SessionController::class, 'store']
+    )->name('sessions.store');
+
+    // Direcciones
     Route::post(
         '/manage/new-location',
         [LocationController::class, 'store']
     )->name('location.store');
 
-    Route::post(
-        '/manage/new-session',
-        [SessionController::class, 'store']
-    )->name('session.store');
-
-    Route::get(
-        '/sesiones/{id}',
-        [SessionController::class, 'showSessionsByPromotor']
-    )->name('sessions.mostrar');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña
@@ -93,7 +95,7 @@ Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->
 
 Route::get('/buyTicket/{session_id}/{email}', [GeneratorPDF::class, 'generatePDF'])->name('buy-ticket');
 
-Route::get('/sendPdfEmail',[GeneratorPDF::class, 'sendPdfEmail'])->name('send-pfd-email');
+Route::get('/sendPdfEmail', [GeneratorPDF::class, 'sendPdfEmail'])->name('send-pfd-email');
 
 Route::fallback(function () {
     return ('Opps!!');

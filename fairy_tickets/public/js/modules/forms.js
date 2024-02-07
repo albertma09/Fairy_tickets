@@ -1,7 +1,4 @@
 /* Métodos y funcionalidades del formulario de eventos */
-// Contadores para las funcionalidades
-let ticketGroupIdCounter = 2;
-
 
 // Función que devuelve true si el radio con value custom está checkeado
 const isCustomDateRadioChecked = (radioGroup) => {
@@ -106,37 +103,64 @@ export const setupAddressFormToggle = () => {
     }
 };
 
+// Función que devuelve el número más alto entre los grupos de input de ticket
+const findTicketWithHighestNumber = () => {
+    let highestNumber = 0;
+
+    // Itera todos los elementos cuya id empiece por: 'formTicketUnit'
+    document.querySelectorAll('[id^="formTicketUnit"]').forEach((element) => {
+        // Extraemos el número del id
+        const idNumber = parseInt(element.id.replace("formTicketUnit", ""), 10);
+
+        // Mira si el número es más alto que el actual más alto
+        if (!isNaN(idNumber) && idNumber > highestNumber) {
+            highestNumber = idNumber;
+        }
+    });
+
+    return highestNumber;
+};
+
 // Función que se encarga de añadir un nuevo grupo de inputs para un nuevo tipo de ticket
 const addNewTicketInputGroup = (ticketContainer, firstTicket) => {
-        const newTicketType = firstTicket.cloneNode(true);
-        newTicketType.querySelector("h4").textContent = `Tipo de entrada ${ticketGroupIdCounter}`;
+    const newTicketType = firstTicket.cloneNode(true);
+    let ticketIdCounter = findTicketWithHighestNumber()+1;
+    console.log(ticketIdCounter);
+    newTicketType.id = `formTicketUnit${ticketIdCounter}`;
+    newTicketType.querySelector(
+        "h4"
+    ).textContent = `Tipo de entrada ${ticketIdCounter}`;
 
-        // Cambiamos los ids para que no se repitan
-        const ticketTypeName = newTicketType.querySelector("#ticketDescription1");
-        ticketTypeName.id = `ticketDescription${ticketGroupIdCounter}`;
-        ticketTypeName.previousElementSibling.setAttribute('for', `ticketDescription${ticketGroupIdCounter}`);
-        
-        const price = newTicketType.querySelector("#price1");
-        price.id = `price${ticketGroupIdCounter}`;
-        price.previousElementSibling.setAttribute('for', `price${ticketGroupIdCounter}`);
+    // Cambiamos los ids para que no se repitan
+    const ticketTypeName = newTicketType.querySelector("#ticketDescription1");
+    ticketTypeName.id = `ticketDescription${ticketIdCounter}`;
+    ticketTypeName.previousElementSibling.setAttribute(
+        "for",
+        `ticketDescription${ticketIdCounter}`
+    );
 
-        const ticketQuantity = newTicketType.querySelector("#ticketQuantity1");
-        ticketQuantity.id = `ticketQuantity${ticketGroupIdCounter}`;
-        ticketQuantity.previousElementSibling.setAttribute('for', `ticketQuantity${ticketGroupIdCounter}`);
+    const price = newTicketType.querySelector("#price1");
+    price.id = `price${ticketIdCounter}`;
+    price.previousElementSibling.setAttribute("for", `price${ticketIdCounter}`);
 
-        // Añadimos el contenedor al padre y sumamos al contador que lleva la cuenta de inputs
-        ticketContainer.appendChild(newTicketType);
-        ticketGroupIdCounter++;
+    const ticketQuantity = newTicketType.querySelector("#ticketQuantity1");
+    ticketQuantity.id = `ticketQuantity${ticketIdCounter}`;
+    ticketQuantity.previousElementSibling.setAttribute(
+        "for",
+        `ticketQuantity${ticketIdCounter}`
+    );
+
+    // Añadimos el contenedor al padre
+    ticketContainer.appendChild(newTicketType);
 };
 
 // Función que se encarga de eliminar el último grupo de inputs para un tipo de ticket
 const removeLastTicketInputGroup = (ticketContainer) => {
     const ticketGroups = ticketContainer.children;
-    
+
     // Nos aseguramos que hay más de un contenedor antes de eliminarlo
     if (ticketGroups.length > 1) {
         ticketGroups[ticketGroups.length - 1].remove();
-        ticketGroupIdCounter--;
     }
 };
 
@@ -146,7 +170,7 @@ export const setupAddRemoveTicketTypes = () => {
     const addTicketTypeBtn = document.querySelector("#addTicketType");
     const removeTicketTypeBtn = document.querySelector("#removeTicketType");
     const ticketContainer = document.querySelector("#formTicketContainer");
-    const firstTicket = document.querySelector("#formTicketUnit");
+    const firstTicket = document.querySelector("#formTicketUnit1");
     if (
         addTicketTypeBtn &&
         removeTicketTypeBtn &&

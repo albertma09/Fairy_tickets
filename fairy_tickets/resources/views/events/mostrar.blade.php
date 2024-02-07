@@ -27,7 +27,8 @@
         <h1 class="titulo-brand">
             Sesiones
         </h1>
-        <button class="button button-brand" href="{{ route('session.create') }}">Añadir Nueva Sesión</button>
+        <a class="button button-brand" href="{{ route('sessions.create', ['eventId' => $id]) }}">Añadir Nueva
+            Sesión</a>
         <div class="sesiones-container">
             @foreach ($sessionPrices as $sessionId => $session)
                 <div class="sesion-card">

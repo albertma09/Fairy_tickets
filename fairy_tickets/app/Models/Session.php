@@ -29,7 +29,7 @@ class Session extends Model
 
     // Función que pasa por parámetro la id de un usuario y
     // devuelve todas las sesiones de los eventos que este ha creado
-    public static function getAllSessionsByPromotor($id)
+    public static function getAllSessionsByPromotor(string $id)
     {
         try {
             Log::info('Llamada al método Session.getAllSessionsByPromotor');
@@ -48,20 +48,32 @@ class Session extends Model
     }
 
     // Función que pasa por parámetro la id de un evento y
-    // devuelve la primera sesión creada (la sesión por defecto) y sus tickets
-    public static function getFirstSessionByEvent($eventId)
+    // devuelve la primera sesión creada (la sesión por defecto)
+    public static function getFirstSessionByEvent(string $eventId): Session
     {
         try {
             Log::info('Llamada al método Session.getFirstSessionByEvent');
+            // Recupera los datos de la primera sesión de este evento
+            $session = Session::where('event_id', $eventId)
+                ->orderBy('id')
+                ->first();
+            Log::info('Fin del get a la primera sesión del evento');
+            return $session;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
 
-            $sessions = DB::table('sessions')
-                ->join('ticket_types', 'ticket_types.session_id', '=', 'sessions.id')
-                ->select('sessions.name', 'sessions.date', 'sessions.hour')
-                ->where('events.user_id', '=', $id)
-                ->orderBy('sessions.date')
-                ->get();
-            Log::info('fin de la carga de sesiones por promotor');
-            return $sessions;
+
+    public static function getFirstSessionDataByEvent(string $eventId): array
+    {
+        try {
+            Log::info('Llamada al método Session.getFirstSessionDataByEvent');
+            $firstSession = Self::getFirstSessionByEvent($eventId);
+            $ticketTypes = $firstSession->ticketTypes;
+            $sessionData = ['session' => $firstSession, 'tickettypes' => $ticketTypes];
+            Log::info('Fin del método que recupera todos los datos de la primera sesión de un evento y sus tipos de ticket');
+            return $sessionData;
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
@@ -69,8 +81,9 @@ class Session extends Model
 
 
 
-// Función que recibe el tipo de cierre escogido por el usuario y la fecha del evento y
-// devuelve la fecha del cierre según lo que se pida
+
+    // Función que recibe el tipo de cierre escogido por el usuario y la fecha del evento y
+    // devuelve la fecha del cierre según lo que se pida
     private static function adjustOnlineClosure(Carbon $eventDate, string $onlineClosure, string $customClosure = null): Carbon
     {
         try {
@@ -105,7 +118,7 @@ class Session extends Model
     }
 
 
-// Función que recibe una id de sesión y crea un array de tickets vinculados a ésta
+    // Función que recibe una id de sesión y crea un array de tickets vinculados a ésta
     private static function createSessionTicketsArray(int $sessionId, array $formData): array
     {
         try {

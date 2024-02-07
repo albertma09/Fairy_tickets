@@ -5,7 +5,7 @@ import {
     setupAddressFormToggle,
     setupCustomiseOnlineClosureToggle,
     setupAddRemoveTicketTypes,
-} from "./modules/eventForm.js";
+} from "./modules/forms.js";
 import {
     addMenuFunctionalities,
     delayedCloseMenuOnResize,
