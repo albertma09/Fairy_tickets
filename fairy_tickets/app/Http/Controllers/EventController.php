@@ -64,6 +64,7 @@ class EventController extends Controller
                 'id' => $row->event_id,
                 'name' => $row->name,
                 'description' => $row->description,
+                'image' => $row->image,
                 'location_name' => $row->location_name,
                 'capacity' => $row->capacity,
                 'province' => $row->province,
