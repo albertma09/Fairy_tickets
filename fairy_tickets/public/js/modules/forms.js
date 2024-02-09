@@ -1,4 +1,4 @@
-/* Métodos y funcionalidades del formulario de eventos */
+/* Métodos y funcionalidades de los formularios */
 
 // Función que devuelve true si el radio con value custom está checkeado
 const isCustomDateRadioChecked = (radioGroup) => {
@@ -124,14 +124,14 @@ const findTicketWithHighestNumber = () => {
 // Función que se encarga de añadir un nuevo grupo de inputs para un nuevo tipo de ticket
 const addNewTicketInputGroup = (ticketContainer, firstTicket) => {
     const newTicketType = firstTicket.cloneNode(true);
-    let ticketIdCounter = findTicketWithHighestNumber()+1;
-    console.log(ticketIdCounter);
+    let ticketIdCounter = findTicketWithHighestNumber() + 1;
+
+    // Cambiamos los ids para que no se repitan y los 'for' de los labels
     newTicketType.id = `formTicketUnit${ticketIdCounter}`;
     newTicketType.querySelector(
         "h4"
     ).textContent = `Tipo de entrada ${ticketIdCounter}`;
 
-    // Cambiamos los ids para que no se repitan
     const ticketTypeName = newTicketType.querySelector("#ticketDescription1");
     ticketTypeName.id = `ticketDescription${ticketIdCounter}`;
     ticketTypeName.previousElementSibling.setAttribute(
@@ -187,3 +187,4 @@ export const setupAddRemoveTicketTypes = () => {
         });
     }
 };
+

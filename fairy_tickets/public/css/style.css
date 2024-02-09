@@ -28,6 +28,13 @@
   display: grid;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* Formato inicial de fuente para el sitio web */
 html {
   font-family: "Source Sans 3", sans-serif;
@@ -775,7 +782,7 @@ nav .button-icon i.fa-bars {
 }
 
 form .msg-error {
-  color: #da0000;
+  color: #F15025;
   padding: 10px;
 }
 form .msg-correct {
@@ -821,6 +828,66 @@ form .form-section-title {
   font-size: 2rem;
   padding: 1rem;
   margin: 3rem 1.6rem 1.5rem 1.6rem;
+}
+form #time_wrapper {
+  padding: 0.1rem 0.2rem;
+  width: fit-content;
+  margin: 0 auto;
+  border-radius: 4px;
+  position: relative;
+}
+form #time_wrapper input {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+form #time_wrapper #time_input {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  /* Firefox */
+}
+form #time_wrapper #time_input label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+form #time_wrapper #time_input .label {
+  font-size: 0.55rem;
+  position: absolute;
+  top: 4.5px;
+}
+form #time_wrapper #time_input .label.lbl-hrs {
+  left: 20px;
+}
+form #time_wrapper #time_input .label.lbl-min {
+  left: 14px;
+}
+form #time_wrapper #time_input input[type=number] {
+  -moz-appearance: textfield;
+}
+form #time_wrapper #time_input #time_input,
+form #time_wrapper #time_input input {
+  border-radius: 8px;
+  font-weight: light;
+  font-size: 1.5rem;
+}
+form #time_wrapper #time_input input:focus {
+  color: #40e0d0;
+}
+form #time_wrapper #time_input input:focus + .label {
+  color: #40e0d0;
+}
+form #time_wrapper #time_input input.invalid:focus {
+  outline: 3px solid #F15025;
+}
+form #time_wrapper #time_input input.invalid:focus + .label {
+  color: #F15025;
+}
+form #time_wrapper #time_input #error {
+  justify-self: center;
+  margin: 0 auto;
 }
 
 /* Estilos generales para la barra de desplazamiento */

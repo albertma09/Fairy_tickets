@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
-use App\Models\Location;
-use App\Models\Category;
 use Exception;
+use App\Models\Event;
+use App\Libraries\Utils;
+use App\Models\Category;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
@@ -116,34 +117,7 @@ class EventController extends Controller
         return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
     }
 
-    // Función que comprueba que el total de tickets no sea mayor que el de la capacidad de la sesión
-    public static function checkSessionCapTicketAmount(int $sessionMaxCap, array $ticketAmounts): bool
-    {
-        try {
-            Log::info('Llamada al método EventController.checkSessionCapTicketAmount', ['session_max_cap' => $sessionMaxCap, 'ticket_amounts' => $ticketAmounts]);
-            $totalTickets = 0;
-            foreach ($ticketAmounts as $amount) {
-                $totalTickets += $amount;
-                Log::debug($amount);
-            }
-            return ($sessionMaxCap >= $totalTickets);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
-
-    // Función que cambia las comas por puntos, por si el input de precio es hecho en formato español
-    private function sanitizePriceValues(Request $request)
-    {
-        $priceValues = $request->input('price', []);
-
-        foreach ($priceValues as &$price) {
-            $price = str_replace(',', '.', $price); // Replace commas with dots
-        }
-
-        $request->merge(['price' => $priceValues]);
-    }
-
+    
 
     public function store(Request $request)
     {
@@ -151,7 +125,7 @@ class EventController extends Controller
             log::info('Llamada al método EventController.store');
 
             // Primero comprobamos que los precios lleguen bien
-            $this->sanitizePriceValues($request);
+            Utils::sanitizePriceInput($request);
 
             // Validación de la información del formulario
             $validatedData = $request->validate([
@@ -181,7 +155,7 @@ class EventController extends Controller
             }
 
             // Miramos si la cantidad de tickets total es válida
-            if ($this->checkSessionCapTicketAmount($validatedData['sessionMaxCapacity'], $validatedData['ticketQuantity'])) {
+            if (Utils::checkSessionCapTicketAmount($validatedData['sessionMaxCapacity'], $validatedData['ticketQuantity'])) {
                 // Se guarda en base de datos el evento, la primera sesión y los tickets
                 Event::createEvent($validatedData);
                 return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');

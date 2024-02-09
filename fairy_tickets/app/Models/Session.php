@@ -147,9 +147,10 @@ class Session extends Model
     {
         try {
             log::info('Llamada al método Session.createSession');
-            // Parseamos el datetime que nos llega
-            $sessionDatetime = $formData['sessionDatetime'];
-            $carbonDatetime = Carbon::parse($sessionDatetime);
+            // Parseamos la fecha y la hora que nos llegan por separado
+            $sessionDate = $formData['sessionDate'];
+            $sessionTime = $formData['sessionTime'];
+            $carbonDatetime = Carbon::parse($sessionDate . ' ' . $sessionTime);
 
             // Asignamos la fecha de cierre de venta online según los datos del formulario
             $onlineClosure = Self::adjustOnlineClosure($carbonDatetime, $formData['onlineSaleClosure'], $formData['customSaleClosure']);
@@ -157,12 +158,11 @@ class Session extends Model
             // Arreglamos el tipo de datos que nos trae nominal_tickets, pasamos a booleano cuando viene vacío
             $nominalTickets = (bool) ($formData['nominal_tickets'] ?? false);
 
-
             // Preparamos los datos de la sesión en un array
             $sessionData = [
                 'event_id' => $eventId,
-                'date' => $carbonDatetime->toDateString(),
-                'hour' => $carbonDatetime->toTimeString(),
+                'date' => $sessionDate,
+                'hour' => $sessionTime,
                 'session_capacity' => $formData['sessionMaxCapacity'],
                 'online_sale_closure' => $onlineClosure->toDateTimeString(),
                 'nominal_tickets' => $nominalTickets,
@@ -177,7 +177,6 @@ class Session extends Model
             foreach ($tickets as $ticket) {
                 TicketType::create($ticket);
             }
-
 
             return $sessionId;
         } catch (Exception $e) {

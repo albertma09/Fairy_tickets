@@ -7,8 +7,8 @@
     </div>
     <div class="input-unit">
         <label for="price{{ $index }}">Precio</label>
-        <input type="text" name="price[]" pattern="\d{1,4}(,\d{1,2})?"
-            title="Sólo puedes usar números, y máximo 4 numeros enteros."
+        <input type="text" name="price[]" pattern="\d{1,4}([,.]\d{1,2})?"
+            title="Sólo puedes usar números, y máximo 4 numeros enteros"
             value="{{old('price.' . ($index - 1)) !== null ? old('price.' . ($index - 1)) : ($ticketType ? $ticketType->price : '0000,00') }}"
             id="price{{ $index }}" placeholder="0000,00" />
     </div>
