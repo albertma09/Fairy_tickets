@@ -477,6 +477,37 @@ Valoración de la semana individual
 
 Además también estuve haciendo la pantalla de home promotor para que se pudiesen ver los eventos de cada usuario y mejorar el aspecto visual.* 
 
+=== Sprint 4
+==== Trabajo realizado
+Esta semana nos hemos dedicado a corregir los siguientes puntos:
+
+Documentación::
+
+
+- Actualizamos y completamos la documentación del proyecto, asegurándonos de que esté al día y refleje con precisión los últimos cambios y configuraciones.
+- Actualizamos el diagrama de la base de datos para representar de manera precisa la estructura actual.
+- Verificamos y actualizamos todos los enlaces en la documentación para garantizar su funcionalidad y accesibilidad.
+
+Pruebas::
+
+
+- Mejoramos la suite de pruebas, llevándolas a cabo con una base de datos independiente de la de producción para una mayor integridad de los datos.
+- Validamos exhaustivamente todos los caminos posibles en el código para garantizar su funcionalidad y estabilidad.
+
+Despliegue::
+
+
+- Solucionamos problemas de configuración en el VirtualHost de Apache y Docker, asegurando un despliegue sin problemas y eficiente.
+- Optimizamos el entorno Docker eliminando comandos adicionales y archivos de configuración no utilizados.
+
+Diseño::
+
+
+- Mejoramos la experiencia del usuario utilizando grid y SASS en todo el proyecto.
+- Actualizamos todas las pantallas de la aplicación en Figma, incluyendo bocetos detallados para cada una antes de su implementación.
+- Organizamos el código de manera más limpia y estructurada, evitando la mezcla de lógica, vistas y scripts de JavaScript.
+
+
 == Lineas futuras.
 == Conclusiones
 
