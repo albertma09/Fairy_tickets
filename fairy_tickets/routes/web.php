@@ -85,6 +85,8 @@ Route::get('/sendPdfEmail',[GeneratorPDF::class, 'sendPdfEmail'])->name('send-pf
 
 Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('user-opinion');
 
+Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
+
 Route::fallback(function () {
     return ('Opps!!');
 });

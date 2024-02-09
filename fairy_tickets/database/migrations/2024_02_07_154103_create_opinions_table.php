@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps();
 
             // definicion constraint FK
-            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade')->unique();
         });
     }
 

@@ -14,6 +14,8 @@ import { commonButtonsSetup } from "./modules/buttons.js";
 
 import { ticketSalesModalSetup } from './modules/modals.js';
 
+import { addValues } from './modules/opinionForm.js';
+
 // Función que inicializa las funcionalidades para el eventform
 const initializeEventForm = () => {
     setupAddressFormToggle();
@@ -54,4 +56,5 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeEventForm();
     commonButtonsSetup();
     ticketSalesModalSetup();
+    addValues();
 });

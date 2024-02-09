@@ -87,6 +87,7 @@ class Ticket extends Model
             ->join('events', 'events.id', '=', 'sessions.event_id')
             ->select('events.id', 'purchases.email', 'events.name as event_name', 'sessions.id as session_id')
             ->where('sessions.date', '=', DB::raw('1 + CURRENT_DATE'))
+            ->distinct()
             ->get();
 
 
@@ -105,8 +106,9 @@ class Ticket extends Model
             $event = DB::table('purchases')
             ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
             ->join('events', 'events.id', '=', 'sessions.event_id')
-            ->select('purchases.name', 'purchases.email', 'events.id','events.name as event_name')
+            ->select('purchases.id','purchases.name', 'purchases.email', 'events.id as event_id','events.name as event_name')
             ->where('sessions.date', '=', DB::raw('CURRENT_DATE - 1'))
+            ->distinct()
             ->get();
 
 
