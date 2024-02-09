@@ -727,6 +727,9 @@ nav .button-icon i.fa-bars {
 .default-form .grid-container .row-unit input[type=radio] {
   margin: 0;
 }
+.default-form .grid-container .button {
+  justify-self: center;
+}
 .default-form input:not([type=checkbox]):not([type=radio]):not([type=file]),
 .default-form select,
 .default-form textarea {
@@ -821,6 +824,45 @@ form .form-section-title {
   font-size: 2rem;
   padding: 1rem;
   margin: 3rem 1.6rem 1.5rem 1.6rem;
+}
+
+.stars-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.fa-star {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.fa-star:hover,
+.fa-star.checked,
+.fa-star:hover ~ .fa-star {
+  color: yellow;
+}
+
+.caret-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.caret-icon:hover {
+  opacity: 1;
+}
+
+.caret-icon.checked {
+  opacity: 1;
+}
+
+.caret-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
 }
 
 /* Estilos generales para la barra de desplazamiento */

@@ -11,12 +11,16 @@ class Opinion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['purchase_id', 'name', 'star_rating', 'face_rating', 'title', 'coment'];
+    protected $fillable = ['purchase_id', 'name', 'star_rating', 'face_rating', 'title', 'comment'];
 
     public function purchase(): BelongsTo
     {
         return $this->belongsTo(Purchase::class);
     }
+
+
+    
+
 
 
 }

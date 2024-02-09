@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
                 $token = Crypt::encryptString(json_encode([
                     'name' => $opinion->name,
                     'email' => $opinion->email,
+                    'id' => $opinion->id,
                 ]));
 
                 

@@ -52,7 +52,7 @@ class GeneratorPDF extends Controller
 
         
 
-        return view('home.sessions');
+        return redirect()->route('home.index');
 
     }
 }
