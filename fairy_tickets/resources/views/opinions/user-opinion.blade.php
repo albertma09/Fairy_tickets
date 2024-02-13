@@ -11,7 +11,7 @@
             <div class="grid-container">
                 <input type="hidden" name="token" id="token" value="{{ $token }}">
 
-                <div>
+                <div class="input-unit">
                     <input type="hidden" id="purchase_id" name="purchase_id" value="{{ $id['id'] }}">
                     <label for="nom">Nombre:</label>
                     <input type="text" id="name" name="name" required>
@@ -22,7 +22,7 @@
                         El nombre introducido no es valido, por favor, introduzca un valor valido
                     </div>
                 @enderror
-                <div>
+                <div class="input-unit">
                     <label for="caretes">Que te ha parecido:</label>
                     <input type="hidden" id="face_rating" name="face_rating" required>
                     <div class="caret-container">
@@ -52,7 +52,7 @@
                         </div>
                     @enderror
                 </div>
-                <div>
+                <div class="input-unit">
                     <label for="titol">Titulo:</label>
                     <input type="text" id="title" name="title" required>
                 </div>
@@ -61,7 +61,7 @@
                         El titulo introducido no es valido, por favor, introduzca un valor valido
                     </div>
                 @enderror
-                <div>
+                <div class="input-unit">
                     <label for="comentari">Comentario:</label>
                     <textarea id="comment" name="comment" rows="4" required></textarea>
                 </div>

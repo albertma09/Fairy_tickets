@@ -882,7 +882,6 @@ form .time-wrapper .time-input {
   width: fit-content;
   display: flex;
   align-items: center;
-  /* Firefox */
 }
 form .time-wrapper .time-input label {
   display: flex;
@@ -900,9 +899,6 @@ form .time-wrapper .time-input .label.lbl-hrs {
 }
 form .time-wrapper .time-input .label.lbl-min {
   left: 14px;
-}
-form .time-wrapper .time-input input[type=number] {
-  -moz-appearance: textfield;
 }
 form .time-wrapper .time-input #time_input,
 form .time-wrapper .time-input input {
