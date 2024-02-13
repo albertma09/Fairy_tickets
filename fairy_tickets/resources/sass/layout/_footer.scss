@@ -1,0 +1,34 @@
+.footer {
+    background-color: $col-oscuro;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navigation-map, .promoter-link {
+    flex-basis: 45%;
+}
+
+.navigation-map h3, .promoter-link h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.navigation-map ul, .promoter-link {
+    list-style: none;
+    padding: 0;
+}
+
+.navigation-map ul li, .promoter-link {
+    margin-bottom: 8px;
+}
+
+.navigation-map a, .promoter-link a {
+    color: $col-claro;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navigation-map a:hover, .promoter-link a:hover {
+    color: $col-brand;
+}
