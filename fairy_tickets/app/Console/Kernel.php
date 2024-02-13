@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
                         -> subject('Valoracion');
                 });
             }
-        })->daily();
+        })->everyMinute();
 
        
     }
