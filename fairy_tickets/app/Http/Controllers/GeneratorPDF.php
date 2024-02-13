@@ -7,6 +7,7 @@ use Dompdf\Dompdf;
 use App\Models\Ticket;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class GeneratorPDF extends Controller
@@ -40,15 +41,18 @@ class GeneratorPDF extends Controller
     public function sendPdfEmail(){
 
         $data = Ticket::getEventInformation();
+        
         $event = $data[0];
-        $session_id = $event->id;
+        $event_id = $event->id;
 
-        Mail::send('components.email-pdf', ['session_id'=> 234, 'email'=>'avis.beahan@example.org', 'event'=>$event, 'session_id'=>$session_id ], function ($message) {
+        Mail::send('email.email-pdf', ['session_id'=> 234, 'email'=>'avis.beahan@example.org', 'event'=>$event, 'event_id'=>$event_id ], function ($message) {
             $message->to('recipient@example.com')
-                ->subject('Correo de prueba para descargar tickets');
+                ->subject('Compra tickets');
         });
 
-        return view('sessions.mostrar');
+        
+
+        return redirect()->route('home.index');
 
     }
 }

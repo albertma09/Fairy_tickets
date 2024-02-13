@@ -10,6 +10,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\GeneratorPDF;
+use App\Http\Controllers\OpinionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,10 @@ Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->
 Route::get('/buyTicket/{session_id}/{email}', [GeneratorPDF::class, 'generatePDF'])->name('buy-ticket');
 
 Route::get('/sendPdfEmail', [GeneratorPDF::class, 'sendPdfEmail'])->name('send-pfd-email');
+
+Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('user-opinion');
+
+Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
 
 Route::fallback(function () {
     return ('Opps!!');

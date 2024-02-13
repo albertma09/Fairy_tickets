@@ -7,6 +7,15 @@ import { commonButtonsSetup } from "./modules/buttons.js";
 
 import { ticketSalesModalSetup } from './modules/modals.js';
 
+import { addValues } from './modules/opinionForm.js';
+
+// Función que inicializa las funcionalidades para el eventform
+const initializeEventForm = () => {
+    setupAddressFormToggle();
+    setupCustomiseOnlineClosureToggle();
+    setupAddRemoveTicketTypes();
+};
+
 
 // Event listener del evento 'resize' de la ventana
 window.addEventListener("resize", delayedCloseMenuOnResize);
@@ -39,4 +48,5 @@ document.addEventListener("DOMContentLoaded", function () {
     addMenuFunctionalities();
     commonButtonsSetup();
     ticketSalesModalSetup();
+    addValues();
 });

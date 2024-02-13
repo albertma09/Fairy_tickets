@@ -296,10 +296,10 @@ body > .grid-container {
 }
 
 .body-container {
-  padding: 1rem;
   overflow-y: auto;
 }
 .body-container main {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -507,6 +507,41 @@ nav .filter-categories {
 .promotor-container .event-card .edit-icon {
   position: absolute;
   display: none;
+}
+
+.footer {
+  background-color: #05283d;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navigation-map, .promoter-link {
+  flex-basis: 45%;
+}
+
+.navigation-map h3, .promoter-link h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.navigation-map ul, .promoter-link {
+  list-style: none;
+  padding: 0;
+}
+
+.navigation-map ul li, .promoter-link {
+  margin-bottom: 8px;
+}
+
+.navigation-map a, .promoter-link a {
+  color: #fdf7f7;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navigation-map a:hover, .promoter-link a:hover {
+  color: #40e0d0;
 }
 
 .button {
@@ -734,6 +769,9 @@ nav .button-icon i.fa-bars {
 .default-form .grid-container .row-unit input[type=radio] {
   margin: 0;
 }
+.default-form .grid-container .button {
+  justify-self: center;
+}
 .default-form input:not([type=checkbox]):not([type=radio]):not([type=file]),
 .default-form select,
 .default-form textarea {
@@ -887,6 +925,45 @@ form .time-wrapper .time-input input.invalid:focus + .label {
 form .time-wrapper .time-input #error {
   justify-self: center;
   margin: 0 auto;
+}
+
+.stars-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.fa-star {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.fa-star:hover,
+.fa-star.checked,
+.fa-star:hover ~ .fa-star {
+  color: yellow;
+}
+
+.caret-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.caret-icon:hover {
+  opacity: 1;
+}
+
+.caret-icon.checked {
+  opacity: 1;
+}
+
+.caret-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
 }
 
 /* Estilos generales para la barra de desplazamiento */

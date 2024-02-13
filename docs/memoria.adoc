@@ -477,6 +477,79 @@ Valoración de la semana individual
 
 Además también estuve haciendo la pantalla de home promotor para que se pudiesen ver los eventos de cada usuario y mejorar el aspecto visual.* 
 
+=== Sprint 4
+==== Trabajo realizado
+Esta semana nos hemos dedicado a corregir los siguientes puntos:
+
+Documentación::
+
+
+- Actualizamos y completamos la documentación del proyecto, asegurándonos de que esté al día y refleje con precisión los últimos cambios y configuraciones.
+- Actualizamos el diagrama de la base de datos para representar de manera precisa la estructura actual.
+- Verificamos y actualizamos todos los enlaces en la documentación para garantizar su funcionalidad y accesibilidad.
+
+Pruebas::
+
+
+- Mejoramos la suite de pruebas, llevándolas a cabo con una base de datos independiente de la de producción para una mayor integridad de los datos.
+- Validamos exhaustivamente todos los caminos posibles en el código para garantizar su funcionalidad y estabilidad.
+
+Despliegue::
+
+
+- Solucionamos problemas de configuración en el VirtualHost de Apache y Docker, asegurando un despliegue sin problemas y eficiente.
+- Optimizamos el entorno Docker eliminando comandos adicionales y archivos de configuración no utilizados.
+
+Diseño::
+
+
+- Mejoramos la experiencia del usuario utilizando grid y SASS en todo el proyecto.
+- Actualizamos todas las pantallas de la aplicación en Figma, incluyendo bocetos detallados para cada una antes de su implementación.
+- Organizamos el código de manera más limpia y estructurada, evitando la mezcla de lógica, vistas y scripts de JavaScript.
+
+=== Sprint 5
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 9 nuevas tareas del desarrollo de la aplicación:
+
+===== Pantalla de Confirmación de Compra (R17)
+
+  - Mostrar un resumen de la compra con detalles del evento, fecha, hora, precios y total.
+  - Solicitar información personal (nombre, DNI, teléfono) para cada asistente si las entradas son nominativas.
+  - Solicitar correo electrónico del comprador.
+  - Contar con un contador regresivo para completar la compra y redireccionar si se agota.
+  - Botón para finalizar la compra.
+
+===== Pasarela de Pago (R18)
+
+  - Implementar el pago con tarjeta de crédito utilizando la plataforma Sandbox de RedSys versión REST.
+
+===== Gestión de Errores en el Pago (R19)
+
+===== Generación de Entradas (PDF) (R20)
+
+  - Generar entradas en formato PDF después de un pago exitoso.
+  - Incluir logo de la plataforma, detalles del evento, tipo de entrada, códigos QR y numéricos únicos.
+  - Incluir nombre y DNI del propietario si la entrada es nominativa.
+
+===== Envío de Entradas (PDF) (R21)
+
+  - Enviar correo electrónico al comprador con detalles del evento, enlace a la página de detalles y entradas en PDF.
+
+===== Envío de Recordatorio Previo al Evento (R22)
+
+  - Enviar correo electrónico recordatorio un día antes del evento con enlace para descargar las entradas compradas.
+
+===== Envío de Petición de Opinión Posterior al Evento (R23)
+
+  - Enviar correo electrónico de valoración al comprador un día después del evento con enlace personalizado a la página de "Deja tu opinión".
+
+===== Página "Deja tu Opinión" (R24)
+
+  - Solicitar nombre, opinión con iconos de caritas, puntuación con iconos de estrellas, título del comentario y comentario en sí.
+
+===== Mostrar Opiniones en la Página de Detalles del Evento (R25)
+  - Mostrar opiniones y valoraciones de los compradores en la página de detalles del evento.
+
 == Lineas futuras.
 == Conclusiones
 

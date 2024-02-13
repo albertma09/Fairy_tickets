@@ -27,9 +27,10 @@ body > .grid-container {
 }
 
 .body-container {
-    padding: 1rem;
+    
     overflow-y: auto;
     main {
+        padding: 1rem;
         @include flex-container(column, nowrap);
         width: 100%;
         align-items: center;

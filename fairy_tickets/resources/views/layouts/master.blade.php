@@ -22,9 +22,25 @@
                     @yield('content')
                 </div>
             </main>
-            <footer class="footer"></footer>
+            <footer class="footer">
+                <div class="navigation-map">
+                    <h3>Navigation Map</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Legal notices</a></li>
+                    </ul>
+                </div>
+                <div class="promoter-link">
+                    <h3>Promoter Link</h3>
+                    <a href=" {{ auth()->check() ? route('promotor', ['userId' => auth()->user()->id]) : route('login') }}">Promoter's Page</a>
+                   
+                </div>
+            </footer>
         </div>
+        
     </div>
+    
     <script type="module" src="{{ asset('js/main.js') }}"></script>
     @yield('scripts')
 </body>

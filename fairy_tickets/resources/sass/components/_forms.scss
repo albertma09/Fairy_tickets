@@ -1,7 +1,8 @@
 .default-form {
-    > .grid-container {
+    >.grid-container {
         padding: 0 1rem;
     }
+
     .grid-container {
         grid-template-columns: 1fr;
         gap: 1.2rem;
@@ -19,6 +20,10 @@
                 margin: 0;
             }
         }
+
+        .button {
+            justify-self: center;
+        }
     }
 
     input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
@@ -30,6 +35,7 @@
         box-sizing: border-box;
         background-color: $col-oscuro;
         color: $col-claro;
+
         &:focus {
             outline: none;
             border-color: $col-brand;
@@ -78,12 +84,14 @@ form {
             font-weight: lighter;
         }
     }
+
     .input-unit {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
         gap: 0.3rem;
         align-items: center;
     }
+
     .form-ticket-unit {
         @include flex-container(column, nowrap);
         margin-bottom: 2rem;
@@ -188,4 +196,44 @@ form {
         }
 
     }
+}
+
+.stars-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.fa-star {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.fa-star:hover,
+.fa-star.checked,
+.fa-star:hover~.fa-star {
+    color: yellow;
+}
+
+
+.caret-icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.caret-icon:hover {
+    opacity: 1;
+}
+
+.caret-icon.checked {
+    opacity: 1;
+}
+
+.caret-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
 }

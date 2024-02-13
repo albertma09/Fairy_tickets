@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
 
 class Ticket extends Model
 {
@@ -48,8 +49,8 @@ class Ticket extends Model
             ->join('sessions', 'ticket_types.session_id', '=', 'sessions.id')
             ->join('events', 'events.id', '=', 'sessions.event_id')
             ->join('locations', 'locations.id', '=', 'events.location_id')
-            ->where('purchases.email', '=', 'avis.beahan@example.org')
-            ->where('ticket_types.session_id', '=', 234)
+            ->where('purchases.email', '=', $email)
+            ->where('ticket_types.session_id', '=', $session_id)
             ->get();
 
             return $tickets;
@@ -66,14 +67,54 @@ class Ticket extends Model
             $event = DB::table('events')
             ->join('sessions', 'sessions.event_id', '=', 'events.id')
             ->select('events.id','events.name', 'events.description', 'sessions.date', 'sessions.hour')
-            ->where('sessions.id', 234)
+            ->where('sessions.id', 1)
             ->get();
 
             return $event;
 
         }catch (Exception $e){
+            Log::debug($e->getMessage());
+        }
+    }
 
-           
+    public static function getRememberTickets(){
+
+        try{
+
+            
+            $event = DB::table('purchases')
+            ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
+            ->join('events', 'events.id', '=', 'sessions.event_id')
+            ->select('events.id', 'purchases.email', 'events.name as event_name', 'sessions.id as session_id')
+            ->where('sessions.date', '=', DB::raw('1 + CURRENT_DATE'))
+            ->distinct()
+            ->get();
+
+
+
+            return $event;
+        }catch(Exception $e){
+            Log::debug($e->getMessage());
+        }
+    }
+
+    public static function sendOpinion(){
+
+        try{
+
+            
+            $event = DB::table('purchases')
+            ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
+            ->join('events', 'events.id', '=', 'sessions.event_id')
+            ->select('purchases.id','purchases.name', 'purchases.email', 'events.id as event_id','events.name as event_name')
+            ->where('sessions.date', '=', DB::raw('CURRENT_DATE - 1'))
+            ->distinct()
+            ->get();
+
+
+
+            return $event;
+        }catch(Exception $e){
             Log::debug($e->getMessage());
         }
     }
