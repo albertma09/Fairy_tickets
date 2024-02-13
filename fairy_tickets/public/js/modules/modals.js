@@ -170,3 +170,9 @@ export const ticketSalesModalSetup = () => {
         });
     }
 };
+
+// Snippet que carga los modales de feedback en todas las páginas
+const feedbackDialog = document.querySelector('dialog.fb-dialog');
+if(feedbackDialog){
+    feedbackDialog.showModal()
+}

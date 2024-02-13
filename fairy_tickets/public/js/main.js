@@ -1,11 +1,4 @@
 // Imports de módulos
-
-
-import {
-    setupAddressFormToggle,
-    setupCustomiseOnlineClosureToggle,
-    setupAddRemoveTicketTypes,
-} from "./modules/eventForm.js";
 import {
     addMenuFunctionalities,
     delayedCloseMenuOnResize,
@@ -53,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     addMenuFunctionalities();
-    initializeEventForm();
     commonButtonsSetup();
     ticketSalesModalSetup();
     addValues();

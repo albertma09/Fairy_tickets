@@ -20,17 +20,4 @@ class PromotorController extends Controller
         }
     }
 
-    public function getSessionsByPromotor($id)
-    {
-        
-        try {
-            Log::info("Llamada al metodo PromotorController.getSessionsByPromotor");
-            $sessions = Session::getAllSessionsByPromotor($id);
-            
-            return view('home.sessions', ['sessions' => $sessions]);
-            
-        } catch (Exception $e) {
-            Log::debug($e->getMessage());
-        }
-    }
 }

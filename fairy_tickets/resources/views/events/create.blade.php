@@ -88,28 +88,36 @@
             </div>
 
             <h3 class="form-section-title">Información de la primera sesión</h3>
-            <!-- Fecha y hora de la celebración del evento-->
+            <!-- Fecha de la celebración del evento-->
             <div class="input-unit">
-                <label for='datetime'>Fecha y hora del evento</label>
-                <input type="datetime-local" id="datetime" name="sessionDatetime" value="{{ old('sessionDatetime') }}"
-                    required />
-                @error('sessionDatetime')
+                <label for='date'>Fecha de la primera sesión del evento</label>
+                <input type="date" id="date" name="session_date" value="{{ old('session_date') }}" required />
+                @error('session_date')
                     <div class="msg-error">
-                        Por favor, elija unas fecha y hora correctas.
+                        Por favor, elija una fecha correcta.
                     </div>
                 @enderror
             </div>
+            <!-- Hora de la celebración del evento-->
+            <div class="input-unit">
+                <div>
+                    <p>Hora de inicio de la primera sesión</p>
+                    @php
+                        $inputName = 'session';
+                    @endphp
+                    <x-forms.time-input-component :inputName="$inputName" />
+                </div>
+            </div>
 
             <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
-            {{-- Nueva fecha -> formulario con aforo y entradas para esa fecha --}}
             <!-- Aforo máximo -->
             <div class="input-unit">
-                <label for="sessionMaxCapacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
+                <label for="session_capacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
                 </label>
-                <input type="number" id="sessionMaxCapacity" name="sessionMaxCapacity"
-                    value="{{ $errors->has('sessionMaxCapacity') ? old('sessionMaxCapacity') : session('newLocation')['capacity'] ?? '' }}"
+                <input type="number" id="session_capacity" name="session_capacity"
+                    value="{{ old('session_capacity') ?? session('newLocation')['capacity'] ?? '' }}"
                     max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
-                @error('sessionMaxCapacity')
+                @error('session_capacity')
                     <div class="msg-error">
                         No ha introducido un dato correcto, recuerde que la capacidad de la sesión no puede superar el aforo del
                         recinto dónde se celebra el evento.
@@ -128,38 +136,46 @@
             <div class="input-unit">
                 <p>Indica el momento del cierre de la venta de entradas en línea</p>
                 <div class="row-unit">
-                    <input type="radio" id="withEvent" name="onlineSaleClosure" value="0"
+                    <input type="radio" id="withEvent" name="online_sale_closure" value="0"
                         class="onlinesale-closure-radio"
-                        {{ old('onlineSaleClosure') == 0 || old('onlineSaleClosure') === null ? 'checked' : '' }}>
+                        {{ old('online_sale_closure') == 0 || old('online_sale_closure') === null ? 'checked' : '' }}>
                     <label for="withEvent">Hora de la celebración del evento</label>
                 </div>
                 <div class="row-unit">
-                    <input type="radio" id="oneHBefore" name="onlineSaleClosure" value="1"
-                        class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 1 ? 'checked' : '' }}>
+                    <input type="radio" id="oneHBefore" name="online_sale_closure" value="1"
+                        class="onlinesale-closure-radio" {{ old('online_sale_closure') == 1 ? 'checked' : '' }}>
                     <label for="oneHBefore">Una hora antes de la celebración del evento</label>
                 </div>
                 <div class="row-unit">
-                    <input type="radio" id="twoHBefore" name="onlineSaleClosure" value="2"
-                        class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 2 ? 'checked' : '' }}>
+                    <input type="radio" id="twoHBefore" name="online_sale_closure" value="2"
+                        class="onlinesale-closure-radio" {{ old('online_sale_closure') == 2 ? 'checked' : '' }}>
                     <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
                 </div>
                 <div class="row-unit">
-                    <input type="radio" id="customDatetime" name="onlineSaleClosure" value="custom"
-                        class="onlinesale-closure-radio" {{ old('onlineSaleClosure') == 'custom' ? 'checked' : '' }}>
+                    <input type="radio" id="customDatetime" name="online_sale_closure" value="custom"
+                        class="onlinesale-closure-radio" {{ old('online_sale_closure') == 'custom' ? 'checked' : '' }}>
                     <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
                 </div>
             </div>
-            <div class="input-unit" id="customClosureDatetimeContainer">
-                <label for="onlineClosureDatetime">Indica la fecha y hora para establecer el momento del cierre de
+            <div class="input-unit" id="custom_closure_datetime_container">
+                <label for="custom_closure_date">Indica la fecha para establecer el momento del cierre de
                     la
                     venta online</label>
-                <input type="datetime-local" id="onlineClosureDatetime" name="customSaleClosure"
-                    value="{{ old('customSaleClosure') }}">
+                <input type="date" id="custom_closure_date" name="custom_closure_date"
+                    value="{{ old('custom_closure_date') }}">
                 @error('customSaleClosure')
                     <div class="msg-error">
-                        Por favor, elija unas fecha y hora correctas.
+                        Por favor, elija una fecha correcta.
                     </div>
                 @enderror
+            </div>
+
+            <div class="input-unit">
+                <p>Indica la hora del momento del cierre de la venta online</p>
+                @php
+                    $inputName = 'custom_closure';
+                @endphp
+                <x-forms.time-input-component :inputName="$inputName" />
             </div>
 
             <div>
@@ -171,30 +187,13 @@
                 <p class="msg-info">Ten en cuenta que la suma total no
                     podrá ser mayor que la capacidad máxima de tu sesión.</p>
             </div>
+            @php
+                $index = 1;
+            @endphp
             <div class="form-ticket-container" id="formTicketContainer">
-                <div class="form-ticket-unit" id="formTicketUnit">
-                    <h4 class="form-ticket-title">Tipo de entrada 1</h4>
-                    <div class="input-unit">
-                        <label for="ticketDescription1">Nombre del tipo de entrada</label>
-                        <input type="text" name="ticketDescription[]" id="ticketDescription1"
-                            value="{{ old('ticketDescription.0') }}" />
-                    </div>
-                    <div class="input-unit">
-                        <label for="price1">Precio</label>
-                        <input type="text" name="price[]" pattern="\d{1,4}(,\d{1,2})?"
-                            title="Sólo puedes usar números, y máximo 4 numeros enteros."
-                            value="{{ old('price.0') !== null ? old('price.0') : '0000,00' }}" id="price1"
-                            placeholder="0000,00" />
-                    </div>
-                    <div class="input-unit">
-                        <label for="ticketQuantity1">Cantidad de entradas a la venta (opcional)</label>
-                        <input type="number" min="0"
-                            max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}"
-                            name="ticketQuantity[]" id="ticketQuantity1" value ="{{ old('ticketQuantity.0') }}"
-                            title="Sólo puedes usar números y no no puede ser mayor a la capacidad máxima indicada">
-                    </div>
-                </div>
+                <x-forms.tickettype-input-group-component :index="$index" :ticketType="null" />
             </div>
+
             <div class="add-remove-ticket">
 
                 <p>Añade un nuevo tipo de entrada o elimina el último</p>
@@ -245,3 +244,7 @@
         <x-forms.events-form-component />
     </dialog>
 @endsection
+@section('scripts')
+    <script src="{{ asset('js/forms.js') }}"></script>
+@endsection
+
