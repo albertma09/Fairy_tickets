@@ -10,11 +10,6 @@
         <input type="number" id="{{ $inputName }}Minutes" value="00" name="{{ $inputName }}_minutes">
         <span class="label lbl-min">minutos</span>
       </label>
-      {{-- <span>:</span>
-      <label for="seconds">
-        <input type="number" id="seconds" value="00">
-        <span class="label lbl-sec">seconds</span>
-      </label> --}}
     </div>
   </div>
   <div id="error" class="msg-error">This is an error</div>

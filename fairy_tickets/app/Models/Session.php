@@ -148,8 +148,9 @@ class Session extends Model
         try {
             log::info('Llamada al método Session.createSession');
             // Parseamos la fecha y la hora que nos llegan por separado
-            $sessionDate = $formData['sessionDate'];
-            $sessionTime = $formData['sessionTime'];
+            $sessionDate = $formData['session_date'];
+            $sessionTime = $formData['session_hours'].$formData['session_minutes'];
+
             $carbonDatetime = Carbon::parse($sessionDate . ' ' . $sessionTime);
 
             // Asignamos la fecha de cierre de venta online según los datos del formulario

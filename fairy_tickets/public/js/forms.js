@@ -13,29 +13,6 @@ const hideElement = (element, condition) => {
     element.classList.toggle("hidden", !condition);
 };
 
-// Función que realiza el cambio de visibilidad del input personalizar datetime de cierre de venta online si se selecciona
-export const setupCustomiseOnlineClosureToggle = () => {
-    const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
-    const customContainer = document.getElementById(
-        "customClosureDatetimeContainer"
-    );
-    // Si existen, lanza las funcionalidades
-    if (radioGroup && customContainer) {
-        // Estado inicial
-        hideElement(customContainer, isCustomDateRadioChecked(radioGroup));
-
-        // Listeners para cambiar el estado cuando haya un cambio
-        radioGroup.forEach((radio) => {
-            radio.addEventListener("change", () => {
-                // Used the hideElement function
-                hideElement(
-                    customContainer,
-                    isCustomDateRadioChecked(radioGroup)
-                );
-            });
-        });
-    }
-};
 
 // Función que pasa al controlador la id de una ubicación y espera sus datos
 const fetchLocationData = async (locationId) => {
@@ -83,26 +60,6 @@ const handleNewAddress = (newAddressDialog, addressSelect) => {
     }
 };
 
-// Función inicial que establece las funcionalidades del formulario de dirección y lo relacionado con la capacidad máxima
-export const setupAddressFormToggle = () => {
-    // Getters del select y los containers
-    const addressSelect = document.getElementById("addressId");
-    const newAddressDialog = document.getElementById("newLocationDialog");
-    const maxCapInput = document.getElementById("sessionMaxCapacity");
-    const ticketQtyInput = document.getElementById("ticketQuantity");
-
-    // Si existen añade el listener las funcionalidades, por si no estamos en esa página
-    if (addressSelect && newAddressDialog && maxCapInput) {
-        addressSelect.addEventListener("change", () => {
-            handleNewAddress(newAddressDialog, addressSelect);
-            assignMaxCapToForm(addressSelect, maxCapInput, ticketQtyInput);
-        });
-        maxCapInput.addEventListener("change", () => {
-            ticketQtyInput.max = maxCapInput.value;
-        });
-    }
-};
-
 // Función que devuelve el número más alto entre los grupos de input de ticket
 const findTicketWithHighestNumber = () => {
     let highestNumber = 0;
@@ -132,22 +89,22 @@ const addNewTicketInputGroup = (ticketContainer, firstTicket) => {
         "h4"
     ).textContent = `Tipo de entrada ${ticketIdCounter}`;
 
-    const ticketTypeName = newTicketType.querySelector("#ticketDescription1");
-    ticketTypeName.id = `ticketDescription${ticketIdCounter}`;
+    const ticketTypeName = newTicketType.querySelector("#ticket_description1");
+    ticketTypeName.id = `ticket_description${ticketIdCounter}`;
     ticketTypeName.previousElementSibling.setAttribute(
         "for",
-        `ticketDescription${ticketIdCounter}`
+        `ticket_description${ticketIdCounter}`
     );
 
     const price = newTicketType.querySelector("#price1");
     price.id = `price${ticketIdCounter}`;
     price.previousElementSibling.setAttribute("for", `price${ticketIdCounter}`);
 
-    const ticketQuantity = newTicketType.querySelector("#ticketQuantity1");
-    ticketQuantity.id = `ticketQuantity${ticketIdCounter}`;
+    const ticketQuantity = newTicketType.querySelector("#ticket_quantity1");
+    ticketQuantity.id = `ticket_quantity${ticketIdCounter}`;
     ticketQuantity.previousElementSibling.setAttribute(
         "for",
-        `ticketQuantity${ticketIdCounter}`
+        `ticket_quantity${ticketIdCounter}`
     );
 
     // Añadimos el contenedor al padre
@@ -164,8 +121,56 @@ const removeLastTicketInputGroup = (ticketContainer) => {
     }
 };
 
+
+
+// Función que realiza el cambio de visibilidad del input personalizar datetime de cierre de venta online si se selecciona
+const setupCustomiseOnlineClosureToggle = () => {
+    const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
+    const customContainer = document.getElementById(
+        "customClosureDatetimeContainer"
+    );
+    // Si existen, lanza las funcionalidades
+    if (radioGroup && customContainer) {
+        // Estado inicial
+        hideElement(customContainer, isCustomDateRadioChecked(radioGroup));
+
+        // Listeners para cambiar el estado cuando haya un cambio
+        radioGroup.forEach((radio) => {
+            radio.addEventListener("change", () => {
+                // Used the hideElement function
+                hideElement(
+                    customContainer,
+                    isCustomDateRadioChecked(radioGroup)
+                );
+            });
+        });
+    }
+};
+
+
+// Función inicial que establece las funcionalidades del formulario de dirección y lo relacionado con la capacidad máxima
+export const setupAddressFormToggle = () => {
+    // Getters del select y los containers
+    const addressSelect = document.getElementById("addressId");
+    const newAddressDialog = document.getElementById("newLocationDialog");
+    const maxCapInput = document.getElementById("sessionMaxCapacity");
+    const ticketQtyInput = document.getElementById("ticket_quantity");
+
+    // Si existen añade el listener las funcionalidades, por si no estamos en esa página
+    if (addressSelect && newAddressDialog && maxCapInput) {
+        addressSelect.addEventListener("change", () => {
+            handleNewAddress(newAddressDialog, addressSelect);
+            assignMaxCapToForm(addressSelect, maxCapInput, ticketQtyInput);
+        });
+        maxCapInput.addEventListener("change", () => {
+            ticketQtyInput.max = maxCapInput.value;
+        });
+    }
+};
+
+
 // Función que establece las funcionalidades para los tipos de tickets: añadir nuevos tipos y eliminarlos
-export const setupAddRemoveTicketTypes = () => {
+const setupAddRemoveTicketTypes = () => {
     // Recogemos los botones, el container y el div a clonar
     const addTicketTypeBtn = document.querySelector("#addTicketType");
     const removeTicketTypeBtn = document.querySelector("#removeTicketType");
@@ -188,3 +193,7 @@ export const setupAddRemoveTicketTypes = () => {
     }
 };
 
+// Llamada a las funciones que setean el js según encuentren o no los elementos que necesiten. 
+setupCustomiseOnlineClosureToggle();
+setupAddRemoveTicketTypes();
+setupAddressFormToggle();

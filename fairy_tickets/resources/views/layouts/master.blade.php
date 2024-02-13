@@ -26,6 +26,7 @@
         </div>
     </div>
     <script type="module" src="{{ asset('js/main.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

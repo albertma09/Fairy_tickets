@@ -1,11 +1,4 @@
 // Imports de módulos
-
-
-import {
-    setupAddressFormToggle,
-    setupCustomiseOnlineClosureToggle,
-    setupAddRemoveTicketTypes,
-} from "./modules/forms.js";
 import {
     addMenuFunctionalities,
     delayedCloseMenuOnResize,
@@ -13,13 +6,6 @@ import {
 import { commonButtonsSetup } from "./modules/buttons.js";
 
 import { ticketSalesModalSetup } from './modules/modals.js';
-
-// Función que inicializa las funcionalidades para el eventform
-const initializeEventForm = () => {
-    setupAddressFormToggle();
-    setupCustomiseOnlineClosureToggle();
-    setupAddRemoveTicketTypes();
-};
 
 
 // Event listener del evento 'resize' de la ventana
@@ -51,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     addMenuFunctionalities();
-    initializeEventForm();
     commonButtonsSetup();
     ticketSalesModalSetup();
 });

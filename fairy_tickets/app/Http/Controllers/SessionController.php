@@ -65,25 +65,28 @@ class SessionController extends Controller
                 'session_date' => 'required|date',
                 'session_hours' => 'required|integer|min:0|max:23',
                 'session_minutes' => 'required|integer|min:0|max:59',
-                'sessionMaxCapacity' => 'required|integer',
+                'session_capacity' => 'required|integer',
                 'online_sale_closure' => 'required|in:0,1,2,custom',
                 'custom_closure_date' => 'nullable|required_if:onlineSaleClosure,custom|date',
-                'customSaleClosureTime' => 'nullable|required_if:onlineSaleClosure,custom',
+                'custom_closure_hours' => 'nullable|required_if:onlineSaleClosure,custom|integer|min:0|max:23',
+                'custom_closure_minutes' => 'nullable|required_if:onlineSaleClosure,custom|integer|min:0|max:59',
                 'named_tickets' => 'sometimes|nullable|accepted',
                 'ticketDescription.*' => 'required|string',
-                'price.*' => 'required|numeric|min:0',
                 'ticketQuantity.*' => 'nullable|integer|min:0',
+                'price.*' => 'required|numeric|min:0',
             ]);
 
 
             // Miramos si la cantidad de tickets total es válida
-            if (Utils::checkSessionCapTicketAmount($validatedData['sessionMaxCapacity'], $validatedData['ticketQuantity'])) {
+            if (Utils::checkSessionCapTicketAmount($validatedData['session_capacity'], $validatedData['ticketQuantity'])) {
                 // Se guarda en base de datos el evento, la primera sesión y los tickets
                 Session::createSession($validatedData['event_id'], $validatedData);
                 return redirect()->route('sessions.create', [$validatedData['event_id']])->with('success', 'La sesión ha sido añadida de forma satisfactoria.');
             } else {
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
             }
+
+
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->route('sessions.create', [$request['event_id']])->with('error', $e->getMessage())->withInput();
