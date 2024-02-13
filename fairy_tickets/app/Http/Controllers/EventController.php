@@ -161,7 +161,7 @@ class EventController extends Controller
             if (Utils::checkSessionCapTicketAmount($validatedData['sessionMaxCapacity'], $validatedData['ticketQuantity'])) {
                 // Se guarda en base de datos el evento, la primera sesión y los tickets
                 Event::createEvent($validatedData);
-                return redirect()->route('events.create')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
+                return redirect()->route('promotor')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
             } else {
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
             }
