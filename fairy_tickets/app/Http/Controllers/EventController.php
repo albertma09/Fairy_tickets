@@ -144,8 +144,8 @@ class EventController extends Controller
                 'custom_closure_hours' => 'nullable|required_if:onlineSaleClosure,custom|integer|min:0|max:23',
                 'custom_closure_minutes' => 'nullable|required_if:onlineSaleClosure,custom|integer|min:0|max:59',
                 'named_tickets' => 'sometimes|nullable|accepted',
-                'ticketDescription.*' => 'required|string',
-                'ticketQuantity.*' => 'nullable|integer|min:0',
+                'ticket_description.*' => 'required|string',
+                'ticket_quantity.*' => 'nullable|integer|min:0',
                 'price.*' => 'required|numeric|min:0',
             ]);
 
@@ -158,10 +158,10 @@ class EventController extends Controller
             }
 
             // Miramos si la cantidad de tickets total es válida
-            if (Utils::checkSessionCapTicketAmount($validatedData['sessionMaxCapacity'], $validatedData['ticketQuantity'])) {
+            if (Utils::checkSessionCapTicketAmount($validatedData['session_capacity'], $validatedData['ticket_quantity'])) {
                 // Se guarda en base de datos el evento, la primera sesión y los tickets
                 Event::createEvent($validatedData);
-                return redirect()->route('promotor')->with('success', 'El evento ha sido guardado de forma satisfactoria.');
+                return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido guardado de forma satisfactoria.');
             } else {
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
             }

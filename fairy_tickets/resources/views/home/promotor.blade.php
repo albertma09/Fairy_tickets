@@ -21,7 +21,7 @@
                     <div class="img">
                         <img src="{{ asset('storage/img/covers/' . $event->image) }}" />
                     </div>
-                    
+
                     <h3>{{ $event->name }}</h3>
                     <div class="edit-icon">
                         <i class="fas fa-pencil-alt"></i>
@@ -31,4 +31,7 @@
             @endforeach
         </div>
     </div>
+    @if (Session::has('success'))
+        <x-feedback-dialog-component />
+    @endif
 @endsection

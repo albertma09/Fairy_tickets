@@ -13,7 +13,6 @@ const hideElement = (element, condition) => {
     element.classList.toggle("hidden", !condition);
 };
 
-
 // Función que pasa al controlador la id de una ubicación y espera sus datos
 const fetchLocationData = async (locationId) => {
     try {
@@ -121,8 +120,6 @@ const removeLastTicketInputGroup = (ticketContainer) => {
     }
 };
 
-
-
 // Función que realiza el cambio de visibilidad del input personalizar datetime de cierre de venta online si se selecciona
 const setupCustomiseOnlineClosureToggle = () => {
     const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
@@ -147,14 +144,13 @@ const setupCustomiseOnlineClosureToggle = () => {
     }
 };
 
-
 // Función inicial que establece las funcionalidades del formulario de dirección y lo relacionado con la capacidad máxima
-export const setupAddressFormToggle = () => {
+const setupAddressFormToggle = () => {
     // Getters del select y los containers
     const addressSelect = document.getElementById("addressId");
     const newAddressDialog = document.getElementById("newLocationDialog");
-    const maxCapInput = document.getElementById("sessionMaxCapacity");
-    const ticketQtyInput = document.getElementById("ticket_quantity");
+    const maxCapInput = document.getElementById("session_capacity");
+    const ticketQtyInput = document.querySelector("[id^='ticket_quantity']");
 
     // Si existen añade el listener las funcionalidades, por si no estamos en esa página
     if (addressSelect && newAddressDialog && maxCapInput) {
@@ -167,7 +163,6 @@ export const setupAddressFormToggle = () => {
         });
     }
 };
-
 
 // Función que establece las funcionalidades para los tipos de tickets: añadir nuevos tipos y eliminarlos
 const setupAddRemoveTicketTypes = () => {
@@ -193,7 +188,40 @@ const setupAddRemoveTicketTypes = () => {
     }
 };
 
-// Llamada a las funciones que setean el js según encuentren o no los elementos que necesiten. 
+// Función que recibe un input y un número de dígitos,
+// y se encarga de que el value del input nunca supere ese número
+const restrainInputDigits = (input, digitNumber) => {
+    if (input.value.length > digitNumber) {
+        input.value = input.value.slice(-digitNumber);
+    }
+};
+
+// Función que recibe un input
+// se encarga de que el value nunca supere el máximo
+const restrainInputValueToMax = (input) => {
+    let maxValue = parseInt(input.max);
+    if (!isNaN(maxValue) && parseInt(input.value) > maxValue) {
+        input.value = maxValue.toString();
+    }
+};
+
+const setupTimeInput = () => {
+    // Todos los inputs númericos de los inputs del tiempo.
+    const numberInputs = document.querySelectorAll(
+        '.time-input input[type="number"]'
+    );
+    if (numberInputs) {
+        numberInputs.forEach((input) => {
+            addEventListener("keyup", () => {
+                restrainInputDigits(input, 2);
+                restrainInputValueToMax(input);
+            });
+        });
+    }
+};
+
+// Llamada a las funciones que setean el js según encuentren o no los elementos que necesiten.
 setupCustomiseOnlineClosureToggle();
 setupAddRemoveTicketTypes();
 setupAddressFormToggle();
+setupTimeInput();

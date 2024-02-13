@@ -737,7 +737,6 @@ nav .button-icon i.fa-bars {
 .default-form input:not([type=checkbox]):not([type=radio]):not([type=file]),
 .default-form select,
 .default-form textarea {
-  width: 100%;
   padding: 0.6rem;
   border: 2px solid #fdf7f7;
   border-radius: 4px;
@@ -829,63 +828,63 @@ form .form-section-title {
   padding: 1rem;
   margin: 3rem 1.6rem 1.5rem 1.6rem;
 }
-form #time_wrapper {
+form .time-wrapper {
   padding: 0.1rem 0.2rem;
   width: fit-content;
   margin: 0 auto;
   border-radius: 4px;
   position: relative;
 }
-form #time_wrapper input {
+form .time-wrapper input {
   width: 60px;
   height: 60px;
   text-align: center;
 }
-form #time_wrapper #time_input {
+form .time-wrapper .time-input {
   width: fit-content;
   display: flex;
   align-items: center;
   /* Firefox */
 }
-form #time_wrapper #time_input label {
+form .time-wrapper .time-input label {
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
 }
-form #time_wrapper #time_input .label {
+form .time-wrapper .time-input .label {
   font-size: 0.55rem;
   position: absolute;
   top: 4.5px;
 }
-form #time_wrapper #time_input .label.lbl-hrs {
+form .time-wrapper .time-input .label.lbl-hrs {
   left: 20px;
 }
-form #time_wrapper #time_input .label.lbl-min {
+form .time-wrapper .time-input .label.lbl-min {
   left: 14px;
 }
-form #time_wrapper #time_input input[type=number] {
+form .time-wrapper .time-input input[type=number] {
   -moz-appearance: textfield;
 }
-form #time_wrapper #time_input #time_input,
-form #time_wrapper #time_input input {
+form .time-wrapper .time-input #time_input,
+form .time-wrapper .time-input input {
   border-radius: 8px;
   font-weight: light;
   font-size: 1.5rem;
 }
-form #time_wrapper #time_input input:focus {
+form .time-wrapper .time-input input:focus {
   color: #40e0d0;
 }
-form #time_wrapper #time_input input:focus + .label {
+form .time-wrapper .time-input input:focus + .label {
   color: #40e0d0;
 }
-form #time_wrapper #time_input input.invalid:focus {
+form .time-wrapper .time-input input.invalid:focus {
   outline: 3px solid #F15025;
 }
-form #time_wrapper #time_input input.invalid:focus + .label {
+form .time-wrapper .time-input input.invalid:focus + .label {
   color: #F15025;
 }
-form #time_wrapper #time_input #error {
+form .time-wrapper .time-input #error {
   justify-self: center;
   margin: 0 auto;
 }
@@ -1005,7 +1004,7 @@ dialog div #confirmButton {
   grid-column: 2;
   grid-row: 2;
 }
-dialog.close-dialog-button {
+dialog.corner-button {
   position: absolute;
   right: 0;
   top: 0;
