@@ -54,7 +54,7 @@ class Event extends Model
 
             return $events;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ class Event extends Model
 
             return $events;
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 

@@ -11,11 +11,9 @@
     <div class="slider-container">
 
         @foreach ($evento as $event)
-        
-        <img class="slider-item"
-        src="{{asset('storage/img/covers/' . $event["image"])}}" /> 
+            <img class="slider-item" src="{{ asset('storage/img/covers/' . $event['image']) }}" />
         @endforeach
-        
+
         <img class="slider-item"
             src="https://images.unsplash.com/photo-1580501170888-80668882ca0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" />
         <img class="slider-item"
@@ -56,6 +54,13 @@
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
             {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}">
         </iframe>
+    </div>
+
+    <div class="container">
+        <h3 class="title-section">Opiniones</h3>
+        @foreach ($opinions as $opinion)
+            <x-opinion-card-component :opinion="$opinion" />
+        @endforeach
     </div>
 
 
