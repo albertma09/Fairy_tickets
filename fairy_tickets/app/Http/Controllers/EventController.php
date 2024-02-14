@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Event;
+use App\Models\Opinion;
 use App\Libraries\Utils;
 use App\Models\Category;
 use App\Models\Location;
@@ -58,6 +59,7 @@ class EventController extends Controller
         $events = [];
         $sessions = [];
         $tickets = [];
+        $opinions = Opinion::getOpinionsByEvent($id);
 
         foreach ($result as $row) {
             // Agregar datos de eventos
@@ -115,7 +117,7 @@ class EventController extends Controller
         }
 
 
-        return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets]);
+        return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets, 'opinions' => $opinions,]);
     }
 
     
