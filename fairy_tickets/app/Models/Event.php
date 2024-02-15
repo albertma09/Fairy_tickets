@@ -82,7 +82,7 @@ class Event extends Model
     public static function getEventsById($item)
     {
         $events = DB::table('events')
-            ->select('events.id as event_id', 'events.name', 'events.description','events.image', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price','ticket_types.description as ticket_types_description', 'ticket_types.ticket_amount', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
+            ->select('events.id as event_id', 'events.name', 'events.description','events.image','category_id','location_id', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price','ticket_types.description as ticket_types_description', 'ticket_types.ticket_amount', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
             ->join('sessions', 'events.id', '=', 'sessions.event_id')
             ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
             ->join('locations', 'events.location_id', '=', 'locations.id')
@@ -129,6 +129,17 @@ class Event extends Model
         } catch (Exception $e) {
             Log::debug($e->getMessage());
         }
+    }
+
+    public static function updateEvent(array $eventData)
+    {
+
+        $eventId= $eventData["event_id"];
+        unset($eventData["event_id"]);
+        DB::table('events')
+    ->where('id', $eventId) // Filtras por algún criterio
+    ->update($eventData);
+
     }
 
 }

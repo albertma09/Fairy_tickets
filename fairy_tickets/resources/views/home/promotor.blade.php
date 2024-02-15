@@ -4,7 +4,7 @@
 
 @section('content')
 
-
+ 
 
 
     <h2>Bienvenido/a, {{ auth()->user()->name }}.</h2>
@@ -23,9 +23,14 @@
                     </div>
 
                     <h3>{{ $event->name }}</h3>
-                    <div class="edit-icon">
-                        <i class="fas fa-pencil-alt"></i>
-                        <p>editar</p>
+                    <div class="action-container">
+                        <a href="{{ route('events.update' , ['id' => $event->id]) }}" class="button button-icon">
+                            <i class="fas fa-pencil-alt "></i>
+                        </a>
+                        <a href="{{ route('events.mostrar', ['id' => $event->id]) }}" class="button button-icon">
+                            <i class="fas fa-info"></i>
+                        </a>
+                       
                     </div>
                 </div>
             @endforeach

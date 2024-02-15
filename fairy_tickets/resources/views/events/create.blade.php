@@ -4,14 +4,19 @@
 
 @section('content')
 
-    <form class="default-form" action="{{ route('events.store') }}" method ="POST" enctype="multipart/form-data">
+{{-- @dd($event); --}}
+
+    <form class="default-form" action="{{ isset($event) ? route('events.edit') : route('events.store') }}" method ="POST" enctype="multipart/form-data">
         @csrf
         <div class="grid-container">
             <!-- Título del evento -->
-
+            
             <div class="input-unit">
+                @if(isset($event))
+                <input type="hidden" id="event_id" name="event_id" value="{{$event->event_id}}">
+                @endif
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="name" value="{{ old('name') }}" maxlength="250" autofocus
+                <input type="text" id="title" name="name" value="{{  $event->name ?? old('name') }}" maxlength="250" autofocus
                     required />
                 @error('name')
                     <div class="msg-error">
@@ -27,7 +32,7 @@
                 <select id="category" name="category_id" required>
                     <option value="">Selecciona una opión</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}" {{ $event->category_id ?? old('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
@@ -45,7 +50,7 @@
                     <option value="">Selecciona una opción</option>
                     <option value="new">Añadir nueva dirección</option>
                     @foreach ($locations as $location)
-                        <option value="{{ $location->id }}" {{ old('location_id') == $location->id ? 'selected' : '' }}>
+                        <option value="{{ $location->id }}" {{ $event->location_id ?? old('location_id') == $location->id ? 'selected' : '' }}>
                             {{ $location->name }}</option>
                     @endforeach
                     @if (session('newLocation') == !null)
@@ -79,7 +84,7 @@
             <!-- Descripción -->
             <div class="input-unit">
                 <label for="description">Descripción del evento</label>
-                <textarea id="description" name="description" rows="5">{{ old('description') }}</textarea>
+                <textarea id="description" name="description" rows="5">{{ $event->description ?? old('description') }}</textarea>
                 @error('description')
                     <div class="msg-error">
                         No ha escrito una descripción correcta, por favor, vuelva a escribir la descripción del evento.
@@ -87,6 +92,7 @@
                 @enderror
             </div>
 
+            @if(!isset($event))
             <h3 class="form-section-title">Información de la primera sesión</h3>
             <!-- Fecha de la celebración del evento-->
             <div class="input-unit">
@@ -237,7 +243,8 @@
                     </div>
                 @endif
             </div>
-            <button class="button button-brand" type="submit">Crear Evento</button>
+        @endif
+            <button class="button button-brand" type="submit">{{isset($event) ? "Editar Evento" : "Crear Evento" }}</button>
     </form>
     <dialog id="newLocationDialog">
         <button class="button button-danger close-dialog-button">X</button>

@@ -26,7 +26,7 @@
                 <div class="navigation-map">
                     <h3>Navigation Map</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="{{ route('home.index') }}">Home</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Legal notices</a></li>
                     </ul>
