@@ -47,6 +47,15 @@ Route::middleware(['auth.redirect'])->group(function () {
         [EventController::class, 'store']
     )->name('events.store');
 
+    Route::get(
+        '/manage/update-event/{id}',
+        [EventController::class, 'showUpdateForm']
+    )->name('events.update');
+
+    Route::post(
+        '/manage/update-event',
+        [EventController::class, 'edit']
+    )->name('events.edit');
     // Sesiones
     Route::get(
         '/sesiones/{id}',

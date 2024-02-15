@@ -475,38 +475,19 @@ nav .filter-categories {
 .promotor-container .event-card h3,
 .promotor-container .event-card .img {
   opacity: 1;
-  transition: opacity 0.3s ease;
 }
 .promotor-container .event-card .img {
   width: 90%;
   height: 70%;
+  display: flex;
 }
 .promotor-container .event-card .img img {
   flex: 0 0 100%;
   width: 100%;
   object-fit: cover;
 }
-.promotor-container .event-card:hover {
-  cursor: pointer;
-}
-.promotor-container .event-card:hover .img,
-.promotor-container .event-card:hover h3 {
-  opacity: 0;
-}
-.promotor-container .event-card:hover .edit-icon {
-  display: grid;
-  justify-items: center;
-}
-.promotor-container .event-card:hover .edit-icon i {
-  font-size: 2rem;
-  padding: 0.8rem;
-}
-.promotor-container .event-card:hover .edit-icon p {
-  font-size: 1.5rem;
-}
-.promotor-container .event-card .edit-icon {
-  position: absolute;
-  display: none;
+.promotor-container .event-card .action-container {
+  display: flex;
 }
 
 .footer {

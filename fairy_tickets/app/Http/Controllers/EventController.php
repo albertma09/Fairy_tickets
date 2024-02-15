@@ -21,6 +21,20 @@ class EventController extends Controller
         return view('events.create', ['locations' => $userLocations, 'categories' => $categories]);
     }
 
+    public function showUpdateForm($id){
+        
+
+        $events = Event::getEventsById($id);
+        $event = $events[0];
+        
+        $categories = Category::getCategories();
+        $userLocations = Location::getLocationsByUser();
+        return view('events.create', ['locations' => $userLocations, 'categories' => $categories, 'event' => $event]);
+
+    }
+
+
+
     public function searchBySearchingItem(Request $request): View
     {
         try {
@@ -172,5 +186,28 @@ class EventController extends Controller
             Log::error($e->getMessage());
             return redirect()->route('events.create')->with('error', $e->getMessage())->withInput();
         }
+    }
+
+    public function edit(Request $request){
+
+        
+
+        $validatedData = $request->validate([
+            'event_id' => 'required',
+            'name' => 'required|max:255',
+            'category_id' => 'required|integer',
+            'location_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required|string',
+        ]);
+
+        
+        
+
+        Event::updateEvent($validatedData);
+
+        return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
+       
     }
 }
