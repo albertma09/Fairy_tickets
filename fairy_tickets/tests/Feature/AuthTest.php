@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Event;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -96,6 +97,59 @@ class AuthTest extends TestCase
         
         $response->assertRedirect('/');
 
+    }
+
+    public function test_authenticated_user_can_access_protected_page()
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
+
+        
+        $response = $this->get('/promotor/'.$user->id);
+
+       
+        $response->assertStatus(200);
+
+
+        $response = $this->get('/manage/new-event');
+        $response->assertStatus(200);
+
+        $event = Event::factory(1)->hasSessions(1)->create()->first();
+
+        $response = $this->get('/manage/update-event/'.$event->id);
+        $response->assertStatus(200);
+
+
+        $response = $this->get('/sesiones/'.$event->id);
+        $response->assertStatus(200);
+
+        $response = $this->get('/manage/'.$event->id.'/new-session');
+        $response->assertStatus(200);
+    }
+
+    public function test_unauthenticated_user_is_redirected_to_login_page()
+    {
+        
+        $user = \App\Models\User::factory()->create();
+        $response = $this->get('/promotor/'.$user->id);
+
+        
+        $response->assertRedirect('/login');
+
+        $response = $this->get('/manage/new-event');
+        $response->assertRedirect('/login');
+
+        $event = Event::factory(1)->hasSessions(1)->create()->first();
+
+        $response = $this->get('/manage/update-event/'.$event->id);
+        $response->assertRedirect('/login');
+
+
+        $response = $this->get('/sesiones/'.$event->id);
+        $response->assertRedirect('/login');
+
+        $response = $this->get('/manage/'.$event->id.'/new-session');
+        $response->assertRedirect('/login');
     }
 
 
