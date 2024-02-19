@@ -10,6 +10,6 @@
     <p>Fecha: {{$event->date}}</p>
     <p>Hora: {{$event->hour}}</p>
     <a href="{{route('events.mostrar', ['id'=> $event_id ])}}">Enlace al evento</a>
-    <a href="{{ route('buy-ticket', ['session_id' => 1, 'email' => 'jeffrey.kuhn@example.net']) }}">Descargar entradas</a>
+    <a href="{{ route('buy-ticket', ['session_id' => $session_id, 'email' => $email]) }}">Descargar entradas</a>
 </body>
 </html>
