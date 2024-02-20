@@ -36,7 +36,7 @@ class Session extends Model
 
             $sessions = DB::table('sessions')
                 ->join('events', 'events.id', '=', 'sessions.event_id')
-                ->select('events.name', 'sessions.date', 'sessions.hour')
+                ->select('events.name', 'sessions.date', 'sessions.hour', 'sessions.id')
                 ->where('events.user_id', '=', $id)
                 ->orderBy('sessions.date')
                 ->get();
@@ -181,6 +181,25 @@ class Session extends Model
 
             return $sessionId;
         } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+    public static function getTicketsBySessionId($session_id){
+
+
+        try{
+
+            $tickets = DB::table('tickets')
+            ->select('p.name as buyer_ticket', 'tickets.name as assistant_ticket', 'tickets.id as code', 'tt.description')
+            ->join('purchases as p', 'tickets.purchase_id', '=', 'p.id')
+            ->join('ticket_types as tt', 'tickets.ticket_type_id', '=', 'tt.id')
+            ->where('p.session_id', $session_id)
+            ->get();
+
+            return $tickets;
+
+        }catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }

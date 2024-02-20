@@ -21,6 +21,9 @@
                 <div>{{ date('Y', strtotime($session->date)) }}</div>
             </div>
         </div>
+        <div>
+            <a href="{{route('generar.csv', ['session_id' => $session->id])}}" class="button button-brand">generar csv</a>
+        </div>
         <div class="session-card-locPreu">
             <div class="session-card-data-loc">Total de ventas</div>
             <div class="session-card-data-price">100</div>

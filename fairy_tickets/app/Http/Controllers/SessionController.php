@@ -6,11 +6,14 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\Session;
 use App\Libraries\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -85,11 +88,42 @@ class SessionController extends Controller
             } else {
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
             }
-
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->route('sessions.create', [$request['event_id']])->with('error', $e->getMessage())->withInput();
         }
+    }
+
+    public function generateCSV($session_id)
+    {
+        // Ejecutar la consulta
+
+        
+        $tickets = Session::getTicketsBySessionId($session_id);
+
+        // Encabezados del CSV
+        $csvFileName = 'tickets.csv';
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$csvFileName",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        // Iniciar el manejador del archivo CSV
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, array('Buyer Ticket', 'Assistant Ticket', 'Code', 'Description'));
+
+        // Escribir los datos en el archivo CSV
+        foreach ($tickets as $ticket) {
+            fputcsv($handle, array($ticket->buyer_ticket, $ticket->assistant_ticket, $ticket->code, $ticket->description));
+        }
+
+        // Cerrar el manejador del archivo
+        fclose($handle);
+
+        // Retornar la respuesta con el archivo CSV
+        return Response::make('', 200, $headers);
     }
 }
