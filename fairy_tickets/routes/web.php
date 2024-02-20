@@ -111,6 +111,9 @@ Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('us
 
 Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
 
+
+Route::get('/generate-csv/{session_id}', [SessionController::class, 'generateCSV'])->name('generar.csv');
+
 Route::fallback(function () {
     return ('Opps!!');
 });
