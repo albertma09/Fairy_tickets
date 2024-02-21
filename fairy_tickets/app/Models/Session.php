@@ -3,19 +3,20 @@
 namespace App\Models;
 
 use Exception;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Carbon\Carbon;
 
 class Session extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_id', 'date', 'hour', 'session_capacity', 'online_sale_closure', 'nominal_tickets'];
+    protected $fillable = ['event_id', 'date', 'hour', 'session_capacity', 'online_sale_closure', 'nominal_tickets', 'code'];
 
     public function event(): BelongsTo
     {
@@ -162,6 +163,7 @@ class Session extends Model
             // Preparamos los datos de la sesión en un array
             $sessionData = [
                 'event_id' => $eventId,
+                'code' => Str::random(15),
                 'date' => $sessionDate,
                 'hour' => $sessionTime,
                 'session_capacity' => $formData['sessionMaxCapacity'],

@@ -19,12 +19,13 @@ return new class extends Migration
             $table->unsignedBigInteger('event_id');
 
             //atributos iniciales BD
+            $table->string('code')->unique();
             $table->date('date');
             $table->time('hour');
             $table->integer('session_capacity');
             $table->dateTime('online_sale_closure');
             $table->boolean('nominal_tickets');
-
+            
             // Timestamps
             $table->timestamps();
 
