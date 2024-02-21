@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Session extends Model
 {
@@ -28,6 +29,10 @@ class Session extends Model
         return $this->hasMany(TicketType::class);
     }
 
+    public function token(): HasOne
+    {
+        return $this->hasOne(Token::class);
+    }
     // Función que pasa por parámetro la id de un usuario y
     // devuelve todas las sesiones de los eventos que este ha creado
     public static function getAllSessionsByPromotor(string $id)
