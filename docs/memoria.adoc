@@ -244,7 +244,25 @@ Durante esta semana, nos enfocamos en 5 nuevas tareas del desarrollo de la aplic
 |====================
 | Tarea 3+^| Descripción
 | **R01: Definir Guía de Estilos de la Aplicación** 3+|
-"" 
+"El primer paso que hemos dado esta semana ha sido centrarnos en el diseño del sitio web y decidir qué colores, fuentes, iconos, etc... eran más adecuados para la temática de nuestro sitio.
+
+1. Paleta de colores.
+Entendemos que una aplicación así está orientada a un público sobre todo joven o de mediana edad y que necesitamos colores que llamen a la acción, así que nos hemos decidido por usar un tono rojo/rosado como color de marca sobre un fondo oscuro (gris casi negro), así como un color blanco para que los elementos tengan contraste sobre el fondo.
+
+2. Tipografía.
+Hemos buscado tres fuentes que nos parezcan adecuadas con la temática, sean agradables a la vista, se lean bien en pantallas pequeñas y combinen bien entre sí. Una, sin serifa, será para la mayoría de textos y botones. La segunda, para los títulos y textos destacados. Y la tercera, con serifa y más estilizada, para citas destacadas y títulos artísticos.
+
+3. Iconografía.
+En cuanto a iconos hemos decidido optar por usar los de la librería font-awesome 5, que nos parecen quedan mejor con nuestro estilo y es gratis.
+
+4. Espacios y formas.
+Hemos decidido usar medidas a partir del tamaño de la fuente (rem), ya que al cambiar de pantalla, cambiamos de tamaño de fuente y en teoría todo debería de quedar proporcionado.
+Buscamos cual era el espacio estándar entre el contenido y los bordes en pantallas móviles y a partir de ahí lo escalamos según la pantalla. 
+También decidimos darle a la mayoría elementos de nuestro sitio web, botones, cards, contenedores... un aspecto rectangular con los bordes recortados en las esquinas.
+
+5. Botones.
+Los botones hemos decidido que usarían la misma fuente que el texto normal del sitio web. Tendrán un borde del color de la 'marca' de la web y un fondo transparente que se rellenará al hacer hover con el mismo color que el borde.
+" 
 
 | **R02: Plantear la Estructura de la Base de Datos** 3+|
 "" 
@@ -267,7 +285,10 @@ Configuraciones Adicionales:
 Configura el host virtual de Apache2 para apuntar al directorio del proyecto Laravel." 
 
 | **R04: Diseño Principal** 3+|
-"" 
+"En el diseño, hecho en FIGMA, hemos querido optar por un _layout_ tradicional, con un navegador horizontal estático en la parte de arriba, en el que habrán: el logo, un buscador, los links del navegador y un botón para hacer login o logout. El contenido ocupando el centro de la pantalla y un footer al final del contenido.
+El navegador en pantallas pequeñas pierde los links y aparece un botón tipo _toggle_ para desplegarlos. 
+Pese a explicarlo de esta manera, el diseño lo hemos intentado hacer mobile first, es decir, primero diseñamos la vista móvil y después cómo se expandirían los elementos en el espacio.
+" 
 
 | **R05: Página de Inicio** 3+|
 "" 
@@ -280,7 +301,7 @@ Valoración de la semana individual
 ===== *Diego:*
 
 
-===== *Aitor:* 
+===== *Aitor:* En este sprint me he dedicado principalmente a la guía de estilos junto a mis compañeros. En este sentido, me he dedicado a buscar las fuentes y las tipografías. También me he encargado del diseño principal de la página: el layout, el negador y el home.
 
 
 ===== *Albert: Este sprint he estado sobretodo con la configuración de la maquina isard, además de esto junto con mis compañeros estuvimos decidiendo los estilos de la pagina y con esto creamos la guia de estilos* 
