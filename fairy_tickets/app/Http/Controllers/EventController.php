@@ -11,6 +11,8 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class EventController extends Controller
 {
@@ -152,16 +154,16 @@ class EventController extends Controller
                 'user_id' => 'required|integer',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'description' => 'required|string',
-                'session_date' => 'required|date',
+                'session_date' => 'required|date|after:today',
                 'session_hours' => 'required|integer|min:0|max:23',
                 'session_minutes' => 'required|integer|min:0|max:59',
                 'session_capacity' => 'required|integer',
                 'online_sale_closure' => 'required|in:0,1,2,custom',
-                'custom_closure_date' => 'nullable|required_if:onlineSaleClosure,custom|date',
+                'custom_closure_date' => 'nullable|required_if:onlineSaleClosure,custom|date|after:session_date',
                 'custom_closure_hours' => 'nullable|required_if:onlineSaleClosure,custom|integer|min:0|max:23',
                 'custom_closure_minutes' => 'nullable|required_if:onlineSaleClosure,custom|integer|min:0|max:59',
                 'named_tickets' => 'sometimes|nullable|accepted',
-                'ticket_description.*' => 'required|string',
+                'ticket_description.*' => 'required|string|max:100',
                 'ticket_quantity.*' => 'nullable|integer|min:0',
                 'price.*' => 'required|numeric|min:0',
             ]);
@@ -182,9 +184,20 @@ class EventController extends Controller
             } else {
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
             }
+        } catch (ValidationException $e) {
+            return redirect()->route('events.create')
+                ->withErrors($e->validator->getMessageBag())
+                ->withInput();
+        } catch (FileNotFoundException $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('events.create')
+                ->with('errors', 'No es un archivo de imagen válido o está vacío.')
+                ->withInput();
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect()->route('events.create')->with('error', $e->getMessage())->withInput();
+            return redirect()->route('events.create')
+                ->with('errors', 'Ocurrió un error al guardar el evento.')
+                ->withInput();
         }
     }
 

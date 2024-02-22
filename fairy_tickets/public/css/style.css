@@ -770,6 +770,9 @@ nav .button-icon i.fa-bars {
   border-color: #40e0d0;
   box-shadow: 0 0 5px #40e0d0;
 }
+.default-form input[type=number] {
+  -moz-appearance: textfield;
+}
 .default-form .add-remove-ticket {
   justify-self: center;
   background-color: #05283d;

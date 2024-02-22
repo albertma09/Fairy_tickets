@@ -29,13 +29,13 @@ class LocationController extends Controller
             Log::info("Llamada al método LocationController.store");
             // Validación de la información del formulario
             $validatedData = $request->validate([
-                'name' => 'required|string',
-                'capacity' => 'required|integer',
-                'province' => 'required|string',
-                'city' => 'required|string',
-                'street' => 'required|string',
-                'number' => 'required|string',
-                'cp' => 'required|string',
+                'name' => 'required|string|max:255',
+                'capacity' => 'required|integer|max:999999',
+                'province' => 'required|string|max:100',
+                'city' => 'required|string|max:100',
+                'street' => 'required|string|max:150',
+                'number' => 'required|string|max:3|numeric',
+                'cp' => 'required|string|max:10|numeric',
             ]);
             if ($validatedData) {
                 $location = Location::create($validatedData);
