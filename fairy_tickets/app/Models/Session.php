@@ -131,15 +131,14 @@ class Session extends Model
             Log::info('Llamada a Session.createSessionTicketsArray', ['datos_formulario', $formData]);
             // Crear los tipos de ticket relacionados con la sesión
             $ticketData = [];
-            for ($i = 0; $i < count($formData['ticketDescription']); $i++) {
+            for ($i = 0; $i < count($formData['ticket_description']); $i++) {
                 $ticketData[] = [
                     'session_id' => $sessionId,
-                    'description' => $formData['ticketDescription'][$i],
+                    'description' => $formData['ticket_description'][$i],
                     'price' => $formData['price'][$i],
                     // Cuando la cantidad de tickets no se indican o viene 0 toma la capacidad máxima de sesión
-                    'ticket_amount' => ($formData['ticketQuantity'][$i] !== null && $formData['ticketQuantity'][$i] !== 0) ? $formData['ticketQuantity'][$i] : $formData['sessionMaxCapacity'],
+                    'ticket_amount' => ($formData['ticket_quantity'][$i] !== null && $formData['ticket_quantity'][$i] !== 0) ? $formData['ticket_quantity'][$i] : $formData['session_capacity'],
                 ];
-                Log::debug('Datos que crea la función Session.createSessionTicketArray', $ticketData, $formData['sessionMaxCapacity']);
             }
             return $ticketData;
         } catch (\Exception $e) {
@@ -160,7 +159,7 @@ class Session extends Model
             $carbonDatetime = Carbon::parse($sessionDate . ' ' . $sessionTime);
 
             // Asignamos la fecha de cierre de venta online según los datos del formulario
-            $onlineClosure = Self::adjustOnlineClosure($carbonDatetime, $formData['onlineSaleClosure'], $formData['customSaleClosure']);
+            $onlineClosure = Self::adjustOnlineClosure($carbonDatetime, $formData['online_sale_closure'], $formData['custom_sale_closure']);
 
             // Arreglamos el tipo de datos que nos trae nominal_tickets, pasamos a booleano cuando viene vacío
             $nominalTickets = (bool) ($formData['nominal_tickets'] ?? false);
@@ -171,7 +170,7 @@ class Session extends Model
                 'code' => Str::random(15),
                 'date' => $sessionDate,
                 'hour' => $sessionTime,
-                'session_capacity' => $formData['sessionMaxCapacity'],
+                'session_capacity' => $formData['session_capacity'],
                 'online_sale_closure' => $onlineClosure->toDateTimeString(),
                 'nominal_tickets' => $nominalTickets,
             ];

@@ -124,7 +124,7 @@ const removeLastTicketInputGroup = (ticketContainer) => {
 const setupCustomiseOnlineClosureToggle = () => {
     const radioGroup = document.querySelectorAll(".onlinesale-closure-radio");
     const customContainer = document.getElementById(
-        "customClosureDatetimeContainer"
+        "custom_closure_datetime_container"
     );
     // Si existen, lanza las funcionalidades
     if (radioGroup && customContainer) {

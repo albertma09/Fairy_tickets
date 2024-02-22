@@ -11,7 +11,7 @@ class TimeInputComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $inputName)
+    public function __construct(public string $inputName, public int $hours = 0, public int $minutes = 0)
     {
     }
 

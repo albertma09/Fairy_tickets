@@ -13,12 +13,11 @@
             <div class="input-unit">
                 <label for="date">Fecha de la sesión</label>
                 <input type="date" id="date" name="session_date"
-                    value="{{ old('session_date') !== null ? old('session_date') : $sessionData['session']['date'] }}"
-                    required autofocus />
+                    value="{{ old('session_date') ?? $sessionData['session']['date'] }}" required autofocus />
                 @error('session_date')
-                    <div class="msg-error">
-                        Por favor, elija una fecha correcta.
-                    </div>
+                    <p class="msg-error">
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
             <!-- Hora de la celebración del evento-->
@@ -28,13 +27,8 @@
                     @php
                         $inputName = 'session';
                     @endphp
-                    <x-forms.time-input-component :inputName="$inputName" />
+                    <x-forms.time-input-component :inputName="$inputName" :hours="$sessionData['session']['hours'] ?? 0" :minutes="$sessionData['session']['minutes'] ?? 0" />
                 </div>
-                @error('sessionTime')
-                    <div class="msg-error">
-                        Por favor, elija una hora correcta.
-                    </div>
-                @enderror
             </div>
 
             <!-- Aforo máximo -->
@@ -46,11 +40,9 @@
                     value="{{ $errors->has('session_capacity') ? old('session_capacity') : $sessionData['session']['session_capacity'] ?? '' }}"
                     max="{{ session('newLocation') == !null ? $location->capacity : '' }}">
                 @error('session_capacity')
-                    <div class="msg-error">
-                        No ha introducido un dato correcto, recuerde que la capacidad de la sesión no puede superar el aforo
-                        del
-                        recinto dónde se celebra el evento.
-                    </div>
+                    <p class="msg-error">
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
@@ -87,23 +79,25 @@
                     <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
                 </div>
             </div>
-            <div class="input-unit" id="custom_closure_datetime_container">
-                <label for="custom_closure_date">Indica la fecha para establecer el momento del cierre de la venta
-                    online</label>
-                <input type="date" id="custom_closure_date" name="custom_closure_date" value="{{ old('custom_closure_date') }}">
-                @error('custom_closure_date')
-                    <div class="msg-error">
-                        Por favor, elija una fecha correcta.
-                    </div>
-                @enderror
-
-            </div>
-            <div class="input-unit">
-                <p>Indica la hora del momento del cierre de la venta online</p>
-                @php
-                    $inputName = 'custom_closure';
-                @endphp
-                <x-forms.time-input-component :inputName="$inputName" />
+            <div id="custom_closure_datetime_container">
+                <div class="input-unit">
+                    <label for="custom_closure_date">Indica la fecha para establecer el momento del cierre de la venta
+                        online</label>
+                    <input type="date" id="custom_closure_date" name="custom_closure_date"
+                        value="{{ old('custom_closure_date') ?? $sessionData['session']['custom_closure_date'] }}">
+                    @error('custom_closure_date')
+                        <p class="msg-error">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+                <div class="input-unit">
+                    <p>Indica la hora del momento del cierre de la venta online</p>
+                    @php
+                        $inputName = 'custom_closure';
+                    @endphp
+                    <x-forms.time-input-component :inputName="$inputName" :hours="$sessionData['session']['custom_closure_hours'] ?? 0" :minutes="$sessionData['session']['custom_closure_minutes'] ?? 0" />
+                </div>
             </div>
             <div>
                 <h3 class="form-section-title">Tipos de entrada</h3>

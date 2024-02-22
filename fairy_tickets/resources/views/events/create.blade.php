@@ -4,25 +4,25 @@
 
 @section('content')
 
-{{-- @dd($event); --}}
+    {{-- @dd($event); --}}
 
-    <form class="default-form" action="{{ isset($event) ? route('events.edit') : route('events.store') }}" method ="POST" enctype="multipart/form-data">
+    <form class="default-form" action="{{ isset($event) ? route('events.edit') : route('events.store') }}" method ="POST"
+        enctype="multipart/form-data">
         @csrf
         <div class="grid-container">
             <!-- Título del evento -->
-            
+
             <div class="input-unit">
-                @if(isset($event))
-                <input type="hidden" id="event_id" name="event_id" value="{{$event->event_id}}">
+                @if (isset($event))
+                    <input type="hidden" id="event_id" name="event_id" value="{{ $event->event_id }}">
                 @endif
                 <label for="title">Título del evento</label>
-                <input type="text" id="title" name="name" value="{{  $event->name ?? old('name') }}" maxlength="250" autofocus
-                    required />
+                <input type="text" id="title" name="name" value="{{ $event->name ?? old('name') }}"
+                    maxlength="250" autofocus required />
                 @error('name')
-                    <div class="msg-error">
-                        El título del evento que has introducido es erróneo, por favor, vuelve a introducir un título
-                        válido.
-                    </div>
+                    <p class="msg-error">
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
@@ -32,15 +32,16 @@
                 <select id="category" name="category_id" required>
                     <option value="">Selecciona una opión</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ $event->category_id ?? old('category_id') == $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}"
+                            {{ $event->category_id ?? old('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
                 @error('category_id')
-                    <div class="msg-error">
-                        Por favor, selecciona una categoría.
-                    </div>
+                    <p class="msg-error">
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
@@ -50,7 +51,8 @@
                     <option value="">Selecciona una opción</option>
                     <option value="new">Añadir nueva dirección</option>
                     @foreach ($locations as $location)
-                        <option value="{{ $location->id }}" {{ $event->location_id ?? old('location_id') == $location->id ? 'selected' : '' }}>
+                        <option value="{{ $location->id }}"
+                            {{ $event->location_id ?? old('location_id') == $location->id ? 'selected' : '' }}>
                             {{ $location->name }}</option>
                     @endforeach
                     @if (session('newLocation') == !null)
@@ -58,9 +60,9 @@
                         </option>
                     @endif
                     @error('location_id')
-                        <div class="msg-error">
-                            Por favor, selecciona una opción válida para determinar la ubicación del evento.
-                        </div>
+                        <p class="msg-error">
+                            {{ $message }}
+                        </p>
                     @enderror
                 </select>
             </div>
@@ -75,9 +77,9 @@
                     </div>
                 @endif
                 @error('image')
-                    <div class="msg-error">
-                        Ha habido algún error al subir la imágen, por favor, vuélvalo a intentar.
-                    </div>
+                    <p class="msg-error">
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
@@ -86,165 +88,162 @@
                 <label for="description">Descripción del evento</label>
                 <textarea id="description" name="description" rows="5">{{ $event->description ?? old('description') }}</textarea>
                 @error('description')
-                    <div class="msg-error">
-                        No ha escrito una descripción correcta, por favor, vuelva a escribir la descripción del evento.
-                    </div>
+                    <p class="msg-error">
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            @if(!isset($event))
-            <h3 class="form-section-title">Información de la primera sesión</h3>
-            <!-- Fecha de la celebración del evento-->
-            <div class="input-unit">
-                <label for='date'>Fecha de la primera sesión del evento</label>
-                <input type="date" id="date" name="session_date" value="{{ old('session_date') }}" required />
-                @error('session_date')
-                    <div class="msg-error">
-                        Por favor, elija una fecha correcta.
+            @if (!isset($event))
+                <h3 class="form-section-title">Información de la primera sesión</h3>
+                <!-- Fecha de la celebración del evento-->
+                <div class="input-unit">
+                    <label for='date'>Fecha de la primera sesión del evento</label>
+                    <input type="date" id="date" name="session_date" value="{{ old('session_date') }}" required />
+                    @error('session_date')
+                        <p class="msg-error">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+                <!-- Hora de la celebración del evento-->
+                <div class="input-unit">
+                    <div>
+                        <p>Hora de inicio de la primera sesión</p>
+                        @php
+                            $inputName = 'session';
+                        @endphp
+                        <x-forms.time-input-component :inputName="$inputName" />
                     </div>
-                @enderror
-            </div>
-            <!-- Hora de la celebración del evento-->
-            <div class="input-unit">
+                </div>
+
+                <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
+                <!-- Aforo máximo -->
+                <div class="input-unit">
+                    <label for="session_capacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
+                    </label>
+                    <input type="number" id="session_capacity" name="session_capacity"
+                        value="{{ old('session_capacity') ?? (session('newLocation')['capacity'] ?? '') }}"
+                        max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
+                    @error('session_capacity')
+                        <p class="msg-error">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <!-- Entradas nominales -->
+                <div class="row-unit">
+                    <input type="checkbox" id="named_tickets" name="named_tickets"
+                        {{ old('named_tickets') ? 'checked' : '' }} />
+                    <label for="named_tickets">Entradas nominales</label>
+                </div>
+
+                <!-- Cierre de la venta en línea -->
+                <div class="input-unit">
+                    <p>Indica el momento del cierre de la venta de entradas en línea</p>
+                    <div class="row-unit">
+                        <input type="radio" id="withEvent" name="online_sale_closure" value="0"
+                            class="onlinesale-closure-radio"
+                            {{ old('online_sale_closure') == 0 || old('online_sale_closure') === null ? 'checked' : '' }}>
+                        <label for="withEvent">Hora de la celebración del evento</label>
+                    </div>
+                    <div class="row-unit">
+                        <input type="radio" id="oneHBefore" name="online_sale_closure" value="1"
+                            class="onlinesale-closure-radio" {{ old('online_sale_closure') == 1 ? 'checked' : '' }}>
+                        <label for="oneHBefore">Una hora antes de la celebración del evento</label>
+                    </div>
+                    <div class="row-unit">
+                        <input type="radio" id="twoHBefore" name="online_sale_closure" value="2"
+                            class="onlinesale-closure-radio" {{ old('online_sale_closure') == 2 ? 'checked' : '' }}>
+                        <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
+                    </div>
+                    <div class="row-unit">
+                        <input type="radio" id="customDatetime" name="online_sale_closure" value="custom"
+                            class="onlinesale-closure-radio"
+                            {{ old('online_sale_closure') == 'custom' ? 'checked' : '' }}>
+                        <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
+                    </div>
+                </div>
+                <div id="custom_closure_datetime_container">
+                    <div class="input-unit">
+                        <label for="custom_closure_date">Indica la fecha para establecer el momento
+                            del cierre de
+                            la
+                            venta online</label>
+                        <input type="date" id="custom_closure_date" name="custom_closure_date"
+                            value="{{ old('custom_closure_date') }}">
+                        @error('custom_closure_date')
+                            <p class="msg-error">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="input-unit">
+                        <p>Indica la hora del momento del cierre de la venta online</p>
+                        @php
+                            $inputName = 'custom_closure';
+                        @endphp
+                        <x-forms.time-input-component :inputName="$inputName" />
+                    </div>
+
+                </div>
+
                 <div>
-                    <p>Hora de inicio de la primera sesión</p>
-                    @php
-                        $inputName = 'session';
-                    @endphp
-                    <x-forms.time-input-component :inputName="$inputName" />
+                    <h3 class="form-section-title">Tipos de entrada</h3>
+                    <p>En esta sección podrás definir cuántas clases de entrada tendrá la primera sesión de tu evento, así
+                        como
+                        su nombre y precio.
+                        También podrás poner una cantidad máxima de entradas a la venta.</p>
+                    <p class="msg-info">Ten en cuenta que la suma total no
+                        podrá ser mayor que la capacidad máxima de tu sesión.</p>
                 </div>
-            </div>
-
-            <!-- Nuevo formulario que relacionará fechas con aforos y entradas -->
-            <!-- Aforo máximo -->
-            <div class="input-unit">
-                <label for="session_capacity">Limitación de aforo (por defecto, la capacidad máxima del recinto)
-                </label>
-                <input type="number" id="session_capacity" name="session_capacity"
-                    value="{{ old('session_capacity') ?? session('newLocation')['capacity'] ?? '' }}"
-                    max="{{ session('newLocation') == !null ? session('newLocation')['capacity'] : '' }}">
-                @error('session_capacity')
-                    <div class="msg-error">
-                        No ha introducido un dato correcto, recuerde que la capacidad de la sesión no puede superar el aforo del
-                        recinto dónde se celebra el evento.
-                    </div>
-                @enderror
-            </div>
-
-            <!-- Entradas nominales -->
-            <div class="row-unit">
-                <input type="checkbox" id="named_tickets" name="named_tickets"
-                    {{ old('named_tickets') ? 'checked' : '' }} />
-                <label for="named_tickets">Entradas nominales</label>
-            </div>
-
-            <!-- Cierre de la venta en línea -->
-            <div class="input-unit">
-                <p>Indica el momento del cierre de la venta de entradas en línea</p>
-                <div class="row-unit">
-                    <input type="radio" id="withEvent" name="online_sale_closure" value="0"
-                        class="onlinesale-closure-radio"
-                        {{ old('online_sale_closure') == 0 || old('online_sale_closure') === null ? 'checked' : '' }}>
-                    <label for="withEvent">Hora de la celebración del evento</label>
-                </div>
-                <div class="row-unit">
-                    <input type="radio" id="oneHBefore" name="online_sale_closure" value="1"
-                        class="onlinesale-closure-radio" {{ old('online_sale_closure') == 1 ? 'checked' : '' }}>
-                    <label for="oneHBefore">Una hora antes de la celebración del evento</label>
-                </div>
-                <div class="row-unit">
-                    <input type="radio" id="twoHBefore" name="online_sale_closure" value="2"
-                        class="onlinesale-closure-radio" {{ old('online_sale_closure') == 2 ? 'checked' : '' }}>
-                    <label for="twoHBefore">Dos horas antes de la celebración del evento</label>
-                </div>
-                <div class="row-unit">
-                    <input type="radio" id="customDatetime" name="online_sale_closure" value="custom"
-                        class="onlinesale-closure-radio" {{ old('online_sale_closure') == 'custom' ? 'checked' : '' }}>
-                    <label for="customDatetime">Personalizar fecha y hora de cierre de la venta online</label>
-                </div>
-            </div>
-            <div class="input-unit" id="custom_closure_datetime_container">
-                <label for="custom_closure_date">Indica la fecha para establecer el momento del cierre de
-                    la
-                    venta online</label>
-                <input type="date" id="custom_closure_date" name="custom_closure_date"
-                    value="{{ old('custom_closure_date') }}">
-                @error('customSaleClosure')
-                    <div class="msg-error">
-                        Por favor, elija una fecha correcta.
-                    </div>
-                @enderror
-            </div>
-
-            <div class="input-unit">
-                <p>Indica la hora del momento del cierre de la venta online</p>
                 @php
-                    $inputName = 'custom_closure';
+                    $index = 1;
                 @endphp
-                <x-forms.time-input-component :inputName="$inputName" />
-            </div>
-
-            <div>
-                <h3 class="form-section-title">Tipos de entrada</h3>
-                <p>En esta sección podrás definir cuántas clases de entrada tendrá la primera sesión de tu evento, así
-                    como
-                    su nombre y precio.
-                    También podrás poner una cantidad máxima de entradas a la venta.</p>
-                <p class="msg-info">Ten en cuenta que la suma total no
-                    podrá ser mayor que la capacidad máxima de tu sesión.</p>
-            </div>
-            @php
-                $index = 1;
-            @endphp
-            <div class="form-ticket-container" id="formTicketContainer">
-                <x-forms.tickettype-input-group-component :index="$index" :ticketType="null" />
-            </div>
-
-            <div class="add-remove-ticket">
-
-                <p>Añade un nuevo tipo de entrada o elimina el último</p>
-                <div class="dual-button-container">
-                    <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i>
-                    </button>
-                    <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i>
-                    </button>
+                <div class="form-ticket-container" id="formTicketContainer">
+                    <x-forms.tickettype-input-group-component :index="$index" :ticketType="null" />
                 </div>
-            </div>
-            </fieldset>
 
-            <!-- Evento oculto -->
-            <div class="row-unit">
-                <input type="checkbox" id="hidden_event" name="hidden" {{ old('hidden') ? 'checked' : '' }} />
-                <label for="hidden_event">Ocultar evento</label>
+                <div class="add-remove-ticket">
 
-            </div>
-
-            <div>
-                @if (session('success'))
-                    <h3>¡Operación realizada con éxito!</h3>
-                    <div class="msg-correct">
-                        {{ session('success') }}
+                    <p>Añade un nuevo tipo de entrada o elimina el último</p>
+                    <div class="dual-button-container">
+                        <button class="button button-brand" id="addTicketType"><i class="fas fa-plus"></i>
+                        </button>
+                        <button class="button button-danger" id="removeTicketType"><i class="fas fa-minus"></i>
+                        </button>
                     </div>
-                @endif
+                </div>
+                </fieldset>
 
-                @if (session('error'))
-                    <div class="msg-error">
-                        <h3>¡Atención!</h3>
-                        {{ session('error') }}
-                        @if ($errors->any())
-                            <div>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                    </div>
-                @endif
-            </div>
-        @endif
-            <button class="button button-brand" type="submit">{{isset($event) ? "Editar Evento" : "Crear Evento" }}</button>
+                <!-- Evento oculto -->
+                <div class="row-unit">
+                    <input type="checkbox" id="hidden_event" name="hidden" {{ old('hidden') ? 'checked' : '' }} />
+                    <label for="hidden_event">Ocultar evento</label>
+
+                </div>
+
+                <div>
+                    @if (session('error'))
+                        <div class="msg-error">
+                            <h3>¡Atención!</h3>
+                            {{ session('error') }}
+                            @if ($errors->any())
+                                <div>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            @endif
+            <button class="button button-brand"
+                type="submit">{{ isset($event) ? 'Editar Evento' : 'Crear Evento' }}</button>
     </form>
     <dialog id="newLocationDialog">
         <button class="button button-danger close-dialog-button">X</button>
@@ -254,4 +253,3 @@
 @section('scripts')
     <script src="{{ asset('js/forms.js') }}"></script>
 @endsection
-
