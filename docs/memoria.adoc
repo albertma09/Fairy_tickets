@@ -301,7 +301,7 @@ Valoración de la semana individual
 ===== *Diego:*
 
 
-===== *Aitor:* En este sprint me he dedicado principalmente a la guía de estilos junto a mis compañeros. En este sentido, me he dedicado a buscar las fuentes y las tipografías. También me he encargado del diseño principal de la página: el layout, el negador y el home.
+===== *Aitor:* En este sprint me he dedicado principalmente a la guía de estilos junto a mis compañeros. En este sentido, me he dedicado a buscar las fuentes y las tipografías. También me he encargado del diseño principal de la página: el layout, el navegador y el home.
 
 
 ===== *Albert: Este sprint he estado sobretodo con la configuración de la maquina isard, además de esto junto con mis compañeros estuvimos decidiendo los estilos de la pagina y con esto creamos la guia de estilos* 
@@ -356,7 +356,7 @@ Para Promotores y Administradores:
 - Mostrar requisitos y dar retroalimentación.
 - Configurar el tiempo de caducidad desde el archivo de configuración.
 
-===== R12: Página Crear Esdeveniment
+===== R12: Página Crear Evento
 
 Para Promotores:
 - Crear eventos con título, categoría, dirección, imagen principal, descripción, fecha y hora, aforo máximo, entradas y más.
@@ -422,7 +422,72 @@ Configuración de Notificación de Reset de Contraseña:
 
 Asegúrate de que el modelo User utilice el trait Notifiable para recibir notificaciones." 
 
-| R12: Página Crear Esdeveniment | ""
+| R12: Página Crear Evento 3+|  **Diseño Inicial**
+
+La página crear evento se trata de un formulario en el que el promotor podrá crear nuevos eventos. Esta vista no puede ser accesible por cualquier usuario, solo los promotores deben poder acceder.
+Este requerimiento ha llevado varias semanas de trabajo.
+Para ello, primero hemos hecho una actualización de la base de datos conforme a las relaciones entre eventos, direcciones, sesiones y tipos de ticket.
+
+Consideramos que un evento, pertenece a un promotor tiene una y solo una ubicación y puede tener varias sesiones.
+Una sesión pertenece a un evento y puede tener varios tipos de ticket.
+
+Hecho esto, el siguiente paso ha sido crear los modelos, las migraciones, las factories y actualizar el seeder, para comprobar que el diseño de la base de datos era coherente.
+
+Acto seguido nos hemos dispuesto a hacer un sketch de las vistas. Para este caso, hemos intentado hacerlo lo más sencillo posible, juntanto los inputs y sus labels correspondientes en containers y colocándolos unos encima de otros.
+
+En cuanto hemos tenido el sketch nos hemos puesto a crear la estructura html en la vista. Añadiendo los atributos necesarios para la validación html que consideramos adecuada para cada input.
+
+**Insertar nueva ubicación**
+
+El siguiente paso ha sido decidir como lidiar con las direcciones. Esta fue la primera encrucijada que nos encontramos, no saber si haciamos bien en tener ubicaciones propias para cada usuario o, por el contrario, tener una base de datos de ubicaciones compartidas de las que los usuarios pudieran elegir las direcciones.
+
+Al principio decidimos hacer lo segundo, pero una vez hecha toda la estructura de base de datos y haciendo pruebas con las factories y el seeder nos decantamos por cambiarlo, y hacer que a cada usuario le aparecieran las direcciones que ya había usado anteriormente. Esto lo hemos hecho así porque de la otra manera era muy fácil que se duplicaran datos por diferencias en mayúsculas, puntuación, acentuación, etc... Así que, puestos a tener duplicados de la información, decidimos que era mejor que cada usuario tuviera sus propias direcciones en la tabla.
+
+Al final, después de todos los cambios, tuvimos que ver como íbamos a implementarlo en la estructura html del formulario. Nuestra decisión ha sido permitir la opción de añadir una nueva dirección en el desplegable de las direcciones. 
+Al clicar en añadir una nueva dirección se abre un formulario en un dialog que permite la inserción de nuevas direcciones, por ahora decidimos no centrarnos en la validación y lo dejamos desnudo pero funcional.
+
+Esto significa que hemos tenido que hacer el controlador para las ubicaciones llamado LocationController, y dentro el método store al cual apunte el action del formulario nuevo. Aquí si que hemos hecho las validaciones pertinentes antes de guardar los datos en la tabla.
+
+
+
+*Primera versión del formulario*
+
+En la primera versión funcional del formulario intentamos centrarnos en que todo funcionara añadiendo sólo una sesión y un tipo de ticket en la sesión.
+
+Primero de todo revisamos todos los tipos de input y sus atributos y que estuvieran en consonancia con lo que se pedía de ellos en el requerimiento.
+
+**Funcionalidades JavaScript.**
+En este punto, nos dimos cuenta que eran necesarias varias funcionalidades de JS para el correcto funcionamiento y la coherencia del formulario. 
+
+Estas son:
+
+- Mostrar el formulario de nueva dirección al hacer click en esa opción en el desplegable.
+
+- Mostrar input de cierre de la venta online manual al hacer click en el radio que le da esa opción al usuario.
+
+- Que al seleccionar una ubicación se usara la capacidad máxima de esa ubicación para rellenar el atributo "max" del input de Aforo de la sesión.
+
+**Validación e inserción**
+
+Una vez hecho esto, y con el JS funcionando, lo siguiente era crear la función "store" del controlador de eventos. 
+Esto lo hemos hecho usando el método "validate" de laravel y guardando, de momento, las imágenes en el storage de nuestro proyecto.
+
+Una vez comprobado que los datos llegaban bien al controlador, se validaban de forma correcta y se guardaba el evento, nos disupsimos a hacer que se guardara la primera sesión de ese evento. 
+
+En este proceso hemos tenido que crear métodos propios de inserción de datos a base de datos porque teníamos que hacer retoques a los inputs de la request antes de guardarlos. Esto es sacar los inputs que no necesitabamos para crear el evento y lo mismo para la sesión y los tickets.
+
+**Crear primera sesión con multiples tipos de ticket.**
+
+En este punto, y una vez comprobado que todo el proceso de validación e inserción de datos del formulario funcionaba bien, teniamos que conseguir poder insertar más de un tipo de ticket a la vez en una sesión.
+
+Para ello lo primero fue averiguar como mandar un array de datos bajo el mismo "name" de input. Esto se consigue añadiendo una apertura y cierre de corchete justo después del nombre que se haya puesto en el atributo "name", por ejemplo: <input ... name="minput[]" ... />
+
+Así, decidimos crear un nuevo componente que fuera el tipo de ticket, creamos un conjunto de inputs con la validación y los inputs adecuados, y teniendo cuidado que sus "id"s y los "for"s de sus labels no se repitieran, para ello le pasamos al componente un índice, en el caso que se tuviera que crear varias instancias del componente.
+
+Siguiendo este modelo, en JS añadimos la funcionalidad de poder añadir o quitar tipos de ticket, cuidando de que siempre hubiera mínimo uno, y de que no se repitieran los atributos que debían de mantenerse únicos.
+
+Con esa funcionalidad lista, lo único que queda es refactorizar las validaciones en el back-end, y los métodos de guardado de sesiones, para en vez de guardar un ticket relacionado con la sesión actual, se guarde un array de tickets.
+"
 
 |====================
 
@@ -432,7 +497,8 @@ Valoración de la semana individual
 ===== *Diego:*
 
 
-===== *Aitor:* 
+===== *Aitor: Esta semana, y algunas que le siguen, me he encargado de hacer todo lo relacionado con el formulario de creación de eventos. Resultó ser mucho más complejo de lo esperado. Era como tener que construir algo muy grande mediante pequeñas piezas que cuando no encajaban se tenían que ir limando hasta que se podían unir al conjunto sin hacerlo explotar.
+* 
 
 
 ===== *Albert: Este sprint he estado con el desarrollo tanto visual como funcional de todo el sistema de autenticación de usuario* 
