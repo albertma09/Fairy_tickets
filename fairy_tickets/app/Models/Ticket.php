@@ -13,7 +13,7 @@ use Illuminate\Support\Carbon;
 class Ticket extends Model
 {
     use HasFactory;
-    protected $fillable = ['purchase_id', 'ticket_type_id', 'name', 'dni', 'phone_number',];
+    protected $fillable = ['purchase_id', 'ticket_type_id', 'name', 'dni', 'phone_number', 'verified'];
 
     public function purchase(): BelongsTo
     {
@@ -27,94 +27,116 @@ class Ticket extends Model
     public static function getTicketsInformation($session_id, $email)
     {
 
-        try{
+        try {
             $tickets = DB::table('tickets')
-            ->select(
-                'tickets.id',
-                'tickets.name as client_name',
-                'tickets.dni',
-                'purchases.email',
-                'ticket_types.description as ticket_type_name',
-                'ticket_types.price',
-                'events.name as event_name',
-                'events.description as event_description',
-                'sessions.date',
-                'sessions.hour',
-                'locations.name as location_name',
-                'locations.city',
-                'locations.province'
-            )
-            ->join('purchases', 'purchases.id', '=', 'tickets.purchase_id')
-            ->join('ticket_types', 'ticket_types.id', '=', 'tickets.ticket_type_id')
-            ->join('sessions', 'ticket_types.session_id', '=', 'sessions.id')
-            ->join('events', 'events.id', '=', 'sessions.event_id')
-            ->join('locations', 'locations.id', '=', 'events.location_id')
-            ->where('purchases.email', '=', $email)
-            ->where('ticket_types.session_id', '=', $session_id)
-            ->get();
+                ->select(
+                    'tickets.id',
+                    'tickets.name as client_name',
+                    'tickets.dni',
+                    'purchases.email',
+                    'ticket_types.description as ticket_type_name',
+                    'ticket_types.price',
+                    'events.name as event_name',
+                    'events.description as event_description',
+                    'sessions.date',
+                    'sessions.hour',
+                    'locations.name as location_name',
+                    'locations.city',
+                    'locations.province'
+                )
+                ->join('purchases', 'purchases.id', '=', 'tickets.purchase_id')
+                ->join('ticket_types', 'ticket_types.id', '=', 'tickets.ticket_type_id')
+                ->join('sessions', 'ticket_types.session_id', '=', 'sessions.id')
+                ->join('events', 'events.id', '=', 'sessions.event_id')
+                ->join('locations', 'locations.id', '=', 'events.location_id')
+                ->where('purchases.email', '=', $email)
+                ->where('ticket_types.session_id', '=', $session_id)
+                ->get();
 
             return $tickets;
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e->getMessage());
         }
-        
-
-
     }
 
-    public static function getEventInformation(){
-        try{
+    public static function getEventInformation()
+    {
+        try {
             $event = DB::table('events')
-            ->join('sessions', 'sessions.event_id', '=', 'events.id')
-            ->select('events.id','events.name', 'events.description', 'sessions.date', 'sessions.hour')
-            ->where('sessions.id', 1)
-            ->get();
+                ->join('sessions', 'sessions.event_id', '=', 'events.id')
+                ->select('events.id', 'events.name', 'events.description', 'sessions.date', 'sessions.hour')
+                ->where('sessions.id', 1)
+                ->get();
 
             return $event;
-
-        }catch (Exception $e){
+        } catch (Exception $e) {
             Log::debug($e->getMessage());
         }
     }
 
-    public static function getRememberTickets(){
+    public static function getRememberTickets()
+    {
 
-        try{
+        try {
 
-            
+
             $event = DB::table('purchases')
-            ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
-            ->join('events', 'events.id', '=', 'sessions.event_id')
-            ->select('events.id', 'purchases.email', 'events.name as event_name', 'sessions.id as session_id')
-            ->where('sessions.date', '=', DB::raw('1 + CURRENT_DATE'))
-            ->distinct()
-            ->get();
+                ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
+                ->join('events', 'events.id', '=', 'sessions.event_id')
+                ->select('events.id', 'purchases.email', 'events.name as event_name', 'sessions.id as session_id')
+                ->where('sessions.date', '=', DB::raw('1 + CURRENT_DATE'))
+                ->distinct()
+                ->get();
 
 
 
             return $event;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::debug($e->getMessage());
         }
     }
 
-    public static function sendOpinion(){
+    public static function sendOpinion()
+    {
 
-        try{
+        try {
 
-            
+
             $event = DB::table('purchases')
-            ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
-            ->join('events', 'events.id', '=', 'sessions.event_id')
-            ->select('purchases.id','purchases.name', 'purchases.email', 'events.id as event_id','events.name as event_name')
-            ->where('sessions.date', '=', DB::raw('CURRENT_DATE - 1'))
-            ->distinct()
-            ->get();
+                ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
+                ->join('events', 'events.id', '=', 'sessions.event_id')
+                ->select('purchases.id', 'purchases.name', 'purchases.email', 'events.id as event_id', 'events.name as event_name')
+                ->where('sessions.date', '=', DB::raw('CURRENT_DATE - 1'))
+                ->distinct()
+                ->get();
 
 
 
             return $event;
-        }catch(Exception $e){
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
+    }
+
+
+    public static function validateTicket($ticket_id, $session_id)
+    {
+
+        try {
+
+            $ticket = DB::table('tickets')
+                ->join('purchases', 'purchases.id', '=', 'tickets.purchase_id')
+                ->join('sessions', 'sessions.id', '=', 'purchases.session_id')
+                ->select('tickets.*', 'purchases.*', 'sessions.*')
+                ->where('tickets.id', $ticket_id)
+                ->where('sessions.id', $session_id)
+                ->first();
+
+
+
+
+            return $ticket;
+        } catch (Exception $e) {
             Log::debug($e->getMessage());
         }
     }

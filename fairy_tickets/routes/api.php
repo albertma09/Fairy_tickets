@@ -16,11 +16,16 @@ use App\Providers\AppServiceProvider;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
 
 
 Route::prefix('v1')->as('v1:')->group(static function (): void {
-    Route::post('/Ticket', [ApiController::class, 'login'])->name('ticket.show');
+    Route::post('/login', [ApiController::class, 'login'])->name('login');
+    Route::post('/logout', [ApiController::class, 'logout'])->name('logout');
+
+
+    Route::get('/verificar-ticket/{ticket_id}', [APIController::class, 'verificarTicket']);
 });

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('dni', 9)->nullable(); // 8 Numeros y 1 letra
             $table->string('phone_number')->nullable();
+            $table->boolean('verified')->default(false);
 
             // timestamps
             $table->timestamps();

@@ -1,0 +1,18 @@
+= Documentación de la API de verificación de tickets
+
+Esta Api te permite verificar si el ticket de una session es valido o no.
+Primero se loguea mediante el codigo de la sesión y una vez logueado mediante el lector qr se verifica el id del ticket y comprueba si existe y si es de la sesión que pertoca, una vez este eso comprobado mira si ese ticket ya ha sido verificado o no, si no esta verificado lo da por valido y lo verifica, y si ya lo esta manda un error.
+
+== login
+Introduces el codigo y te devuelve un token en formato JSON.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: application/form-data
+|===
+[cols="2,8",options="header"]
+|===
+| Nombre del parámetro | Descripción
+| code | codigo de la session con la que haremos login.
+|===
