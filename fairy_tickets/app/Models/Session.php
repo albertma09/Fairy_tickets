@@ -8,10 +8,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Session extends Model
 {
@@ -208,5 +208,15 @@ class Session extends Model
         }catch (Exception $e) {
             Log::error($e->getMessage());
         }
+    }
+
+    public static function getSessionByCode($code){
+
+        $session = DB::table('sessions')
+            ->select('code', 'id')
+            ->where('code', $code)
+            ->first();
+
+        return $session;
     }
 }
