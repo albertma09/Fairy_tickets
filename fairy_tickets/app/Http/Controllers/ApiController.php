@@ -50,11 +50,12 @@ class ApiController extends Controller
 
         try{
             $token = request()->cookie('Token');
-            $validateToken = Token::verifyToken($token);
+            $session_id = request()->cookie('session_id');
+            $validateToken = Token::verifyToken($token, $session_id);
     
             if ($validateToken) {
                 
-                $validateTicket = Ticket::validateTicket($ticket_id, request()->cookie('session_id'));
+                $validateTicket = Ticket::validateTicket($ticket_id, $session_id);
                 if($validateTicket->verified){
                     return response()->json(['error' => 'Este ticket no es valido, ya ha sido verificado'],400);
                 }else{

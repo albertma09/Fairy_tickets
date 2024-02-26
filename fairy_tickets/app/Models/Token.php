@@ -41,11 +41,12 @@ class Token extends Model
         }
     }
 
-    public static function verifyToken($token){
+    public static function verifyToken($token, $session_id){
 
         $validate = DB::table('tokens')
             ->select('token')
             ->where('token', '=', $token)
+            ->where('session_id', '=', $session_id)
             ->first();
 
             return $validate;
