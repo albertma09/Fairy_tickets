@@ -30,7 +30,7 @@ class ApiController extends Controller
             $token = Token::getTokenBySessionId($session->id);
             
     
-            return response()->json(['token' => $token, 'session_id' => $session->id]);
+            return response()->json(['token' => $token, 'session_id' => $session->id], 200);
         }catch(Exception $ex){
             Log::error($ex->getMessage());
         }

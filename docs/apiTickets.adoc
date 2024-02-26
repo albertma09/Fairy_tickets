@@ -1,7 +1,15 @@
 = Documentación de la API de verificación de tickets
 
-Esta Api te permite verificar si el ticket de una session es valido o no.
+Esta Api te permite verificar si el ticket de una sesion es valido o no.
 Primero se loguea mediante el codigo de la sesión y una vez logueado mediante el lector qr se verifica el id del ticket y comprueba si existe y si es de la sesión que pertoca, una vez este eso comprobado mira si ese ticket ya ha sido verificado o no, si no esta verificado lo da por valido y lo verifica, y si ya lo esta manda un error.
+
+En la versión actual (v1), trabaja con 3 endpoints:
+
+GET /verify-ticket/{ticket_id}: Este endpoint se utiliza para comprobar si un ticket es valido dentro de la sessión iniciada. Toma como parámetro el id del ticket y devuelve si es valido o no y porque.
+
+POST /login: Este endpoint utiliza un codigo de sesion con el que se realizara el inicio de sesion. Si es valido se creara un token para identificar la sesión.
+
+POST /logout: Este endpoint utiliza un token almacenado en una cookie al iniciar sesión. Al ejecutarse este elimina la cookie y el token de la base de datos.
 
 == login
 Introduces el codigo y te devuelve un token en formato JSON.
@@ -14,5 +22,104 @@ Introduces el codigo y te devuelve un token en formato JSON.
 [cols="2,8",options="header"]
 |===
 | Nombre del parámetro | Descripción
-| code | codigo de la session con la que haremos login.
+| code | codigo de la sesion con la que haremos login.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: text/plain
+
+code=your_code_here
+----
+
+.Ejemplo de respuesta exitosa (200)
+
+[source,json]
+----
+[source,json]
+[
+"token": "bepNyKZHiiwXl1X",
+"session_id": 1
+]
+----
+Este ejemplo devuelve un token y el id de la sesion a la que se esta accediendo.
+
+Estos datos se utilizaran para comprobar los tickets que se esten verificando si pertenecen a la sesion y si son validos
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un token y el id de la sesión.
+| 401 | Error de autenticación - El codigo no es valido.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
+|===
+
+== Logout
+
+Al darle a logout elimina el token de la base de datos y la cookie donde estaba almacenado.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: application/form-data
+|===
+[cols="2,8",options="header"]
+|===
+| Nombre del parámetro | Descripción
+| token | token creado del inicio de sessión.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+POST logout HTTP/1.1
+Host: example.com
+Content-Type: application/form-data
+
+token=your_token_here
+----
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un mensaje indicando que el logout fue exitoso.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
+|===
+
+== Verificar ticket
+Mediante un codigo qr se identifica el id del ticket y se verifica si es valido.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: application/form-data
+|===
+[cols="2,8",options="header"]
+|===
+| Nombre del parámetro | Descripción
+| id | id del ticket que se esta comprobando.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+GET /verify-ticket/7 HTTP/1.1
+Host: example.com
+----
+
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un mensaje indicando que el ticket es valido, y si es nominal también te añade los datos del cliente.
+| 400 | El parámetro es erróneo.
+| 401 | Error de autenticación - El codigo no es valido.
+| 404 | No encontrado - Ticket no encontrado.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
 |===
