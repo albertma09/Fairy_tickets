@@ -27,5 +27,5 @@ Route::prefix('v1')->as('v1:')->group(static function (): void {
     Route::post('/logout', [ApiController::class, 'logout'])->name('logout');
 
 
-    Route::get('/verificar-ticket/{ticket_id}', [APIController::class, 'verificarTicket']);
+    Route::get('/verify-ticket/{ticket_id}', [APIController::class, 'verificarTicket']);
 });
