@@ -269,4 +269,57 @@ if (feedbackDialog) {
     feedbackDialog.showModal()
 }
 
+
+export const logoutModal = () => {
+    // Obtén el elemento del enlace de cierre de sesión por su ID
+    const logoutLink = document.getElementById("logout-link");
+    const logoutDialog = document.getElementById('logoutDialog');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
+    // Agrega un event listener para el clic en el enlace
+    if (logoutLink) {
+        logoutLink.addEventListener("click", function (event) {
+            logoutDialog.showModal();
+
+
+        });
+    }
+
+    cancelButton.addEventListener('click', () => {
+        logoutDialog.close();
+    });
+
+    confirmButton.addEventListener('click', () => {
+        document.getElementById("logout-form").submit();
+        logoutDialog.close();
+    });
+}
+
+export const closeSaleModal = () => {
+    const closeSales = document.querySelectorAll(".closeSale");
+    const closeSaleDialog = document.getElementById('closeSaleDialog');
+    const cancelButton = document.getElementById('cancelButtonSale');
+    const confirmButton = document.getElementById('confirmButtonSale');
+    let id;
+    // Agrega un event listener para el clic en cada botón de cierre
+    closeSales.forEach(closeSale => {
+        closeSale.addEventListener("click", function (event) {
+            id = closeSale.getAttribute('id');
+            closeSaleDialog.showModal();
+        });
+        
+    });
+
+    cancelButton.addEventListener('click', () => {
+        closeSaleDialog.close();
+    });
+
+    confirmButton.addEventListener('click', () => {
+        console.log(id);
+        document.getElementById('close-sale-form-'+id).submit();
+        closeSaleDialog.close();
+    });
+}
+
 export { ticketSalesModalSetup, activateButtonConfirm };
+

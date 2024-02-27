@@ -112,6 +112,7 @@ Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('us
 
 Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
 
+Route::post('/close-sale',[SessionController::class, 'closeSale'])->name('close.sale');
 
 //pagos
 Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPayment'])->name('payment.index');

@@ -12,6 +12,18 @@
 
     <div>
         <div class="promotor-container">
+            @if (Session::has('message'))
+            <div class="alert alert-success">
+                <p class="msg-correct">{{ Session::get('message') }}</p>
+            </div>
+            @endif
+            
+
+            @if (Session::has('error'))
+            <div class="alert alert-danger">
+                <p class="msg-error">{{ Session::get('error') }}</p>
+            </div>
+            @endif
             @foreach ($sessions as $session)
                 <x-session-component :session="$session" />
             @endforeach

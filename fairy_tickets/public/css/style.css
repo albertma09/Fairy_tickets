@@ -105,6 +105,21 @@ button {
   }
 }
 
+.msg-error {
+  color: #F15025;
+  padding: 10px;
+}
+.msg-correct {
+  color: #72c487;
+  padding: 10px;
+}
+.msg-info {
+  margin: 1rem 0 1rem 2rem;
+  padding-bottom: 0.2rem;
+  border-right: 0.2rem solid #ff6f61;
+  font-weight: lighter;
+}
+
 .centrado {
   margin-top: 12.5%;
   display: flex;
@@ -835,20 +850,6 @@ button:disabled:hover {
   justify-content: space-between;
 }
 
-form .msg-error {
-  color: #F15025;
-  padding: 10px;
-}
-form .msg-correct {
-  color: #72c487;
-  padding: 10px;
-}
-form .msg-info {
-  margin: 1rem 0 1rem 2rem;
-  padding-bottom: 0.2rem;
-  border-right: 0.2rem solid #ff6f61;
-  font-weight: lighter;
-}
 form .input-unit {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -1098,6 +1099,21 @@ dialog.corner-button {
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.alert-success {
+  color: #72c487;
+  background-color: #05283d;
+}
+.alert-danger {
+  color: #F15025;
+  background-color: #05283d;
 }
 
 .session-card {
