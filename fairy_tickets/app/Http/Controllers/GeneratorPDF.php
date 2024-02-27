@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use DateTime;
-use Dompdf\Dompdf;
+use Exception;
+use App\Models\Event;
 use App\Models\Ticket;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Exception;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class GeneratorPDF extends Controller
@@ -45,7 +44,7 @@ class GeneratorPDF extends Controller
 
         try {
             Log::info('Llamada al método GeneratorPDF.sendPdfEmail');
-            $data = Ticket::getEventInformation($sessionID);
+            $data = Event::getEventBySessionId($sessionID);
 
             $event = $data[0];
             $event_id = $event->id;
