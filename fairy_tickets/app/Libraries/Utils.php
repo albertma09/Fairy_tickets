@@ -2,7 +2,9 @@
 
 namespace App\Libraries;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 use Illuminate\Support\Facades\Log;
 
 class Utils
@@ -39,6 +41,12 @@ class Utils
        } catch (\Exception $e) {
            Log::error($e->getMessage());
        }
+   }
+
+   // Función que recibe una fecha, hora y minutos y devuelve un objeto datetime de Carbon 
+   public static function parseDateTime(string $date, string $hours, string $minutes): Carbon
+   {
+       return Carbon::parse("$date $hours:$minutes");
    }
 
 }
