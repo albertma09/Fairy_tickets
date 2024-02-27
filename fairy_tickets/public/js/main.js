@@ -5,7 +5,7 @@ import {
 } from "./modules/navigation.js";
 import { commonButtonsSetup } from "./modules/buttons.js";
 
-import { ticketSalesModalSetup, logoutModal, closeSaleModal } from './modules/modals.js';
+import { ticketSalesModalSetup, logoutModal, closeSaleModal, activateButtonConfirm } from './modules/modals.js';
 
 import { addValues } from './modules/opinionForm.js';
 
@@ -16,7 +16,6 @@ const initializeEventForm = () => {
     setupAddRemoveTicketTypes();
 };
 
-
 // Event listener del evento 'resize' de la ventana
 window.addEventListener("resize", delayedCloseMenuOnResize);
 
@@ -25,7 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
     addMenuFunctionalities();
     commonButtonsSetup();
     ticketSalesModalSetup();
+    activateButtonConfirm();
     addValues();
     logoutModal();
     closeSaleModal();
 });
+
+
+// summaryPurchaseInfo();

@@ -19,19 +19,19 @@ class Token extends Model
     }
 
 
-    public static function getTokenBySessionId($session_id)
+    public static function getTokenBySessionId(int $sessionId)
     {
 
 
         $existingToken = DB::table('tokens')
-            ->where('session_id', '=', $session_id)
+            ->where('session_id', '=', $sessionId)
             ->first();
 
         if (!$existingToken) {
             $token = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 5)), 0, 15);
 
             Token::create([
-                'session_id' => $session_id,
+                'session_id' => $sessionId,
                 'token' => $token,
             ]);
 
@@ -41,12 +41,12 @@ class Token extends Model
         }
     }
 
-    public static function verifyToken($token, $session_id){
+    public static function verifyToken(string $token, int $sessionId){
 
         $validate = DB::table('tokens')
             ->select('token')
             ->where('token', '=', $token)
-            ->where('session_id', '=', $session_id)
+            ->where('session_id', '=', $sessionId)
             ->first();
 
             return $validate;

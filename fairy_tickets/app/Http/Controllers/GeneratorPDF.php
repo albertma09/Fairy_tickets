@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use DateTime;
-use Dompdf\Dompdf;
+use Exception;
+use App\Models\Event;
 use App\Models\Ticket;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class GeneratorPDF extends Controller
@@ -21,38 +22,43 @@ class GeneratorPDF extends Controller
 
         foreach ($tickets as $ticket) {
             $codigoQR = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($ticket->id));
-            $date = $ticket->date; 
+            $date = $ticket->date;
             $dateObj = new DateTime($date);
 
-            
-            $day = $dateObj->format('d'); 
-            $month = $dateObj->format('m'); 
-            $year = $dateObj->format('Y'); 
-            $html .= view('components.ticket-pdf', ['codigoQR' => $codigoQR, 'ticket' => $ticket, 'day'=>$day, 'month'=>$month, 'year'=>$year])->render();
+
+            $day = $dateObj->format('d');
+            $month = $dateObj->format('m');
+            $year = $dateObj->format('Y');
+            $html .= view('components.ticket-pdf', ['codigoQR' => $codigoQR, 'ticket' => $ticket, 'day' => $day, 'month' => $month, 'year' => $year])->render();
         }
 
         $pdf = Pdf::loadHtml($html);
-        
+
 
 
         return $pdf->stream('ticket.pdf');
     }
 
-    public function sendPdfEmail(){
+    public static function sendPdfEmail($ownerEmail, $sessionID)
+    {
 
-        $data = Ticket::getEventInformation();
-        
-        $event = $data[0];
-        $event_id = $event->id;
+        try {
+            Log::info('Llamada al método GeneratorPDF.sendPdfEmail');
+            $data = Event::getEventBySessionId($sessionID);
 
-        Mail::send('email.email-pdf', ['session_id'=> 234, 'email'=>'avis.beahan@example.org', 'event'=>$event, 'event_id'=>$event_id ], function ($message) {
-            $message->to('recipient@example.com')
-                ->subject('Compra tickets');
-        });
+            $event = $data[0];
+            $event_id = $event->id;
 
-        
+            Mail::send('email.email-pdf', ['session_id' => $sessionID, 'email' => $ownerEmail, 'event' => $event, 'event_id' => $event_id], function ($message) use($ownerEmail) {
+                $message->to($ownerEmail)
+                    ->subject('Compra tickets');
+            });
 
-        return redirect()->route('home.index');
 
+
+            return redirect()->route('home.index');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 }

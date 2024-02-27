@@ -73,7 +73,8 @@ class Session extends Model
         }
     }
 
-
+    // Función que recibe el id de un evento y devuelve un array con los datos de la primera sesión
+    // y sus tipos de ticket asociados
     public static function getFirstSessionDataByEvent(string $eventId): array
     {
         try {
@@ -157,7 +158,7 @@ class Session extends Model
             log::info('Llamada al método Session.createSession');
             // Parseamos la fecha y la hora que nos llegan por separado
             $sessionDate = $formData['session_date'];
-            $sessionTime = $formData['session_hours'].$formData['session_minutes'];
+            $sessionTime = $formData['session_hours'] . $formData['session_minutes'];
 
             $carbonDatetime = Carbon::parse($sessionDate . ' ' . $sessionTime);
 
@@ -194,26 +195,25 @@ class Session extends Model
         }
     }
 
-    public static function getTicketsBySessionId($session_id){
+    public static function getSessionByTicketTypeID($ticketTypeID)
+    {
 
-
-        try{
-
-            $tickets = DB::table('tickets')
-            ->select('p.name as buyer_ticket', 'tickets.name as assistant_ticket', 'tickets.id as code', 'tt.description')
-            ->join('purchases as p', 'tickets.purchase_id', '=', 'p.id')
-            ->join('ticket_types as tt', 'tickets.ticket_type_id', '=', 'tt.id')
-            ->where('p.session_id', $session_id)
-            ->get();
-
-            return $tickets;
-
-        }catch (Exception $e) {
+        try {
+            Log::info("Llamada al metodo Session.getSessionByTicketTypeID");
+            $sessionData = DB::table('sessions')
+                ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
+                ->join('events', 'events.id', '=', 'sessions.event_id')
+                ->select('sessions.id', 'events.name', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets')
+                ->where('ticket_types.id', '=', $ticketTypeID)
+                ->get();
+            return $sessionData;
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
-    }
+    }    
 
-    public static function getSessionByCode($code){
+    public static function getSessionByCode($code)
+    {
 
         $session = DB::table('sessions')
             ->select('code', 'id')

@@ -36,9 +36,10 @@ class Event extends Model
         return $this->hasMany(Session::class);
     }
 
-    public static function getEventsBySearching($item)
+    public static function getEventsBySearching(string $item)
     {
         try {
+            Log::info('Llamado al método Event.getEventsBySearching');
             $events = DB::table('events')
                 ->join('locations', 'events.location_id', '=', 'locations.id')
                 ->join('sessions', 'events.id', '=', 'sessions.event_id')
@@ -58,11 +59,12 @@ class Event extends Model
         }
     }
 
-    public static function getEventsByCategory($item)
+    public static function getEventsByCategory(string $item)
     {
         try {
+            Log::info('Llamada al método Event.getEventsByCategory');
             $events = DB::table('events')
-                ->join('categories','categories.id','=','events.category_id')
+                ->join('categories', 'categories.id', '=', 'events.category_id')
                 ->join('locations', 'events.location_id', '=', 'locations.id')
                 ->join('sessions', 'events.id', '=', 'sessions.event_id')
                 ->join('ticket_types', 'ticket_types.session_id', '=', 'sessions.id')
@@ -79,29 +81,57 @@ class Event extends Model
         }
     }
 
-    public static function getEventsById($item)
+    public static function getEventsById(int $id)
     {
-        $events = DB::table('events')
-            ->select('events.id as event_id', 'events.name', 'events.description','events.image','category_id','location_id', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price','ticket_types.description as ticket_types_description', 'ticket_types.ticket_amount', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
-            ->join('sessions', 'events.id', '=', 'sessions.event_id')
-            ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
-            ->join('locations', 'events.location_id', '=', 'locations.id')
-            ->where('events.id', '=', $item)
-            ->orderBy('sessions.date', 'asc')
-            ->get();
+        try {
+            Log::info('Llamada al método Event.getEventsById');
 
-        return $events;
+            $events = DB::table('events')
+                ->select('events.id as event_id', 'events.name', 'events.description', 'events.image', 'category_id', 'location_id', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price', 'ticket_types.description as ticket_types_description', 'ticket_types.ticket_amount', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
+                ->join('sessions', 'events.id', '=', 'sessions.event_id')
+                ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
+                ->join('locations', 'events.location_id', '=', 'locations.id')
+                ->where('events.id', '=', $id)
+                ->orderBy('sessions.date', 'asc')
+                ->get();
+
+            return $events;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 
-    public static function getEventsByUserId($item)
+
+    public static function getEventBySessionId(int $sessionId)
     {
+        try {
+            $event = DB::table('events')
+                ->join('sessions', 'sessions.event_id', '=', 'events.id')
+                ->select('events.id', 'events.name', 'events.description', 'sessions.date', 'sessions.hour')
+                ->where('sessions.id', $sessionId)
+                ->get();
 
-        $events = DB::table('events')
-            ->select('id', 'name', 'description', 'image')
-            ->where('user_id', $item)
-            ->get();
+            return $event;
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
+    }
 
-        return $events;
+
+    public static function getEventsByUserId(int $userId)
+    {
+        try {
+            Log::info('Llamada al método Event.getEventsByUserId');
+
+            $events = DB::table('events')
+                ->select('id', 'name', 'description', 'image')
+                ->where('user_id', $userId)
+                ->get();
+
+            return $events;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 
     public static function createEvent(array $formData)
@@ -127,19 +157,22 @@ class Event extends Model
             $sessionId = Session::createSession($eventId, $formData);
             TicketType::createTicketType($sessionId, $formData);
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
     public static function updateEvent(array $eventData)
     {
+        try {
+            Log::info('Llamada al método Event.updateEvent');
 
-        $eventId= $eventData["event_id"];
-        unset($eventData["event_id"]);
-        DB::table('events')
-    ->where('id', $eventId) // Filtras por algún criterio
-    ->update($eventData);
-
+            $eventId = $eventData["event_id"];
+            unset($eventData["event_id"]);
+            DB::table('events')
+                ->where('id', $eventId) // Filtras por algún criterio
+                ->update($eventData);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
-
 }

@@ -1,0 +1,66 @@
+.summary-content {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 1.5rem;
+    &-event{
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        background-color: $col-oscuro;
+        border-radius: 10px;
+    }
+    &-purchase {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 2rem;
+        row-gap: 1.5rem;
+        &-amount{
+            text-align: center;
+        }
+    }
+}
+.additionalInformation{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    row-gap: 1.5rem;
+}
+
+.success-payment{
+    background-color: $col-fb-green;
+    color: $col-oscuro;
+    border-radius: 10px;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2rem;
+    &-title{
+        margin-bottom: 1rem;
+    }
+    &-info{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(4,1fr);
+    }
+}
+
+.error-payment{
+    background-color: $col-oscuro;
+    color: $col-fb-danger;
+    border-radius: 10px;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2rem;
+    &-title{
+        margin-bottom: 1rem;
+    }
+    &-info{
+        display: grid;
+        margin-bottom: 1rem;
+        color: $col-claro;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(4,1fr);
+    }
+    &-url{
+        color: $col-fb-danger;
+        text-align: center;
+    }
+}
+
+.return-home{
+    margin-bottom: 2rem;
+}

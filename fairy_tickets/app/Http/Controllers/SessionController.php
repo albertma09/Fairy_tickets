@@ -108,7 +108,7 @@ class SessionController extends Controller
         // Ejecutar la consulta
 
 
-        $tickets = Session::getTicketsBySessionId($session_id);
+        $tickets = Ticket::getTicketsBySessionId($session_id);
 
         // Encabezados del CSV
         $csvFileName = 'tickets.csv';

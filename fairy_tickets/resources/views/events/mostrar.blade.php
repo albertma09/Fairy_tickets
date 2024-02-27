@@ -39,7 +39,7 @@
                     <p class="sesion-info">Hora de sesión:
                         {{ \Carbon\Carbon::createFromFormat('H:i:s', $session['hour'])->format('H:i') }}</p>
                     <p class="sesion-info">Precio: {{ $session['min_price'] }}€</p>
-                    <button class="button button-brand" id="{{ $session['id'] }}">Comprar</button>
+                    <button class="button button-brand" id="{{ $session['id'] }}" name="session-buy">Comprar</button>
                 </div>
             @endforeach
         </div>
@@ -72,6 +72,14 @@
             <div id="ticket-types-container"></div>
             <div id="final-price">
                 Total: 0.00€
+            </div>
+            <div id="confirmPayButton" class="confirmPayButton">
+                <form action="{{route('payment.index')}}" method="POST">
+                    @csrf
+                    <input type="hidden" id="totalPrice" name="totalPrice" value="0">
+                    <input type="hidden" id="ticketTId" name="ticketTId" value="0">
+                    <button class="button button-brand confirmPayButtom" id="confirmPayButtom" disabled >Confirmar compra</button>
+                </form>
             </div>
             <!-- El contenido del menú se agregará aquí dinámicamente -->
         </div>
