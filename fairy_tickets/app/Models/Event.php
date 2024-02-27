@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use stdClass;
 
 class Event extends Model
 {
@@ -82,7 +81,7 @@ class Event extends Model
         }
     }
 
-    public static function getEventsById(int $item)
+    public static function getEventsById(int $id)
     {
         try {
             Log::info('Llamada al método Event.getEventsById');
@@ -92,7 +91,7 @@ class Event extends Model
                 ->join('sessions', 'events.id', '=', 'sessions.event_id')
                 ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
                 ->join('locations', 'events.location_id', '=', 'locations.id')
-                ->where('events.id', '=', $item)
+                ->where('events.id', '=', $id)
                 ->orderBy('sessions.date', 'asc')
                 ->get();
 
@@ -102,14 +101,31 @@ class Event extends Model
         }
     }
 
-    public static function getEventsByUserId(int $item)
+
+    public static function getEventBySessionId(int $sessionId)
+    {
+        try {
+            $event = DB::table('events')
+                ->join('sessions', 'sessions.event_id', '=', 'events.id')
+                ->select('events.id', 'events.name', 'events.description', 'sessions.date', 'sessions.hour')
+                ->where('sessions.id', $sessionId)
+                ->get();
+
+            return $event;
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
+    }
+
+
+    public static function getEventsByUserId(int $userId)
     {
         try {
             Log::info('Llamada al método Event.getEventsByUserId');
 
             $events = DB::table('events')
                 ->select('id', 'name', 'description', 'image')
-                ->where('user_id', $item)
+                ->where('user_id', $userId)
                 ->get();
 
             return $events;

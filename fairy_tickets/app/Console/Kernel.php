@@ -2,12 +2,11 @@
 
 namespace App\Console;
 
-use App\Models\Ticket;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use SplSubject;
 
 class Kernel extends ConsoleKernel
 {
@@ -17,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            $events = Ticket::getRememberTickets();
+            $events = Purchase::getRememberTickets();
 
             foreach ($events as $event) {
                 $email = $event->email;
@@ -26,7 +25,7 @@ class Kernel extends ConsoleKernel
                         ->subject('Dia evento');
                 });
             }
-            $opinions = Ticket::sendOpinion();
+            $opinions = Purchase::sendOpinion();
             // dd($events);
             foreach ($opinions as $opinion) {
                 $token = Crypt::encryptString(json_encode([
