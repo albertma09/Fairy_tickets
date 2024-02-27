@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\GeneratorPDF;
 use App\Http\Controllers\OpinionsController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +98,7 @@ Route::get('/home', [CategoryController::class, 'index'])->name('home.index');
 
 Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
 
-Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
+// Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/events/categories/{name}', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
@@ -112,7 +113,10 @@ Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('us
 Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
 
 
-Route::get('/generate-csv/{session_id}', [SessionController::class, 'generateCSV'])->name('generar.csv');
+//pagos
+Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPayment'])->name('payment.index');
+Route::post('/pay',[PaymentController::class,'paymentRedsys'])->name('payment.payToRedsys');
+Route::get('/confirm-purchase',[PaymentController::class,'responseRedsys'])->name('payment.confirmation');
 
 Route::fallback(function () {
     return ('Opps!!');

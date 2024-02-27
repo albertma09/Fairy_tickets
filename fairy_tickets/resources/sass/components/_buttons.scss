@@ -122,3 +122,14 @@ nav .button-icon i {
         color: $col-oscuro;
     }
 }
+
+button:disabled{
+    background-color: $col-oscuro-2;
+    color: $col-oscuro;
+    border-color: $col-oscuro;
+    &:hover{
+        background-color: $col-oscuro-2;
+        border-color: $col-oscuro;
+        cursor: auto;
+    }
+  }

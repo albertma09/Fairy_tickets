@@ -191,6 +191,22 @@ class Session extends Model
         }
     }
 
+    public static function getSessionByTicketTypeID($ticketTypeID){
+
+        try{
+            Log::info("Llamada al metodo Session.getSessionByTicketTypeID");
+            $sessionData = DB::table('sessions')
+                ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
+                ->join('events', 'events.id', '=', 'sessions.event_id')
+                ->select('sessions.id','events.name','sessions.date', 'sessions.hour', 'sessions.nominal_tickets')
+                ->where('ticket_types.id', '=', $ticketTypeID)
+                ->get();
+            return $sessionData;
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+        }
+    }
+
     public static function getTicketsBySessionId($session_id){
 
 
