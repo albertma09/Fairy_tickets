@@ -495,7 +495,8 @@ nav .filter-categories {
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20px;
 }
 .promotor-container .event-card {
   width: 18rem;
