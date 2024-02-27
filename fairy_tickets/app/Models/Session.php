@@ -41,11 +41,14 @@ class Session extends Model
             Log::info('Llamada al método Session.getAllSessionsByPromotor');
 
             $sessions = DB::table('sessions')
-                ->join('events', 'events.id', '=', 'sessions.event_id')
-                ->select('events.name', 'sessions.date', 'sessions.hour', 'sessions.id')
-                ->where('events.user_id', '=', $id)
-                ->orderBy('sessions.date')
-                ->get();
+            ->select('events.name', 'sessions.date', 'sessions.hour', 'sessions.id', DB::raw('COUNT(tickets.id) AS count'))
+            ->join('events', 'events.id', '=', 'sessions.event_id')
+            ->leftJoin('purchases', 'purchases.session_id', '=', 'sessions.id')
+            ->leftJoin('tickets', 'purchases.id', '=', 'tickets.purchase_id')
+            ->where('events.user_id', $id)
+            ->groupBy('events.name', 'sessions.id')
+            ->orderBy('sessions.date')
+            ->get();
             Log::info('fin de la carga de sesiones por promotor');
             return $sessions;
         } catch (Exception $e) {

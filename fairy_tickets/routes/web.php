@@ -111,6 +111,7 @@ Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('us
 
 Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
 
+Route::post('/close-sale',[SessionController::class, 'closeSale'])->name('close.sale');
 
 Route::get('/generate-csv/{session_id}', [SessionController::class, 'generateCSV'])->name('generar.csv');
 

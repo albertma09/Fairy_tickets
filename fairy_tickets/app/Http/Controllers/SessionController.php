@@ -52,7 +52,7 @@ class SessionController extends Controller
         try {
             Log::info("Llamada al metodo SessionController.getSessionsByPromotor");
             $sessions = Session::getAllSessionsByPromotor($id);
-
+            // dd($sessions);
             return view('sessions.mostrar', ['sessions' => $sessions]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
@@ -134,5 +134,29 @@ class SessionController extends Controller
 
         // Retornar la respuesta con el archivo CSV
         return Response::make('', 200, $headers);
+    }
+
+    public function closeSale(Request $request)
+    {
+
+
+        
+
+        $session_id = $request['session_id'];
+        
+        $session = Session::findOrFail($session_id);
+        
+        if (Carbon::parse($session->online_sale_closure)->lte(now())) {
+            
+            return back()->with('error', 'La fecha de cierre de la venta ya ha pasado.');
+        }
+
+        $session->online_sale_closure = now(); 
+
+        $session->save();
+
+        
+
+        return back()->with('message', 'Venta de sesión cerrada exitosamente');
     }
 }

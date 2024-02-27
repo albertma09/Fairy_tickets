@@ -69,24 +69,6 @@
 }
 
 form {
-    .msg {
-        &-error {
-            color: $col-fb-danger;
-            padding: 10px;
-        }
-
-        &-correct {
-            color: $col-fb-green;
-            padding: 10px;
-        }
-
-        &-info {
-            margin: 1rem 0 1rem 2rem;
-            padding-bottom: 0.2rem;
-            border-right: 0.2rem solid $col-contraste;
-            font-weight: lighter;
-        }
-    }
 
     .input-unit {
         display: grid;

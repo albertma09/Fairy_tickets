@@ -17,14 +17,14 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
     numberOfTickets.size = 1;
     const addQuantityText = document.createElement("p");
     addQuantityText.textContent = 'Ingresa la cantidad';
-    
+
     // plus.classList.add("fas", "fa-plus");
     // minus.classList.add("fas", "fa-minus");
     // plusButton.appendChild(plus);
     // minusButton.appendChild(minus);
     // plusButton.classList.add("button", "button-brand");
     // minusButton.classList.add("button", "button-danger");
-    
+
     numberOfTickets.value = "0";
     let selectedQuantity = 0;
     // plusButton.addEventListener("click", function () {
@@ -71,16 +71,16 @@ const buildBuyContainer = (ticket, buyContainer, finalPrice) => {
                 updateTotal(-ticketPrice, finalPrice);
             }
 
-            quantity = parseInt(numberOfTickets.value); 
+            quantity = parseInt(numberOfTickets.value);
 
-           
-        
+
+
         };
     };
 
     numberOfTickets.addEventListener("blur", calculateTotal(selectedQuantity));
-    
-    
+
+
     buyContainer.appendChild(numberOfTickets);
     buyContainer.appendChild(addQuantityText);
     // buyContainer.appendChild(minusButton);
@@ -136,29 +136,29 @@ export const ticketSalesModalSetup = () => {
         ticketTypesContainer &&
         finalPrice
     ) {
-        
+
         document
             .querySelectorAll(".sesion-card .button-brand")
             .forEach((button) => {
                 button.addEventListener("click", function () {
-                   
+
                     popupContainer.style.display = "flex";
                     Object.entries(tickets).forEach(([ticketId, ticket]) => {
                         if (ticket.session_id == button.id) {
-                            
+
                             buildTicketContainer(ticket, ticketTypesContainer, finalPrice);
-                            
+
                         }
                     });
                 });
             });
 
-        
+
         closePopupButton.addEventListener("click", function () {
             resetContainer(ticketTypesContainer, finalPrice, popupContainer);
         });
 
-        
+
         popupContainer.addEventListener("click", function (event) {
             if (event.target === popupContainer) {
                 resetContainer(
@@ -173,6 +173,58 @@ export const ticketSalesModalSetup = () => {
 
 // Snippet que carga los modales de feedback en todas las páginas
 const feedbackDialog = document.querySelector('dialog.fb-dialog');
-if(feedbackDialog){
+if (feedbackDialog) {
     feedbackDialog.showModal()
+}
+
+
+export const logoutModal = () => {
+    // Obtén el elemento del enlace de cierre de sesión por su ID
+    const logoutLink = document.getElementById("logout-link");
+    const logoutDialog = document.getElementById('logoutDialog');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
+    // Agrega un event listener para el clic en el enlace
+    if (logoutLink) {
+        logoutLink.addEventListener("click", function (event) {
+            logoutDialog.showModal();
+
+
+        });
+    }
+
+    cancelButton.addEventListener('click', () => {
+        logoutDialog.close();
+    });
+
+    confirmButton.addEventListener('click', () => {
+        document.getElementById("logout-form").submit();
+        logoutDialog.close();
+    });
+}
+
+export const closeSaleModal = () => {
+    const closeSales = document.querySelectorAll(".closeSale");
+    const closeSaleDialog = document.getElementById('closeSaleDialog');
+    const cancelButton = document.getElementById('cancelButtonSale');
+    const confirmButton = document.getElementById('confirmButtonSale');
+    let id;
+    // Agrega un event listener para el clic en cada botón de cierre
+    closeSales.forEach(closeSale => {
+        closeSale.addEventListener("click", function (event) {
+            id = closeSale.getAttribute('id');
+            closeSaleDialog.showModal();
+        });
+        
+    });
+
+    cancelButton.addEventListener('click', () => {
+        closeSaleDialog.close();
+    });
+
+    confirmButton.addEventListener('click', () => {
+        console.log(id);
+        document.getElementById('close-sale-form-'+id).submit();
+        closeSaleDialog.close();
+    });
 }
