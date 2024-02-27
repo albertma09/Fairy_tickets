@@ -98,12 +98,14 @@ class EventController extends Controller
                 'id' => $row->session_id,
                 'date' => $row->date,
                 'hour' => $row->hour,
+                'nominal_tickets' => $row->nominal_tickets
             ];
 
             // Agregar datos de tickets
             $tickets[$row->ticket_type_id] = [
                 'id' => $row->ticket_type_id,
                 'session_id' => $row->session_id,
+                'event_id' => $row->event_id,
                 'price' => $row->price,
                 'ticket_types_description' => $row->ticket_types_description,
                 'ticket_amount' => $row->ticket_amount,
@@ -128,7 +130,9 @@ class EventController extends Controller
                 'id' => $session['id'],
                 'date' => $session['date'],
                 'hour' => $session['hour'],
+                'nominal_tickets' => $session['nominal_tickets'],
                 'min_price' => $minPrice,
+
             ];
         }
 

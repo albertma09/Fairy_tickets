@@ -26,11 +26,11 @@ class Category extends Model
         try {
             Log::info('Llamada al método Category.getCategorizableCards');
 
-            $categorieswhitEvents = null;
+            $categoriesWithEvents = null;
             $totalCategories = Category::getTotalCategories();
             for ($i = 0; $i < count($totalCategories); $i++) {
                 $categoryName = $totalCategories[$i]->name;
-                if ($categorieswhitEvents === null) {
+                if ($categoriesWithEvents === null) {
                     $categories = DB::table(DB::raw('(SELECT DISTINCT ON (event) e.id, e.name as event, c.name as category, s.date, tt.price
                     FROM events e
                     INNER JOIN categories c ON c.id = e.category_id
@@ -44,7 +44,7 @@ class Category extends Model
                         ->limit(env('EVENTSBYCATEGORY'))
                         ->get();
                     $categories = $categories->toArray();
-                    $categorieswhitEvents = $categories;
+                    $categoriesWithEvents = $categories;
                 } else {
                     $categories = DB::table(DB::raw('(SELECT DISTINCT ON (event) e.id, e.name as event, c.name as category, s.date, tt.price
                     FROM events e
@@ -59,10 +59,10 @@ class Category extends Model
                         ->limit(env('EVENTSBYCATEGORY'))
                         ->get();
                     $categories = $categories->toArray();
-                    $categorieswhitEvents = array_merge($categorieswhitEvents, $categories);
+                    $categoriesWithEvents = array_merge($categoriesWithEvents, $categories);
                 }
             }
-            return $categorieswhitEvents;
+            return $categoriesWithEvents;
         } catch (Exception $e) {
             Log::debug($e->getMessage());
         }

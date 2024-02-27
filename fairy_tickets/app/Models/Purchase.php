@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,5 +27,28 @@ class Purchase extends Model
     public function opinion(): HasOne
     {
         return $this->hasOne(Opinion::class);
+    }
+
+    public static function createPurchase(array $owner)
+    {
+        try {
+            Log::info("Llamada al método purchase.createPurchase");
+            
+            $purchaseData = $owner;
+            $purchase = Purchase::create($purchaseData);
+            $purchaseId = $purchase->id;
+            $sessionIdOwner = $purchase->session_id;
+            $emailOwner = $purchase->email;
+
+            $dataOwnerInserted = [
+                "purchase_id" => $purchaseId,
+                "session_id" => $sessionIdOwner,
+                "email" => $emailOwner
+            ];
+            return($dataOwnerInserted);
+            
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 }

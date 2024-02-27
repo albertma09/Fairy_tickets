@@ -59,13 +59,13 @@ class Ticket extends Model
         }
     }
 
-    public static function getEventInformation()
+    public static function getEventInformation($sessionId)
     {
         try {
             $event = DB::table('events')
                 ->join('sessions', 'sessions.event_id', '=', 'events.id')
                 ->select('events.id', 'events.name', 'events.description', 'sessions.date', 'sessions.hour')
-                ->where('sessions.id', 1)
+                ->where('sessions.id', $sessionId)
                 ->get();
 
             return $event;
@@ -138,6 +138,21 @@ class Ticket extends Model
             return $ticket;
         } catch (Exception $e) {
             Log::debug($e->getMessage());
+        }
+    }
+
+    public static function createRegisterPurchase(array $assistants)
+    {
+        try {
+            Log::info("Llamada al método ticket.createRegisterPurchase");
+            
+            $assistantsData = $assistants;
+            foreach ($assistantsData as $assitant) {
+                Ticket::create($assitant);
+            }
+            
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
         }
     }
 }

@@ -30,6 +30,14 @@ html {
             font-size: 50px;
         }
     }
+    &-subtitulo{
+        font-family: $fjalla;
+        text-align: center;
+        font-size: 20px;
+        @include respond-to(1024px) {
+            font-size: 30px;
+        }
+    }
 }
 
 h2 {
