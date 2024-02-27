@@ -140,22 +140,24 @@ class Event extends Model
             Log::info("Llamada al método Event.createEvent");
             // Separamos los datos de los eventos y de las sesiones
             $eventData = $formData;
-            unset($eventData['sessionDatetime']);
-            unset($eventData['sessionMaxCapacity']);
-            unset($eventData['onlineSaleClosure']);
-            unset($eventData['customSaleClosure']);
-            unset($eventData['nominal_tickets']);
-            unset($eventData['ticketDescription']);
+            unset($eventData['session_date']);
+            unset($eventData['session_hours']);
+            unset($eventData['session_minutes']);
+            unset($eventData['session_capacity']);
+            unset($eventData['online_sale_closure']);
+            unset($eventData['custom_closure_date']);
+            unset($eventData['custom_closure_hours']);
+            unset($eventData['custom_closure_minutes']);
+            unset($eventData['named_tickets']);
+            unset($eventData['ticket_description']);
             unset($eventData['price']);
-            unset($eventData['ticketQuantity']);
+            unset($eventData['ticket_quantity']);
             $eventData['hidden'] = (bool) ($eventData['hidden'] ?? false);
 
             // Crea el evento y guarda la id
             $event = Event::create($eventData);
             $eventId = $event->id;
-
-            $sessionId = Session::createSession($eventId, $formData);
-            TicketType::createTicketType($sessionId, $formData);
+            Session::createSession($eventId, $formData);
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }

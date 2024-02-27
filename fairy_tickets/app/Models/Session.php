@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Exception;
 use Carbon\Carbon;
+use App\Libraries\Utils;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -82,116 +83,57 @@ class Session extends Model
             $firstSession = Self::getFirstSessionByEvent($eventId);
             $ticketTypes = $firstSession->ticketTypes;
             $sessionData = ['session' => $firstSession, 'tickettypes' => $ticketTypes];
-            Log::info('Fin del método que recupera todos los datos de la primera sesión de un evento y sus tipos de ticket');
+            Log::debug('Fin del método que recupera todos los datos de la primera sesión de un evento y sus tipos de ticket');
             return $sessionData;
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
 
-
-
-
-    // Función que recibe el tipo de cierre escogido por el usuario y la fecha del evento y
-    // devuelve la fecha del cierre según lo que se pida
-    private static function adjustOnlineClosure(Carbon $eventDate, string $onlineClosure, string $customClosure = null): Carbon
-    {
-        try {
-            Log::info('Llamada al método Session.adjustOnlineClosure');
-            // Set default closure date
-            $closureDate = $eventDate;
-            // Adjust online closure based on the onlineSaleClosure value
-            switch ($onlineClosure) {
-                case '1':
-                    $closureDate = $eventDate->clone()->subHour();
-                    break;
-                case '2':
-                    $closureDate = $eventDate->clone()->subHours(2);
-                    break;
-                case 'custom':
-                    if ($customClosure) {
-                        $closureDate = Carbon::parse($customClosure);
-                    } else {
-                        throw new \Exception('Error: fecha y hora de cierre de venta no especificado.');
-                    }
-                    break;
-                case '0':
-                    // 
-                    break;
-                default:
-                    throw new \Exception('Error: tipo de dato de venta online no válido.');
-            }
-            return $closureDate;
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
-
-
-    // Función que recibe una id de sesión y crea un array de tickets vinculados a ésta
-    private static function createSessionTicketsArray(int $sessionId, array $formData): array
-    {
-        try {
-            Log::info('Llamada a Session.createSessionTicketsArray', ['datos_formulario', $formData]);
-            // Crear los tipos de ticket relacionados con la sesión
-            $ticketData = [];
-            for ($i = 0; $i < count($formData['ticket_description']); $i++) {
-                $ticketData[] = [
-                    'session_id' => $sessionId,
-                    'description' => $formData['ticket_description'][$i],
-                    'price' => $formData['price'][$i],
-                    // Cuando la cantidad de tickets no se indican o viene 0 toma la capacidad máxima de sesión
-                    'ticket_amount' => ($formData['ticket_quantity'][$i] !== null && $formData['ticket_quantity'][$i] !== 0) ? $formData['ticket_quantity'][$i] : $formData['session_capacity'],
-                ];
-            }
-            return $ticketData;
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
-
+    
     // Función que hace el insert a base de datos de una sesión,
     // recibe el id del evento al que pertenece y los datos de sesión en forma de array asociativo
     public static function createSession(int $eventId, array $formData)
     {
         try {
             log::info('Llamada al método Session.createSession');
-            // Parseamos la fecha y la hora que nos llegan por separado
-            $sessionDate = $formData['session_date'];
-            $sessionTime = $formData['session_hours'] . $formData['session_minutes'];
 
-            $carbonDatetime = Carbon::parse($sessionDate . ' ' . $sessionTime);
+            // Parsea la fecha y la hora de la sesión
+            $carbonDatetime = Utils::parseDateTime(
+                $formData['session_date'],
+                $formData['session_hours'],
+                $formData['session_minutes']
+            );
 
-            // Asignamos la fecha de cierre de venta online según los datos del formulario
-            $onlineClosure = Self::adjustOnlineClosure($carbonDatetime, $formData['online_sale_closure'], $formData['custom_sale_closure']);
+            // Parsea la fecha y la hora de cierre de venta personalizadas,
+            // comprobamos si vienen datos en el array y si no entendemos que no hay hora de cierre personalizada
+            $customSaleClosure = isset($formData['custom_closure_date']) && isset($formData['custom_closure_hours']) && isset($formData['custom_closure_minutes'])
+                ? Utils::parseDateTime(
+                    $formData['custom_closure_date'],
+                    $formData['custom_closure_hours'],
+                    $formData['custom_closure_minutes']
+                )
+                : null;
 
-            // Arreglamos el tipo de datos que nos trae nominal_tickets, pasamos a booleano cuando viene vacío
-            $nominalTickets = (bool) ($formData['nominal_tickets'] ?? false);
+            // Ajusta el cierre de venta en línea
+            $onlineClosure = Utils::adjustOnlineClosure(
+                $carbonDatetime,
+                $formData['online_sale_closure'],
+                $customSaleClosure
+            );
 
-            // Preparamos los datos de la sesión en un array
-            $sessionData = [
-                'event_id' => $eventId,
-                'code' => Str::random(15),
-                'date' => $sessionDate,
-                'hour' => $sessionTime,
-                'session_capacity' => $formData['session_capacity'],
-                'online_sale_closure' => $onlineClosure->toDateTimeString(),
-                'nominal_tickets' => $nominalTickets,
-            ];
+            // Crea los datos de la sesión
+            $sessionData = Utils::createSessionData($eventId, $formData, $onlineClosure);
 
-            // Creamos la sesión y recibimos el id
+            // Crea la sesión y los tickets asociados
             $session = Session::create($sessionData);
             $sessionId = $session->id;
-
-            // Creamos los tickets asociados a la sesión
-            $tickets = Self::createSessionTicketsArray($sessionId, $formData);
-            foreach ($tickets as $ticket) {
-                TicketType::create($ticket);
-            }
+            TicketType::createSeveralTickets($sessionId, $formData);
 
             return $sessionId;
         } catch (Exception $e) {
             Log::error($e->getMessage());
+            throw $e;
         }
     }
 
@@ -210,16 +152,20 @@ class Session extends Model
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
-    }    
+    }
 
     public static function getSessionByCode($code)
     {
+        try {
+            Log::info("Llamada al metodo Session.getSessionByCode");
+            $session = DB::table('sessions')
+                ->select('code', 'id')
+                ->where('code', $code)
+                ->first();
 
-        $session = DB::table('sessions')
-            ->select('code', 'id')
-            ->where('code', $code)
-            ->first();
-
-        return $session;
+            return $session;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 }
