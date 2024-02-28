@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Exception;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,10 @@ class Event extends Model
     public function sessions(): HasMany
     {
         return $this->hasMany(Session::class);
+    }
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
     }
 
     public static function getEventsBySearching(string $item)
@@ -122,19 +127,16 @@ class Event extends Model
     {
         try {
             Log::info('Llamada al método Event.getEventsByUserId');
-
-            $events = DB::table('events')
-                ->select('id', 'name', 'description', 'image')
+            $events = Event::select('id', 'name', 'description')
                 ->where('user_id', $userId)
                 ->get();
-
             return $events;
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
 
-    public static function createEvent(array $formData)
+    public static function createEvent(array $formData, UploadedFile $imageFile)
     {
         try {
             Log::info("Llamada al método Event.createEvent");
@@ -157,6 +159,9 @@ class Event extends Model
             // Crea el evento y guarda la id
             $event = Event::create($eventData);
             $eventId = $event->id;
+            // Creamos la imagen, 
+            // con el último parámetro en true para indicar que será la imagen principal
+            Image::createImage($eventId, $imageFile, true);
             Session::createSession($eventId, $formData);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -173,6 +178,29 @@ class Event extends Model
             DB::table('events')
                 ->where('id', $eventId) // Filtras por algún criterio
                 ->update($eventData);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+    // Función que hace un append de las urls de las imagenes a una instancia de evento
+    public function getMainImage()
+    {
+        try {
+            // Traemos los diferentes códigos de imágen del evento
+            $mainImage = Image::getMainImageByEvent($this->id);
+
+            // Montamos las URLs y as añadimos al final de la instancia
+            if ($mainImage) {
+                $this->mainSmImg = env('IMAGE_API_URL') . "/" . $mainImage->small;
+                $this->mainMdImg = env('IMAGE_API_URL') . "/" . $mainImage->medium;
+                $this->mainBgImg = env('IMAGE_API_URL') . "/" . $mainImage->big;
+            } else {
+                // Si no hay imagen principal devolvemos null
+                $this->mainSmImg = null;
+                $this->mainMdImg = null;
+                $this->mainBgImg = null;
+            }
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
