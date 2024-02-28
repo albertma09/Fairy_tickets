@@ -201,19 +201,19 @@ class EventController extends Controller
     public function edit(Request $request)
     {
 
-
+       
 
         $validatedData = $request->validate([
             'event_id' => 'required',
             'name' => 'required|max:255',
             'category_id' => 'required|integer',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'location_id' => 'required|integer',
             'user_id' => 'required|integer',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required|string',
         ]);
 
-
+        
 
 
         Event::updateEvent($validatedData);
