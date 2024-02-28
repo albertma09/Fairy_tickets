@@ -87,48 +87,72 @@ Guarda los cambios y reinicia Apache:
 ----
 sudo service apache2 restart
 ----
-===== Configuración del docker y la base de datos
-En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
-
-La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
-
-
-Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
-
-Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
-
-[source,docker]
-----
-docker compose build
-----
-
-Una vez creada la imagen tendremos que lanzar el comando up para construir los contenedores indicados en el archivo `compose.yml`:
-
-[source,docker]
-----
-docker compose up -d
-----
-
-De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
 
 ===== Despliegue del Proyecto desde Git
 
-Clona tu proyecto Laravel desde Git en el directorio `/var/www/html`:
+Para comenzar con el despliegue accederemos a la url de nuestro proyecto: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador
+
+Buscaremos un boton que ponga code y copiaremos la url que se indica que en este caso es la siguiente: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git
+
+Clonamos el proyecto dentro del directorio `/var/www/html` de la siguiente manera:
 
 [source,sh]
 ----
-sudo git clone https://tu-repositorio-git.git /var/www/html
+sudo git clone https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git /var/www/html
 ----
 
-Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel:
+Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel, para hacerlo tiene que ser dentro de la carpeta del proyecto laravel, en este caso es la carpeta fairy_tickets:
 
 [source,sh]
 ----
-cd /var/www/html
+cd /var/www/html/gr01-mateos-lopera-amador/fairy_tickets
 sudo composer install
 ----
 
-Configura el archivo de entorno `.env` con la información adecuada, incluyendo la conexión a la base de datos.
+===== Configuración del archivo .env en Laravel
+
+
+El archivo `.env` en Laravel es un archivo de configuración que contiene variables de entorno para ajustar la configuración del proyecto, incluyendo la conexión a la base de datos, la configuración de correo electrónico, entre otros. En este documento, explicaremos cómo configurar correctamente el archivo `.env` para que funcione correctamente tu proyecto Laravel.
+
+====== Pasos para configurar el archivo .env:
+
+1. **Copiar el archivo .env.example**: Antes de comenzar, asegúrate de copiar el archivo `.env.example` que se proporciona en el proyecto Laravel y renombrarlo como `.env`.
+
+2. **Configuración de la conexión a la base de datos**:
+
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nombre_base_de_datos
+    DB_USERNAME=nombre_usuario
+    DB_PASSWORD=contraseña
+    ```
+
+    Reemplaza `nombre_base_de_datos` con el nombre de tu base de datos, `nombre_usuario` con el nombre de usuario de la base de datos, y `contraseña` con la contraseña correspondiente.
+
+3. **Configuración de otros ajustes**: Además de la conexión a la base de datos, puedes configurar otras variables de entorno en el archivo `.env` según sea necesario. Algunas de las variables comunes incluyen:
+
+    ```
+    APP_NAME=Nombre_de_la_aplicación
+    APP_ENV=local
+    APP_KEY=Clave_secreta_generada_por_Artisan
+    APP_DEBUG=true
+    APP_URL=http://localhost
+    ```
+
+    ```
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=your_username
+    MAIL_PASSWORD=your_password
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS=your_email@example.com
+    MAIL_FROM_NAME="${APP_NAME}"
+    ```
+
+    Asegúrate de ajustar estos valores según las necesidades específicas de tu proyecto.
 
 Genera la clave de aplicación de Laravel:
 
@@ -169,9 +193,35 @@ Configura el host virtual de Apache2 para apuntar al directorio del proyecto Lar
 Guarda los cambios y reinicia Apache:
 
 [source,sh]
+
 ----
 sudo service apache2 restart
 ----    
+
+== Configuración del docker y la base de datos
+
+En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
+
+La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
+
+
+Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
+
+Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
+
+[source,docker]
+----
+docker compose build
+----
+
+Una vez creada la imagen tendremos que lanzar el comando up para construir los contenedores indicados en el archivo `compose.yml`:
+
+[source,docker]
+----
+docker compose up -d
+----
+
+De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
 
 == Sprints
 === Sprint 1

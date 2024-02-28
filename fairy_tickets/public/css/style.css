@@ -781,8 +781,19 @@ button:disabled:hover {
   margin-top: 1.4rem;
 }
 
+.default-form {
+  width: 100%;
+}
 .default-form > .grid-container {
   padding: 0 1rem;
+}
+.default-form .separate-form {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 .default-form .grid-container {
   grid-template-columns: 1fr;
@@ -922,7 +933,6 @@ form .time-wrapper .time-input .label.lbl-min {
 form .time-wrapper .time-input #time_input,
 form .time-wrapper .time-input input {
   border-radius: 8px;
-  font-weight: light;
   font-size: 1.5rem;
 }
 form .time-wrapper .time-input input:focus {
@@ -979,6 +989,63 @@ form .time-wrapper .time-input #error {
   display: flex;
   justify-content: space-around;
   padding: 10px;
+}
+
+.secondary-img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.6);
+  background-color: #05283d;
+  padding: 1rem 0.5rem;
+}
+
+.scroll-secondary-img {
+  max-height: 25rem;
+  /* Altura máxima para habilitar el scroll */
+  width: 20rem;
+  overflow-y: auto;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1.5rem;
+}
+
+.secondary-img {
+  width: 18rem;
+  height: 12rem;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+.secondary-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.5s ease;
+}
+.secondary-img .icono {
+  font-size: 48px;
+  color: #fdf7f7;
+  display: none;
+}
+.secondary-img:hover {
+  cursor: pointer;
+}
+.secondary-img:hover img {
+  display: none;
+}
+.secondary-img:hover .icono {
+  display: block;
+}
+.secondary-img:hover .icono:hover {
+  color: #F15025;
 }
 
 /* Estilos generales para la barra de desplazamiento */
