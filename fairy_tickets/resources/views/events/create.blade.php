@@ -253,8 +253,8 @@
 
             @if (isset($event))
                 <div class="secondary-img-container">
-                    <input type="file" name="imagenes[]" multiple accept="image/*">
-
+                    
+                    <input type="file" name="images[]" id="images" multiple accept="image/*">
                     <div class="scroll-secondary-img">
                         <div class="secondary-img">
                             <img

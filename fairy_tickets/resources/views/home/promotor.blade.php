@@ -19,7 +19,7 @@
             @foreach ($events as $event)
                 <div class="event-card">
                     <div class="img">
-                        <img src="{{ $event->mainBgImg }}" />
+                        <img src="{{ $event->mainBgImg }}" alt="imagen principal del evento">
                     </div>
 
                     <h3>{{ $event->name }}</h3>
