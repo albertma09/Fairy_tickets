@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Http\UploadedFile;
 
 class EventController extends Controller
 {
@@ -23,16 +24,16 @@ class EventController extends Controller
         return view('events.create', ['locations' => $userLocations, 'categories' => $categories]);
     }
 
-    public function showUpdateForm($id){
-        
+    public function showUpdateForm($id)
+    {
+
 
         $events = Event::getEventsById($id);
         $event = $events[0];
-        
+
         $categories = Category::getCategories();
         $userLocations = Location::getLocationsByUser();
         return view('events.create', ['locations' => $userLocations, 'categories' => $categories, 'event' => $event]);
-
     }
 
 
@@ -140,7 +141,7 @@ class EventController extends Controller
         return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets, 'opinions' => $opinions,]);
     }
 
-    
+
 
     public function store(Request $request)
     {
@@ -172,18 +173,10 @@ class EventController extends Controller
                 'price.*' => 'required|numeric|min:0',
             ]);
 
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('public/img/covers');
-                $fileName = basename($imagePath);
-                $validatedData['image'] = $fileName;
-            } else {
-                throw new Exception('No es un archivo de imagen válido o está vacío.');
-            }
-
-            // Miramos si la cantidad de tickets total es válida
-            if (Utils::checkSessionCapTicketAmount($validatedData['session_capacity'], $validatedData['ticket_quantity'])) {
-                // Se guarda en base de datos el evento, la primera sesión y los tickets
-                Event::createEvent($validatedData);
+            // Miramos si la cantidad de tickets total es válida y si hay imagen en la petición
+            if (Utils::checkSessionCapTicketAmount($validatedData['session_capacity'], $validatedData['ticket_quantity']) && $request->file('image')) {
+                // Se guarda en base de datos el evento, la imagen principal, la primera sesión y los tickets
+                Event::createEvent($validatedData, $request->file('image'));
                 return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido guardado de forma satisfactoria.');
             } else {
                 throw new Exception('La cantidad de tickets total supera el máximo establecido en la sesión.');
@@ -205,9 +198,10 @@ class EventController extends Controller
         }
     }
 
-    public function edit(Request $request){
+    public function edit(Request $request)
+    {
 
-        
+
 
         $validatedData = $request->validate([
             'event_id' => 'required',
@@ -219,12 +213,11 @@ class EventController extends Controller
             'description' => 'required|string',
         ]);
 
-        
-        
+
+
 
         Event::updateEvent($validatedData);
 
         return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
-       
     }
 }
