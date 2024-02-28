@@ -4,6 +4,7 @@ descripción...
 == Miembros y sus portfolios
 * https://github.com/albertma09[Albert Mateos Aguilera]
 * https://github.com/DiegoYAH[Diego Amador Hernández]
+* http://www.jangoku.es/aitor/micv/[Aitor Lopera Toledo]
 
 == Fuentes externas
 * https://trello.com/b/c7PO2ag3/grupo1mateosloperaamador[Trello]

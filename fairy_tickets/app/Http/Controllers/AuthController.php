@@ -35,7 +35,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $userId = Auth::user()->id;
-            return redirect()->intended('/promotor/' . $userId);
+            return redirect()->route('promotor', ["userId"=>$userId]);
         }
 
         return redirect()->route('login')->with('error', 'Las credenciales de login no son correctas');

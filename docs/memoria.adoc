@@ -12,20 +12,34 @@ Albert Mateos - Aitor Lopera - Diego Amador
 * Diego Amador   
 
 == Objetivos de la aplicación.
+Esta aplicación tiene como objetivo la creación de una plataforma en la que publicar eventos y poner a la venta entradas para los mismos.
+
 == Necesidades.
+Las necesidades a las que esta aplicación trata de dar respuesta son las siguientes:
+
+1. Publicación de eventos. Permitirá publicar eventos en la red para darlos a conocer al gran público.
+
+2. CRUD de eventos. Ofrecerá un sistema de gestión para que los promotores usuarios de la app puedan llevar a cabo su trabajo de manera más eficiente e intuitiva. Así, la plataforma permitirá una gestión CRUD de los eventos.
+
+3. Plataforma de pagos. Llevar a cabo toda la gestión de la compraventa de entradas. La aplicación se encargará de ofrecer una forma de pago segura mediante el consumo de una API (pasarela de pagos) externa.
+
+4. Identificación de entradas y seguimiento del consumidor. La aplicación se encargará de la identificación de las entradas y el envío y recordatorio de las mismas a los clientes antes del evento.
+
+5. Monitorización de la satisfacción del consumidor. Permitirá un sistema de _feedback_ para que los usuarios que hayan comprado una entrada puedan dar su opinión sobre el evento, y así el promotor tenga una forma directa de conocer el grado de satisfacción de sus clientes.
+
+
 == Publico objetivo.
+Esta aplicación está diseñada considerando dos _targets_ diferentes. 
+
+Por un lado, tenemos a los promotores que necesitan publicar sus eventos y llevarlos a la mayor cantidad de gente posible. Este tipo de usuario será el que tenga acceso a las secciones restringidas de la aplicación que llevan a cabo todo el proceso CRUD de los eventos.
+Se trata de un público corporativo y profesional, que lo que necesita es realizar su trabajo de la forma más cómoda y eficiente, resultados al menor plazo posible y retroalimentación rápida y clara.
+
+En el otro lado, encontramos al gran público, a las personas que buscando por la red encontrarán eventos publicados en esta aplicacióna y comprarán sus entradas. Este grupo de personas, consideramos que lo compone un rango muy amplio y diverso, ya que, además, el rango de edades o los sesgos de filtraje variarán mucho dependiendo del tipo de evento que se publique. Entendiendo esto, pensamos que se tratará de personas con un mínimo poder adquisitivo que suelan tener acceso a las redes y las utilitcen a menudo. Esto engloba a personas de entre 14 y 60 años.  
 
 ==  Diseño de base de datos.
-[plantuml,,png]
---
-class Event{}
-class Location{}
-class Category{}
+Para ver el diseño MER de la base de datos puede dirigirse al siguiente enlace:
+https://drive.google.com/file/d/1jDNZInTPw_NM7lHp22TpuoQtsD87uHpR/view?usp=sharing[Esquema MER]
 
-Event ||..o{ Location
-Event ||..o{ Category
-    
---
 
 == Sketching y Mockups de interfícies de usuario.
 .Consejo:
@@ -76,22 +90,69 @@ sudo service apache2 restart
 
 ===== Despliegue del Proyecto desde Git
 
-Clona tu proyecto Laravel desde Git en el directorio `/var/www/html`:
+Para comenzar con el despliegue accederemos a la url de nuestro proyecto: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador
+
+Buscaremos un boton que ponga code y copiaremos la url que se indica que en este caso es la siguiente: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git
+
+Clonamos el proyecto dentro del directorio `/var/www/html` de la siguiente manera:
 
 [source,sh]
 ----
-sudo git clone https://tu-repositorio-git.git /var/www/html
+sudo git clone https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git /var/www/html
 ----
 
-Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel:
+Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel, para hacerlo tiene que ser dentro de la carpeta del proyecto laravel, en este caso es la carpeta fairy_tickets:
 
 [source,sh]
 ----
-cd /var/www/html
+cd /var/www/html/gr01-mateos-lopera-amador/fairy_tickets
 sudo composer install
 ----
 
-Configura el archivo de entorno `.env` con la información adecuada, incluyendo la conexión a la base de datos.
+===== Configuración del archivo .env en Laravel
+
+
+El archivo `.env` en Laravel es un archivo de configuración que contiene variables de entorno para ajustar la configuración del proyecto, incluyendo la conexión a la base de datos, la configuración de correo electrónico, entre otros. En este documento, explicaremos cómo configurar correctamente el archivo `.env` para que funcione correctamente tu proyecto Laravel.
+
+====== Pasos para configurar el archivo .env:
+
+1. **Copiar el archivo .env.example**: Antes de comenzar, asegúrate de copiar el archivo `.env.example` que se proporciona en el proyecto Laravel y renombrarlo como `.env`.
+
+2. **Configuración de la conexión a la base de datos**:
+
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nombre_base_de_datos
+    DB_USERNAME=nombre_usuario
+    DB_PASSWORD=contraseña
+    ```
+
+    Reemplaza `nombre_base_de_datos` con el nombre de tu base de datos, `nombre_usuario` con el nombre de usuario de la base de datos, y `contraseña` con la contraseña correspondiente.
+
+3. **Configuración de otros ajustes**: Además de la conexión a la base de datos, puedes configurar otras variables de entorno en el archivo `.env` según sea necesario. Algunas de las variables comunes incluyen:
+
+    ```
+    APP_NAME=Nombre_de_la_aplicación
+    APP_ENV=local
+    APP_KEY=Clave_secreta_generada_por_Artisan
+    APP_DEBUG=true
+    APP_URL=http://localhost
+    ```
+
+    ```
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=your_username
+    MAIL_PASSWORD=your_password
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS=your_email@example.com
+    MAIL_FROM_NAME="${APP_NAME}"
+    ```
+
+    Asegúrate de ajustar estos valores según las necesidades específicas de tu proyecto.
 
 Genera la clave de aplicación de Laravel:
 
@@ -132,9 +193,35 @@ Configura el host virtual de Apache2 para apuntar al directorio del proyecto Lar
 Guarda los cambios y reinicia Apache:
 
 [source,sh]
+
 ----
 sudo service apache2 restart
 ----    
+
+== Configuración del docker y la base de datos
+
+En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
+
+La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
+
+
+Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
+
+Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
+
+[source,docker]
+----
+docker compose build
+----
+
+Una vez creada la imagen tendremos que lanzar el comando up para construir los contenedores indicados en el archivo `compose.yml`:
+
+[source,docker]
+----
+docker compose up -d
+----
+
+De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
 
 == Sprints
 === Sprint 1
@@ -207,7 +294,25 @@ Durante esta semana, nos enfocamos en 5 nuevas tareas del desarrollo de la aplic
 |====================
 | Tarea 3+^| Descripción
 | **R01: Definir Guía de Estilos de la Aplicación** 3+|
-"" 
+"El primer paso que hemos dado esta semana ha sido centrarnos en el diseño del sitio web y decidir qué colores, fuentes, iconos, etc... eran más adecuados para la temática de nuestro sitio.
+
+1. Paleta de colores.
+Entendemos que una aplicación así está orientada a un público sobre todo joven o de mediana edad y que necesitamos colores que llamen a la acción, así que nos hemos decidido por usar un tono rojo/rosado como color de marca sobre un fondo oscuro (gris casi negro), así como un color blanco para que los elementos tengan contraste sobre el fondo.
+
+2. Tipografía.
+Hemos buscado tres fuentes que nos parezcan adecuadas con la temática, sean agradables a la vista, se lean bien en pantallas pequeñas y combinen bien entre sí. Una, sin serifa, será para la mayoría de textos y botones. La segunda, para los títulos y textos destacados. Y la tercera, con serifa y más estilizada, para citas destacadas y títulos artísticos.
+
+3. Iconografía.
+En cuanto a iconos hemos decidido optar por usar los de la librería font-awesome 5, que nos parecen quedan mejor con nuestro estilo y es gratis.
+
+4. Espacios y formas.
+Hemos decidido usar medidas a partir del tamaño de la fuente (rem), ya que al cambiar de pantalla, cambiamos de tamaño de fuente y en teoría todo debería de quedar proporcionado.
+Buscamos cual era el espacio estándar entre el contenido y los bordes en pantallas móviles y a partir de ahí lo escalamos según la pantalla. 
+También decidimos darle a la mayoría elementos de nuestro sitio web, botones, cards, contenedores... un aspecto rectangular con los bordes recortados en las esquinas.
+
+5. Botones.
+Los botones hemos decidido que usarían la misma fuente que el texto normal del sitio web. Tendrán un borde del color de la 'marca' de la web y un fondo transparente que se rellenará al hacer hover con el mismo color que el borde.
+" 
 
 | **R02: Plantear la Estructura de la Base de Datos** 3+|
 "" 
@@ -230,7 +335,10 @@ Configuraciones Adicionales:
 Configura el host virtual de Apache2 para apuntar al directorio del proyecto Laravel." 
 
 | **R04: Diseño Principal** 3+|
-"" 
+"En el diseño, hecho en FIGMA, hemos querido optar por un _layout_ tradicional, con un navegador horizontal estático en la parte de arriba, en el que habrán: el logo, un buscador, los links del navegador y un botón para hacer login o logout. El contenido ocupando el centro de la pantalla y un footer al final del contenido.
+El navegador en pantallas pequeñas pierde los links y aparece un botón tipo _toggle_ para desplegarlos. 
+Pese a explicarlo de esta manera, el diseño lo hemos intentado hacer mobile first, es decir, primero diseñamos la vista móvil y después cómo se expandirían los elementos en el espacio.
+" 
 
 | **R05: Página de Inicio** 3+|
 "" 
@@ -243,7 +351,7 @@ Valoración de la semana individual
 ===== *Diego:*
 
 
-===== *Aitor:* 
+===== *Aitor:* En este sprint me he dedicado principalmente a la guía de estilos junto a mis compañeros. En este sentido, me he dedicado a buscar las fuentes y las tipografías. También me he encargado del diseño principal de la página: el layout, el navegador y el home.
 
 
 ===== *Albert: Este sprint he estado sobretodo con la configuración de la maquina isard, además de esto junto con mis compañeros estuvimos decidiendo los estilos de la pagina y con esto creamos la guia de estilos* 
@@ -298,7 +406,7 @@ Para Promotores y Administradores:
 - Mostrar requisitos y dar retroalimentación.
 - Configurar el tiempo de caducidad desde el archivo de configuración.
 
-===== R12: Página Crear Esdeveniment
+===== R12: Página Crear Evento
 
 Para Promotores:
 - Crear eventos con título, categoría, dirección, imagen principal, descripción, fecha y hora, aforo máximo, entradas y más.
@@ -364,7 +472,72 @@ Configuración de Notificación de Reset de Contraseña:
 
 Asegúrate de que el modelo User utilice el trait Notifiable para recibir notificaciones." 
 
-| R12: Página Crear Esdeveniment | ""
+| R12: Página Crear Evento 3+|  **Diseño Inicial**
+
+La página crear evento se trata de un formulario en el que el promotor podrá crear nuevos eventos. Esta vista no puede ser accesible por cualquier usuario, solo los promotores deben poder acceder.
+Este requerimiento ha llevado varias semanas de trabajo.
+Para ello, primero hemos hecho una actualización de la base de datos conforme a las relaciones entre eventos, direcciones, sesiones y tipos de ticket.
+
+Consideramos que un evento, pertenece a un promotor tiene una y solo una ubicación y puede tener varias sesiones.
+Una sesión pertenece a un evento y puede tener varios tipos de ticket.
+
+Hecho esto, el siguiente paso ha sido crear los modelos, las migraciones, las factories y actualizar el seeder, para comprobar que el diseño de la base de datos era coherente.
+
+Acto seguido nos hemos dispuesto a hacer un sketch de las vistas. Para este caso, hemos intentado hacerlo lo más sencillo posible, juntanto los inputs y sus labels correspondientes en containers y colocándolos unos encima de otros.
+
+En cuanto hemos tenido el sketch nos hemos puesto a crear la estructura html en la vista. Añadiendo los atributos necesarios para la validación html que consideramos adecuada para cada input.
+
+**Insertar nueva ubicación**
+
+El siguiente paso ha sido decidir como lidiar con las direcciones. Esta fue la primera encrucijada que nos encontramos, no saber si haciamos bien en tener ubicaciones propias para cada usuario o, por el contrario, tener una base de datos de ubicaciones compartidas de las que los usuarios pudieran elegir las direcciones.
+
+Al principio decidimos hacer lo segundo, pero una vez hecha toda la estructura de base de datos y haciendo pruebas con las factories y el seeder nos decantamos por cambiarlo, y hacer que a cada usuario le aparecieran las direcciones que ya había usado anteriormente. Esto lo hemos hecho así porque de la otra manera era muy fácil que se duplicaran datos por diferencias en mayúsculas, puntuación, acentuación, etc... Así que, puestos a tener duplicados de la información, decidimos que era mejor que cada usuario tuviera sus propias direcciones en la tabla.
+
+Al final, después de todos los cambios, tuvimos que ver como íbamos a implementarlo en la estructura html del formulario. Nuestra decisión ha sido permitir la opción de añadir una nueva dirección en el desplegable de las direcciones. 
+Al clicar en añadir una nueva dirección se abre un formulario en un dialog que permite la inserción de nuevas direcciones, por ahora decidimos no centrarnos en la validación y lo dejamos desnudo pero funcional.
+
+Esto significa que hemos tenido que hacer el controlador para las ubicaciones llamado LocationController, y dentro el método store al cual apunte el action del formulario nuevo. Aquí si que hemos hecho las validaciones pertinentes antes de guardar los datos en la tabla.
+
+
+
+*Primera versión del formulario*
+
+En la primera versión funcional del formulario intentamos centrarnos en que todo funcionara añadiendo sólo una sesión y un tipo de ticket en la sesión.
+
+Primero de todo revisamos todos los tipos de input y sus atributos y que estuvieran en consonancia con lo que se pedía de ellos en el requerimiento.
+
+**Funcionalidades JavaScript.**
+En este punto, nos dimos cuenta que eran necesarias varias funcionalidades de JS para el correcto funcionamiento y la coherencia del formulario. 
+
+Estas son:
+
+- Mostrar el formulario de nueva dirección al hacer click en esa opción en el desplegable.
+
+- Mostrar input de cierre de la venta online manual al hacer click en el radio que le da esa opción al usuario.
+
+- Que al seleccionar una ubicación se usara la capacidad máxima de esa ubicación para rellenar el atributo "max" del input de Aforo de la sesión.
+
+**Validación e inserción**
+
+Una vez hecho esto, y con el JS funcionando, lo siguiente era crear la función "store" del controlador de eventos. 
+Esto lo hemos hecho usando el método "validate" de laravel y guardando, de momento, las imágenes en el storage de nuestro proyecto.
+
+Una vez comprobado que los datos llegaban bien al controlador, se validaban de forma correcta y se guardaba el evento, nos disupsimos a hacer que se guardara la primera sesión de ese evento. 
+
+En este proceso hemos tenido que crear métodos propios de inserción de datos a base de datos porque teníamos que hacer retoques a los inputs de la request antes de guardarlos. Esto es sacar los inputs que no necesitabamos para crear el evento y lo mismo para la sesión y los tickets.
+
+**Crear primera sesión con multiples tipos de ticket.**
+
+En este punto, y una vez comprobado que todo el proceso de validación e inserción de datos del formulario funcionaba bien, teniamos que conseguir poder insertar más de un tipo de ticket a la vez en una sesión.
+
+Para ello lo primero fue averiguar como mandar un array de datos bajo el mismo "name" de input. Esto se consigue añadiendo una apertura y cierre de corchete justo después del nombre que se haya puesto en el atributo "name", por ejemplo: <input ... name="minput[]" ... />
+
+Así, decidimos crear un nuevo componente que fuera el tipo de ticket, creamos un conjunto de inputs con la validación y los inputs adecuados, y teniendo cuidado que sus "id"s y los "for"s de sus labels no se repitieran, para ello le pasamos al componente un índice, en el caso que se tuviera que crear varias instancias del componente.
+
+Siguiendo este modelo, en JS añadimos la funcionalidad de poder añadir o quitar tipos de ticket, cuidando de que siempre hubiera mínimo uno, y de que no se repitieran los atributos que debían de mantenerse únicos.
+
+Con esa funcionalidad lista, lo único que queda es refactorizar las validaciones en el back-end, y los métodos de guardado de sesiones, para en vez de guardar un ticket relacionado con la sesión actual, se guarde un array de tickets.
+"
 
 |====================
 
@@ -374,7 +547,8 @@ Valoración de la semana individual
 ===== *Diego:*
 
 
-===== *Aitor:* 
+===== *Aitor: Esta semana, y algunas que le siguen, me he encargado de hacer todo lo relacionado con el formulario de creación de eventos. Resultó ser mucho más complejo de lo esperado. Era como tener que construir algo muy grande mediante pequeñas piezas que cuando no encajaban se tenían que ir limando hasta que se podían unir al conjunto sin hacerlo explotar.
+* 
 
 
 ===== *Albert: Este sprint he estado con el desarrollo tanto visual como funcional de todo el sistema de autenticación de usuario* 
@@ -439,6 +613,79 @@ Valoración de la semana individual
 ===== *Albert: Este sprint principalmente he estado con el desarrollo de la pagina de detalles del evento, haciendo que se puedan ver imagenes, el nombre y descripción del evento, las sesiones y la locación.
 
 Además también estuve haciendo la pantalla de home promotor para que se pudiesen ver los eventos de cada usuario y mejorar el aspecto visual.* 
+
+=== Sprint 4
+==== Trabajo realizado
+Esta semana nos hemos dedicado a corregir los siguientes puntos:
+
+Documentación::
+
+
+- Actualizamos y completamos la documentación del proyecto, asegurándonos de que esté al día y refleje con precisión los últimos cambios y configuraciones.
+- Actualizamos el diagrama de la base de datos para representar de manera precisa la estructura actual.
+- Verificamos y actualizamos todos los enlaces en la documentación para garantizar su funcionalidad y accesibilidad.
+
+Pruebas::
+
+
+- Mejoramos la suite de pruebas, llevándolas a cabo con una base de datos independiente de la de producción para una mayor integridad de los datos.
+- Validamos exhaustivamente todos los caminos posibles en el código para garantizar su funcionalidad y estabilidad.
+
+Despliegue::
+
+
+- Solucionamos problemas de configuración en el VirtualHost de Apache y Docker, asegurando un despliegue sin problemas y eficiente.
+- Optimizamos el entorno Docker eliminando comandos adicionales y archivos de configuración no utilizados.
+
+Diseño::
+
+
+- Mejoramos la experiencia del usuario utilizando grid y SASS en todo el proyecto.
+- Actualizamos todas las pantallas de la aplicación en Figma, incluyendo bocetos detallados para cada una antes de su implementación.
+- Organizamos el código de manera más limpia y estructurada, evitando la mezcla de lógica, vistas y scripts de JavaScript.
+
+=== Sprint 5
+==== Trabajo realizado
+Durante esta semana, nos enfocamos en 9 nuevas tareas del desarrollo de la aplicación:
+
+===== Pantalla de Confirmación de Compra (R17)
+
+  - Mostrar un resumen de la compra con detalles del evento, fecha, hora, precios y total.
+  - Solicitar información personal (nombre, DNI, teléfono) para cada asistente si las entradas son nominativas.
+  - Solicitar correo electrónico del comprador.
+  - Contar con un contador regresivo para completar la compra y redireccionar si se agota.
+  - Botón para finalizar la compra.
+
+===== Pasarela de Pago (R18)
+
+  - Implementar el pago con tarjeta de crédito utilizando la plataforma Sandbox de RedSys versión REST.
+
+===== Gestión de Errores en el Pago (R19)
+
+===== Generación de Entradas (PDF) (R20)
+
+  - Generar entradas en formato PDF después de un pago exitoso.
+  - Incluir logo de la plataforma, detalles del evento, tipo de entrada, códigos QR y numéricos únicos.
+  - Incluir nombre y DNI del propietario si la entrada es nominativa.
+
+===== Envío de Entradas (PDF) (R21)
+
+  - Enviar correo electrónico al comprador con detalles del evento, enlace a la página de detalles y entradas en PDF.
+
+===== Envío de Recordatorio Previo al Evento (R22)
+
+  - Enviar correo electrónico recordatorio un día antes del evento con enlace para descargar las entradas compradas.
+
+===== Envío de Petición de Opinión Posterior al Evento (R23)
+
+  - Enviar correo electrónico de valoración al comprador un día después del evento con enlace personalizado a la página de "Deja tu opinión".
+
+===== Página "Deja tu Opinión" (R24)
+
+  - Solicitar nombre, opinión con iconos de caritas, puntuación con iconos de estrellas, título del comentario y comentario en sí.
+
+===== Mostrar Opiniones en la Página de Detalles del Evento (R25)
+  - Mostrar opiniones y valoraciones de los compradores en la página de detalles del evento.
 
 == Lineas futuras.
 == Conclusiones

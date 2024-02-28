@@ -14,9 +14,33 @@ html {
         font-family: $fjalla;
         font-size: 70px;
     }
+    &-cabecera {
+        font-family: $fjalla;
+        text-align: center;
+        font-size: 70px;
+        @include respond-to(1024px) {
+            font-size: 100px;
+        }
+    }
+    &-seccion {
+        font-family: $fjalla;
+        text-align: center;
+        font-size: 40px;
+        @include respond-to(1024px) {
+            font-size: 50px;
+        }
+    }
+    &-subtitulo{
+        font-family: $fjalla;
+        text-align: center;
+        font-size: 20px;
+        @include respond-to(1024px) {
+            font-size: 30px;
+        }
+    }
 }
 
-h2{
+h2 {
     font-family: $fjalla;
 }
 
@@ -34,5 +58,24 @@ button {
 
     @include respond-to(768px) {
         font-size: 18px;
+    }
+}
+
+.msg {
+    &-error {
+        color: $col-fb-danger;
+        padding: 10px;
+    }
+
+    &-correct {
+        color: $col-fb-green;
+        padding: 10px;
+    }
+
+    &-info {
+        margin: 1rem 0 1rem 2rem;
+        padding-bottom: 0.2rem;
+        border-right: 0.2rem solid $col-contraste;
+        font-weight: lighter;
     }
 }

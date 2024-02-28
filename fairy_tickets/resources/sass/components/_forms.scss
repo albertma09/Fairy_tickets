@@ -1,27 +1,300 @@
 .default-form {
-    @include flex-container(row, wrap);
-    padding: 4rem;
-    div {
-        padding: 1.2rem;
-        &.input-unit {
-            @include flex-container(column);
+    width: 100%;
+
+    >.grid-container {
+        padding: 0 1rem;
+    }
+
+    .separate-form {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+
+    .grid-container {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+
+        .row-unit {
+            display: flex;
+            align-items: center;
+
+            label {
+                margin-left: 1rem;
+            }
+
+            input[type="checkbox"],
+            input[type="radio"] {
+                margin: 0;
+            }
         }
-        &.row-unit {
-            @include flex-container();
-        }
-        &.container-quarter {
-            width: 25%;
-        }
-        &.container-half {
-            width: 50%;
-        }
-        &.container-full {
-            width: 100%;
+
+        .button {
+            justify-self: center;
         }
     }
-    input,
-    select {
+
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    select,
+    textarea {
         padding: 0.6rem;
+        border: 2px solid $col-claro;
         border-radius: 4px;
+        box-sizing: border-box;
+        background-color: $col-oscuro;
+        color: $col-claro;
+
+        &:focus {
+            outline: none;
+            border-color: $col-brand;
+            box-shadow: 0 0 5px $col-brand;
+        }
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .add-remove-ticket {
+        justify-self: center;
+        background-color: $col-oscuro;
+        @include card-shape;
+        @include flex-container(row, nowrap);
+        max-width: fit-content;
+        padding: 1rem;
+        margin-top: -1.2rem;
+        margin-bottom: 1.2rem;
+
+        p {
+            max-width: 35vw;
+            padding-right: 1rem;
+
+            @include respond-to(765px) {
+                max-width: 20vw;
+            }
+        }
+
+        .dual-button-container {
+            @include flex-container(column, nowrap);
+            justify-content: space-between;
+        }
+    }
+}
+
+form {
+
+    .input-unit {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.3rem;
+        align-items: center;
+    }
+
+    .form-ticket-unit {
+        @include flex-container(column, nowrap);
+        margin-bottom: 2rem;
+
+        .form-ticket-title {
+            font-family: $fjalla;
+            letter-spacing: 0.1rem;
+            font-weight: normal;
+            border-left: 1rem solid $col-contraste;
+            border-bottom: 2px solid $col-contraste;
+            padding-left: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .input-unit {
+            margin-bottom: 1.2rem;
+        }
+    }
+
+    .form-section-title {
+        text-align: center;
+        border-radius: 4px;
+        border: 2px solid $col-contraste;
+        color: $col-contraste;
+        font-family: $fjalla;
+        font-size: 2rem;
+        padding: 1rem;
+        margin: 3rem 1.6rem 1.5rem 1.6rem;
+    }
+
+    .time-wrapper {
+        padding: 0.1rem 0.2rem;
+        width: fit-content;
+        margin: 0 auto;
+        border-radius: 4px;
+        position: relative;
+
+        input {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+        }
+
+        .time-input {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+
+
+            label {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+            }
+
+            .label {
+                font-size: 0.55rem;
+                position: absolute;
+                top: 4.5px;
+            }
+
+            .label.lbl-hrs {
+                left: 20px;
+            }
+
+            .label.lbl-min {
+                left: 14px;
+            }
+
+
+            #time_input,
+            input {
+                border-radius: 8px;
+                font-size: 1.5rem;
+            }
+
+            input:focus {
+                color: $col-brand;
+            }
+
+            input:focus+.label {
+                color: $col-brand;
+            }
+
+            input.invalid:focus {
+                outline: 3px solid $col-fb-danger;
+            }
+
+            input.invalid:focus+.label {
+                color: $col-fb-danger;
+            }
+
+            #error {
+                justify-self: center;
+                margin: 0 auto;
+                // visibility: hidden;
+            }
+        }
+
+    }
+}
+
+.stars-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.fa-star {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.fa-star:hover,
+.fa-star.checked,
+.fa-star:hover~.fa-star {
+    color: yellow;
+}
+
+
+.caret-icon {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.caret-icon:hover {
+    opacity: 1;
+}
+
+.caret-icon.checked {
+    opacity: 1;
+}
+
+.caret-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.secondary-img-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include card-shape;
+    background-color: $col-oscuro;
+    padding: 1rem 0.5rem;
+}
+
+.scroll-secondary-img {
+    max-height: 25rem;
+    /* Altura máxima para habilitar el scroll */
+    width: 20rem;
+    overflow-y: auto;
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 1.5rem;
+}
+
+.secondary-img {
+    width: 18rem;
+    height: 12rem;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: opacity 0.5s ease;
+    }
+
+    .icono {
+        font-size: 48px;
+        color: $col-claro;
+        display: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        img {
+            display: none;
+        }
+
+        .icono {
+            display: block;
+
+            &:hover{
+                color: $col-fb-danger;
+            }
+        }
     }
 }

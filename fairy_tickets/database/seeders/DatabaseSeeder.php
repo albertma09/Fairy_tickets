@@ -7,8 +7,7 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Location;
-use App\Models\Session;
-use App\Models\TicketType;
+use App\Models\Purchase;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -19,12 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
 
         if ($this->command->confirm('Desea refrescar la base de datos?', true)) {
             $this->command->call('migrate:fresh');
@@ -44,6 +37,8 @@ class DatabaseSeeder extends Seeder
 
         Event::factory($eventNum / 2)->hasSessions(1)->create();
         Event::factory($eventNum / 2)->hasSessions(rand(2, 4))->create();
+
+        Purchase::factory(10)->create();
 
         $this->command->info("Se han creado $eventNum eventos");
     }

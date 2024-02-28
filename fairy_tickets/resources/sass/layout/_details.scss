@@ -96,13 +96,17 @@
     display: grid;
     justify-content: center;
     grid-template-rows: 5rem 1fr;
+    grid-auto-columns: 1fr;
     overflow-y: scroll;
     justify-items: center;
-
     @media (min-width: 769px) {
       /* En pantallas de ordenador, ocupa el 80% del ancho */
       width: 80vw;
       border-radius: 10px;
+    }
+    h1{
+      grid-row: 1;
+      grid-column: 1/3;
     }
 
   }
@@ -138,6 +142,8 @@
     max-height: 90%;
     overflow: scroll;
     padding: 0 1rem;
+    grid-row: 2;
+    grid-column: 1/3;
   }
 
   .ticket-container {
@@ -162,33 +168,45 @@
     width: 50vw;
     font-size: 1.5rem;
 
-    &>p:first-child {
+    & > p:first-child{
       font-size: 2.5rem;
     }
 
-
-  }
-
-  .buy-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-rows: 1fr;
-    width: 20vw;
-    align-items: center;
-    justify-items: center;
-
-    &>*:first-child {
-      font-size: 2rem;
-      grid-row: 2;
-      text-align: center;
-      background-color: $col-oscuro-2;
-      color: $col-brand;
-      border: solid 2px;
-      border-radius: 4px;
+    
     }
+    .buy-container{
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-rows: 1fr 1fr;
+      width: 20vw;
+      align-items: center;
+      justify-items: center;
+      
+      & > *:first-child{
+        font-size: 2rem;
+        grid-row: 2;
+        background: transparent;
+        border: solid $col-brand;
+        color: $col-brand;
+        text-align: center;
+        border-radius: 4px;
+      }
   }
 
-  #final-price {
+  #final-price{
     font-size: 2rem;
+    grid-row: 3;
   }
-}
+
+  .confirmPay{
+    display: none;
+    grid-row: 3;
+  }
+
+  // .confirmPayButtom:disabled{
+  //   cursor: not-allowed;
+  //   background-color: $col-oscuro-2;
+  //   color: $col-oscuro;
+  //   border-color: $col-oscuro;
+  // }
+  }

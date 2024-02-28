@@ -8,6 +8,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\GeneratorPDF;
+use App\Http\Controllers\OpinionsController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +37,7 @@ Route::middleware(['auth.redirect'])->group(function () {
     // Home del promotor
     Route::get('/promotor/{userId}', [PromotorController::class, 'mostrarPromotor'])->name('promotor');
 
-    // Creación de nuevos eventos, vista y llamada a la función que gestiona la subida de datos
+    // Eventos
     Route::get(
         '/manage/new-event',
         [EventController::class, 'showCreateForm']
@@ -43,15 +47,38 @@ Route::middleware(['auth.redirect'])->group(function () {
         '/manage/new-event',
         [EventController::class, 'store']
     )->name('events.store');
+
+    Route::get(
+        '/manage/update-event/{id}',
+        [EventController::class, 'showUpdateForm']
+    )->name('events.update');
+
+    Route::post(
+        '/manage/update-event',
+        [EventController::class, 'edit']
+    )->name('events.edit');
+    // Sesiones
+    Route::get(
+        '/sesiones/{id}',
+        [SessionController::class, 'showSessionsByPromotor']
+    )->name('sessions.mostrar');
+
+    Route::get(
+        '/manage/{eventId}/new-session',
+        [SessionController::class, 'showCreateForm']
+    )->name('sessions.create');
+
+    Route::post(
+        '/manage/new-session',
+        [SessionController::class, 'store']
+    )->name('sessions.store');
+
+    // Direcciones
     Route::post(
         '/manage/new-location',
         [LocationController::class, 'store']
     )->name('location.store');
 
-    Route::get(
-        '/sesiones/{id}',
-        [PromotorController::class, 'getSessionsByPromotor']
-    )->name('home.sessions');
 });
 
 // Formulario donde el usuario pone su email para que le enviemos el email de resetear la contraseña
@@ -71,11 +98,29 @@ Route::get('/home', [CategoryController::class, 'index'])->name('home.index');
 
 Route::post('/events', [EventController::class, 'searchBySearchingItem'])->name('search.index');
 
-Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
+// Route::post('/events/categories', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/events/categories/{name}', [EventController::class, 'searchByCategoryItem'])->name('searchByCategory.index');
 
 Route::get('/detalles-evento/{id}', [EventController::class, 'mostrarEvento'])->name('events.mostrar');
+
+Route::get('/buyTicket/{session_id}/{email}', [GeneratorPDF::class, 'generatePDF'])->name('buy-ticket');
+
+Route::get('/sendPdfEmail', [GeneratorPDF::class, 'sendPdfEmail'])->name('send-pfd-email');
+
+Route::get('/opinion/{token}',[OpinionsController::class, 'showPage'])->name('user-opinion');
+
+Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name('create-opinion');
+
+Route::post('/close-sale',[SessionController::class, 'closeSale'])->name('close.sale');
+
+Route::get('/generate-csv/{session_id}', [SessionController::class, 'generateCSV'])->name('generar.csv');
+
+//pagos
+Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPayment'])->name('payment.index');
+Route::post('/pay',[PaymentController::class,'paymentRedsys'])->name('payment.payToRedsys');
+Route::get('/confirm-purchase',[PaymentController::class,'responseRedsys'])->name('payment.confirmation');
+
 Route::fallback(function () {
     return ('Opps!!');
 });

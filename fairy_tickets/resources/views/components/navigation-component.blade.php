@@ -1,13 +1,14 @@
-<nav>
+<nav class="nav">
     <div class="nav-main">
-        <a href="{{ route('home.index') }}" class="button">
-            <img src="{{ asset('logo/logoFairyTickets_fondoOscuro.png') }}" alt="Logo del sitio web" />
+        <a href="{{ route('home.index') }}" class="button button-logo">
+            <img src="{{ asset('logo/logoFairyTickets.png') }}" alt="Logo del sitio web" />
         </a>
         <x-search-component />
         <ul id="nav-dropdown-menu">
             <li><a href="{{ route('home.index') }}" class="{{ Request::is('home*') ? 'nav-active' : '' }}">Home</a></li>
             @if (Auth::check())
-                <li><a href="{{ route('promotor', ['userId' => Auth::id()]) }}" class="{{ Request::is('promotor*') ? 'nav-active' : '' }}">Promotor</a></li>
+                <li><a href="{{ route('promotor', ['userId' => Auth::id()]) }}"
+                        class="{{ Request::is('promotor*') ? 'nav-active' : '' }}">Promotor</a></li>
             @endif
 
         </ul>
@@ -28,5 +29,5 @@
         <button class="button  button-icon" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
     </div>
     <x-category-filter-component />
-    <x-modal-component/>
+    <x-modal-component />
 </nav>

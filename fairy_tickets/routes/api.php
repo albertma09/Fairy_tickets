@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
+use App\Providers\AppServiceProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+
+Route::prefix('v1')->as('v1:')->group(static function (): void {
+    Route::post('/login', [ApiController::class, 'login'])->name('login');
+    Route::post('/logout', [ApiController::class, 'logout'])->name('logout');
+
+
+    Route::get('/verify-ticket/{ticket_id}', [APIController::class, 'verificarTicket']);
 });

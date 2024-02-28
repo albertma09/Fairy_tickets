@@ -10,8 +10,10 @@
 
     <div class="slider-container">
 
-        <img class="slider-item"
-            src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
+        @foreach ($evento as $event)
+            <img class="slider-item" src="{{ asset('storage/img/covers/' . $event['image']) }}" />
+        @endforeach
+
         <img class="slider-item"
             src="https://images.unsplash.com/photo-1580501170888-80668882ca0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" />
         <img class="slider-item"
@@ -27,6 +29,8 @@
         <h1 class="titulo-brand">
             Sesiones
         </h1>
+        <a class="button button-brand" href="{{ route('sessions.create', ['eventId' => $id]) }}">Añadir Nueva
+            Sesión</a>
         <div class="sesiones-container">
             @foreach ($sessionPrices as $sessionId => $session)
                 <div class="sesion-card">
@@ -35,7 +39,7 @@
                     <p class="sesion-info">Hora de sesión:
                         {{ \Carbon\Carbon::createFromFormat('H:i:s', $session['hour'])->format('H:i') }}</p>
                     <p class="sesion-info">Precio: {{ $session['min_price'] }}€</p>
-                    <button class="button button-brand" id="{{ $session['id'] }}">Comprar</button>
+                    <button class="button button-brand" id="{{ $session['id'] }}" name="session-buy">Comprar</button>
                 </div>
             @endforeach
         </div>
@@ -45,6 +49,17 @@
         @foreach ($evento as $event)
             <p>Ubicación: {{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
                 {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}</p>
+        @endforeach
+        <iframe width="600" height="450" frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
+            {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}">
+        </iframe>
+    </div>
+
+    <div class="container">
+        <h3 class="title-section">Opiniones</h3>
+        @foreach ($opinions as $opinion)
+            <x-opinion-card-component :opinion="$opinion" />
         @endforeach
     </div>
 
@@ -57,6 +72,14 @@
             <div id="ticket-types-container"></div>
             <div id="final-price">
                 Total: 0.00€
+            </div>
+            <div id="confirmPayButton" class="confirmPayButton">
+                <form action="{{route('payment.index')}}" method="POST">
+                    @csrf
+                    <input type="hidden" id="totalPrice" name="totalPrice" value="0">
+                    <input type="hidden" id="ticketTId" name="ticketTId" value="0">
+                    <button class="button button-brand confirmPayButtom" id="confirmPayButtom" disabled >Confirmar compra</button>
+                </form>
             </div>
             <!-- El contenido del menú se agregará aquí dinámicamente -->
         </div>

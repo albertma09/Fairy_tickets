@@ -1,5 +1,4 @@
-
-.add-event{
+.add-event {
     width: 16rem;
     padding: 1.2rem;
 }
@@ -9,7 +8,9 @@
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
+
 
     .event-card {
         width: 18rem;
@@ -23,16 +24,35 @@
         justify-content: space-around;
         align-items: center;
 
+        h3,
+        .img {
+            opacity: 1;
+            
+        }
+
         .img {
             width: 90%;
             height: 70%;
-
+            display: flex;
             img {
                 flex: 0 0 100%;
                 width: 100%;
                 object-fit: cover;
             }
+
+
+
         }
+
+        
+
+        
+
+        .action-container{
+            display: flex;
+        }
+            
+        
 
 
     }
