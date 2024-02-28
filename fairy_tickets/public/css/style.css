@@ -933,7 +933,6 @@ form .time-wrapper .time-input .label.lbl-min {
 form .time-wrapper .time-input #time_input,
 form .time-wrapper .time-input input {
   border-radius: 8px;
-  font-weight: light;
   font-size: 1.5rem;
 }
 form .time-wrapper .time-input input:focus {
