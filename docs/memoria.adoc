@@ -87,44 +87,25 @@ Guarda los cambios y reinicia Apache:
 ----
 sudo service apache2 restart
 ----
-===== Configuración del docker y la base de datos
-En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
-
-La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
-
-
-Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
-
-Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
-
-[source,docker]
-----
-docker compose build
-----
-
-Una vez creada la imagen tendremos que lanzar el comando up para construir los contenedores indicados en el archivo `compose.yml`:
-
-[source,docker]
-----
-docker compose up -d
-----
-
-De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
 
 ===== Despliegue del Proyecto desde Git
 
-Clona tu proyecto Laravel desde Git en el directorio `/var/www/html`:
+Para comenzar con el despliegue accederemos a la url de nuestro proyecto: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador
+
+Buscaremos un boton que ponga code y copiaremos la url que se indica que en este caso es la siguiente: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git
+
+Clonamos el proyecto dentro del directorio `/var/www/html` de la siguiente manera:
 
 [source,sh]
 ----
-sudo git clone https://tu-repositorio-git.git /var/www/html
+sudo git clone https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git /var/www/html
 ----
 
-Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel:
+Accede al directorio del proyecto y ejecuta la instalación de dependencias de Laravel, para hacerlo tiene que ser dentro de la carpeta del proyecto laravel, en este caso es la carpeta fairy_tickets:
 
 [source,sh]
 ----
-cd /var/www/html
+cd /var/www/html/gr01-mateos-lopera-amador/fairy_tickets
 sudo composer install
 ----
 
@@ -212,9 +193,35 @@ Configura el host virtual de Apache2 para apuntar al directorio del proyecto Lar
 Guarda los cambios y reinicia Apache:
 
 [source,sh]
+
 ----
 sudo service apache2 restart
 ----    
+
+== Configuración del docker y la base de datos
+
+En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
+
+La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
+
+
+Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
+
+Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
+
+[source,docker]
+----
+docker compose build
+----
+
+Una vez creada la imagen tendremos que lanzar el comando up para construir los contenedores indicados en el archivo `compose.yml`:
+
+[source,docker]
+----
+docker compose up -d
+----
+
+De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
 
 == Sprints
 === Sprint 1
