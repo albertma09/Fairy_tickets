@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Event;
+use App\Models\Image;
 use App\Models\Opinion;
+use App\Models\Session;
 use App\Libraries\Utils;
 use App\Models\Category;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Http\UploadedFile;
 
 class EventController extends Controller
 {
@@ -28,8 +30,7 @@ class EventController extends Controller
     {
 
 
-        $events = Event::getEventsById($id);
-        $event = $events[0];
+        $event = Event::getEventById($id);
 
         $categories = Category::getCategories();
         $userLocations = Location::getLocationsByUser();
@@ -71,77 +72,64 @@ class EventController extends Controller
 
     public function mostrarEvento($id)
     {
-        $result = Event::getEventsById($id);
+        try {
+            $event = Event::getEventById($id);
+            $location = Location::getLocationById($event->location_id);
+            $sessionsAndTickets = Session::getAllSessionsAndTicketsByEvent($event->id);
+            $opinions = Opinion::getOpinionsByEvent($id);
+            $tickets = [];
+            foreach ($sessionsAndTickets as $row) {
+                // Agregar datos de sesiones
+                $sessions[$row->id] = [
+                    'id' => $row->id,
+                    'date' => $row->date,
+                    'hour' => $row->hour,
+                    'nominal_tickets' => $row->nominal_tickets
+                ];
 
-        $events = [];
-        $sessions = [];
-        $tickets = [];
-        $opinions = Opinion::getOpinionsByEvent($id);
+                // Agregar datos de tickets
+                $tickets[] = [
+                    'id' => $row->ticket_id, // Changed to ticket_id
+                    'session_id' => $row->id, // Changed to id
+                    'price' => $row->price, // Assuming you have this property in the ticket_types table
+                    'ticket_types_description' => $row->description, // Changed to description
+                    'ticket_amount' => $row->ticket_amount,
+                ];
+            }
 
-        foreach ($result as $row) {
-            // Agregar datos de eventos
-            $events[$row->event_id] = [
-                'id' => $row->event_id,
-                'name' => $row->name,
-                'description' => $row->description,
-                'image' => $row->image,
-                'location_name' => $row->location_name,
-                'capacity' => $row->capacity,
-                'province' => $row->province,
-                'city' => $row->city,
-                'street' => $row->street,
-                'number' => $row->number,
-                'cp' => $row->cp,
-            ];
-
-            // Agregar datos de sesiones
-            $sessions[$row->session_id] = [
-                'id' => $row->session_id,
-                'date' => $row->date,
-                'hour' => $row->hour,
-                'nominal_tickets' => $row->nominal_tickets
-            ];
-
-            // Agregar datos de tickets
-            $tickets[$row->ticket_type_id] = [
-                'id' => $row->ticket_type_id,
-                'session_id' => $row->session_id,
-                'event_id' => $row->event_id,
-                'price' => $row->price,
-                'ticket_types_description' => $row->ticket_types_description,
-                'ticket_amount' => $row->ticket_amount,
-            ];
-        }
-
-        usort($tickets, function ($a, $b) {
-            return $a['price'] - $b['price'];
-        });
-
-        $sessionPrices = [];
-
-        foreach ($sessions as $sessionId => $session) {
-            // Encuentra los tickets asociados a esta sesión
-            $sessionTickets = array_filter($tickets, function ($ticket) use ($sessionId) {
-                return $ticket['session_id'] == $sessionId;
+            usort($tickets, function ($a, $b) {
+                return $a['price'] - $b['price'];
             });
 
-            $minPrice = min(array_column($sessionTickets, 'price'));
+            $sessionPrices = [];
 
-            $sessionPrices[$sessionId] = [
-                'id' => $session['id'],
-                'date' => $session['date'],
-                'hour' => $session['hour'],
-                'nominal_tickets' => $session['nominal_tickets'],
-                'min_price' => $minPrice,
+            foreach ($sessions as $sessionId => $session) {
+                // Encuentra los tickets asociados a esta sesión
+                $sessionTickets = array_filter($tickets, function ($ticket) use ($sessionId) {
+                    return $ticket['session_id'] == $sessionId;
+                });
 
-            ];
+                $minPrice = min(array_column($sessionTickets, 'price'));
+
+                $sessionPrices[$sessionId] = [
+                    'id' => $session['id'],
+                    'date' => $session['date'],
+                    'hour' => $session['hour'],
+                    'nominal_tickets' => $session['nominal_tickets'],
+                    'min_price' => $minPrice,
+                ];
+            }
+
+            $images = Image::getAllImagesByEvent($id);
+            
+            if ($images && !empty($images)) {
+                $images = Utils::constructImageUrls($images);
+            }
+            return view('events.mostrar', ['id' => $id, 'evento' => $event, 'ubicacion' => $location, 'imagenes' => $images, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets, 'opinions' => $opinions]);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
         }
-
-
-        return view('events.mostrar', ['id' => $id, 'evento' => $events, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets, 'opinions' => $opinions,]);
     }
-
-
 
     public function store(Request $request)
     {
@@ -219,5 +207,15 @@ class EventController extends Controller
         Event::updateEvent($validatedData);
 
         return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
+    }
+    public function changeMainImage($eventId, $imageId)
+    {
+        try {
+            Log::info("Llamada al método EventController.changeMainImage con evento: $eventId y imagen $imageId");
+            Image::resetMainImage($eventId);
+            Image::setMainImage($imageId);
+        } catch (\Exception $ex) {
+            Log::error("Error al cambiar la imagen principal - " . $ex->getMessage());
+        }
     }
 }

@@ -28,7 +28,7 @@ class Location extends Model
 
             $location = Location::select('locations.id', 'locations.name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
                 ->where('locations.id', '=', $id)
-                ->get();
+                ->first();
             return $location;
         } catch (Exception $e) {
             Log::debug($e->getMessage());
