@@ -185,11 +185,23 @@ class Event extends Model
         try {
             Log::info('Llamada al método Event.updateEvent');
 
+
             $eventId = $eventData["event_id"];
+            // dd($eventData);
+            if (isset($eventData["images"])){
+                $images = $eventData["images"];
+                foreach ($images as $imageFile) {
+                    Image::createImage($eventId, $imageFile);
+                }
+            }
             unset($eventData["event_id"]);
+            unset($eventData["images"]);
+            
+            
             DB::table('events')
                 ->where('id', $eventId) // Filtras por algún criterio
                 ->update($eventData);
+
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }

@@ -1,7 +1,7 @@
 <nav class="nav">
     <div class="nav-main">
         <a href="{{ route('home.index') }}" class="button button-logo">
-            <img src="{{ asset('logo/logoFairyTickets.png') }}" alt="Logo del sitio web" />
+            <img src="{{ asset('logo/logoFairyTickets.png') }}" alt="Logo del sitio web" >
         </a>
         <x-search-component />
         <ul id="nav-dropdown-menu">
