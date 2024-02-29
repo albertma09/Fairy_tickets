@@ -187,7 +187,7 @@ class Event extends Model
 
 
             $eventId = $eventData["event_id"];
-            // dd($eventData);
+
             if (isset($eventData["images"])){
                 $images = $eventData["images"];
                 foreach ($images as $imageFile) {

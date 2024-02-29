@@ -22,7 +22,7 @@ class Image extends Model
 
     // Función que hace la petición a la API, envía la imagen y el array con los tamaños,
     // intenta recibir un array con los códigos de las imágenes
-    private static function sendImageToApi(UploadedFile $imageFile, array $sizes): array
+    private static function sendImageToApi(UploadedFile $imageFile, array $sizes)
     {
         $client = new Client();
         try {

@@ -121,10 +121,10 @@ class EventController extends Controller
             }
 
             $images = Image::getAllImagesByEvent($id);
+            
             if ($images && !empty($images)) {
                 $images = Utils::constructImageUrls($images);
             }
-
             return view('events.mostrar', ['id' => $id, 'evento' => $event, 'ubicacion' => $location, 'imagenes' => $images, 'sessionPrices' => $sessionPrices, 'tickets' => $tickets, 'opinions' => $opinions]);
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
