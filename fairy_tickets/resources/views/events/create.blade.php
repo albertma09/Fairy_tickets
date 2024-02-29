@@ -1,6 +1,9 @@
 @extends('layouts.master')
-
+@if (!isset($event))
 @section('title', 'Nuevo Evento')
+@else
+@section('title', $event->name)
+@endif
 
 @section('content')
 
@@ -15,7 +18,7 @@
 
                 <div class="input-unit">
                     @if (isset($event))
-                        <input type="hidden" id="event_id" name="event_id" value="{{ $event->event_id }}">
+                        <input type="hidden" id="event_id" name="event_id" value="{{ $event->id }}">
                     @endif
                     <label for="title">Título del evento</label>
                     <input type="text" id="title" name="name" value="{{ $event->name ?? old('name') }}"

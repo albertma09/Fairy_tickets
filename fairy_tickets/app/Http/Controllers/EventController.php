@@ -30,8 +30,7 @@ class EventController extends Controller
     {
 
 
-        $events = Event::getEventsById($id);
-        $event = $events[0];
+        $event = Event::getEventById($id);
 
         $categories = Category::getCategories();
         $userLocations = Location::getLocationsByUser();
