@@ -258,10 +258,20 @@
                     <div class="scroll-secondary-img">
                         <div class="secondary-img">
                             <img
-                                src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
-                                <i class="fas fa-trash-alt icono"></i>
+                                src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" >
+                                <div class="input-unit">
+                                    <i class="fas fa-trash-alt icon icon-trash"></i>
+                                    <p>borrar</p>
+                                </div>
+                                <div class="input-unit">
+                                    <i class="far fa-images icon icon-img"></i>
+                                    <p>Imagen principal</p>
+                                </div>
+                                
+                                
+                                
                         </div>
-                        <div class="secondary-img">
+                        {{-- <div class="secondary-img">
                             <img
                                 src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
                                 <i class="fas fa-trash-alt icono"></i>
@@ -275,7 +285,7 @@
                             <img
                                 src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
                                 <i class="fas fa-trash-alt icono"></i>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>
