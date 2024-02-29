@@ -56,6 +56,25 @@ class Session extends Model
             Log::error($e->getMessage());
         }
     }
+    // Función que pasa por parámetro la id de un evento y
+    // devuelve todas sus sesiones
+    public static function getAllSessionsAndTicketsByEvent(int $id)
+    {
+        try {
+            Log::info('Llamada al método Session.getAllSessionsByEvent');
+
+            $sessions = DB::table('sessions')
+            ->select('sessions.id', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets', 'tickets.id as ticket_id', 'tickets.description', 'tickets.ticket_amount')
+            ->join('tickets', 'sessions.id', '=', 'tickets.session_id')
+            ->where('sessions.event_id', $id)
+            ->groupBy('sessions.id')
+            ->orderBy('sessions.date')
+            ->get();
+            return $sessions;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
 
     // Función que pasa por parámetro la id de un evento y
     // devuelve la primera sesión creada (la sesión por defecto)

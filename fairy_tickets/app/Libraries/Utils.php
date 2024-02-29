@@ -94,4 +94,34 @@ class Utils
             Log::error($e->getMessage());
         }
     }
+
+    // Función que recibe un array de imágenes y devuelve el array con la URL
+    //  construída a partir de los códigos de los tamaños de las imágenes
+    public static function constructImageUrls($images)
+    {
+        try {
+            Log::info("Llamada a método Utils.constructImageUrls, con imagenes: $images");
+            $imageUrls = [];
+
+            foreach ($images as $image) {
+                Log::debug($image);
+                // Construímos las URLs
+                $smallImageUrl = env('IMAGE_API_URL') . "/" . $image->small;
+                $mediumImageUrl = env('IMAGE_API_URL') . "/" . $image->medium;
+                $bigImageUrl = env('IMAGE_API_URL') . "/" . $image->big;
+
+                $imageUrls[] = [
+                    'id' => $image->id,
+                    'small' => $smallImageUrl,
+                    'medium' => $mediumImageUrl,
+                    'big' => $bigImageUrl,
+                ];
+            }
+
+            return $imageUrls;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return [];
+        }
+    }
 }

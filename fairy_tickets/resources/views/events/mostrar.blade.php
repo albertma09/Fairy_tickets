@@ -1,6 +1,6 @@
 @extends('layouts.mostrar-evento')
 
-@section('title', $evento[$id]['name'])
+@section('title', $evento['name'])
 
 @section('content')
 
@@ -9,20 +9,18 @@
     {{-- @dd($tickets) --}}
 
     <div class="slider-container">
-
-        @foreach ($evento as $event)
-            <img class="slider-item" src="{{ asset('storage/img/covers/' . $event['image']) }}" />
-        @endforeach
-
-        <img class="slider-item"
-            src="https://images.unsplash.com/photo-1580501170888-80668882ca0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" />
-        <img class="slider-item"
-            src="https://images.unsplash.com/photo-1572508589584-94d778209dd9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" />
+        @if ($imagenes && !empty($imagenes))
+            @foreach ($imagenes as $imagen)
+                <img class="slider-item" src="{{ $imagen['big'] }}" />
+            @endforeach
+        @else
+            <p>No se han encontrado imágenes para este evento.</p>
+        @endif
 
     </div>
     <div class="container">
-        <h2 class="titulo-brand">{{ $evento[$id]['name'] }}</h2>
-        <p>{{ $evento[$id]['description'] }}</p>
+        <h2 class="titulo-brand">{{ $evento['name'] }}</h2>
+        <p>{{ $evento['description'] }}</p>
     </div>
 
     <div class="container">
@@ -46,13 +44,11 @@
     </div>
 
     <div class="container">
-        @foreach ($evento as $event)
-            <p>Ubicación: {{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
-                {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}</p>
-        @endforeach
+        <p>Ubicación: {{ $evento['location_name'] }}, {{ $evento['street'] }}, {{ $evento['number'] }},
+            {{ $evento['cp'] }}, {{ $evento['city'] }}, {{ $evento['province'] }}</p>
         <iframe width="600" height="450" frameborder="0" style="border:0"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $event['location_name'] }}, {{ $event['street'] }}, {{ $event['number'] }},
-            {{ $event['cp'] }}, {{ $event['city'] }}, {{ $event['province'] }}">
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $evento['location_name'] }}, {{ $evento['street'] }}, {{ $evento['number'] }},
+            {{ $evento['cp'] }}, {{ $evento['city'] }}, {{ $evento['province'] }}">
         </iframe>
     </div>
 
@@ -74,11 +70,12 @@
                 Total: 0.00€
             </div>
             <div id="confirmPayButton" class="confirmPayButton">
-                <form action="{{route('payment.index')}}" method="POST">
+                <form action="{{ route('payment.index') }}" method="POST">
                     @csrf
                     <input type="hidden" id="totalPrice" name="totalPrice" value="0">
                     <input type="hidden" id="ticketTId" name="ticketTId" value="0">
-                    <button class="button button-brand confirmPayButtom" id="confirmPayButtom" disabled >Confirmar compra</button>
+                    <button class="button button-brand confirmPayButtom" id="confirmPayButtom" disabled>Confirmar
+                        compra</button>
                 </form>
             </div>
             <!-- El contenido del menú se agregará aquí dinámicamente -->

@@ -120,7 +120,7 @@ class Image extends Model
     public static function getAllImagesByEvent(int $eventId, bool $main = true)
     {
         try {
-            Log::info("Llamada al método Image.getMainImageByEvent", [$eventId]);
+            Log::info("Llamada al método Image.getAllImagesByEvent. Event Id: $eventId");
             // Declaramos la consulta
             $query = self::where('event_id', $eventId);
 
@@ -128,13 +128,40 @@ class Image extends Model
             if (!$main) {
                 $query->where('main', false);
             }
-
             // Recuperamos todas las imagenes del evento
-            $images = $query->get(['small', 'medium', 'big']);
+            $images = $query->get(['id', 'small', 'medium', 'big']);
 
             return $images;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+        }
+    }
+
+    // Función que setea a falso el campo main de todas las imágenes del evento que recibe por parámetro
+    public static function resetMainImage($eventId)
+    {
+        try {
+            Log::info("Llamada a Image.ResetMainImage. Reseteando todas las imagenes a main:false del evento ID: $eventId");
+    
+            self::where('event_id', $eventId)
+                ->update(['main' => false]);
+    
+            Log::info("Imagen principal reseteada para el evento ID: $eventId");
+        } catch (\Exception $e) {
+            Log::error("Error al resetear la imagen principal del evento ID: $eventId - " . $e->getMessage());
+        }
+    }
+    // Función que setea a true el campo main de la imagen que recibe por parámetro
+    public static function setMainImage($imageId)
+    {
+        try {
+            Log::info("Llamada a método Image.setMainImage: Estableciendo a true el campo main de la imagen ID: $imageId");
+    
+            self::where('id', $imageId)
+                ->update(['main' => true]);
+    
+        } catch (\Exception $e) {
+            Log::error("Error al establecer la imagen principal con ID: $imageId - " . $e->getMessage());
         }
     }
 }
