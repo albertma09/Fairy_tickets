@@ -23,7 +23,7 @@
                     <tr>
                         <td colspan="3">
                             <img src="{{ public_path('logo/logoFairyTickets.png') }}"
-                                alt="Logo del sitio web" class="logo-img" />
+                                alt="Logo del sitio web" class="logo-img" >
                         </td>
                     </tr>
 

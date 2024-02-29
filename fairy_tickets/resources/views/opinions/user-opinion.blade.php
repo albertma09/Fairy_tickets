@@ -26,9 +26,9 @@
                     <label for="caretes">Que te ha parecido:</label>
                     <input type="hidden" id="face_rating" name="face_rating" required>
                     <div class="caret-container">
-                        <img src="{{ asset('opinion/bad.png') }}" alt="Valoración 1" class="caret-icon" data-value="1">
-                        <img src="{{ asset('opinion/normal.png') }}" alt="Valoración 2" class="caret-icon" data-value="2">
-                        <img src="{{ asset('opinion/good.png') }}" alt="Valoración 3" class="caret-icon" data-value="3">
+                        <img src="{{ asset('opinion/bad.png') }}" alt="Valoración 1" class="caret-icon" data-value="1" loading="lazy">
+                        <img src="{{ asset('opinion/normal.png') }}" alt="Valoración 2" class="caret-icon" data-value="2" loading="lazy">
+                        <img src="{{ asset('opinion/good.png') }}" alt="Valoración 3" class="caret-icon" data-value="3" loading="lazy">
                     </div>
                     @error('caretes')
                         <div class="msg-error">
