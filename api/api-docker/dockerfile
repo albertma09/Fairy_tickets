@@ -1,0 +1,24 @@
+# Elegimos la imagen que queremos para el contenedor, en este acaso php 8.2
+FROM php:8.2
+
+# Instalamos las dependencias y librerías necesarias para trabajar con imágenes y gd
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ \
+    && docker-php-ext-install gd
+
+# Designamos la carpeta en la que vamos a poner el proyecto
+WORKDIR /var/www/html
+
+# Copiamos el proyecto
+COPY ImgAda .
+
+# Damos los permisos necesarios
+RUN chown -R www-data:www-data \
+    /var/www/html/storage \
+    /var/www/html/bootstrap/cache
+
+# Servimos la api en el puerto 8000
+CMD php artisan serve --host=0.0.0.0 --port=8000

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  laravelapp:
+    container_name: img-api
+    build:
+    # Context indica la ruta desde la cuál se hará el COPY en el dockerfile
+      context: ../
+      dockerfile: api-docker/Dockerfile
+    # Línea para que se inicie al iniciar docker
+    restart: always
+    # Servimos nuestra aplicación en el puerto 8088 del host.
+    ports:
+      - "8088:8000"
