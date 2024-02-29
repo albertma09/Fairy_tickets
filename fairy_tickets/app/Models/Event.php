@@ -94,7 +94,6 @@ class Event extends Model
             $event= Event::select('id', 'name', 'description', 'category_id', 'location_id')
             ->where('id', '=', $id)
             ->first();
-            dd($event);
             return $event;
         } catch (Exception $e) {
             Log::error($e->getMessage());

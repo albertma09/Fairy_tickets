@@ -44,11 +44,11 @@
     </div>
 
     <div class="container">
-        <p>Ubicación: {{ $evento['location_name'] }}, {{ $evento['street'] }}, {{ $evento['number'] }},
-            {{ $evento['cp'] }}, {{ $evento['city'] }}, {{ $evento['province'] }}</p>
+        <p>Ubicación: {{ $ubicacion->name }}, {{ $ubicacion->street }}, {{ $ubicacion->number }},
+            {{ $ubicacion->cp }}, {{ $ubicacion->city }}, {{ $ubicacion->province }}</p>
         <iframe width="600" height="450" frameborder="0" style="border:0"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $evento['location_name'] }}, {{ $evento['street'] }}, {{ $evento['number'] }},
-            {{ $evento['cp'] }}, {{ $evento['city'] }}, {{ $evento['province'] }}">
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMNGMRDRS3lh4Q9Iug9RE6Jy326FkicHY&q={{ $ubicacion->name }}, {{ $ubicacion->street }}, {{ $ubicacion->number }},
+            {{ $ubicacion->cp }}, {{ $ubicacion->city }}, {{ $ubicacion->province }}">
         </iframe>
     </div>
 

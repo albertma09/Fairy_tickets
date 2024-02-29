@@ -42,14 +42,14 @@ class Session extends Model
             Log::info('Llamada al método Session.getAllSessionsByPromotor');
 
             $sessions = DB::table('sessions')
-            ->select('events.name', 'sessions.date', 'sessions.hour', 'sessions.id', DB::raw('COUNT(tickets.id) AS count'))
-            ->join('events', 'events.id', '=', 'sessions.event_id')
-            ->leftJoin('purchases', 'purchases.session_id', '=', 'sessions.id')
-            ->leftJoin('tickets', 'purchases.id', '=', 'tickets.purchase_id')
-            ->where('events.user_id', $id)
-            ->groupBy('events.name', 'sessions.id')
-            ->orderBy('sessions.date')
-            ->get();
+                ->select('events.name', 'sessions.date', 'sessions.hour', 'sessions.id', DB::raw('COUNT(tickets.id) AS count'))
+                ->join('events', 'events.id', '=', 'sessions.event_id')
+                ->leftJoin('purchases', 'purchases.session_id', '=', 'sessions.id')
+                ->leftJoin('tickets', 'purchases.id', '=', 'tickets.purchase_id')
+                ->where('events.user_id', $id)
+                ->groupBy('events.name', 'sessions.id')
+                ->orderBy('sessions.date')
+                ->get();
             Log::info('fin de la carga de sesiones por promotor');
             return $sessions;
         } catch (Exception $e) {
@@ -63,13 +63,13 @@ class Session extends Model
         try {
             Log::info('Llamada al método Session.getAllSessionsByEvent');
 
-            $sessions = DB::table('sessions')
-            ->select('sessions.id', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets', 'tickets.id as ticket_id', 'tickets.description', 'tickets.ticket_amount')
-            ->join('tickets', 'sessions.id', '=', 'tickets.session_id')
-            ->where('sessions.event_id', $id)
-            ->groupBy('sessions.id')
-            ->orderBy('sessions.date')
-            ->get();
+            $sessions = Session::select('sessions.id', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets', 'ticket_types.id AS ticket_id', 'ticket_types.description', 'ticket_types.price', 'ticket_types.ticket_amount')
+                ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
+                ->where('sessions.event_id', $id)
+                ->groupBy('sessions.id', 'ticket_types.id')
+                ->orderBy('sessions.date')
+                ->get();
+
             return $sessions;
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -109,7 +109,7 @@ class Session extends Model
         }
     }
 
-    
+
     // Función que hace el insert a base de datos de una sesión,
     // recibe el id del evento al que pertenece y los datos de sesión en forma de array asociativo
     public static function createSession(int $eventId, array $formData)
