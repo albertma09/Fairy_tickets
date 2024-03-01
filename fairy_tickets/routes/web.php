@@ -114,7 +114,10 @@ Route::post('/createOpinion',[OpinionsController::class, 'createOpinion'])->name
 
 Route::post('/close-sale',[SessionController::class, 'closeSale'])->name('close.sale');
 
-Route::get('/generate-csv/{session_id}', [SessionController::class, 'generateCSV'])->name('generar.csv');
+//pagos
+Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPayment'])->name('payment.index');
+Route::post('/pay',[PaymentController::class,'paymentRedsys'])->name('payment.payToRedsys');
+Route::get('/confirm-purchase',[PaymentController::class,'responseRedsys'])->name('payment.confirmation');
 
 //pagos
 Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPayment'])->name('payment.index');

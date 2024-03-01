@@ -24,7 +24,6 @@ const dniOwner = document.querySelector('#dniOwner');
 const emailOwner = document.querySelector('#emailOwner');
 const mobileOwner = document.querySelector('#mobileOwner');
 
-
 // Función que convierte el dato del localStorage en un array para mostrar los datos de la compra 
 const convertToArray = () => {
     if (localStorage.getItem('dataPurchase') != null) {
@@ -39,18 +38,7 @@ const convertToArray = () => {
             }
         }
     }
-
 }
-
-// const dataNonNominalsTickets = (dataPurchaseConfirm) =>{
-//     console.log(dataPurchaseConfirm);
-//     let quantityTickets = parseInt(dataPurchaseConfirm[0][3]);
-//     let dataTicketsOwner = [];
-//     for (let i = 0; i < quantityTickets; i++) {
-//         dataTicketsOwner.push(dataPurchaseConfirm[0][0]);
-//     } 
-//     return dataTicketsOwner;
-// }
 
 // Función que realiza la inserción de los datos en el recuadro del resumen de la compra
 const insertDataSummaryPurchase = () => {
@@ -93,6 +81,7 @@ const insertDataSummaryPurchase = () => {
     rowDataTotal.classList.add('summary-content-purchase');
     summaryTable.appendChild(rowDataTotal);
     priceToRedsys.value = ((showPrice.toFixed(2)).toString()).replace(/\./g, '');
+    localStorage.removeItem('dataPurchase');
 }
 
 //Función que cuenta la cantidad de tickets seleccionados para generar los formularios de los tickets nominales.
