@@ -38,7 +38,6 @@
                         {{ \Carbon\Carbon::createFromFormat('H:i:s', $session['hour'])->format('H:i') }}</p>
                     <p class="sesion-info">Precio: {{ $session['min_price'] }}€</p>
                     <button class="button button-brand" id="{{ $session['id'] }}" name="session-buy">Comprar</button>
-                    <button class="button button-brand" id="{{ $session['id'] }}" name="session-buy">Comprar</button>
                 </div>
             @endforeach
         </div>
