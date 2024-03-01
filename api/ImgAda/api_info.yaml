@@ -1,0 +1,239 @@
+openapi: 3.1.0
+info:
+  title: Li
+  description: |
+    Esta Api permite el almacenamiento de imágenes para su optimización en el uso web.
+    Recibe una imágen que es reescalada automáticamente a tres tamaños (250px, 700px y 1800px)
+    y devuelve las tres urls correspondientes para su posterior acceso o uso.
+  version: 1.0.0
+tags:
+  - name: Images
+paths:
+  # Upload
+  /images:
+    post:
+      summary: Cargar una imagen
+      description: Sube una imagen y devuelve un array de tres urls en JSON.
+      tags:
+        - Images
+      operationId: store
+      requestBody:
+        required: true
+        content:
+          requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - image
+          - sizes
+        properties:
+          image:
+            type: string
+            format: binary
+          sizes:
+            type: array
+            items:
+              type: number
+              format: float
+            example: [250, 700, 1800]
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/imageUrls"
+        "400":
+          description: El archivo de imagen subido no tiene un formato adecuado.
+            content:
+              text/html:
+                schema:
+                  $ref: "#/components/schemas/errorMessage"
+                example: "No se ha recibido ninguna imagen o tiene un formato erróneo"
+        "413":
+          description: El tamaño del archivo de imagen subido es muy grande.
+            content:
+              text/html:
+                schema:
+                  $ref: "#/components/schemas/errorMessage"
+                example: "El tamaño de la imagen excede el límite"
+        "500":
+          description: Error de servidor.
+            content:
+              text/html:
+                schema:
+                  $ref: "#/components/schemas/errorMessage"
+                examples: 
+                  processingError: 
+                    value: "No se ha podido procesar la imagen"
+                  unexpectedError: 
+                    value: "Ha ocurrido un error inesperado"
+
+  # Petición de imagen
+  /images/{code}:
+    parameters:
+      - $ref: "#/components/parameters/codeParam"
+    get:
+      summary: Recupera una imagen
+      description: Recupera la imagen indicada a través del parámetro.
+      tags:
+        - Images
+      operationId: show
+      responses:
+        "200":
+          description: "OK"
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: El parámetro es erróneo.
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "No se ha podido desencriptar la url"
+        "404":
+          description: No encontrado.
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Archivo no encontrado"
+        "500":
+          description: Error de servidor.
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Ha ocurrido un error inesperado"
+    delete:
+      summary: Eliminar imágenes
+      description: Elimina imágenes basadas en las URLs proporcionadas.
+      tags:
+        - Images
+      operationId: delete
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - urls
+              properties:
+                urls:
+                  type: array
+                  items:
+                    type: string
+                    description: URL de la imagen a eliminar.
+      responses:
+        "200":
+          description: Imágenes eliminadas correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted_files:
+                    type: array
+                    items:
+                      type: string
+                      description: Nombre de archivo de la imagen eliminada.
+        "400":
+          description: Petición incorrecta. No se proporcionaron URLs válidas o el tamaño del archivo excede el límite.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        "404":
+          description: Archivo no encontrado para alguna de las URLs proporcionadas.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        "500":
+          description: Error de servidor. No se pudo eliminar alguna de las imágenes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+
+components:
+  parameters:
+    codeParam:
+      description: Código de la imagen
+      name: code
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/encodedUrl"
+  schemas:
+    imageUrls:
+      type: array
+      maxItems: 3
+      minItems: 3
+      items:
+        type: string
+        maxLength: 400
+        description: La url de uno de los tamaños requeridos para la imagen subida.
+    requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - image
+          - sizes
+        properties:
+          image:
+            type: string
+            format: binary
+          sizes:
+            type: array
+            items:
+              type: number
+              format: float
+            example: [250, 700, 1800]
+    encodedUrl:
+      type: string
+      maxLength: 256
+      example: "eyJpdiI6IjFZV2tFODJMQlFsSHRoZkZrbTl5c1E9PSIsInZhbHVlIjoiYkw1bVVTSnBYTktWL2YxdkJ3R09JWWphR1FBRmIzc2RrZzRqeWxFWEpnZz0iLCJtYWMiOiI5NzBkODU0MGJiN2ZkNzY5NGE0NDU3OTllODhhODNkZWM5ZDY3MjEyOGNmYTgwYjUwYjZlMzljZWZlMWM1NjYzIiwidGFnIjoiIn0="
+  # securitySchemes:
+  #   defaultApiKey:
+  #     description: API key provided in console
+  #     type: apiKey
+  #     name: api-key
+  #     in: header
+  #   basicHttpAuthentication:
+  #     description: Basic HTTP Authentication
+  #     type: http
+  #     scheme: Basic
+  #   bearerHttpAuthentication:
+  #     description: Bearer token using a JWT
+  #     type: http
+  #     scheme: Bearer
+  #     bearerFormat: JWT
+  #   app2AppOauth:
+  #     type: oauth2
+  #     flows:
+  #       clientCredentials:
+  #         tokenUrl: https://learn.openapis.org/oauth/2.0/token
+  #         scopes:
+  #           # Only reading the board allow with delegated access
+  #           board:read: Read the board
+  #   user2AppOauth:
+  #     type: oauth2
+  #     flows:
+  #       authorizationCode:
+  #         authorizationUrl: https://learn.openapis.org/oauth/2.0/auth
+  #         tokenUrl: https://learn.openapis.org/oauth/2.0/token
+  #         scopes:
+  #           #Â Reads and writes permitted via authorization code flow
+  #           board:read: Read the board
+  #           board:write: Write to the board

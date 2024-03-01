@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use stdClass;
 
 class Event extends Model
 {
@@ -86,25 +87,37 @@ class Event extends Model
         }
     }
 
-    public static function getEventsById(int $id)
+    public static function getEventById(int $id)
     {
         try {
-            Log::info('Llamada al método Event.getEventsById');
+            Log::info("Llamada al método Event.getEventsById, id de evento: $id");
 
-            $events = DB::table('events')
-                ->select('events.id as event_id', 'events.name', 'events.description', 'events.image', 'category_id', 'location_id', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price', 'ticket_types.description as ticket_types_description', 'ticket_types.ticket_amount', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
-                ->join('sessions', 'events.id', '=', 'sessions.event_id')
-                ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
-                ->join('locations', 'events.location_id', '=', 'locations.id')
-                ->where('events.id', '=', $id)
-                ->orderBy('sessions.date', 'asc')
-                ->get();
-
-            return $events;
+            $event= Event::select('id', 'name', 'description', 'category_id', 'location_id')
+            ->where('id', '=', $id)
+            ->first();
+            return $event;
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
+    // public static function getEventsById(int $id)
+    // {
+    //     try {
+    //         Log::info("Llamada al método Event.getEventsById, id de evento: $id");
+
+    //         $events = DB::table('events')
+    //             ->select('events.id as event_id', 'events.name', 'events.description', 'category_id', 'location_id', 'sessions.id as session_id', 'sessions.date', 'sessions.hour', 'sessions.nominal_tickets', 'ticket_types.id as ticket_type_id', 'ticket_types.session_id', 'ticket_types.price', 'ticket_types.description as ticket_types_description', 'ticket_types.ticket_amount', 'locations.name as location_name', 'locations.capacity', 'locations.province', 'locations.city', 'locations.street', 'locations.number', 'locations.cp')
+    //             ->join('sessions', 'events.id', '=', 'sessions.event_id')
+    //             ->join('ticket_types', 'sessions.id', '=', 'ticket_types.session_id')
+    //             ->join('locations', 'events.location_id', '=', 'locations.id')
+    //             ->where('events.id', '=', $id)
+    //             ->orderBy('sessions.date', 'asc')
+    //             ->get();
+    //         return $events;
+    //     } catch (Exception $e) {
+    //         Log::error($e->getMessage());
+    //     }
+    // }
 
 
     public static function getEventBySessionId(int $sessionId)
@@ -173,11 +186,23 @@ class Event extends Model
         try {
             Log::info('Llamada al método Event.updateEvent');
 
+
             $eventId = $eventData["event_id"];
+
+            if (isset($eventData["images"])){
+                $images = $eventData["images"];
+                foreach ($images as $imageFile) {
+                    Image::createImage($eventId, $imageFile);
+                }
+            }
             unset($eventData["event_id"]);
+            unset($eventData["images"]);
+            
+            
             DB::table('events')
                 ->where('id', $eventId) // Filtras por algún criterio
                 ->update($eventData);
+
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }

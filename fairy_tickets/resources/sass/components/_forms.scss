@@ -248,7 +248,6 @@ form {
 
 .scroll-secondary-img {
     max-height: 25rem;
-    /* Altura máxima para habilitar el scroll */
     width: 20rem;
     overflow-y: auto;
     display: flex;
@@ -265,7 +264,7 @@ form {
     border: 1px solid #ccc;
     overflow: hidden;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     border-radius: 4px;
 
@@ -276,9 +275,13 @@ form {
         transition: opacity 0.5s ease;
     }
 
-    .icono {
+    .icon {
         font-size: 48px;
         color: $col-claro;
+        display: none;
+    }
+
+    p {
         display: none;
     }
 
@@ -289,12 +292,26 @@ form {
             display: none;
         }
 
-        .icono {
+        p {
             display: block;
+        }
 
-            &:hover{
-                color: $col-fb-danger;
-            }
+        .icon {
+            display: block;
+        }
+    }
+
+    .input-unit {
+        justify-items: center;
+
+        .icon-trash:hover,
+        .icon-trash:hover + p {
+            color: $col-fb-danger;
+        }
+
+        .icon-img:hover,
+        .icon-img:hover + p {
+            color: $col-fb-green;
         }
     }
 }

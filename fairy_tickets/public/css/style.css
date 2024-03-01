@@ -1003,7 +1003,6 @@ form .time-wrapper .time-input #error {
 
 .scroll-secondary-img {
   max-height: 25rem;
-  /* Altura máxima para habilitar el scroll */
   width: 20rem;
   overflow-y: auto;
   display: flex;
@@ -1020,7 +1019,7 @@ form .time-wrapper .time-input #error {
   border: 1px solid #ccc;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   border-radius: 4px;
 }
@@ -1030,9 +1029,12 @@ form .time-wrapper .time-input #error {
   display: block;
   transition: opacity 0.5s ease;
 }
-.secondary-img .icono {
+.secondary-img .icon {
   font-size: 48px;
   color: #fdf7f7;
+  display: none;
+}
+.secondary-img p {
   display: none;
 }
 .secondary-img:hover {
@@ -1041,11 +1043,22 @@ form .time-wrapper .time-input #error {
 .secondary-img:hover img {
   display: none;
 }
-.secondary-img:hover .icono {
+.secondary-img:hover p {
   display: block;
 }
-.secondary-img:hover .icono:hover {
+.secondary-img:hover .icon {
+  display: block;
+}
+.secondary-img .input-unit {
+  justify-items: center;
+}
+.secondary-img .input-unit .icon-trash:hover,
+.secondary-img .input-unit .icon-trash:hover + p {
   color: #F15025;
+}
+.secondary-img .input-unit .icon-img:hover,
+.secondary-img .input-unit .icon-img:hover + p {
+  color: #72c487;
 }
 
 /* Estilos generales para la barra de desplazamiento */
