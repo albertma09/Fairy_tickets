@@ -342,6 +342,7 @@ body > .grid-container {
   flex-wrap: nowrap;
   width: 100%;
   align-items: center;
+  min-height: 100%;
 }
 .body-container main .titulo-cabecera {
   margin: 2rem 0;

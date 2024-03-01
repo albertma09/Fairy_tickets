@@ -34,6 +34,7 @@ body > .grid-container {
         @include flex-container(column, nowrap);
         width: 100%;
         align-items: center;
+        min-height: 100%;
         .titulo-cabecera {
             margin: 2rem 0;
         }
