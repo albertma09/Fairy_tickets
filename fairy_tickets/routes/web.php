@@ -119,10 +119,6 @@ Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPaym
 Route::post('/pay',[PaymentController::class,'paymentRedsys'])->name('payment.payToRedsys');
 Route::get('/confirm-purchase',[PaymentController::class,'responseRedsys'])->name('payment.confirmation');
 
-//pagos
-Route::post('/summary-purchase',[PaymentController::class,'getSessionDataForPayment'])->name('payment.index');
-Route::post('/pay',[PaymentController::class,'paymentRedsys'])->name('payment.payToRedsys');
-Route::get('/confirm-purchase',[PaymentController::class,'responseRedsys'])->name('payment.confirmation');
 
 Route::fallback(function () {
     return ('Opps!!');
