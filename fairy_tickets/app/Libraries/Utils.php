@@ -4,6 +4,9 @@ namespace App\Libraries;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Event;
+use App\Models\Image;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
@@ -123,5 +126,42 @@ class Utils
             Log::error($e->getMessage());
             return [];
         }
+    }
+
+    // Función que primero resetea todas las imágenes de un evento a main=false
+    // y luego establece la imágen recibida por parámetro como la principal
+    public static function changeMainImage($eventId, $imageId)
+    {
+        try {
+            Log::info("Llamada al método EventController.changeMainImage con evento: $eventId y imagen $imageId");
+            Image::resetMainImage($eventId);
+            Image::setMainImage($imageId);
+        } catch (\Exception $ex) {
+            Log::error("Error al cambiar la imagen principal - " . $ex->getMessage());
+        }
+    }
+
+    // Función que convierte resultados de queries personalizadas sobre eventos 
+    // a instancias de la clase Evento, recibe por parámetro
+    public static function createEventInstancesFromStd($input){
+        $events = [];
+            // Convertimos los resultados en Instancias de Evento
+            foreach ($input as $result) {
+                $event = new Event([
+                    'name'        => $result->event ?? null,
+                    'description' => $result->description ?? null,
+                ]);
+                
+                $event->id      = $result->id;
+                $event->hour    = $result->hour ?? null;
+                $event->location = $result->location ?? null;
+                $event->city     = $result->city ?? null;
+                $event->date     = $result->date ?? null;
+                $event->price    = $result->price ?? null;
+                // añadimos la imagen principal de este evento
+                $event->getMainImage();
+                $events[]=$event;
+            }
+        return $events;
     }
 }

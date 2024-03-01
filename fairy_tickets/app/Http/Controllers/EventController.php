@@ -11,7 +11,6 @@ use App\Libraries\Utils;
 use App\Models\Category;
 use App\Models\Location;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -43,9 +42,9 @@ class EventController extends Controller
     {
         try {
             Log::info("Llamada al método EventController.searchBySearchingItem");
-
             $item = $request->input('search-input');
-            $events = Event::getEventsBySearching($item);
+            $results = Event::getEventsBySearching($item);
+            $events = Utils::createEventInstancesFromStd($results);
             return view('search.index', ['events' => $events]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
@@ -58,11 +57,9 @@ class EventController extends Controller
     {
         try {
             Log::info("Llamada al método EventController.searchByCategoryItem");
-
             $item = $name;
-
-            $events = Event::getEventsByCategory($item);
-
+            $results = Event::getEventsByCategory($item);
+            $events = Utils::createEventInstancesFromStd($results);
             return view('search.index', ['events' => $events]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
@@ -209,16 +206,6 @@ class EventController extends Controller
             return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
         } catch (Exception $e) {
             Log::debug($e->getMessage());
-        }
-    }
-    public function changeMainImage($eventId, $imageId)
-    {
-        try {
-            Log::info("Llamada al método EventController.changeMainImage con evento: $eventId y imagen $imageId");
-            Image::resetMainImage($eventId);
-            Image::setMainImage($imageId);
-        } catch (\Exception $ex) {
-            Log::error("Error al cambiar la imagen principal - " . $ex->getMessage());
         }
     }
 }
