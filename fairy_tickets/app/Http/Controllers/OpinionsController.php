@@ -32,9 +32,8 @@ class OpinionsController extends Controller
     public function createOpinion( Request $request){
 
 
-        try{
+        
 
-            // dd($request);
             $validatedData = $request->validate([
                 'purchase_id' => 'required|numeric',
                 'name' => 'required|max:100',
@@ -44,16 +43,12 @@ class OpinionsController extends Controller
                 'comment' => 'required',
             ]);
     
-            // dd($validatedData);
+           
             Opinion::create($validatedData);
 
             return back();
 
-        }catch (Exception $e) {
-            
-            Log::error($e->getMessage());
-            return redirect()->route('user-opinion', ['token'=> $request->token])->with('error', $e->getMessage())->withInput();
-        }
+        
         
         
 

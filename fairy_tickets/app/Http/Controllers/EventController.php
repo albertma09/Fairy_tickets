@@ -121,7 +121,7 @@ class EventController extends Controller
             }
 
             $images = Image::getAllImagesByEvent($id);
-            
+
             if ($images && !empty($images)) {
                 $images = Utils::constructImageUrls($images);
             }
@@ -189,24 +189,27 @@ class EventController extends Controller
     public function edit(Request $request)
     {
 
-       
 
-        $validatedData = $request->validate([
-            'event_id' => 'required',
-            'name' => 'required|max:255',
-            'category_id' => 'required|integer',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location_id' => 'required|integer',
-            'user_id' => 'required|integer',
-            'description' => 'required|string',
-        ]);
-
-        
+        try {
+            $validatedData = $request->validate([
+                'event_id' => 'required',
+                'name' => 'required|max:255',
+                'category_id' => 'required|integer',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'location_id' => 'required|integer',
+                'user_id' => 'required|integer',
+                'description' => 'required|string',
+            ]);
 
 
-        Event::updateEvent($validatedData);
 
-        return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
+
+            Event::updateEvent($validatedData);
+
+            return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+        }
     }
     public function changeMainImage($eventId, $imageId)
     {
