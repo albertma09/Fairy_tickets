@@ -42,9 +42,9 @@ class EventController extends Controller
     {
         try {
             Log::info("Llamada al método EventController.searchBySearchingItem");
-
             $item = $request->input('search-input');
-            $events = Event::getEventsBySearching($item);
+            $results = Event::getEventsBySearching($item);
+            $events = Utils::createEventInstancesFromStd($results);
             return view('search.index', ['events' => $events]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
@@ -57,11 +57,9 @@ class EventController extends Controller
     {
         try {
             Log::info("Llamada al método EventController.searchByCategoryItem");
-
             $item = $name;
-
-            $events = Event::getEventsByCategory($item);
-
+            $results = Event::getEventsByCategory($item);
+            $events = Utils::createEventInstancesFromStd($results);
             return view('search.index', ['events' => $events]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
