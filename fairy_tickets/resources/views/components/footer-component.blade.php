@@ -8,6 +8,6 @@
 </div>
 <div class="promoter-link">
     <h3>Link a promotor</h3>
-    <a href=" {{ auth()->check() ? route('promotor', ['userId' => auth()->user()->id]) : route('login') }}">Promoter's Page</a>
+    <a href=" {{ auth()->check() ? route('promotor', ['userId' => auth()->user()->id]) : route('login') }}">Página promotor</a>
    
 </div>

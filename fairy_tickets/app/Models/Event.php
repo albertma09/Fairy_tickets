@@ -123,6 +123,7 @@ class Event extends Model
             Log::info('Llamada al método Event.getEventsByUserId');
             $events = Event::select('id', 'name', 'description')
                 ->where('user_id', $userId)
+                ->orderBy('id')
                 ->get();
             return $events;
         } catch (Exception $e) {
