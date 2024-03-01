@@ -11,7 +11,6 @@ use App\Libraries\Utils;
 use App\Models\Category;
 use App\Models\Location;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -121,7 +120,7 @@ class EventController extends Controller
             }
 
             $images = Image::getAllImagesByEvent($id);
-            
+
             if ($images && !empty($images)) {
                 $images = Utils::constructImageUrls($images);
             }
@@ -189,7 +188,7 @@ class EventController extends Controller
     public function edit(Request $request)
     {
 
-       
+
 
         $validatedData = $request->validate([
             'event_id' => 'required',
@@ -201,21 +200,11 @@ class EventController extends Controller
             'description' => 'required|string',
         ]);
 
-        
+
 
 
         Event::updateEvent($validatedData);
 
         return redirect()->route('promotor', ['userId' => auth()->user()->id])->with('success', 'El evento ha sido actualizado de forma satisfactoria.');
-    }
-    public function changeMainImage($eventId, $imageId)
-    {
-        try {
-            Log::info("Llamada al método EventController.changeMainImage con evento: $eventId y imagen $imageId");
-            Image::resetMainImage($eventId);
-            Image::setMainImage($imageId);
-        } catch (\Exception $ex) {
-            Log::error("Error al cambiar la imagen principal - " . $ex->getMessage());
-        }
     }
 }

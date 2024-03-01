@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
@@ -122,6 +123,19 @@ class Utils
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return [];
+        }
+    }
+
+    // Función que primero resetea todas las imágenes de un evento a main=false
+    // y luego establece la imágen recibida por parámetro como la principal
+    public function changeMainImage($eventId, $imageId)
+    {
+        try {
+            Log::info("Llamada al método EventController.changeMainImage con evento: $eventId y imagen $imageId");
+            Image::resetMainImage($eventId);
+            Image::setMainImage($imageId);
+        } catch (\Exception $ex) {
+            Log::error("Error al cambiar la imagen principal - " . $ex->getMessage());
         }
     }
 }
