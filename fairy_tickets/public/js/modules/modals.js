@@ -10,7 +10,7 @@ const totalInfoTickets = document.querySelector(".sesiones-container");
 const containers = document.querySelectorAll("#ticket-types-container");
 const ticketID = document.querySelector("#ticketTId");
 let nodes = [];
-let showPrice;
+let showPrice = 0;
 let valueToArray;
 
 //Función que reinicia el conteo del total de tickets seleccionados para la compra
