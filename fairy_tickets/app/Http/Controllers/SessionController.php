@@ -52,10 +52,9 @@ class SessionController extends Controller
         try {
             Log::info("Llamada al metodo SessionController.getSessionsByPromotor");
             $sessions = Session::getAllSessionsByPromotor($id);
-            // dd($sessions);
             return view('sessions.mostrar', ['sessions' => $sessions]);
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
