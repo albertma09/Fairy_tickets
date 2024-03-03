@@ -1468,4 +1468,9 @@ hr {
   margin-bottom: 2rem;
 }
 
+.error-input {
+  font-weight: bold;
+  color: #F15025;
+}
+
 /*# sourceMappingURL=style.css.map */

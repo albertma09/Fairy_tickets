@@ -87,6 +87,7 @@ class EventController extends Controller
                 // Agregar datos de tickets
                 $tickets[] = [
                     'id' => $row->ticket_id, // Changed to ticket_id
+                    'event_id'=>$event->id,
                     'session_id' => $row->id, // Changed to id
                     'price' => $row->price, // Assuming you have this property in the ticket_types table
                     'ticket_types_description' => $row->description, // Changed to description
