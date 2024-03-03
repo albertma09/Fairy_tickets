@@ -54,7 +54,7 @@ Para ver los detalles de los Sketching y Mockups, puede dirigirse al siguiente e
 En el siguiente enlace, puede encontrar toda la información a detalle de la guia de estilos de la aplicación https://www.figma.com/file/cOq2a3i65rwIY4i7gC5tbq/gr01-Gu%C3%ADa-de-estilos?type=design&node-id=0-1&mode=design&t=RbeKfi6LfndwQ6Wj-0[Guia de estilos]
 ====
 == Manual de instalación/Distribución de la Aplicación. 
-==== Isard
+=== Isard
 Instala Apache2 y PHP en tu servidor Debian ejecutando los siguientes comandos:
 
 [source,sh]
@@ -63,7 +63,7 @@ sudo apt update
 sudo apt install apache2 php php-cli php-mbstring unzip
 ----
 
-===== Configuración de Apache2
+==== Configuración de Apache2
 
 Edita el archivo de configuración de Apache2 para permitir el uso de archivos `.htaccess` y habilitar el módulo `rewrite`:
 

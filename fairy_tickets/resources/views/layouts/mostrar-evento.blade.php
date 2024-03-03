@@ -19,7 +19,9 @@
             @yield('content')
        
     </main>
-    <footer></footer>
+    <footer class="footer">
+        <x-footer-component />
+    </footer>
     <script type="module" src="{{ asset('js/main.js') }}"></script>
 </body>
 

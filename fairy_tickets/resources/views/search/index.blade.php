@@ -12,12 +12,5 @@
         <div>No hay eventos</div>
     @endforelse
 
-    {{-- <ul>
-        @forelse ($events as $event)
-            <li>{{$event->name}}</li>
-        @empty
-        <li>No hay ningún evento que mostrar.</li>
-        @endforelse
-    </ul> --}}
 
 @endsection
