@@ -34,8 +34,8 @@ class LocationController extends Controller
                 'province' => 'required|string|max:100',
                 'city' => 'required|string|max:100',
                 'street' => 'required|string|max:150',
-                'number' => 'required|string|max:3|numeric',
-                'cp' => 'required|string|max:10|numeric',
+                'number' => 'required|string|digits_between:1,4',
+                'cp' => 'required|string|digits:5',
             ]);
             if ($validatedData) {
                 $location = Location::create($validatedData);

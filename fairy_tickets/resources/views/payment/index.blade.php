@@ -67,44 +67,28 @@
                     <div class="input-unit">
                         <label for="nameOwner">Nombre</label>
                         <input type="text" id="nameOwner" name="owner" maxlength="250" autofocus required />
-                        @error('owner')
-                            <p class="msg-error">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                        <div name="error" id="error_nameOwner"></div>
                     </div>
 
                     <!-- DNI -->
                     <div class="input-unit">
                         <label for="dniOwner">DNI</label>
                         <input type="text" id="dniOwner" name="dniOwner" maxlength="9" autofocus required />
-                        @error('dniOwner')
-                            <p class="msg-error">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                        <div name="error" id="error_dniOwner"></div>
                     </div>
 
                     <!-- Email -->
                     <div class="input-unit">
                         <label for="emailOwner">Email</label>
                         <input type="email" id="emailOwner" name="emailOwner" maxlength="250" autofocus required />
-                        @error('emailOwner')
-                            <p class="msg-error">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                        <div name="error" id="error_emailOwner"></div>
                     </div>
 
                     <!-- Movil -->
                     <div class="input-unit">
                         <label for="mobileOwner">Movil</label>
                         <input type="number" id="mobileOwner" name="mobileOwner" max="999999999" autofocus required />
-                        @error('mobileOwner')
-                            <p class="msg-error">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                        <div name="error" id="error_mobileOwner"></div>
                     </div>
                     <div id="inputs-hidden">
                         <input type="hidden" id="ticketsIdOwner" name="ticketsIdOwner">
@@ -114,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <button class="button button-brand" type="submit">Pagar</button>
+            <button id="pay" class="button button-brand confirmPayButton" type="submit" disabled>Pagar</button>
         </form>
     </div>
 @endsection

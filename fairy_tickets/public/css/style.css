@@ -84,6 +84,12 @@ html {
 
 h2 {
   font-family: "Fjalla One", sans-serif;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-family: "Fjalla One", sans-serif;
+  margin: 1.5rem;
 }
 
 a,
@@ -121,7 +127,6 @@ button {
 }
 
 .centrado {
-  margin-top: 12.5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -342,6 +347,7 @@ body > .grid-container {
   flex-wrap: nowrap;
   width: 100%;
   align-items: center;
+  min-height: 100%;
 }
 .body-container main .titulo-cabecera {
   margin: 2rem 0;
@@ -485,9 +491,19 @@ nav .filter-categories {
   }
 }
 
+.content-options-promotor {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 1rem 0;
+}
+
 .add-event {
-  width: 16rem;
-  padding: 1.2rem;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .promotor-container {
@@ -867,6 +883,7 @@ form .input-unit {
   grid-template-columns: minmax(0, 1fr);
   gap: 0.3rem;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
 form .form-ticket-unit {
   display: flex;
@@ -1201,7 +1218,7 @@ dialog.corner-button {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: auto;
+  width: 70%;
   flex-wrap: wrap;
   padding: 1rem;
   margin: 2rem;
@@ -1212,12 +1229,13 @@ dialog.corner-button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 1rem;
 }
 .session-card-data-name {
   text-align: center;
   font-weight: bold;
   font-size: 1.1rem;
-  margin: 1rem 0;
+  margin: 1rem 1rem 2rem 1rem;
 }
 .session-card-data-img {
   display: flex;
@@ -1465,6 +1483,11 @@ hr {
 
 .return-home {
   margin-bottom: 2rem;
+}
+
+.error-input {
+  font-weight: bold;
+  color: #F15025;
 }
 
 /*# sourceMappingURL=style.css.map */

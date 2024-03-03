@@ -1,6 +1,15 @@
+.content-options-promotor{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    margin: 1rem 0;
+}
 .add-event {
-    width: 16rem;
-    padding: 1.2rem;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .promotor-container {

@@ -27,12 +27,23 @@ class ImageController extends Controller
                 return response()->json(['errors' => $errors], 400);
             }
 
+            $requestData = Processor::extractData($request);
+
+            // Comprobamos que la contraseña sea correcta
+            if (!Validator::verifyCredentials($requestData['pwd'])) {
+                return response()->json(['error' => 'La credencial enviada no es correcta.'], 401);
+            }
+
             // Guardamos el contenido de los parámetros enviados
-            $imageFile = $request->file('image');
-            $sizes = $request->input('sizes');
+            $sizes = $requestData['sizes'];
+            // Comprobamos que el formato del array sizes sea correcto y lo guardamos
+            $errors = Validator::validateSizesInput($sizes);
+            if (!empty($errors)) {
+                return response()->json(['errors' => $errors], 400);
+            }
 
+            $imageFile = $requestData['image'];
 
-            Log::debug("Contenido de sizes: $sizes");
             // Procesamos la imagen y recuperamos los códigos de imagen para devolver
             $processedImages = Processor::processImage($imageFile, $sizes);
             if ($processedImages) {

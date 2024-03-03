@@ -38,6 +38,10 @@ class Image extends Model
                         'name' => 'sizes',
                         'contents' => json_encode($sizes)
                     ],
+                    [
+                        'name' => 'pwd',
+                        'contents' => env('IMAGE_API_KEY')
+                    ],
                 ],
             ]);
             // Posibles respuestas de la API
@@ -45,7 +49,7 @@ class Image extends Model
                 // Si la respuesta es satisfactoria (200)
                 $responseData = json_decode($response->getBody()->getContents(), true);
 
-                // Comprobamos que lo que nos devuelve sea un array 
+                // Comprobamos que lo que nos devuelve sea un array
                 // y este devuelva tantas URLs como tamaños se han pedido
                 if (is_array($responseData['codes']) && count($responseData['codes']) === count($sizes)) {
                     // Devolvemos el array con las URLs
@@ -58,15 +62,14 @@ class Image extends Model
             } else {
                 // Si el código de respuesta no es 200, logeamos el mensaje de error
                 $errorMessage = json_decode($response->getBody()->getContents(), true)['error'] ?? 'Error desconocido';
-                Log::error('Fallo al procesar la imagen: ' . $errorMessage);
-                return null;
+                throw new Exception('Fallo al procesar la imagen: ' . $errorMessage);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
     }
 
-    // Función que recibe la id de un evento, un archivo de imagen y un booleano opcional. 
+    // Función que recibe la id de un evento, un archivo de imagen y un booleano opcional.
     // Llama a la API que almacena las imágenes y guarda en base de datos la imagen con las 3 URLs recibidas de vuelta.
     // Estas URLs apuntan a las tres versiones de la imagen enviada
     // Si el booleano es 'true' marca la imagen en cuestión como imagen principal del evento, por defecto es 'false'
@@ -142,10 +145,10 @@ class Image extends Model
     {
         try {
             Log::info("Llamada a Image.ResetMainImage. Reseteando todas las imagenes a main:false del evento ID: $eventId");
-    
+
             self::where('event_id', $eventId)
                 ->update(['main' => false]);
-    
+
             Log::info("Imagen principal reseteada para el evento ID: $eventId");
         } catch (\Exception $e) {
             Log::error("Error al resetear la imagen principal del evento ID: $eventId - " . $e->getMessage());
@@ -156,10 +159,9 @@ class Image extends Model
     {
         try {
             Log::info("Llamada a método Image.setMainImage: Estableciendo a true el campo main de la imagen ID: $imageId");
-    
+
             self::where('id', $imageId)
                 ->update(['main' => true]);
-    
         } catch (\Exception $e) {
             Log::error("Error al establecer la imagen principal con ID: $imageId - " . $e->getMessage());
         }

@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @if (!isset($event))
-@section('title', 'Nuevo Evento')
+    @section('title', 'Nuevo Evento')
 @else
-@section('title', $event->name)
+    @section('title', $event->name)
 @endif
 
 @section('content')
@@ -74,20 +74,20 @@
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
                 <!-- Imagen Principal -->
                 @if (!isset($event))
-                <div class="input-unit">
-                    <label for="image">Imagen principal del evento</label>
-                    <input type="file" id="image" name="image" accept="image/*">
-                    @if ($errors->has('image'))
-                        <div class="msg-error">
-                            {{ $errors->first('image') }}
-                        </div>
-                    @endif
-                    @error('image')
-                        <p class="msg-error">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
+                    <div class="input-unit">
+                        <label for="image">Imagen principal del evento</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                        @if ($errors->has('image'))
+                            <div class="msg-error">
+                                {{ $errors->first('image') }}
+                            </div>
+                        @endif
+                        @error('image')
+                            <p class="msg-error">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
                 @endif
                 <!-- Descripción -->
                 <div class="input-unit">
@@ -256,12 +256,19 @@
 
             @if (isset($event))
                 <div class="secondary-img-container">
-                    
+
                     <input type="file" name="images[]" id="images" multiple accept="image/*">
                     <div class="scroll-secondary-img">
-                        <div class="secondary-img">
-                            <img
-                                src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" >
+                        @foreach ($images as $image)
+                            <div class="secondary-img">
+                                <img srcset="{{ $image['small'] }} 300w,
+                                {{ $image['medium'] }} 700w,
+                                {{ $image['big'] }} 1600w"
+                                sizes="max-width: 767px 300px,
+                                (min-width: 768px)
+                                and (max-width: 1023px) 50vw,
+                                min-width: 1024px 33.3vw"
+                                    src="large-image.jpg" alt="Imagen del evento" loading="lazy">
                                 <div class="input-unit">
                                     <i class="fas fa-trash-alt icon icon-trash"></i>
                                     <p>borrar</p>
@@ -270,25 +277,9 @@
                                     <i class="far fa-images icon icon-img"></i>
                                     <p>Imagen principal</p>
                                 </div>
-                                
-                                
-                                
-                        </div>
-                        {{-- <div class="secondary-img">
-                            <img
-                                src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
-                                <i class="fas fa-trash-alt icono"></i>
-                        </div>
-                        <div class="secondary-img">
-                            <img
-                                src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
-                                <i class="fas fa-trash-alt icono"></i>
-                        </div>
-                        <div class="secondary-img">
-                            <img
-                                src="https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80" />
-                                <i class="fas fa-trash-alt icono"></i>
-                        </div> --}}
+                            </div>
+                        @endforeach
+
                     </div>
 
                 </div>

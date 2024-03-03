@@ -23,5 +23,4 @@ class PromotorController extends Controller
             Log::debug($e->getMessage());
         }
     }
-
 }

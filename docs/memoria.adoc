@@ -1,10 +1,13 @@
 = Fairy Tickets
 Albert Mateos - Aitor Lopera - Diego Amador 
+:icons:
 :doctype: book
 :encoding: utf-8
 :lang: en
 :toc: left
 :numbered:
+:warning-title: ATENCIÓN
+:important-title: IMPORTANTE
 
 ==  Descripción de los miembros del equipo.
 * Albert Mateos
@@ -54,7 +57,217 @@ Para ver los detalles de los Sketching y Mockups, puede dirigirse al siguiente e
 En el siguiente enlace, puede encontrar toda la información a detalle de la guia de estilos de la aplicación https://www.figma.com/file/cOq2a3i65rwIY4i7gC5tbq/gr01-Gu%C3%ADa-de-estilos?type=design&node-id=0-1&mode=design&t=RbeKfi6LfndwQ6Wj-0[Guia de estilos]
 ====
 == Manual de instalación/Distribución de la Aplicación. 
-==== Isard
+En esta sección se explicará brevemente los pasos a seguir para realizar el despliegue de la aplicación y extensiones necesarias para su funcionamiento. En primer lugar explicaremos como hacer el despliegue en local, y después en servidor, en este caso usaremos una máquina virtual ubuntu en un servidor de Isard.
+
+CAUTION: Atención, ambos manuales explican el despliegue en una máquina con un sistema que utilice el shell _bash_. Para el despliegue en una máquina con Windows los pasos a seguir son los mismos pero la manera de instalar los diferentes _softwares_ que necesitaremos es disinta.
+
+=== Despliegue en local
+
+Para realizar el despliegue del proyecto en un entorno local no necesitamos ningun servidor puesto que usaremos el que lleva "built-in" artisan para servir nuestro sitio web. 
+
+Suponiendo que la máquina en la que hagamos la instalación tiene lo básico instalado, los pasos a seguir son los siguientes:
+
+==== Preparación del entorno
+
+Primero de todo nos aseguraremos que cualquier dependencia que vayamos a instalar este al día.
+
+[source,sh]
+----
+sudo apt update
+----
+
+Una vez hecho esto, procederemos a instalar todo el software que necesitaremos en nuestro entorno para servir el proyecto.
+
+[source,sh]
+----
+sudo apt install php php-cli php-mbstring php-xml php-zip php-gd
+----
+
+[NOTE]
+====
+Explicación de cada una de las dependencias instaladas:
+
+  - `php`: Instala PHP.
+    - `php-cli`: Instala la interfaz de línea de comandos de PHP, necesaria para ejecutar comandos de PHP en la terminal.
+    - `php-mbstring`: Instala la extensión de manejo de cadenas multibyte para PHP, necesaria para manipular texto multibyte.
+    - `php-gd`: Instala la extensión GD para PHP, necesaria para manipular imágenes.
+    - `unzip`: Instala la herramienta de descompresión de archivos zip. Muchas de las dependencias de Laravel vienen comprimidas así que necesitaremos un software descompresor si no lo tenemos ya.
+====
+
+Por último, hemos de instalar composer, una herramienta de gestión de dependencias de PHP, y por extensión de Laravel.
+
+[source,sh]
+----
+sudo apt install composer
+----
+
+
+==== Clonar el Repositorio GIT
+
+El siguiente paso es descargar todo el proyecto desde el repositorio de GIT. Para hacer esto, basta con ir al directorio de la máquina en el que se quiera instalar el proyecto y ejecutar el siguiente comando.
+
+[source,sh]
+----
+git clone https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git .
+----
+
+TIP: El punto del final del comando significa en la ruta actual. Es decir en el directorio en el que nos encontremos en el momento de ejecutarlo. Si se quiere se puede cambiar por una ruta física o por una relativa. 
+
+==== Copiar y configurar el archivo .env del proyecto
+
+El siguiente paso consiste en localizar el archivo .env de la aplicación web, para ello nos hemos de ubicar en la carpeta raíz del repositorio, es decir allá donde lo hayamos clonado.
+
+[NOTE]
+====
+El archivo `.env` en Laravel es un archivo de configuración que contiene variables de entorno para ajustar la configuración del proyecto. Debes configurar debidamente este archivo para que tu aplicación funcione correctamente.
+====
+
+[source,sh]
+----
+cd /ruta/a/tu/proyecto
+----
+
+Desde este punto hemos de entrar en la siguiente ruta: `fairy_tickets/`, que sería la carpeta raíz del proyecto Laravel y allá localizar el archivo `.env.example` y copiarlo en el mismo lugar pero con el nombre .env, de esta manera crearemos el archivo de variables de entorno de nuestra aplicación a partir de una plantilla preconfigurada guardada en el repositorio GIT.
+
+[source,sh]
+----
+cd fairy_tickets
+cp .env.example .env
+----
+
+Una vez hecho esto hemos de abrir el nuevo archivo `.env` con el editor de texto en línea de comandos nano.
+
+[source,sh]
+----
+sudo nano .env
+----
+
+Una vez abierto el archivo buscamos hasta encontrar estas líneas:
+
+[source]
+----
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+----
+
+Y las cambiamos a:
+
+[source]
+----
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=fairy_tickets
+DB_USERNAME=postgres
+DB_PASSWORD=root
+----
+
+Guardamos los cambios y cerramos nano:
+
+1. Presiona `Ctrl + O` para escribir los cambios en el archivo.
+
+2. Presiona `Enter` para confirmar el nombre del archivo (si se te solicita).
+
+3. Presiona `Ctrl + X` para salir de `nano`.
+
+Con esto habremos configurado lo necesario para que al levantar el contenedor de docker donde está nuestra base de datos, la aplicación conecte con ésta.
+
+==== Instalación de dependencias del proyecto Laravel
+
+Una vez configurado el archivo `.env`, el siguiente paso es instalar todas las dependencias necesarias para el proyecto mediante el gestor Composer.
+
+Ubicándonos de nuevo en la carpeta fairy_tickets/, la carpeta raíz del proyecto Laravel, en la que deberíamos de encontrarnos, si se ha seguido la guía hasta este punto, lanzamos el siguiente comando:
+
+[source,sh]
+----
+composer install
+----
+
+Este comando instalará todas las dependencias especificadas en el archivo `composer.json`, que son las que necesita nuestro proyecto.
+
+Llegados aquí, en cuanto a la parte web del proyecto sólo nos quedaría generar una `APP_KEY` de Laravel para poder funcionar (a falta de base de datos y la API encargada de las imágenes). Para esto, seguimos en la carpeta raíz del proyecto Laravel `fairy_tickets/` y lanzamos el siguiente comando:
+
+[source,sh]
+----
+sudo php artisan key:generate
+----
+
+==== Configuración del docker y la base de datos
+
+En el siguiente paso, explicaremos cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql y posteriormente levantar el contenedor docker para que nuestra aplicación se pueda conectar a la base de datos. 
+
+La base de datos será creada desde un script, en el momento de crear el contenedor y lanzarlo por primera vez, para poder modificar el _locale_ y la colación de la misma. 
+
+Así, Lo primero que hemos de hacer es localizar la carpeta docker_config en el proyecto. Desde la raíz del repositorio GIT, la ruta es `~/docker-config/`. Dentro encontraremos tres ficheros: `compose.yml`, `dockerfile` y `initdb-script.sql`. 
+
+Nos colocamos en línea de comandos en esa carpeta y montamos la imagen del dockerfile con el comando de docker: build:
+
+[source,docker]
+----
+cd docker-config
+docker compose build
+----
+
+Una vez creada la imagen tendremos que lanzar el comando up para lanzar los contenedores indicados en el archivo `compose.yml`:
+
+[source,docker]
+----
+docker compose up -d
+----
+
+De esta manera, ya tendremos el contenedor docker de nuestra base de datos postgres en funcionamiento.
+
+CAUTION: Atención, el archivo `compose.yml` está configurado para levantar el contenedor de Postgres y conectarlo al puerto 5432 del host, si este ya está en uso se tendra que cambiar el numero de la izquierda de la siguiente linea:
+
+[source,yml]
+----
+ports:
+      - 5432:5432
+----
+
+Para terminar este paso, hemos de rellenar la base de datos con algunos datos iniciales y generar las tablas que necesitará nuestra aplicación. Para ello nos colocamos, de nuevo, en la carpeta raíz del proyecto Laravel: `~/fairy_tickets` y lanzamos el comando:
+
+[source,sh]
+----
+sudo php artisan db:seed
+----
+
+==== Configuración de la API
+
+El siguiente y último paso para desplegar la aplicación en local es la configuración de la API que procesa y guarda las imágenes de la aplicación.
+
+La API se encuentra en la carpeta `~/api` de la raíz del repositorio GIT y está todo preparado para lanzarla en un contenedor docker y que la página web se conecte a la API ahí.
+
+Este proceso es muy parecido a lo que hemos hecho con el proyecto Laravel de la aplicación principal. Salvo que los directorios son distintos.
+
+1. **Configuración `.env`:** Copiar el archivo .`example.env` a `.env` en la siguiente ruta desde la raíz del repositorio GIT: `~/api/ImgAda`. En este caso no hay que cambiar ninguna línea, ya está todo preparado.
+
+2. **Composer install:** En la misma ruta que el paso anterior lanzar el comando `composer install`.
+
+3. **Creación de clave `APP_KEY`**: En la misma ruta que los dos pasos anteriores lanzar el comando `sudo php artisan key:generate`.
+
+4. **Creación de imágen Docker y lanzamiento de contenedores**: nos ubicamos en la carpeta `~/api/api-docker` desde la raíz del repositorio GIT. Hay deberían de haber dos archivos, el archivo `dockerfile` con lo necesario para crear la imagen que se usará en el contenedor y las instrucciones para el levantamiento en el archivo `docker-compose.yml`. Una vez ubicados aquí lanzamos los comandos `docker compose build` y cuando termine de generar la imagen `docker compose up -d`.
+
+CAUTION: En este caso, la API se conecta al puerto 8088 del host, si estuviera ocupado hay que cambiarlo de la misma manera que en el paso levantamiento del docker de la base de datos.
+
+Ahora deberíamos tanto la base de datos como la API corriendo en sendos contenedores docker y en principio debería de estar todo listo para el uso de la aplicación
+
+==== Puesta en marcha de la web
+
+Para comprobar que todo funciona bien y empezar a usar la web en local puedes iniciar el servidor de desarrollo de Laravel utilizando el comando `php artisan serve`:
+
+[source,sh]
+----
+php artisan serve
+----
+
+Esto iniciará un servidor de desarrollo en `http://localhost:8000`, donde podrás acceder a la aplicación.
+
+=== Isard
 Instala Apache2 y PHP en tu servidor Debian ejecutando los siguientes comandos:
 
 [source,sh]
@@ -63,7 +276,7 @@ sudo apt update
 sudo apt install apache2 php php-cli php-mbstring unzip
 ----
 
-===== Configuración de Apache2
+==== Configuración de Apache2
 
 Edita el archivo de configuración de Apache2 para permitir el uso de archivos `.htaccess` y habilitar el módulo `rewrite`:
 
@@ -150,6 +363,38 @@ El archivo `.env` en Laravel es un archivo de configuración que contiene variab
     MAIL_ENCRYPTION=tls
     MAIL_FROM_ADDRESS=your_email@example.com
     MAIL_FROM_NAME="${APP_NAME}"
+    ```
+
+    Configuración de la app principal
+    ```
+    #numero de eventos a mostrar en el home por categoría
+    EVENTSBYCATEGORY = 4 
+
+    #URL de la conexión a la pasarela de pagos
+    URL_CONNECTION = https://sis-t.redsys.es:25443/sis/realizarPago 
+
+    #URL de los errores de la pasarela
+    URL_DESCRIPTION_ERROR = https://pagosonline.redsys.es/codigosRespuesta.html 
+
+    # Líneas de configuración de la pasarela de pagos
+    DS_MERCHANT_CURRENCY = 978
+    DS_MERCHANT_MERCHANTCODE = 999008881
+    DS_MERCHANT_TERMINAL = 001
+    DS_MERCHANT_TRANSACTIONTYPE = 0
+    Ds_SignatureVersion = HMAC_SHA256_V1
+    claveSHA256 = sq7HjrUOBfKmC576ILgskD5srU870gJ7
+    ACTIVEREDSYS = true
+
+    # Líneas de configuración de la conexión a la API
+
+    # Tamaños deseados para las diferentes versiones de las imágenes, en píxeles (puede variar la cantidad de tamaños)
+    IMAGE_SIZES = [300,700,1600]
+
+    # URL de la conexión a la API
+    IMAGE_API_URL= "http://127.0.0.1:8088/api/v1/images"
+
+    # Contraseña para los endpoints protegidos de la API
+    IMAGE_API_KEY= "CxSJj7WKdWYy90hX4vJjaS6JK2"
     ```
 
     Asegúrate de ajustar estos valores según las necesidades específicas de tu proyecto.

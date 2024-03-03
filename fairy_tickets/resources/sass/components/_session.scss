@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: auto;
+    width: 70%;
     flex-wrap: wrap;
     padding: 1rem;
     margin: 2rem;
@@ -13,12 +13,13 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin: 1rem;
 
         &-name {
             text-align: center;
             font-weight: bold;
             font-size: 1.1rem;
-            margin: 1rem 0;
+            margin: 1rem 1rem 2rem 1rem;
         }
 
         &-img {
