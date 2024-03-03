@@ -48,7 +48,7 @@ class Utils
         }
     }
 
-    // Función que recibe una fecha, hora y minutos y devuelve un objeto datetime de Carbon 
+    // Función que recibe una fecha, hora y minutos y devuelve un objeto datetime de Carbon
     public static function parseDateTime(string $date, string $hours, string $minutes): Carbon
     {
         return Carbon::parse("$date $hours:$minutes");
@@ -141,27 +141,29 @@ class Utils
         }
     }
 
-    // Función que convierte resultados de queries personalizadas sobre eventos 
+    // Función que convierte resultados de queries personalizadas sobre eventos
     // a instancias de la clase Evento, recibe por parámetro
-    public static function createEventInstancesFromStd($input){
+    public static function createEventInstancesFromStd($input)
+    {
         $events = [];
-            // Convertimos los resultados en Instancias de Evento
-            foreach ($input as $result) {
-                $event = new Event([
-                    'name'        => $result->event ?? null,
-                    'description' => $result->description ?? null,
-                ]);
-                
-                $event->id      = $result->id;
-                $event->hour    = $result->hour ?? null;
-                $event->location = $result->location ?? null;
-                $event->city     = $result->city ?? null;
-                $event->date     = $result->date ?? null;
-                $event->price    = $result->price ?? null;
-                // añadimos la imagen principal de este evento
-                $event->getMainImage();
-                $events[]=$event;
-            }
+        // Convertimos los resultados en Instancias de Evento
+        foreach ($input as $result) {
+            $event = new Event([
+                'name'        => $result->event ?? null,
+                'description' => $result->description ?? null,
+            ]);
+
+            $event->id      = $result->id;
+            $event->category = $result->category ?? null;
+            $event->hour    = $result->hour ?? null;
+            $event->location = $result->location ?? null;
+            $event->city     = $result->city ?? null;
+            $event->date     = $result->date ?? null;
+            $event->price    = $result->price ?? null;
+            // añadimos la imagen principal de este evento
+            $event->getMainImage();
+            $events[] = $event;
+        }
         return $events;
     }
 }
