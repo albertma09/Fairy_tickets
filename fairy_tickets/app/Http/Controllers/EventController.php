@@ -33,7 +33,12 @@ class EventController extends Controller
 
         $categories = Category::getCategories();
         $userLocations = Location::getLocationsByUser();
-        return view('events.create', ['locations' => $userLocations, 'categories' => $categories, 'event' => $event]);
+        $images = Image::getAllImagesByEvent($id);
+        if ($images && !empty($images)) {
+            $images = Utils::constructImageUrls($images);
+        }
+
+        return view('events.create', ['locations' => $userLocations, 'categories' => $categories, 'event' => $event, 'images' => $images]);
     }
 
 

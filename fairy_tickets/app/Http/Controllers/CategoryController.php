@@ -19,6 +19,7 @@ class CategoryController extends Controller
             $categories = Category::getTotalCategories();
             $results = Category::getCategorizablesCards();
             $events = Utils::createEventInstancesFromStd($results);
+
             return view('home.index', ['events' => $events, 'categories' => $categories]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
