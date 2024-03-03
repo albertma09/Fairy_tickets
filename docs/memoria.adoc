@@ -334,17 +334,25 @@ El archivo `.env` en Laravel es un archivo de configuración que contiene variab
 2. **Configuración de la conexión a la base de datos**:
 
     ```
-    DB_CONNECTION=mysql
+    DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=nombre_base_de_datos
-    DB_USERNAME=nombre_usuario
-    DB_PASSWORD=contraseña
+    DB_PORT=5432
+    DB_DATABASE=fairy_tickets
+    DB_USERNAME=postgres
+    DB_PASSWORD=root
     ```
 
-    Reemplaza `nombre_base_de_datos` con el nombre de tu base de datos, `nombre_usuario` con el nombre de usuario de la base de datos, y `contraseña` con la contraseña correspondiente.
+    Como hemos explicado en el despliegue en local, estas son las líneas que deberías tener en tu `env`.
 
-3. **Configuración de otros ajustes**: Además de la conexión a la base de datos, puedes configurar otras variables de entorno en el archivo `.env` según sea necesario. Algunas de las variables comunes incluyen:
+3. **Configuración de conexión a la API**:
+    Para configurar la conexión a la API, en la carpeta raíz del proyecto Laravel, es decir desde la raíz delk repositorio GIT: `~/fairy_tickets`.
+    , basta con cambiar la URL del parámetro `IMAGE_API_URL` del archivo `.env` de la siguiente manera:
+
+     ```
+    IMAGE_API_URL= "http://192.168.60.60:8088/api/v1/images"
+    ```
+
+4. **Configuración de otros ajustes**: Además de la conexión a la base de datos, puedes configurar otras variables de entorno en el archivo `.env` según sea necesario. Algunas de las variables comunes incluyen:
 
     ```
     APP_NAME=Nombre_de_la_aplicación
@@ -620,8 +628,6 @@ una vez la llave generada accederemos a la ruta `/var/www/html/gr01-mateos-loper
 sudo docker compose build
 sudo docker compose up -d
 ----
-
-
 
 = Documentación de la API de verificación de tickets
 
