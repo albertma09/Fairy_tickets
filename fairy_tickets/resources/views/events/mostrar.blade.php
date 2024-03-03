@@ -11,7 +11,15 @@
     <div class="slider-container">
         @if ($imagenes && !empty($imagenes))
             @foreach ($imagenes as $imagen)
-                <img class="slider-item" src="{{ $imagen['big'] }}" />
+                <img class="slider-item"
+                    srcset="{{ $imagen['small'] }} 300w,
+                                {{ $imagen['medium'] }} 700w,
+                                {{ $imagen['big'] }} 1600w"
+                    sizes="max-width: 767px 300px,
+                                (min-width: 768px)
+and (max-width: 1023px) 100vw,
+                                min-width: 1024px 100vw"
+                    alt="Imagen del evento" />
             @endforeach
         @else
             <p>No se han encontrado imágenes para este evento.</p>
