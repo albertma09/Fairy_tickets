@@ -63,6 +63,8 @@ Route::middleware(['auth.redirect'])->group(function () {
         [SessionController::class, 'showSessionsByPromotor']
     )->name('sessions.mostrar');
 
+    Route::get('session/{session_id}',[SessionController::class, 'generateCSV'])->name('generar.csv');
+
     Route::get(
         '/manage/{eventId}/new-session',
         [SessionController::class, 'showCreateForm']
