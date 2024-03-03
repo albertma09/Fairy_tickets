@@ -268,7 +268,7 @@
                                 (min-width: 768px)
                                 and (max-width: 1023px) 50vw,
                                 min-width: 1024px 33.3vw"
-                                    src="large-image.jpg" alt="imagen principal del evento" loading="lazy">
+                                    src="large-image.jpg" alt="Imagen del evento" loading="lazy">
                                 <div class="input-unit">
                                     <i class="fas fa-trash-alt icon icon-trash"></i>
                                     <p>borrar</p>

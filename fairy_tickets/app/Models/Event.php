@@ -92,15 +92,15 @@ class Event extends Model
         try {
             Log::info("Llamada al método Event.getEventsById, id de evento: $id");
 
-            $event= Event::select('id', 'name', 'description', 'category_id', 'location_id')
-            ->where('id', '=', $id)
-            ->first();
+            $event = Event::select('id', 'name', 'description', 'category_id', 'location_id', 'user_id')
+                ->where('id', '=', $id)
+                ->first();
             return $event;
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
-    
+
     public static function getEventBySessionId(int $sessionId)
     {
         try {
@@ -171,7 +171,7 @@ class Event extends Model
 
             $eventId = $eventData["event_id"];
 
-            if (isset($eventData["images"])){
+            if (isset($eventData["images"])) {
                 $images = $eventData["images"];
                 foreach ($images as $imageFile) {
                     Image::createImage($eventId, $imageFile);
@@ -179,12 +179,11 @@ class Event extends Model
             }
             unset($eventData["event_id"]);
             unset($eventData["images"]);
-            
-            
+
+
             DB::table('events')
                 ->where('id', $eventId) // Filtras por algún criterio
                 ->update($eventData);
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }

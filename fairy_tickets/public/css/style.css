@@ -127,7 +127,6 @@ button {
 }
 
 .centrado {
-  margin-top: 12.5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1219,7 +1218,7 @@ dialog.corner-button {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: auto;
+  width: 70%;
   flex-wrap: wrap;
   padding: 1rem;
   margin: 2rem;
