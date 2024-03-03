@@ -43,7 +43,7 @@ const assignMaxCapToForm = async (
 ) => {
     if (!isNaN(addressSelect.value)) {
         const locationData = await fetchLocationData(addressSelect.value);
-        const capacity = locationData[0].capacity;
+        const capacity = locationData.capacity;
         changeSessionMaxCap(capacity, maxCapInput, ticketQtyInput);
     }
 };
@@ -160,6 +160,10 @@ const setupAddressFormToggle = () => {
         });
         maxCapInput.addEventListener("change", () => {
             ticketQtyInput.max = maxCapInput.value;
+        });
+    } else if (addressSelect && newAddressDialog) {
+        addressSelect.addEventListener("change", () => {
+            handleNewAddress(newAddressDialog, addressSelect);
         });
     }
 };
