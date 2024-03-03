@@ -68,6 +68,7 @@
                         <label for="nameOwner">Nombre</label>
                         <input type="text" id="nameOwner" name="owner" maxlength="250" autofocus required />
                         <div name="error" id="error_nameOwner"></div>
+                    </div>
 
                     <!-- DNI -->
                     <div class="input-unit">
