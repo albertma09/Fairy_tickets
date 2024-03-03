@@ -19,10 +19,93 @@ let ticketsTypeId = 0;
 let dataTicketsTypeId = [];
 
 //constantes para validacion del comprador
+const nameOwnerFormat = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
+const dniOwnerFormat = /^\d{8}[A-Z]$/;
+const emailOwnerFormat = /[`!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
+const mobileOwnerFormat = /^\d{0,8}(\d{10,})?$/;
+const buttonPay = document.querySelector('#pay');
+let isValidButtonPay = false;
+let inputsFormValidated = 0;
+// const inputsFormPay = document.querySelectorAll('.error-input');
+const error_nameOwner = document.querySelector('#error_nameOwner');
+const error_dniOwner = document.querySelector('#error_dniOwner');
+const error_emailOwner = document.querySelector('#error_emailOwner');
+const error_mobileOwner = document.querySelector('#error_mobileOwner');
 const nameOwner = document.querySelector('#nameOwner');
 const dniOwner = document.querySelector('#dniOwner');
 const emailOwner = document.querySelector('#emailOwner');
 const mobileOwner = document.querySelector('#mobileOwner');
+
+//-----------------------------FUNCIONES INDIVIDUALES PARA LA VALIDACIÓN DE DATOS DEL COMPRADOR-----------------------------
+
+//Función que valida que la letra del DNI coincida con el numero ingresado.
+const validateLetterDni = (dni) => {
+    const letterDni = 'TRWAGMYFPDXBNJZSQVHLCKE';
+    dniNumber = (parseInt(dni.substring(0, 8))) % 23;
+    let isValidLetter;
+    if (letterDni.charAt(dniNumber) === dni.charAt(8) || dni === "") {
+        isValidLetter = true;
+    } else {
+        isValidLetter = false;
+    }
+    return isValidLetter;
+}
+
+//Función que valida que el nombre del comprador no tenga caracteres especiales o numeros
+const validateNameOwner = () => {
+    if (nameOwnerFormat.test(nameOwner.value)) {
+        error_nameOwner.textContent = "El NOMBRE no es valido, no puede contener caracteres especiales y/o números."
+        error_nameOwner.classList.add('error-input');
+    } else {
+        error_nameOwner.textContent = ""
+        error_nameOwner.classList.remove('error-input');
+        if(nameOwner.value !==''){
+            inputsFormValidated +=1;
+        }
+    }
+}
+
+//Función que valida el DNI del comprador.
+const validateDniOwner = () => {
+    if (!validateLetterDni(dniOwner.value)) {
+        error_dniOwner.textContent = "El DNI no es valido, ingrese un DNI valido.";
+        error_dniOwner.classList.add('error-input');
+    } else {
+        error_dniOwner.textContent = "";
+        error_dniOwner.classList.remove('error-input');
+        if(dniOwner.value !==''){
+            inputsFormValidated +=1;
+        }
+    }
+}
+
+//Función que valida que el email del comprador no contenga caracteres especiales (aparte de los que por defecto ya acepta).
+const validateEmailOwner = () => {
+    if (emailOwnerFormat.test(emailOwner.value)) {
+        error_emailOwner.textContent = "El EMAIL no es valido.";
+        error_emailOwner.classList.add('error-input');
+    } else {
+        error_emailOwner.textContent = "";
+        error_emailOwner.classList.remove('error-input');
+        if(emailOwner.value !==''){
+            inputsFormValidated +=1;
+        }
+    }
+}
+
+//Función que valida que la cantidad de digitos sea la correcta (9 digitos).
+const validateMobileOwner = () => {
+    if (mobileOwnerFormat.test(mobileOwner.value)) {
+        error_mobileOwner.textContent = "El MOVIL no es valido, (9 digitos).";
+        error_mobileOwner.classList.add('error-input');
+    } else {
+        error_mobileOwner.textContent = "";
+        error_mobileOwner.classList.remove('error-input');
+        if(mobileOwner.value !==''){
+            inputsFormValidated +=1;
+        }
+    }
+}
 
 // Función que convierte el dato del localStorage en un array para mostrar los datos de la compra 
 const convertToArray = () => {
@@ -105,20 +188,19 @@ const createFormsAssistantCopies = () => {
                 generalForm.appendChild(copyContainerForm);
             }
         });
-    }else{
-        ticketsIdOwner.setAttribute('value',dataTicketsTypeId);
-        ticketsQuantityOwner.setAttribute('value',dataquantityTickets);
+    } else {
+        ticketsIdOwner.setAttribute('value', dataTicketsTypeId);
+        ticketsQuantityOwner.setAttribute('value', dataquantityTickets);
     }
 }
 
-// Funciones para actualizar el tiempo sin actividad
+//-----------------------------------Funciones para actualizar el tiempo sin actividad------------------------------
 const actualizarTiempo = () => {
     tiempoSinActividad = 0;
 };
 
 function detectarInactividad(tiempo) {
     let tiempoSinActividad = 0;
-    // console.log(event_id);
 
     actualizarTiempo();
 
@@ -139,6 +221,37 @@ function detectarInactividad(tiempo) {
     }, 1000); // Revisar cada segundo
 }
 
+//Función que activa el boton de pago una vez todos los campos del comprador han sido validados.
+const activateButtonPay = () => {
+    const inputsFormPay = document.querySelectorAll('.error-input');
+    if (inputsFormPay.length === 0 && inputsFormValidated >= 4 ) {
+        buttonPay.removeAttribute('disabled');
+    }else {
+        buttonPay.removeAttribute('disabled');
+        buttonPay.setAttribute('disabled', '');
+    }
+}
+
+//Función que valida los datos del comprador, campo a campo por sus validaciones particulares independientes.
+const validateDataOwner = () => {
+    nameOwner.addEventListener('change', function (e) {
+        validateNameOwner();
+        activateButtonPay();
+    })
+    dniOwner.addEventListener('change', function (e) {
+        validateDniOwner();
+        activateButtonPay();
+    })
+    emailOwner.addEventListener('change', function (e) {
+        validateEmailOwner();
+        activateButtonPay();
+    })
+    mobileOwner.addEventListener('change', function (e) {
+        validateMobileOwner();
+        activateButtonPay();
+    })
+}
+
 const summaryPurchaseInfo = () => {
     insertDataSummaryPurchase();
     createFormsAssistantCopies();
@@ -146,5 +259,6 @@ const summaryPurchaseInfo = () => {
     localStorage.removeItem('dataPurchase');
 }
 
+validateDataOwner();
 summaryPurchaseInfo();
 detectarInactividad(tiempoInactividad);

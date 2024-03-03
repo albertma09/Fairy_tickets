@@ -14,6 +14,8 @@ use App\Redsys\API_PHP\redsysHMAC256_API_PHP_7\RedsysAPI;
 
 class PaymentController extends Controller
 {
+
+    //Método que retorna la información del evento patra mostrarse en el resumen de la compra.
     public function getSessionDataForPayment(Request $request)
     {
 
@@ -28,7 +30,8 @@ class PaymentController extends Controller
         }
     }
 
-    //Función para generar arrays independientes de los asistentes e insertarlos en base de datos
+    //Método para generar arrays independientes de los de los registros de
+    //los asistentes e insertarlos en base de datos
     public function extractAssistantsToArray(array $assistantsArray, int $purchaseId)
     {
         try {
@@ -69,7 +72,7 @@ class PaymentController extends Controller
         }
     }
 
-    //Función que inserta a los asistentes en la tabla tickets
+    //Método que inserta a los asistentes en la tabla tickets
     public function insertAssistants(int $purchaseId)
     {
         try {
@@ -83,7 +86,7 @@ class PaymentController extends Controller
         }
     }
 
-    //Función para insertar al comprador de los tickets
+    //Método para insertar al comprador de los tickets
     public function insertPurchaser()
     {
         try {
@@ -101,7 +104,7 @@ class PaymentController extends Controller
         }
     }
 
-    //Función que recibe los datos de la vista "resumen-compra" organiza la información y la envia a Redsys
+    //Método que recibe los datos de la vista "resumen-compra" organiza la información y la envia a Redsys
     public function paymentRedsys(Request $request)
     {
         try {
@@ -116,6 +119,7 @@ class PaymentController extends Controller
                 'mobileOwner' => 'required|numeric|min:000000001|max:999999999'
             ]);
             
+            //Se separa la información del comprador y asistentes para ser tratada de forma particular
             $owner = [
                 "session_id" => intval($request->input('session_id')),
                 "name" => $validateDataforms['owner'],
@@ -144,10 +148,13 @@ class PaymentController extends Controller
             session(['owner' => $owner]);
             session(['assistants' => $assistantsArray]);
 
+
+            //Se inicia el proceo de envio de petición de pago a Redsys
             $price = $request->input('priceToRedsys');
             $orderNumber = strval(time());
 
-
+            //Si el valor total es cero o se tiene desactivado el pago por Redsys se retorna a la vista con la compra
+            // realizada y el feedback correspondiente.
             if (intval($price) === 0 || env('ACTIVEREDSYS') === false) {
 
                 $bodyResponse = [
@@ -163,6 +170,7 @@ class PaymentController extends Controller
                 //Si todo va bien con la compra inserto el registro del comprador en la BD
                 self::insertPurchaser();
                 return view('payment.confirmation', ['response' => $bodyResponse]);
+
             } else {
                 $redsys = new RedsysAPI;
                 $urlKO = route('payment.confirmation');
@@ -215,7 +223,7 @@ class PaymentController extends Controller
         }
     }
 
-    //Función que recibe el response de Redsys y muestra el feedback según el código de respuesta de la pasarela
+    //Método que recibe el response de Redsys y muestra el feedback según el código de respuesta de la pasarela
     public function responseRedsys(Request $request)
     {
         try {
@@ -236,8 +244,6 @@ class PaymentController extends Controller
 
             $keyAdmin = env('claveSHA256', 'sq7HjrUOBfKmC576ILgskD5srU870gJ7');
             $calculatedKey = $responseRedsys->createMerchantSignatureNotif($keyAdmin, $params);
-
-            // dd($paramsDeco);
 
             if ($receivedSignature === $calculatedKey && $paramsDeco->Ds_AuthorisationCode != "++++++") {
 
