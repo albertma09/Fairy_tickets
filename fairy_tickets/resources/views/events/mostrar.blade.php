@@ -19,7 +19,7 @@
                                 (min-width: 768px)
 and (max-width: 1023px) 100vw,
                                 min-width: 1024px 100vw"
-                    alt="Imagen del evento" />
+                    alt="Imagen del evento" loading="lazy"/>
             @endforeach
         @else
             <p>No se han encontrado imágenes para este evento.</p>

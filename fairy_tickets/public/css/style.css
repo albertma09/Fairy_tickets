@@ -1219,7 +1219,7 @@ dialog.corner-button {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: auto;
+  width: 70%;
   flex-wrap: wrap;
   padding: 1rem;
   margin: 2rem;
