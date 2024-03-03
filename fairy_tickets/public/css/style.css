@@ -84,6 +84,12 @@ html {
 
 h2 {
   font-family: "Fjalla One", sans-serif;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-family: "Fjalla One", sans-serif;
+  margin: 1.5rem;
 }
 
 a,
@@ -878,6 +884,7 @@ form .input-unit {
   grid-template-columns: minmax(0, 1fr);
   gap: 0.3rem;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
 form .form-ticket-unit {
   display: flex;
