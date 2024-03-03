@@ -443,6 +443,315 @@ Guarda los cambios y reinicia Apache:
 sudo service apache2 restart
 ----    
 
+= Documentación de la API de almacenamiento de imágenes
+
+Esta API permite el almacenamiento de imágenes para su optimización en el uso web. Recibe una imagen y una serie de tamaños en formato _array_ numérico, reescala la imagen a cada uno de esos tamaños y devuelve un _array_ con las _URLs_.
+
+La aplicación recibe una imagen, verifica que se pueda tratar como imagen y la procesa, reescalándola a los tamaños designados. Por cada tamaño guarda un archivo de imagen diferente. Una vez guardados estos archivos, como respuesta a la petición POST, devolverá una url por cada imagen creada. Esta url contendrá el nombre de archivo encriptado y se podrá usar para acceder a la versión de la imagen guardada que se necesite.
+
+En la actual versión (v1), solo trabaja con tres _endpoints_:
+
+
+- GET api/v1/images/{filename}: Este endpoint se utiliza para recuperar una imagen específica. Toma como parámetro el nombre de archivo encriptado y devuelve la imagen correspondiente si existe.
+
+- POST api/v1/images: Este endpoint se utiliza para subir y guardar una imagen. Recibe por parámetros, en el cuerpo de la request, el archivo de la imagen que se quiere procesar y un array numérico con cada uno de los tamaños que se necesitan. Una vez verificados la imagen y el array numérico, la procesa y devuelve un array de tantas URLs como tamaños distintos se hayan requerido. Esta respuesta se enviará en formato JSON y en orden ascendente, es decir de más pequeño a más grande.
+
+- DELETE api/v1/images: Este endpoint se utiliza para eliminar una imagen previamente guardada. Recibe por parámetros, en el cuerpo de la request, un array con las URLs de las imágenes que se quieren eliminar. Una vez verificadas las URLs se procede a la eliminación de las imágenes correspondientes. Si todo va bien se devuelve un json con el array del nombre de los ficheros eliminados. 
+
+
+== GET: Recuperar una imagen
+
+Recupera la imagen indicada a través del parámetro.
+
+[cols="2,8",options="header"]
+|===
+| Parámetros de la petición | Descripción
+| filename | Código de la imagen a recuperar.
+|===
+
+
+.Ejemplo de solicitud:
+
+[source]
+----
+GET http/localhost:8088/api/v1/images/{filename} HTTP/1.1
+Host: example.com
+----
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un archivo de imagen.
+| 400 | El parámetro es erróneo.
+| 404 | No encontrado - Archivo no encontrado.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
+|===
+
+== POST: Subir una imagen
+
+Sube una imagen y devuelve un array de tres URLs en formato JSON.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: multipart/form-data
+|===
+[cols="2,3,6",options="header"]
+|===
+| Nombre del parámetro | Tipo de valor | Descripción
+| image | Archivo de imágen (jpg, jpeg...) | El archivo de imagen que se va a cargar.
+| sizes | Array numérico ([250,600,1600]) | El array de tamaños a los que se requiere reescalar la imagen.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+POST http/localhost:8088/api/v1/images HTTP/1.1
+Host: example.com
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="example.jpg"
+Content-Type: image/jpeg
+
+<contenido binario de la imagen>
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="sizes"
+[250, 700, 1800]
+----WebKitFormBoundary7MA4YWxkTrZu0gW--
+----
+
+[[post-example-response-200]]
+.Ejemplo de respuesta exitosa (200)
+
+[source,json]
+----
+[
+"http://127.0.0.1:8088/api/v1/images/url1",
+"http://127.0.0.1:8088/api/v1/images/url2",
+"http://127.0.0.1:8088/api/v1/images/url3"
+]
+----
+Este ejemplo devuelve tres URLs correspondientes a los diferentes tamaños de la imagen subida en orden ascendente.
+
+Estas URLs pueden utilizarse para acceder a las imágenes optimizadas después de la carga.
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un array con tres urls.
+| 400 | El archivo subido no tiene un formato de imagen válido.
+| 413 | El tamaño del archivo de imagen excede el límite.
+| 500 | Error de servidor - Error inesperado: No se ha podido procesar la imagen.
+|===
+
+== DELETE: Eliminar imágenes
+
+Elimina imágenes basadas en las URLs proporcionadas mediante un array y devuelve otro array con el nombre de los ficheros eliminados.
+
+[cols="2,8",options="header"]
+|===
+| Parámetros de la petición | Descripción
+| urls | Array de URLs de las imágenes a eliminar.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+DELETE http://localhost:8088/api/v1/images HTTP/1.1
+Content-Type: application/json
+Host: example.com
+
+{
+    "urls": [
+        "http://example.com/url1",
+        "http://example.com/url2"
+   ]
+}
+----
+
+[[delete-example-response-200]]
+.Ejemplo de respuesta exitosa (200)
+
+[source,json]
+----
+{
+   "archivos_eliminados": [
+      "url1",
+      "url2",
+   ]
+}
+----
+Este ejemplo devuelve el código del final de las dos URLs correspondientes a los nombres de las dos imágenes que se ha pedido que se eliminaran.
+
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | Imágenes eliminadas correctamente.
+| 400 | Petición incorrecta - No se proporcionaron URLs válidas o el tamaño del archivo excede el límite.
+| 404 | Archivo no encontrado - Archivo no encontrado para alguna de las URLs proporcionadas.
+| 500 | Error de servidor - No se pudo eliminar alguna de las imágenes.
+|===
+
+== Desplegar API en servidor isard
+
+Para comenzar tendremos que tener el proyecto desplegado dentro del servidor isard, en nuestro caso la API ya esta dentro del proyecto tickets, tendremos que acceder a la siguiente ruta:
+
+[source,sh]
+----
+cd /var/www/html/gr01-mateos-lopera-amador/api/ImgAda
+----
+
+Una vez dentro de la ruta copiaremos el fichero .env.example y generaremos la key:
+
+[source,sh]
+----
+sudo cp .env.example .env
+sudo php artisan key:generate
+----
+
+una vez la llave generada accederemos a la ruta `/var/www/html/gr01-mateos-lopera-amador/api/api-docker` que es donde tenemos los archivos de confuguración del docker y ejecutaremos los siguientes comandos para generar el contenedor docker:
+
+[source,sh]
+----
+sudo docker compose build
+sudo docker compose up -d
+----
+
+
+
+= Documentación de la API de verificación de tickets
+
+Esta Api te permite verificar si el ticket de una sesion es valido o no.
+Primero se loguea mediante el codigo de la sesión y una vez logueado mediante el lector qr se verifica el id del ticket y comprueba si existe y si es de la sesión que pertoca, una vez este eso comprobado mira si ese ticket ya ha sido verificado o no, si no esta verificado lo da por valido y lo verifica, y si ya lo esta manda un error.
+
+En la versión actual (v1), trabaja con 3 endpoints:
+
+GET /verify-ticket/{ticket_id}: Este endpoint se utiliza para comprobar si un ticket es valido dentro de la sessión iniciada. Toma como parámetro el id del ticket y devuelve si es valido o no y porque.
+
+POST /login: Este endpoint utiliza un codigo de sesion con el que se realizara el inicio de sesion. Si es valido se creara un token para identificar la sesión.
+
+POST /logout: Este endpoint utiliza un token almacenado en una cookie al iniciar sesión. Al ejecutarse este elimina la cookie y el token de la base de datos.
+
+== login
+Introduces el codigo y te devuelve un token en formato JSON.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: application/form-data
+|===
+[cols="2,8",options="header"]
+|===
+| Nombre del parámetro | Descripción
+| code | codigo de la sesion con la que haremos login.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: text/plain
+
+code=your_code_here
+----
+
+.Ejemplo de respuesta exitosa (200)
+
+[source,json]
+----
+[source,json]
+[
+"token": "bepNyKZHiiwXl1X",
+"session_id": 1
+]
+----
+Este ejemplo devuelve un token y el id de la sesion a la que se esta accediendo.
+
+Estos datos se utilizaran para comprobar los tickets que se esten verificando si pertenecen a la sesion y si son validos
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un token y el id de la sesión.
+| 401 | Error de autenticación - El codigo no es valido.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
+|===
+
+== Logout
+
+Al darle a logout elimina el token de la base de datos y la cookie donde estaba almacenado.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: application/form-data
+|===
+[cols="2,8",options="header"]
+|===
+| Nombre del parámetro | Descripción
+| token | token creado del inicio de sessión.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+POST logout HTTP/1.1
+Host: example.com
+Content-Type: application/form-data
+
+token=your_token_here
+----
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un mensaje indicando que el logout fue exitoso.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
+|===
+
+== Verificar ticket
+Mediante un codigo qr se identifica el id del ticket y se verifica si es valido.
+
+[options="header"]
+|===
+| Cuerpo de la petición
+| Content-Type: application/form-data
+|===
+[cols="2,8",options="header"]
+|===
+| Nombre del parámetro | Descripción
+| id | id del ticket que se esta comprobando.
+|===
+
+.Ejemplo de solicitud:
+
+[source]
+----
+GET /verify-ticket/7 HTTP/1.1
+Host: example.com
+----
+
+
+[cols="2,8",options="header"]
+|===
+| Código de estado | Descripción
+| 200 | OK - Devuelve un mensaje indicando que el ticket es valido, y si es nominal también te añade los datos del cliente.
+| 400 | El parámetro es erróneo.
+| 401 | Error de autenticación - El codigo no es valido.
+| 404 | No encontrado - Ticket no encontrado.
+| 500 | Error de servidor - Ha ocurrido un error inesperado.
+|===
+
+
+
+
 == Configuración del docker y la base de datos
 
 En este apartado se explica cómo crear la imágen de docker necesaria, donde montaremos nuestra base de datos PostgreSql. 
