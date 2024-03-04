@@ -1,23 +1,26 @@
 = Fairy Tickets
 Albert Mateos - Aitor Lopera - Diego Amador 
 :icons:
-:doctype: book
+:doctype: article
 :encoding: utf-8
-:lang: en
+:lang: es
 :toc: left
 :numbered:
-:warning-title: ATENCIÓN
-:important-title: IMPORTANTE
 
-==  Descripción de los miembros del equipo.
-* Albert Mateos
-* Aitor Lopera
-* Diego Amador   
+==  Introducción
+Os presentamos la memoria del segundo proyecto del curso 2023-2024 de 2o de Desarrollo de Aplicaciones Web del instituto Nicolau Copèrnic. Este proyecto consta del desarrollo de una página web de gestión de eventos y de la creación y posterior uso de APIs Restful. 
 
-== Objetivos de la aplicación.
+En este documento presentaremos el equipo de trabajo, las especificaciones y requerimientos del proyecto, el manual de instalación de la aplicación, el manual de las APIs y diversas consideraciones para el futuro.
+
+=== Miembros del equipo
+* Albert Mateos, estudiante de 2o de DAW en instituto Nicolau Copèrnic.
+* Aitor Lopera, estudiante de 2o de DAW en instituto Nicolau Copèrnic.
+* Diego Amador, estudiante de 2o de DAW en instituto Nicolau Copèrnic.   
+
+=== Objetivos de la aplicación.
 Esta aplicación tiene como objetivo la creación de una plataforma en la que publicar eventos y poner a la venta entradas para los mismos.
 
-== Necesidades.
+=== Necesidades.
 Las necesidades a las que esta aplicación trata de dar respuesta son las siguientes:
 
 1. Publicación de eventos. Permitirá publicar eventos en la red para darlos a conocer al gran público.
@@ -31,7 +34,7 @@ Las necesidades a las que esta aplicación trata de dar respuesta son las siguie
 5. Monitorización de la satisfacción del consumidor. Permitirá un sistema de _feedback_ para que los usuarios que hayan comprado una entrada puedan dar su opinión sobre el evento, y así el promotor tenga una forma directa de conocer el grado de satisfacción de sus clientes.
 
 
-== Publico objetivo.
+=== Publico objetivo.
 Esta aplicación está diseñada considerando dos _targets_ diferentes. 
 
 Por un lado, tenemos a los promotores que necesitan publicar sus eventos y llevarlos a la mayor cantidad de gente posible. Este tipo de usuario será el que tenga acceso a las secciones restringidas de la aplicación que llevan a cabo todo el proceso CRUD de los eventos.
@@ -39,25 +42,32 @@ Se trata de un público corporativo y profesional, que lo que necesita es realiz
 
 En el otro lado, encontramos al gran público, a las personas que buscando por la red encontrarán eventos publicados en esta aplicacióna y comprarán sus entradas. Este grupo de personas, consideramos que lo compone un rango muy amplio y diverso, ya que, además, el rango de edades o los sesgos de filtraje variarán mucho dependiendo del tipo de evento que se publique. Entendiendo esto, pensamos que se tratará de personas con un mínimo poder adquisitivo que suelan tener acceso a las redes y las utilitcen a menudo. Esto engloba a personas de entre 14 y 60 años.  
 
-==  Diseño de base de datos.
-Para ver el diseño MER de la base de datos puede dirigirse al siguiente enlace:
+==  Diseño de base de datos y diagramas de clases.
+
+image::images/mer.png[Esquema MER de la base de datos]
+
+Para acceder al esquema MER de la base de datos puede dirigirse al siguiente enlace:
 https://drive.google.com/file/d/1jDNZInTPw_NM7lHp22TpuoQtsD87uHpR/view?usp=sharing[Esquema MER]
 
+Para acceder al diagrama de clases de modelos de la aplicación puede dirigirse al siguiente enlace:
+https://drive.google.com/file/d/1QzYtGKZtJKUy0lgzKIumWgC2MAplmrnS/view?usp=sharing[Diagrama de clases de modelos]
 
-== Sketching y Mockups de interfícies de usuario.
+== Diseño y guía de estilos
+
+Tanto para el diseño de los mockups de las diferentes vistas como para la guía de estilos hemos usado FIGMA, encontraréis sendos enlaces en cada uno de los apartados.
+
+=== Sketching y Mockups de interfaces de usuario.
 .Consejo:
-[TIP]
-====
+
 Para ver los detalles de los Sketching y Mockups, puede dirigirse al siguiente enlace https://www.figma.com/file/4AYrxGKE9Jr0IWjy3QuiVL/gr01-Layouts?type=design&mode=design&t=RbeKfi6LfndwQ6Wj-0[Sketching y Mockups]
-====    
-== Guia de estilos.
-.Consejo:
-[TIP]
-====
+
+=== Guia de estilos.
+
 En el siguiente enlace, puede encontrar toda la información a detalle de la guia de estilos de la aplicación https://www.figma.com/file/cOq2a3i65rwIY4i7gC5tbq/gr01-Gu%C3%ADa-de-estilos?type=design&node-id=0-1&mode=design&t=RbeKfi6LfndwQ6Wj-0[Guia de estilos]
-====
-== Manual de instalación/Distribución de la Aplicación. 
-En esta sección se explicará brevemente los pasos a seguir para realizar el despliegue de la aplicación y extensiones necesarias para su funcionamiento. En primer lugar explicaremos como hacer el despliegue en local, y después en servidor, en este caso usaremos una máquina virtual ubuntu en un servidor de Isard.
+
+== Manual de instalación, distribución y configuración. 
+
+En esta sección se explicarán detalladamente los pasos a seguir para realizar el despliegue de la aplicación y extensiones necesarias para su funcionamiento. En primer lugar explicaremos como hacer el despliegue en local, y después en servidor, en este caso usaremos una máquina virtual ubuntu en un servidor de Isard.
 
 CAUTION: Atención, ambos manuales explican el despliegue en una máquina con un sistema que utilice el shell _bash_. Para el despliegue en una máquina con Windows los pasos a seguir son los mismos pero la manera de instalar los diferentes _softwares_ que necesitaremos es disinta.
 
@@ -113,9 +123,11 @@ git clone https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git .
 
 TIP: El punto del final del comando significa en la ruta actual. Es decir en el directorio en el que nos encontremos en el momento de ejecutarlo. Si se quiere se puede cambiar por una ruta física o por una relativa. 
 
-==== Copiar y configurar el archivo .env del proyecto
+==== Copiar y configurar el archivo `.env` del proyecto
 
-El siguiente paso consiste en localizar el archivo .env de la aplicación web, para ello nos hemos de ubicar en la carpeta raíz del repositorio, es decir allá donde lo hayamos clonado.
+Pese a que hemos dedicado un apartado entero más adelante para la explicación del archivo `.env`, en este apartado hablaremos de él y explicaremos brevemente qué se ha de hacer para que funcione la aplicación.
+
+El siguiente paso consiste en localizar el archivo `.env` de la aplicación web, para ello nos hemos de ubicar en la carpeta raíz del repositorio, es decir allá donde lo hayamos clonado.
 
 [NOTE]
 ====
@@ -127,7 +139,7 @@ El archivo `.env` en Laravel es un archivo de configuración que contiene variab
 cd /ruta/a/tu/proyecto
 ----
 
-Desde este punto hemos de entrar en la siguiente ruta: `fairy_tickets/`, que sería la carpeta raíz del proyecto Laravel y allá localizar el archivo `.env.example` y copiarlo en el mismo lugar pero con el nombre .env, de esta manera crearemos el archivo de variables de entorno de nuestra aplicación a partir de una plantilla preconfigurada guardada en el repositorio GIT.
+Desde este punto hemos de entrar en la siguiente ruta: `fairy_tickets/`, que sería la carpeta raíz del proyecto Laravel y allá localizar el archivo `.env.example` y copiarlo en el mismo lugar pero con el nombre `.env`, de esta manera crearemos el archivo de variables de entorno de nuestra aplicación a partir de una plantilla preconfigurada guardada en el repositorio GIT.
 
 [source,sh]
 ----
@@ -268,7 +280,10 @@ php artisan serve
 Esto iniciará un servidor de desarrollo en `http://localhost:8000`, donde podrás acceder a la aplicación.
 
 === Isard
-Instala Apache2 y PHP en tu servidor Debian ejecutando los siguientes comandos:
+
+En esta sección explicaremos cómo instalar la aplicación en servidor, en este caso usaremos una máquina en el servicio Isard que nos concede el centro. En cualquier caso el proceso debería de ser muy similar en cualquier máquina con ubuntu, debian...
+
+Primero deberíamos de instalar Apache2 y PHP en el servidor Debian ejecutando los siguientes comandos:
 
 [source,sh]
 ----
@@ -278,7 +293,7 @@ sudo apt install apache2 php php-cli php-mbstring unzip
 
 ==== Configuración de Apache2
 
-Edita el archivo de configuración de Apache2 para permitir el uso de archivos `.htaccess` y habilitar el módulo `rewrite`:
+El siguiente paso es configurar el servicio Apache. Para ello edita el archivo de configuración de Apache2 `.htaccess` para permitir el uso de archivos y habilitar el módulo `rewrite`:
 
 [source,sh]
 ----
@@ -301,13 +316,22 @@ Guarda los cambios y reinicia Apache:
 sudo service apache2 restart
 ----
 
-===== Despliegue del Proyecto desde Git
+En este punto ya deberíamos de tener el servicio Apache configurado y corriendo en nuestra máquina servidor.
 
-Para comenzar con el despliegue accederemos a la url de nuestro proyecto: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador
+==== Despliegue del Proyecto desde Git
+
+Ahora procederemos a descargar el proyecto desde el repositorio GIT. Para comenzar con el despliegue accederemos a la url de nuestro proyecto: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.
 
 Buscaremos un boton que ponga code y copiaremos la url que se indica que en este caso es la siguiente: https://git.copernic.cat/alopera/gr01-mateos-lopera-amador.git
 
-Clonamos el proyecto dentro del directorio `/var/www/html` de la siguiente manera:
+Para clonar el proyecto dentro del directorio `/var/www/html`, primero nos ubicamos en esta misma carpeta.
+
+[source,sh]
+----
+cd /var/www/html
+----
+
+ y lanzamos el comando siguiente:
 
 [source,sh]
 ----
@@ -322,12 +346,9 @@ cd /var/www/html/gr01-mateos-lopera-amador/fairy_tickets
 sudo composer install
 ----
 
-===== Configuración del archivo .env en Laravel
+==== Configuración del archivo .env en Laravel
 
-
-El archivo `.env` en Laravel es un archivo de configuración que contiene variables de entorno para ajustar la configuración del proyecto, incluyendo la conexión a la base de datos, la configuración de correo electrónico, entre otros. En este documento, explicaremos cómo configurar correctamente el archivo `.env` para que funcione correctamente tu proyecto Laravel.
-
-====== Pasos para configurar el archivo .env:
+Como sucedía en el caso del despliegue en local, aquí también explicaremos de forma breve y concisa cómo configurar debidamente el archivo `.env` para que funcione correctamente tu proyecto Laravel, en este caso en el servidor. Para ello se han de seguir los pasos descritos a continuación:
 
 1. **Copiar el archivo .env.example**: Antes de comenzar, asegúrate de copiar el archivo `.env.example` que se proporciona en el proyecto Laravel y renombrarlo como `.env`.
 
@@ -345,76 +366,62 @@ El archivo `.env` en Laravel es un archivo de configuración que contiene variab
     Como hemos explicado en el despliegue en local, estas son las líneas que deberías tener en tu `env`.
 
 3. **Configuración de conexión a la API**:
-    Para configurar la conexión a la API, en la carpeta raíz del proyecto Laravel, es decir desde la raíz delk repositorio GIT: `~/fairy_tickets`.
+    Para configurar la conexión a la API, en la carpeta raíz del proyecto Laravel, es decir desde la raíz del repositorio GIT: `~/fairy_tickets`.
     , basta con cambiar la URL del parámetro `IMAGE_API_URL` del archivo `.env` de la siguiente manera:
 
      ```
     IMAGE_API_URL= "http://192.168.60.60:8088/api/v1/images"
     ```
 
-4. **Configuración de otros ajustes**: Además de la conexión a la base de datos, puedes configurar otras variables de entorno en el archivo `.env` según sea necesario. Algunas de las variables comunes incluyen:
+==== Configuración y despliegue de la API que procesa las imágenes en servidor
 
-    ```
-    APP_NAME=Nombre_de_la_aplicación
-    APP_ENV=local
-    APP_KEY=Clave_secreta_generada_por_Artisan
-    APP_DEBUG=true
-    APP_URL=http://localhost
-    ```
+Una vez llegados a este punto, el siguiente paso será configurar la API y servirla en un contenedor docker para que nuestra aplicación web pueda hacer uso de ella.
 
-    ```
-    MAIL_MAILER=smtp
-    MAIL_HOST=smtp.mailtrap.io
-    MAIL_PORT=2525
-    MAIL_USERNAME=your_username
-    MAIL_PASSWORD=your_password
-    MAIL_ENCRYPTION=tls
-    MAIL_FROM_ADDRESS=your_email@example.com
-    MAIL_FROM_NAME="${APP_NAME}"
-    ```
+Para comenzar tendremos que tener el proyecto desplegado dentro del servidor isard, en nuestro caso la API ya esta dentro del proyecto tickets, tendremos que acceder a la siguiente ruta:
 
-    Configuración de la app principal
-    ```
-    #numero de eventos a mostrar en el home por categoría
-    EVENTSBYCATEGORY = 4 
+[source,sh]
+----
+cd /var/www/html/gr01-mateos-lopera-amador/api/ImgAda
+----
 
-    #URL de la conexión a la pasarela de pagos
-    URL_CONNECTION = https://sis-t.redsys.es:25443/sis/realizarPago 
+Una vez dentro de la ruta copiaremos el fichero `.env.example` creando el `.env` necesario y generaremos la key:
 
-    #URL de los errores de la pasarela
-    URL_DESCRIPTION_ERROR = https://pagosonline.redsys.es/codigosRespuesta.html 
+[source,sh]
+----
+sudo cp .env.example .env
+sudo php artisan key:generate
+----
 
-    # Líneas de configuración de la pasarela de pagos
-    DS_MERCHANT_CURRENCY = 978
-    DS_MERCHANT_MERCHANTCODE = 999008881
-    DS_MERCHANT_TERMINAL = 001
-    DS_MERCHANT_TRANSACTIONTYPE = 0
-    Ds_SignatureVersion = HMAC_SHA256_V1
-    claveSHA256 = sq7HjrUOBfKmC576ILgskD5srU870gJ7
-    ACTIVEREDSYS = true
+Una vez hayamos generado la clave accederemos a la ruta `/var/www/html/gr01-mateos-lopera-amador/api/api-docker` que es donde tenemos los archivos de confuguración del docker
 
-    # Líneas de configuración de la conexión a la API
+[source,sh]
+----
+cd /var/www/html/gr01-mateos-lopera-amador/api/api-docker
+----
 
-    # Tamaños deseados para las diferentes versiones de las imágenes, en píxeles (puede variar la cantidad de tamaños)
-    IMAGE_SIZES = [300,700,1600]
+ Y, acto seguido, ejecutaremos los siguientes comandos para generar el contenedor docker:
 
-    # URL de la conexión a la API
-    IMAGE_API_URL= "http://127.0.0.1:8088/api/v1/images"
+[source,sh]
+----
+sudo docker compose build
+sudo docker compose up -d
+----
 
-    # Contraseña para los endpoints protegidos de la API
-    IMAGE_API_KEY= "CxSJj7WKdWYy90hX4vJjaS6JK2"
-    ```
+CAUTION: De nuevo, la API se conecta al puerto 8088 del host, si estuviera ocupado hay que cambiarlo de la misma manera que en el paso levantamiento del docker de la base de datos. También tendríamos que cambiar la línea `IMG_API_URL` del archivo `.env` del proyecto Laravel de la aplicación principal.
 
-    Asegúrate de ajustar estos valores según las necesidades específicas de tu proyecto.
+Hecho esto, deberíamos de tener la API funcionando en servidor en un docker a la espera de peticiones.
 
-Genera la clave de aplicación de Laravel:
+==== Últimos pasos
+
+Para que funcione la aplicación deberemos generar una clave `APP_KEY`. Para ello nos colocamos en la carpeta raíz del proyecto Laravel, `~/fairy_tickets` desde la raíz del repositorio GIT.
+Y generamos la clave de aplicación de Laravel con el siguiente comando:
 
 [source,sh]
 ----
 sudo php artisan key:generate
 ----
 
-Establece los permisos adecuados para los directorios de almacenamiento y de caché:
+Deberemos, también, establecer los permisos adecuados para los directorios de almacenamiento y de caché:
 
 [source,sh]
 ----
@@ -422,9 +429,16 @@ sudo chmod -R 775 storage bootstrap/cache
 sudo chown -R www-data:www-data storage bootstrap/cache
 ----
 
-===== Configuraciones Adicionales
+==== Configuración final
 
-Configura el host virtual de Apache2 para apuntar al directorio del proyecto Laravel. Edita el archivo `/etc/apache2/sites-available/000-default.conf`:
+Antes de terminar, deberemos de asegurarnos que al entrar en nuestra ip el servicio apache redirija al usuario al proyecto de forma adecuada, para ello configuraremos el host virtual de Apache2 para apuntar al directorio del proyecto Laravel. Esto lo conseguiremos editando el archivo `/etc/apache2/sites-available/000-default.conf`.
+
+[source,sh]
+----
+sudo nano /etc/apache2/sites-available/000-default.conf
+----
+
+En el editor nano buscaremos las siguientes líneas y procuraremos que queden de esta forma:
 
 [source,apache]
 ----
@@ -443,21 +457,89 @@ Configura el host virtual de Apache2 para apuntar al directorio del proyecto Lar
 </VirtualHost>
 ----
 
-Guarda los cambios y reinicia Apache:
+Cuando tengamos estas líneas así guardaremos los cambios los cambios y reiniciamos Apache:
 
 [source,sh]
-
 ----
 sudo service apache2 restart
 ----    
 
-= Documentación de la API de almacenamiento de imágenes
+=== Configuración del archivo `.env`
 
-Esta API permite el almacenamiento de imágenes para su optimización en el uso web. Recibe una imagen y una serie de tamaños en formato _array_ numérico, reescala la imagen a cada uno de esos tamaños y devuelve un _array_ con las _URLs_.
+El archivo `.env` en Laravel es un archivo de configuración que contiene variables de entorno para ajustar la configuración del proyecto, incluyendo la conexión a la base de datos, la configuración de correo electrónico, entre otros.
+
+En los apartado anteriores hemos explicado lo justo y necesario para el funcionamiento básico de la aplicación, en esta sección os explicaremos todas aquellas variables útiles para el proyecto y que se pueden encontrar y modificar en el archivo `.env`.
+
+Además de la conexión a la base de datos o a la API, puedes configurar otras variables de entorno en el archivo `.env` según sea necesario. Las variables más importantes son las siguientes.
+
+Configuración general de la aplicación:
+[source]
+----
+APP_NAME=Nombre_de_la_aplicación
+APP_KEY=Clave_secreta_generada_por_Artisan
+----
+
+Configuración del sistema de envío de correos electrónicos.
+[source]
+----
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=tu_nombre_de_usuario
+MAIL_PASSWORD=tu_contraseña
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=tu_email@ejemplo.com
+MAIL_FROM_NAME=nombre_del_remitente
+----
+
+Configuración de la app principal:
+
+[source]
+----    
+#numero de eventos a mostrar en el home por categoría
+EVENTSBYCATEGORY = 4
+
+#URL de la conexión a la pasarela de pagos
+URL_CONNECTION = https://sis-t.redsys.es:25443/sis/realizarPago 
+
+#URL de los errores de la pasarela
+URL_DESCRIPTION_ERROR = https://pagosonline.redsys.es codigosRespuesta.html 
+----
+    
+Líneas de configuración de la pasarela de pagos:
+[source]
+----
+DS_MERCHANT_CURRENCY = 978
+DS_MERCHANT_MERCHANTCODE = 999008881
+DS_MERCHANT_TERMINAL = 001
+DS_MERCHANT_TRANSACTIONTYPE = 0
+Ds_SignatureVersion = HMAC_SHA256_V1
+claveSHA256 = sq7HjrUOBfKmC576ILgskD5srU870gJ7
+ACTIVEREDSYS = true
+----
+
+Líneas de configuración de la conexión a la API
+[source]
+----
+# Tamaños deseados para las diferentes versiones de las imágenes, en píxeles (puede variar la cantidad de tamaños)
+IMAGE_SIZES = [300,700,1600]
+
+# URL de la conexión a la API
+IMAGE_API_URL= "http://127.0.0.1:8088/api/v1/images"
+
+# Contraseña para los endpoints protegidos de la API
+IMAGE_API_KEY= "CxSJj7WKdWYy90hX4vJjaS6JK2"
+----
+
+Asegúrate de ajustar estos valores según tus necesidades.
+
+== Documentación de la API de almacenamiento y procesamiento de imágenes
+
+Dentro del repositorio, en la carpeta `~/api`, encontramos un proyecto paralelo independiente que se llama ImgAda. Se trata de una _API Restful_ que permite el almacenamiento de imágenes para su optimización en el uso web. Recibe una imagen y una serie de tamaños en formato _array_ numérico, reescala la imagen a cada uno de esos tamaños y devuelve un _array_ con las _URLs_.
 
 La aplicación recibe una imagen, verifica que se pueda tratar como imagen y la procesa, reescalándola a los tamaños designados. Por cada tamaño guarda un archivo de imagen diferente. Una vez guardados estos archivos, como respuesta a la petición POST, devolverá una url por cada imagen creada. Esta url contendrá el nombre de archivo encriptado y se podrá usar para acceder a la versión de la imagen guardada que se necesite.
 
-En la actual versión (v1), solo trabaja con tres _endpoints_:
+En la actual versión (v1), solo trabaja con tres _endpoints_ aunque nuestra aplicación solo hace uso de dos, el GET y el POST:
 
 
 - GET api/v1/images/{filename}: Este endpoint se utiliza para recuperar una imagen específica. Toma como parámetro el nombre de archivo encriptado y devuelve la imagen correspondiente si existe.
@@ -466,8 +548,12 @@ En la actual versión (v1), solo trabaja con tres _endpoints_:
 
 - DELETE api/v1/images: Este endpoint se utiliza para eliminar una imagen previamente guardada. Recibe por parámetros, en el cuerpo de la request, un array con las URLs de las imágenes que se quieren eliminar. Una vez verificadas las URLs se procede a la eliminación de las imágenes correspondientes. Si todo va bien se devuelve un json con el array del nombre de los ficheros eliminados. 
 
+=== Seguridad
 
-== GET: Recuperar una imagen
+La API lleva implementada un sistema de seguridad por clave para que algunos de los endpoints, en nuestro caso, el POST, solo pueda ser usado desde la aplicación principal.
+El sistema es muy sencillo, hay una clave guardada tanto en el `.env` de la aplicación principal como en el de la API, al llegarle un POST la API comprueba que lleve la contraseña y la compara con el código guardado en su `env`. Si es la contraseña correcta procede con la lógica del _endpoint_, en caso contrario devuelve un error 401.
+
+=== GET: Recuperar una imagen
 
 Recupera la imagen indicada a través del parámetro.
 
@@ -495,7 +581,7 @@ Host: example.com
 | 500 | Error de servidor - Ha ocurrido un error inesperado.
 |===
 
-== POST: Subir una imagen
+=== POST: Subir una imagen
 
 Sube una imagen y devuelve un array de tres URLs en formato JSON.
 
@@ -504,11 +590,13 @@ Sube una imagen y devuelve un array de tres URLs en formato JSON.
 | Cuerpo de la petición
 | Content-Type: multipart/form-data
 |===
+
 [cols="2,3,6",options="header"]
 |===
 | Nombre del parámetro | Tipo de valor | Descripción
 | image | Archivo de imágen (jpg, jpeg...) | El archivo de imagen que se va a cargar.
 | sizes | Array numérico ([250,600,1600]) | El array de tamaños a los que se requiere reescalar la imagen.
+| pwd | string | El string que debería contener la contraseña del sistema de seguridad de la API.
 |===
 
 .Ejemplo de solicitud:
@@ -528,6 +616,9 @@ Content-Type: image/jpeg
 Content-Disposition: form-data; name="sizes"
 [250, 700, 1800]
 ----WebKitFormBoundary7MA4YWxkTrZu0gW--
+Content-Disposition: form-data; name="pwd"
+"7MA4YWxkTrZu0g"
+----WebKitFormBoundary7MA4YWxkTrZu0gW--
 ----
 
 [[post-example-response-200]]
@@ -536,11 +627,12 @@ Content-Disposition: form-data; name="sizes"
 [source,json]
 ----
 [
-"http://127.0.0.1:8088/api/v1/images/url1",
-"http://127.0.0.1:8088/api/v1/images/url2",
-"http://127.0.0.1:8088/api/v1/images/url3"
+"codigo1",
+"codigo2",
+"codigo3"
 ]
 ----
+
 Este ejemplo devuelve tres URLs correspondientes a los diferentes tamaños de la imagen subida en orden ascendente.
 
 Estas URLs pueden utilizarse para acceder a las imágenes optimizadas después de la carga.
@@ -550,11 +642,12 @@ Estas URLs pueden utilizarse para acceder a las imágenes optimizadas después d
 | Código de estado | Descripción
 | 200 | OK - Devuelve un array con tres urls.
 | 400 | El archivo subido no tiene un formato de imagen válido.
+| 401 | La credencial enviada no es correcta.
 | 413 | El tamaño del archivo de imagen excede el límite.
 | 500 | Error de servidor - Error inesperado: No se ha podido procesar la imagen.
 |===
 
-== DELETE: Eliminar imágenes
+=== DELETE: Eliminar imágenes
 
 Elimina imágenes basadas en las URLs proporcionadas mediante un array y devuelve otro array con el nombre de los ficheros eliminados.
 
@@ -604,32 +697,8 @@ Este ejemplo devuelve el código del final de las dos URLs correspondientes a lo
 | 500 | Error de servidor - No se pudo eliminar alguna de las imágenes.
 |===
 
-== Desplegar API en servidor isard
 
-Para comenzar tendremos que tener el proyecto desplegado dentro del servidor isard, en nuestro caso la API ya esta dentro del proyecto tickets, tendremos que acceder a la siguiente ruta:
-
-[source,sh]
-----
-cd /var/www/html/gr01-mateos-lopera-amador/api/ImgAda
-----
-
-Una vez dentro de la ruta copiaremos el fichero .env.example y generaremos la key:
-
-[source,sh]
-----
-sudo cp .env.example .env
-sudo php artisan key:generate
-----
-
-una vez la llave generada accederemos a la ruta `/var/www/html/gr01-mateos-lopera-amador/api/api-docker` que es donde tenemos los archivos de confuguración del docker y ejecutaremos los siguientes comandos para generar el contenedor docker:
-
-[source,sh]
-----
-sudo docker compose build
-sudo docker compose up -d
-----
-
-= Documentación de la API de verificación de tickets
+== Documentación de la API de verificación de tickets
 
 Esta Api te permite verificar si el ticket de una sesion es valido o no.
 Primero se loguea mediante el codigo de la sesión y una vez logueado mediante el lector qr se verifica el id del ticket y comprueba si existe y si es de la sesión que pertoca, una vez este eso comprobado mira si ese ticket ya ha sido verificado o no, si no esta verificado lo da por valido y lo verifica, y si ya lo esta manda un error.

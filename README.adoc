@@ -2,7 +2,7 @@
 descripción...
 
 == Miembros y sus portfolios
-* https://github.com/albertma09[Albert Mateos Aguilera]
+* https://albertma09.es[Albert Mateos Aguilera]
 * https://github.com/DiegoYAH[Diego Amador Hernández]
 * http://www.jangoku.es/aitor/micv/[Aitor Lopera Toledo]
 
